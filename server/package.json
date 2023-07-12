@@ -1,0 +1,24 @@
+{
+  "name": "culinary-alchemy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node ./dist/index.js",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Huilensolis/CulinaryAlchemy.git"
+  },
+  "author": "Huilen Solis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Huilensolis/CulinaryAlchemy/issues"
+  },
+  "homepage": "https://github.com/Huilensolis/CulinaryAlchemy#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
