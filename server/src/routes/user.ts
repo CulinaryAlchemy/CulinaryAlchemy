@@ -45,11 +45,12 @@ userRouter.get("/by-username/:username", (req, res) => {
 
 userRouter.get("/all/:limit", (req, res) => {
   const { limit } = req.params;
-
   try {
     const parsedLimit = parseInt(limit);
+    
     userProvider.getAllUsers(parsedLimit)
     .then((users) => res.status(200).json(users))
+    .catch((error) => res.status(400).json(error));
   } catch (error) {
     res.status(400).json(error);
   }

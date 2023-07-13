@@ -10,6 +10,7 @@ import { logsMiddw } from './middlewares';
 // routers
 import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
+import { User } from './db/models';
 
 // PORT
 const PORT = process.env.PORT || 3000;
@@ -28,6 +29,10 @@ app.use('/user', userRouter);
     try {
         await dbSequelize.authenticate();
         console.log('Connection with databse has been established successfully.');
+        
+        await dbSequelize.sync();
+        console.log('all models syncronized');
+        // start server 
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
         })

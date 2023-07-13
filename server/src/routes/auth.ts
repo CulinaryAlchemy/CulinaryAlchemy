@@ -6,15 +6,22 @@ export const authRouter = express.Router();
 
 authRouter.post("/register", (req, res) => {
   const { username, email, password } = req.body;
-  const user = {
-    username,
-    email,
-    password,
-  };
+  console.log({ username, email, password });
+
+  const responseSucces = () => {
+    res.status(201).end();
+  }; // replace with real response class
+
+  const responseError = (error: unknown) => {
+    res.status(401).json(error);
+  }; // replace with real response class
+
   try {
-    userProvider.createUser(user)
-    .then(() => res.status(201).end())
+    userProvider
+      .createUser({username, email, password})
+      .then(() => responseSucces())
+      .catch((error) => responseError(error));
   } catch (error) {
-    res.status(400).json(error);
+    responseError(error);
   }
 });
