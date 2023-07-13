@@ -1,9 +1,8 @@
 // libreries
 import express from 'express';
-
 // db
 import { dbSequelize } from './db';
-// routes
+
 
 const app = express();
 
@@ -15,4 +14,6 @@ const app = express();
         console.error('Unable to connect to the database:', error);
     }
 })()
+
+const PORT = process.env.PORT || 3000;
 
