@@ -10,7 +10,6 @@ import { logsMiddw } from './middlewares';
 // routers
 import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
-import { User } from './db/models';
 
 // PORT
 const PORT = process.env.PORT || 3000;
