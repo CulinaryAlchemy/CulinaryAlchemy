@@ -53,17 +53,3 @@ userRouter.get("/all/:limit", async (req, res) => {
     res.status(400).json(error);
   }
 });
-
-userRouter.post("/create", async (req, res) => {
-  const { username, email, password } = req.body;
-  const user = {
-    username,
-    email,
-    password,
-  }
-  try {
-    const newUser = await userProvider.createUser(user);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-})
