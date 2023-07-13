@@ -104,26 +104,4 @@ const userProvider = {
       }
     });
   },
-  deleteUser: async (id: string) => {
-    return new Promise(async (resolve, reject) => {
-      if (typeof id !== "string") {
-        throw new Error("invalid id format, id must be a string!");
-      }
-      try {
-        const doesUserExist = await User.findByPk(id);
-        if (!doesUserExist) {
-            throw new Error("user does not exist");
-        }
-        await User.destroy({
-          where: {
-            id: id,
-          },
-        });
-        resolve('');
-      } catch (error) {
-        reject({ error });
-      }
-    });
-  
-  }
 };
