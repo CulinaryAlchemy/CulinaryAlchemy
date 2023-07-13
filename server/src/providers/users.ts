@@ -74,7 +74,7 @@ export const userProvider = {
         if (!validationFailed) {
           await newUser.save();
         }
-        resolve({ newUser });
+        resolve('');
       } catch (error) {
         reject({ error });
       }
@@ -90,7 +90,7 @@ export const userProvider = {
         if (!doesUserExist) {
           throw new Error("user does not exist");
         }
-        const updatedUser = await User.update(
+        await User.update(
           { newValues },
           {
             where: {
@@ -98,7 +98,7 @@ export const userProvider = {
             },
           }
         );
-        resolve({ updatedUser });
+        resolve('');
       } catch (error) {
         reject({ error });
       }
