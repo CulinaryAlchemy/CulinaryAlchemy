@@ -10,8 +10,8 @@ userRouter.get("/by-id/:id", async (req, res) => {
     if (!id) {
       throw new Error("Invalid id");
     }
-    const users = await userProvider.getUserById(id);
-    res.status(200).json(users);
+    userProvider.getUserById(id)
+    .then((users) => res.status(200).json(users))
   } catch (error) {
     res.status(400).json(error);
   }
@@ -23,8 +23,8 @@ userRouter.get("/by-email/:email", async (req, res) => {
     if (!email) {
       throw new Error("Invalid id");
     }
-    const users = await userProvider.getUserByEmail(email);
-    res.status(200).json(users);
+    userProvider.getUserByEmail(email)
+    .then((user) => res.status(200).json(user))
   } catch (error) {
     res.status(400).json(error);
   }
@@ -36,8 +36,8 @@ userRouter.get("/by-username/:username", async (req, res) => {
     if (!username) {
       throw new Error("Invalid id");
     }
-    const users = await userProvider.getUserByUsername(username);
-    res.status(200).json(users);
+    userProvider.getUserByUsername(username)
+    .then((user) => res.status(200).json(user))
   } catch (error) {
     res.status(400).json(error);
   }
@@ -48,22 +48,9 @@ userRouter.get("/all/:limit", async (req, res) => {
 
   try {
     const parsedLimit = parseInt(limit);
-    const users = await userProvider.getAllUsers(parsedLimit);
+    userProvider.getAllUsers(parsedLimit)
+    .then((users) => res.status(200).json(users))
   } catch (error) {
     res.status(400).json(error);
   }
 });
-
-userRouter.post("/create", async (req, res) => {
-  const { username, email, password } = req.body;
-  const user = {
-    username,
-    email,
-    password,
-  }
-  try {
-    const newUser = await userProvider.createUser(user);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-})
