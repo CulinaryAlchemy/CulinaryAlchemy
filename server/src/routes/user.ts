@@ -2,7 +2,7 @@ import express from "express";
 
 import { userProvider } from "../providers/users";
 
-const userRouter = express.Router();
+export const userRouter = express.Router();
 
 userRouter.get("/by-id/:id", (req, res) => {
   const { id } = req.params;
