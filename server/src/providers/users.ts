@@ -1,7 +1,7 @@
 import { User } from "../db/models";
 import { UserInterface } from "../interfaces";
 
-const userProvider = {
+export const userProvider = {
   getUserById: async (id: string) => {
     return new Promise(async (resolve, reject) => {
       if (typeof id !== "string" || id.length <= 0) {
@@ -88,7 +88,7 @@ const userProvider = {
       try {
         const doesUserExist = await User.findByPk(id);
         if (!doesUserExist) {
-            throw new Error("user does not exist");
+          throw new Error("user does not exist");
         }
         const updatedUser = await User.update(
           { newValues },
@@ -99,6 +99,31 @@ const userProvider = {
           }
         );
         resolve({ updatedUser });
+      } catch (error) {
+        reject({ error });
+      }
+    });
+  },
+  deleteUser: async (id: string) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (typeof id !== "string") {
+          throw new Error("invalid id format, id must be a string!");
+        }
+
+        const user: any = await User.findByPk(id);
+        if(!user){
+          throw new Error("user does not exist");
+        }
+
+        if(user.isDeleted){
+          throw new Error("user already deleted");
+        }
+
+        user.isDeleted = true;
+
+        await user.save()
+        resolve('')
       } catch (error) {
         reject({ error });
       }
