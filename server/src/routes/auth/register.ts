@@ -1,8 +1,6 @@
-import express from "express";
+import { authRouter } from "./index";
 
-import { userProvider } from "../providers/users";
-
-export const authRouter = express.Router();
+import { userProvider } from "../../providers/users";
 
 authRouter.post("/register", (req, res) => {
   const { username, email, password } = req.body;
@@ -18,7 +16,7 @@ authRouter.post("/register", (req, res) => {
 
   try {
     userProvider
-      .createUser({username, email, password})
+      .createUser({ username, email, password })
       .then(() => responseSucces())
       .catch((error) => responseError(error));
   } catch (error) {
