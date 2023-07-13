@@ -12,8 +12,8 @@ authRouter.post("/register", async (req, res) => {
     password,
   };
   try {
-    const newUser = await userProvider.createUser(user);
-    res.status(201).end();
+    userProvider.createUser(user)
+    .then(() => res.status(201).end())
   } catch (error) {
     res.status(400).json(error);
   }
