@@ -1,9 +1,15 @@
 // libreries
 import express from 'express';
+
 // db
 import { dbSequelize } from './db';
+
 // middlewares
 import { logsMiddw } from './middlewares';
+
+// routers
+import { authRouter } from './routes/auth';
+import { userRouter } from './routes/user';
 
 // PORT
 const PORT = process.env.PORT || 3000;
@@ -12,6 +18,11 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(logsMiddw);
+
+// routes
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
+
 
 (async () => {
     try {
