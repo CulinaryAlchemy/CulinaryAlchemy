@@ -4,7 +4,7 @@ import { userProvider } from "../providers/users";
 
 export const authRouter = express.Router();
 
-authRouter.post("/register", async (req, res) => {
+authRouter.post("/register", (req, res) => {
   const { username, email, password } = req.body;
   const user = {
     username,
