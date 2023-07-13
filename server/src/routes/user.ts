@@ -4,7 +4,7 @@ import { userProvider } from "../providers/users";
 
 const userRouter = express.Router();
 
-userRouter.get("/by-id/:id", async (req, res) => {
+userRouter.get("/by-id/:id", (req, res) => {
   const { id } = req.params;
   try {
     if (!id) {
@@ -17,7 +17,7 @@ userRouter.get("/by-id/:id", async (req, res) => {
   }
 });
 
-userRouter.get("/by-email/:email", async (req, res) => {
+userRouter.get("/by-email/:email", (req, res) => {
   const { email } = req.params;
   try {
     if (!email) {
@@ -30,7 +30,7 @@ userRouter.get("/by-email/:email", async (req, res) => {
   }
 });
 
-userRouter.get("/by-username/:username", async (req, res) => {
+userRouter.get("/by-username/:username", (req, res) => {
   const { username } = req.params;
   try {
     if (!username) {
@@ -43,7 +43,7 @@ userRouter.get("/by-username/:username", async (req, res) => {
   }
 });
 
-userRouter.get("/all/:limit", async (req, res) => {
+userRouter.get("/all/:limit", (req, res) => {
   const { limit } = req.params;
 
   try {
