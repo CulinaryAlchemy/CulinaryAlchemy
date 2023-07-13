@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
-import { dbSequelize } from "../db";
+import bcrypt from 'bcrypt';
 
+import { dbSequelize } from "../db";
 export const User = dbSequelize.define('User', {
     username: {
         type: DataTypes.STRING,
@@ -77,4 +78,8 @@ export const User = dbSequelize.define('User', {
     // createdRecipes: {
     // relation with recipes
     // }
+});
+
+User.beforeCreate(async (user: any) => {
+    user.password = await bcrypt.hash(user.password, 10);
 })
