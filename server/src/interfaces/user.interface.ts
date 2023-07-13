@@ -3,11 +3,12 @@ export interface UserInterface{
     name?: string;
     password: string;
     email: string;
-    avatar: string;
+    avatar?: string;
+    description?: string;
     location?: string;
     dietaryPreferences?: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
     deletedAt?: Date;
-    isDeleted: boolean;
+    isDeleted?: boolean;
 }
