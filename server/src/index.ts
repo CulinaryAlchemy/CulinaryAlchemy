@@ -16,7 +16,9 @@ const PORT = process.env.PORT || 3000;
 
 // app
 const app = express();
+
 app.use(express.json());
+
 app.use(logsMiddw);
 
 // routes
