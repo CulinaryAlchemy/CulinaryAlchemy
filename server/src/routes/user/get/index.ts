@@ -1,3 +1,5 @@
-import { getById } from "./by-ud";
+import { getById } from "./by-id";
 import { getByEmail } from "./by-email";
-export { getById, getByEmail };
+import { getByUsername } from './by-username';
+import { getAll } from "./all";
+export { getById, getByEmail, getByUsername, getAll };
