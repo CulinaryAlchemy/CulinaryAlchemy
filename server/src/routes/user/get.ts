@@ -1,15 +1,17 @@
 import { userRouter } from "./index";
 import { userProvider } from "../../providers/users";
+import { sendApiError, sendApiResponse } from "../../utils";
+import { HttpStatusCodes } from "../../utils";
 
 userRouter.get("/id/:id", (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
-      throw new Error("Invalid id");
-    }
-    userProvider.getUserById(id).then((users) => res.status(200).json(users));
+    userProvider
+      .getUserById(id)
+      .then((users) => sendApiResponse(res, 200, users))
+	  .catch(error => sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'internal server error', error))
   } catch (error) {
-    res.status(400).json(error);
+    sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'internal server error', error)
   }
 });
 
