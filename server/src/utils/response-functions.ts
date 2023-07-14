@@ -6,7 +6,7 @@ export function sendApiResponse(res: Response, statusCode: number, data: any): v
   res.status(statusCode).json(response);
 }
 
-export function sendApiError(res: Response, statusCode: number, message: string, details?: string): void {
+export function sendApiError(res: Response, statusCode: number, message: string, details?: any): void {
   const response = ApiResponse.error(statusCode, message, details);
   res.status(statusCode).json(response);
 }
