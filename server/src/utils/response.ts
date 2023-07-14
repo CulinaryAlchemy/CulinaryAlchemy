@@ -1,37 +1,38 @@
 export class ApiResponse {
   private success: boolean;
+  private statusCode: number;
   private data: any;
   private error: ApiResponseError | null;
-  private code: number;
+
   constructor(
     success: boolean,
+    statusCode: number,
     data: any,
     error: ApiResponseError | null = null,
-    code: number
   ) {
     this.success = success;
     this.data = data;
     this.error = error;
-    this.code = code;
+    this.statusCode = statusCode;
   }
 
   static success(data: any, code:number): ApiResponse {
-    return new ApiResponse(true, data, null, code);
+    return new ApiResponse(true, code, data, null, );
   }
 
-  static error(code: number, message: string, details?: string): ApiResponse {
-    const error = new ApiResponseError(code, message, details);
-    return new ApiResponse(false, null, error, code);
+  static error(statusCode: number, message: string, details?: string): ApiResponse {
+    const error = new ApiResponseError(statusCode, message, details);
+    return new ApiResponse(false, statusCode, null, error);
   }
 }
 
 export class ApiResponseError {
-  private code: number;
+  private statusCode: number;
   private message: string;
   private details?: string;
 
-  constructor(code: number, message: string, details?: string) {
-    this.code = code;
+  constructor(statusCode: number, message: string, details?: string) {
+    this.statusCode = statusCode;
     this.message = message;
     this.details = details;
   }
