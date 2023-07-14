@@ -8,10 +8,28 @@ userRouter.get("/id/:id", (req, res) => {
   try {
     userProvider
       .getUserById(id)
-      .then((users) => sendApiResponse(res, 200, users))
-	  .catch(error => sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'internal server error', error))
+      .then((users) => {
+        if (users) {
+          sendApiResponse(res, 200, users);
+        } else {
+          sendApiError(res, HttpStatusCodes.NOT_FOUND, "user not found", null);
+        }
+      })
+      .catch((error) =>
+        sendApiError(
+          res,
+          HttpStatusCodes.INTERNAL_SERVER_ERROR,
+          "internal server error",
+          error
+        )
+      );
   } catch (error) {
-    sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'internal server error', error)
+    sendApiError(
+      res,
+      HttpStatusCodes.INTERNAL_SERVER_ERROR,
+      "internal server error",
+      error
+    );
   }
 });
 
