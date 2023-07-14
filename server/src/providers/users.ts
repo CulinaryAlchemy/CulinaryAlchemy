@@ -20,23 +20,19 @@ export const userProvider = {
     });
   },
   getUserByEmail: async (email: string) => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       if (typeof email !== "string" || email.length <= 0) {
         throw new Error("invalid email format, email must be a string!");
       }
-      try {
-        const users = await User.findOne({
+        const user = await User.findOne({
           where: {
             email: email,
           },
         });
-        if(!users){
+        if(!user){
           // response error:
         }
-        resolve({ users });
-      } catch (error) {
-        reject({ error });
-      }
+        resolve({user})
     });
   },
   getUserByUsername: async (username: string) => {

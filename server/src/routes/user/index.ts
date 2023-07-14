@@ -1,24 +1,12 @@
 import express from "express";
 
-import { getById } from "./get";
+import { getById, getByEmail } from "./get";
 
 export const userRouter = express.Router();
 
 userRouter.get("/id/:id", getById);
 
-// userRouter.get("/email/:email", (req, res) => {
-//   const { email } = req.params;
-//   try {
-//     if (!email) {
-//       throw new Error("Invalid id");
-//     }
-//     userProvider
-//       .getUserByEmail(email)
-//       .then((user) => res.status(200).json(user));
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
-// });
+userRouter.get("/email/:email", getByEmail);
 
 // userRouter.get("/username/:username", (req, res) => {
 //   const { username } = req.params;

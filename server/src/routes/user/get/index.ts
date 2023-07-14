@@ -1,3 +1,3 @@
 import { getById } from "./by-ud";
-
-export { getById };
+import { getByEmail } from "./by-email";
+export { getById, getByEmail };
