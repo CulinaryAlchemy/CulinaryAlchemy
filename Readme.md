@@ -39,9 +39,9 @@ To set up the RecipeAlchemy project locally, please follow these steps:
 1. Clone this repository to your local machine.
 2. Install the necessary dependencies by running `npm install` in both the backend and frontend directories.
 3. Set up the database connection and environment variables. Refer to the provided configuration files and documentation.
-4. Run the backend server using `npm start` in the backend directory.
+4. Run the backend server using `npm run dev` in the backend directory.
 5. Run the frontend development server using `npm start` in the frontend directory.
-6. Access the RecipeAlchemy platform in your browser at `http://localhost:3000`.
+6. Access the RecipeAlchemy platform in your browser at `http://localhost:3000` or to your environment port var.
 
 ## Contributions
 
