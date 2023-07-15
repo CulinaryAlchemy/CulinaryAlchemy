@@ -17,7 +17,7 @@ export const User = dbSequelize.define('User', {
         allowNull: false,
         validate: {
             isEmail: true,
-            len: [1, 254],
+            len: [4, 254],
         }
     },
     password: {
