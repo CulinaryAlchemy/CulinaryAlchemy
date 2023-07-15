@@ -1,25 +1,27 @@
-import { authRouter } from "./index";
-
+import { Request, Response } from "express";
 import { UserProvider } from "../../providers/user";
+import { HttpStatusCodes, sendApiError, sendApiResponse } from "../../utils";
 
-authRouter.post("/register", (req, res) => {
+export const register = (req: Request, res: Response) => {
   const { username, email, password } = req.body;
   console.log({ username, email, password });
 
-  const responseSucces = () => {
-    res.status(201).end();
-  }; // replace with real response class
-
-  const responseError = (error: unknown) => {
-    res.status(401).json(error);
-  }; // replace with real response class
-
   try {
-    UserProvider
-      .createUser({ username, email, password })
-      .then(() => responseSucces())
-      .catch((error) => responseError(error));
+    UserProvider.createUser({ username, email, password })
+      .then(() => sendApiResponse(res, HttpStatusCodes.CREATED, null))
+      .catch((error) =>
+        sendApiError(
+          res,
+          HttpStatusCodes.INTERNAL_SERVER_ERROR,
+          "internal server error",
+          error
+        )
+      );
   } catch (error) {
-    responseError(error);
+    sendApiError(
+      res,
+      HttpStatusCodes.INTERNAL_SERVER_ERROR,
+      "internal server error"
+    );
   }
-});
+};
