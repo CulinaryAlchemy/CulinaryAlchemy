@@ -27,10 +27,10 @@ CulinaryAlchemy is an online platform that aims to revolutionize the way people 
 
 ## Technologies Used
 
-- **Backend:** Node.js, Express, Passport-JWT for authentication, express-validator for validations.
-- **Frontend:** react, typescript, scss.
-- **Database:** soon.
-- **Additional Libraries and Frameworks:** soon.
+- **Backend:** Node.js, Express.
+- **Frontend:** react.
+- **Database:** sequelize with sqlite.
+- **Additional Libraries and Frameworks:** Passport-JWT for authentication, express-validator for validations, bcrypt for encrypting passwords..
 
 ## Project Setup
 
