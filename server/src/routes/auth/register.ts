@@ -1,6 +1,6 @@
 import { authRouter } from "./index";
 
-import { userProvider } from "../../providers/users";
+import { UserProvider } from "../../providers/user";
 
 authRouter.post("/register", (req, res) => {
   const { username, email, password } = req.body;
@@ -15,7 +15,7 @@ authRouter.post("/register", (req, res) => {
   }; // replace with real response class
 
   try {
-    userProvider
+    UserProvider
       .createUser({ username, email, password })
       .then(() => responseSucces())
       .catch((error) => responseError(error));
