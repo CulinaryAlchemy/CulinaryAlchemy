@@ -9,8 +9,9 @@ export const updateUser = async (id: string, newValues: UserInterface) => {
     try {
       const doesUserExist = await User.findByPk(id);
       if (!doesUserExist) {
-        throw new Error("user does not exist");
+        reject("user does not exist");
       }
+      
       await User.update(
         { newValues },
         {
