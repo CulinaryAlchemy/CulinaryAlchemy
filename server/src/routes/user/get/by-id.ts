@@ -1,4 +1,4 @@
-import { userProvider } from "../../../providers/users";
+import { UserProvider } from "../../../providers/user";
 import { sendApiError, sendApiResponse } from "../../../utils/index";
 import { HttpStatusCodes } from "../../../utils";
 
@@ -7,8 +7,8 @@ import { Request, Response } from "express";
 export const getById = (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    userProvider
-      .getUserById(id)
+    UserProvider
+      .getUser.ById(id)
       .then((users) => {
         if (users) {
           sendApiResponse(res, 200, users);

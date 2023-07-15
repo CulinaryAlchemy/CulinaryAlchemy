@@ -1,4 +1,4 @@
-import { userProvider } from "../../../providers/users";
+import { UserProvider } from "../../../providers/user";
 import { sendApiError, sendApiResponse } from "../../../utils/index";
 import { HttpStatusCodes } from "../../../utils";
 
@@ -7,8 +7,8 @@ import { Request, Response } from "express";
 export const getByUsername = (req: Request, res: Response) => {
   const { username } = req.params;
   try {
-    userProvider
-      .getUserByUsername(username)
+    UserProvider
+      .getUser.ByUsername(username)
       .then((user) =>
         user
           ? sendApiResponse(res, HttpStatusCodes.SUCCESS, user)

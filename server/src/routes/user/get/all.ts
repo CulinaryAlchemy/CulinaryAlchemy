@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { userProvider } from "../../../providers/users";
+import { UserProvider } from "../../../providers/user";
 import { sendApiError, sendApiResponse } from "../../../utils/index";
 import { HttpStatusCodes } from "../../../utils";
 
@@ -8,8 +8,8 @@ export const getAll = (req: Request, res: Response) => {
   try {
     const parsedLimit = parseInt(limit);
 
-    userProvider
-      .getAllUsers(parsedLimit)
+    UserProvider
+      .getUser.All(parsedLimit)
       .then((users) =>
         users
           ? sendApiResponse(res, HttpStatusCodes.SUCCESS, users)
