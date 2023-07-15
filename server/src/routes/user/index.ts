@@ -11,7 +11,7 @@ import { idValidator, emailValidator } from "../../middlewares/valdiators";
 export const userRouter = express.Router();
 
 // get
-userRouter.get("/id/:id", idValidator, getById);
+userRouter.get("/id", idValidator, getById);
 
 userRouter.get("/email", emailValidator, getByEmail);
 
@@ -20,7 +20,7 @@ userRouter.get("/username/:username", getByUsername);
 userRouter.get("/all/:limit", getAll);
 
 // put
-userRouter.put("/id/:id", idValidator, putById)
+userRouter.put("/id", idValidator, putById)
 
 // delete 
-userRouter.delete("/id/:id", idValidator, deleteById)
+userRouter.delete("/id", idValidator, deleteById)

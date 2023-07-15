@@ -5,7 +5,7 @@ import { HttpStatusCodes } from "../../../utils";
 import { Request, Response } from "express";
 
 export const putById = async (req: Request, res: Response, newValues: any) => {
-    const { id } = req.params;
+    const { id } = req.body;
 
     try{
         UserProvider.updateUser(id, newValues)

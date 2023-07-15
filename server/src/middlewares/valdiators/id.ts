@@ -1,5 +1,5 @@
-import { param, } from "express-validator";
+import { body } from "express-validator";
 
 export const idValidator = [
-    param('id').notEmpty().withMessage('Id is required')
+    body('id').notEmpty().withMessage('Id is required')
 ]
