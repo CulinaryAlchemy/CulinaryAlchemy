@@ -8,7 +8,7 @@ export const userRouter = express.Router();
 // get
 userRouter.get("/id/:id", getById);
 
-userRouter.get("/email/:email", getByEmail);
+userRouter.get("/email", getByEmail);
 
 userRouter.get("/username/:username", getByUsername);
 

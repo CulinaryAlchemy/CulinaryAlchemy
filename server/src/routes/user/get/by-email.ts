@@ -4,7 +4,7 @@ import { sendApiError, sendApiResponse } from "../../../utils/index";
 import { HttpStatusCodes } from "../../../utils";
 
 export const getByEmail = (req: Request, res: Response) => {
-  const { email } = req.params;
+  const { email } = req.body;
   try {
     UserProvider
       .getUser.ByEmail(email)
