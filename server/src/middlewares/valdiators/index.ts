@@ -1,3 +1,3 @@
 import { idValidator } from "./id";
-
-export { idValidator };
+import { emailValidator } from "./email";
+export { idValidator, emailValidator };
