@@ -29,7 +29,7 @@ export const getUser = {
           email: email,
         },
       });
-
+      
       if (!user) {
         reject("user not found");
       }

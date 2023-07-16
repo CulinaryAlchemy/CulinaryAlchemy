@@ -4,7 +4,7 @@ import { UserInterface } from "../../interfaces";
 export const updateUser = async (id: string, newValues: UserInterface) => {
   return new Promise(async (resolve, reject) => {
     if (typeof id !== "string") {
-      throw new Error("invalid id format, id must be a string!");
+      reject("invalid id format, id must be a string!");
     }
     try {
       const doesUserExist = await User.findByPk(id);
