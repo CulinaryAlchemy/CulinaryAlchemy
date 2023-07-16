@@ -1,5 +1,4 @@
-import { Strategy, ExtractJwt, StrategyOptions } from "passport-jwt";
-import bcrypt from "bcrypt";
+import { Strategy, ExtractJwt } from "passport-jwt";
 
 import { UserProvider } from "../providers/user";
 import passport from "passport";
@@ -17,21 +16,15 @@ const jwtVerify = async (payload: any, done: any) => {
       return done(null, false, { message: "token expired" });
     }
 
-    let user: any = null;
+    let userFromDb: any = null;
     await UserProvider.getUser
       .ById(payload.sub)
-      .then((user) => (user = user))
-      .catch(() => (user = null));
+      .then((user) => (userFromDb = { user }));
 
-    if (!user) {
-      return done(null, false, { message: "user not found" });
+    if (!userFromDb) {
+      return done(null, false, { message: userFromDb });
     }
-
-    if (user.password !== payload.password) {
-      return done(null, false, { message: "wrong credentials" });
-    }
-
-    done(null, user);
+    done(null, userFromDb);
   } catch (error) {
     return done(null, false, { message: "internal server error" });
   }
@@ -39,6 +32,6 @@ const jwtVerify = async (payload: any, done: any) => {
 
 const jwtStrategy = new Strategy(jwtOptions, jwtVerify);
 
-passport.use(jwtStrategy);
+passport.use("jwt", jwtStrategy);
 
-export { passport };
+export default passport;

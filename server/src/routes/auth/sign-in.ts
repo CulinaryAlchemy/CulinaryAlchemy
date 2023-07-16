@@ -38,8 +38,8 @@ export const signIn = async (req: Request, res: Response) => {
   }
 
   const secret = process.env.JWT_SECRET || "secret";
-
-  const token = Jwt.sign({ sub: userFromDb.id }, secret, { expiresIn: "1h" });
+  const expDate = Date.now() + (1000 * 60 * 60)
+  const token = Jwt.sign({ sub: userFromDb.id, exp: expDate }, secret);
 
   sendApiResponse(res, HttpStatusCodes.SUCCESS, token);
 };
