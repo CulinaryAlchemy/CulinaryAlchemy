@@ -4,14 +4,10 @@ import { UserInterface } from "../../interfaces";
 export const getUser = {
   ById: async (id: string) => {
     return new Promise(async (resolve, reject) => {
-      if (typeof id !== "string" || id.length <= 0) {
-        throw new Error("invalid id format, id must be a string!");
-      }
-
       try {
         const user = await User.findByPk(id);
         if (!user) {
-          // response error:
+          reject("user not found");
         }
         resolve({ user });
       } catch (error) {
@@ -20,17 +16,18 @@ export const getUser = {
     });
   },
   ByEmail: async (email: string) => {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
       if (typeof email !== "string" || email.length <= 0) {
-        throw new Error("invalid email format, email must be a string!");
+        reject("invalid email format, email must be a string!");
       }
       const user = await User.findOne({
         where: {
           email: email,
         },
       });
+
       if (!user) {
-        // response error:
+        reject("user not found");
       }
       resolve({ user });
     });
@@ -38,7 +35,7 @@ export const getUser = {
   ByUsername: async (username: string) => {
     return new Promise(async (resolve, reject) => {
       if (typeof username !== "string" || username.length <= 0) {
-        throw new Error("invalid email format, email must be a string!");
+        reject("invalid email format, email must be a string!");
       }
       try {
         const user = await User.findOne({
@@ -46,9 +43,11 @@ export const getUser = {
             username: username,
           },
         });
+
         if (!user) {
-          // response error:
+          reject("user not found");
         }
+
         resolve({ user });
       } catch (error) {
         reject({ error });
@@ -66,7 +65,7 @@ export const getUser = {
           limit: limit,
         });
         if (!users) {
-          // response error:
+          reject("users not found");
         }
         resolve({ users });
       } catch (error) {
