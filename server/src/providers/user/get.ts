@@ -29,7 +29,7 @@ export const getUser = {
           email: email,
         },
       });
-      
+
       if (!user) {
         reject("user not found");
       }
@@ -47,9 +47,11 @@ export const getUser = {
             username: username,
           },
         });
+
         if (!user) {
-          // response error:
+          reject("user not found")
         }
+        
         resolve({ user });
       } catch (error) {
         reject({ error });

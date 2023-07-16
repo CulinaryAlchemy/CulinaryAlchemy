@@ -7,7 +7,6 @@ import { HttpStatusCodes, sendApiError, sendApiResponse } from "../../utils";
 
 export const signIn = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-
   if (!email || !password) {
     sendApiError(
       res,
@@ -16,12 +15,16 @@ export const signIn = async (req: Request, res: Response) => {
     );
     return;
   }
+  let user: any = null
+  await UserProvider.getUser
+    .ByEmail(email)
+    .then((userFromDb) => user = userFromDb)
+    .catch((error) =>
+      sendApiError(res, HttpStatusCodes.NOT_FOUND, "bad credentials")
+    );
 
-  const { user }: any = await UserProvider.getUser.ByEmail(email);
-
-  if (!user) {
-    sendApiError(res, HttpStatusCodes.NOT_FOUND, "bad credentials");
-    return;
+  if(!user){
+    return res.end()
   }
 
   const passwordMatches = await bcrypt.compare(password, user.password);
