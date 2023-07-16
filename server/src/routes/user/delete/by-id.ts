@@ -5,7 +5,7 @@ import { HttpStatusCodes } from "../../../utils";
 import { Request, Response } from "express";
 
 export const deleteById = async (req: Request, res: Response) => {
-    const { id } = req.body;
+    const { id } = req.params;
 
     try{
         UserProvider.deleteUser(id)

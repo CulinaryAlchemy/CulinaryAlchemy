@@ -1,5 +1,4 @@
 import { User } from "../../db/models";
-import { UserInterface } from "../../interfaces";
 
 export const deleteUser = async (id: string) => {
   return new Promise(async (resolve, reject) => {
