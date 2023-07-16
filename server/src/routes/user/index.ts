@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 
 // providers
 import { getById, getByEmail, getByUsername, getAll } from "./get";
@@ -10,6 +11,8 @@ import { idValidator, emailValidator } from "../../middlewares/valdiators";
 
 export const userRouter = express.Router();
 
+const passportMiddleware =  passport.authenticate('jwt', { session: false })
+
 // get
 userRouter.get("/id", idValidator, getById);
 
@@ -20,7 +23,7 @@ userRouter.get("/username/:username", getByUsername);
 userRouter.get("/all/:limit", getAll);
 
 // put
-userRouter.put("/id", idValidator, putById)
+userRouter.put("/id", passportMiddleware, idValidator, putById)
 
 // delete 
-userRouter.delete("/id", idValidator, deleteById)
+userRouter.delete("/id", passportMiddleware, idValidator, deleteById)

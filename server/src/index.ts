@@ -1,6 +1,6 @@
 // libreries
 import express from 'express';
-
+import passport from 'passport';
 // db
 import { dbSequelize } from './db';
 

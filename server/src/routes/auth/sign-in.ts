@@ -15,19 +15,22 @@ export const signIn = async (req: Request, res: Response) => {
     );
     return;
   }
-  let user: any = null
+  let userFromDb: any = null;
   await UserProvider.getUser
     .ByEmail(email)
-    .then((userFromDb) => user = userFromDb)
-    .catch((error) =>
+    .then((user: any) => {
+      userFromDb = user.user
+      console.log(userFromDb)
+    })
+    .catch(() =>
       sendApiError(res, HttpStatusCodes.NOT_FOUND, "bad credentials")
     );
 
-  if(!user){
-    return res.end()
+  if (!userFromDb) {
+    return
   }
 
-  const passwordMatches = await bcrypt.compare(password, user.password);
+  const passwordMatches = await bcrypt.compare(password, userFromDb.password);
 
   if (!passwordMatches) {
     sendApiError(res, HttpStatusCodes.NOT_FOUND, "bad credentials");
@@ -36,7 +39,7 @@ export const signIn = async (req: Request, res: Response) => {
 
   const secret = process.env.JWT_SECRET || "secret";
 
-  const token = Jwt.sign({ sub: user.id }, secret, { expiresIn: "1h" });
+  const token = Jwt.sign({ sub: userFromDb.id }, secret, { expiresIn: "1h" });
 
   sendApiResponse(res, HttpStatusCodes.SUCCESS, token);
 };
