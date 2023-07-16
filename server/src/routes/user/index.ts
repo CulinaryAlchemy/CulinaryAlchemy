@@ -16,8 +16,6 @@ const passportMiddleware = passport.authenticate("jwt", { session: false });
 // get
 userRouter.get("/id/:id", idValidator, getById);
 
-userRouter.get("/email", emailValidator, getByEmail);
-
 userRouter.get("/username/:username", getByUsername);
 
 userRouter.get("/all/:limit", getAll);
