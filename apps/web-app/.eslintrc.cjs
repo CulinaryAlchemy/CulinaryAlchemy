@@ -24,6 +24,10 @@ module.exports = {
       { allowConstantExport: true },
     ],
     '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    'no-multiple-empty-lines': 'off',
+    '@typescript-eslint/promise-function-async': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
     "no-restricted-imports": [
       "error",
       {
