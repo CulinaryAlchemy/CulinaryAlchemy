@@ -8,6 +8,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react-hooks/recommended',
+    'standard-with-typescript'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -23,5 +24,15 @@ module.exports = {
       { allowConstantExport: true },
     ],
     '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    'no-multiple-empty-lines': 'off',
+    '@typescript-eslint/promise-function-async': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*"]
+      }
+    ]
   },
 }
