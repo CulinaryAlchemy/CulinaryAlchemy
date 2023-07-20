@@ -1,9 +1,7 @@
-import express from 'express';
-import { register } from './register';
-import { signIn } from './sign-in';
-import { emailValidator, validateRegisterInput } from '../../middlewares/valdiators';
-
-import { validateValidationChainResult } from '../../middlewares/valdiators';
+import express from "express";
+import { register } from "./register";
+import { signIn } from "./sign-in";
+import { emailValidator } from "../../middlewares/valdiators";
 
 const authRouter = express.Router();
 
