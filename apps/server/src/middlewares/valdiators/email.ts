@@ -8,14 +8,18 @@ export const emailValidator: ValidationChain[] = [
 	body('email').custom(validateEmailDomain),
 ];
 
-function validateEmailDomain(email: string) {
-	const [, domain] = email.split('@');
-
-	return new Promise((resolve, reject) => {
+async function validateEmailDomain(email: string) {
+	await new Promise((resolve, reject) => {
+		if (!email) {
+			return reject(new Error('invalid email'));
+		}
+		const [, domain] = email.split('@');
 		dns.resolve(domain, (error) => {
 			if (error) {
+				console.log('reject');
 				return reject(new Error('invalid email domain'));
 			} else {
+				console.log('resolve');
 				return resolve(true);
 			}
 		});

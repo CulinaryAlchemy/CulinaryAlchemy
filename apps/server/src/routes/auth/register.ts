@@ -4,7 +4,6 @@ import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
 
 export const register = (req: Request, res: Response) => {
 	const { username, email, password } = req.body;
-	console.log({ username, email, password });
 
 	try {
 		UserProvider.createUser({ username, email, password })

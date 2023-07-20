@@ -23,7 +23,6 @@ app.use(logsMiddw);
 // routes
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
-
 (async () => {
 	try {
 		await dbSequelize.authenticate();
