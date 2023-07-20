@@ -16,9 +16,6 @@ export const getUser = {
 	},
 	ByEmail: async (email: string) => {
 		return new Promise(async (resolve, reject) => {
-			if (typeof email !== 'string' || email.length <= 0) {
-				reject('invalid email format, email must be a string!');
-			}
 			const user = await User.findOne({
 				where: {
 					email: email,
@@ -33,9 +30,6 @@ export const getUser = {
 	},
 	ByUsername: async (username: string) => {
 		return new Promise(async (resolve, reject) => {
-			if (typeof username !== 'string' || username.length <= 0) {
-				reject('invalid email format, email must be a string!');
-			}
 			try {
 				const user = await User.findOne({
 					where: {
@@ -55,10 +49,6 @@ export const getUser = {
 	},
 	All: async (limit: number) => {
 		return new Promise(async (resolve, reject) => {
-			if (typeof limit !== 'number' || limit <= 0) {
-				reject('invalid limit format, limit must be a number!');
-			}
-
 			try {
 				const users = await User.findAll({
 					limit: limit,

@@ -7,14 +7,7 @@ import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
 
 export const signIn = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
-	if (!email || !password) {
-		sendApiError(
-			res,
-			HttpStatusCodes.BAD_REQUEST,
-			'Email and password are required'
-		);
-		return;
-	}
+
 	let userFromDb: any = null;
 	await UserProvider.getUser
 		.ByEmail(email)
