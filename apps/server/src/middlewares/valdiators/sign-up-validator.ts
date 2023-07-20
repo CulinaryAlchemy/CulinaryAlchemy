@@ -1,6 +1,6 @@
 import { body, ValidationChain } from 'express-validator';
 import { emailValidator } from '.';
-export const validateRegisterInput: ValidationChain[] = [
+export const validateSignUpInput: ValidationChain[] = [
 	body('username').notEmpty().withMessage('Username cant be empty'), // username
 	body('username').isString().withMessage('Username must be string'),
 	...emailValidator, // email

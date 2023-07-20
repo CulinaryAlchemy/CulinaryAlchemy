@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { UserProvider } from '../../providers/user';
 import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
 
-export const register = (req: Request, res: Response) => {
+export const signUp = (req: Request, res: Response) => {
 	const { username, email, password } = req.body;
 
 	try {
