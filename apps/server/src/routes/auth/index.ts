@@ -1,7 +1,11 @@
 import express from 'express';
 import { signUp } from './sign-up';
 import { signIn } from './sign-in';
-import { emailValidator, validateValidationChainResult, validateSignUpInput } from '../../middlewares/valdiators';
+import {
+	validateSignIpInput,
+	validateValidationChainResult,
+	validateSignUpInput,
+} from '../../middlewares/valdiators';
 
 const authRouter = express.Router();
 
@@ -13,7 +17,7 @@ authRouter.post(
 );
 authRouter.post(
 	'/sign-in',
-	emailValidator,
+	validateSignIpInput,
 	validateValidationChainResult,
 	signIn
 );
