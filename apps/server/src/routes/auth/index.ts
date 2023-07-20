@@ -7,7 +7,7 @@ import { validateValidationChainResult } from '../../middlewares/valdiators';
 
 const authRouter = express.Router();
 
-authRouter.post('/register', validateRegisterInput, register);
+authRouter.post('/register', validateRegisterInput, validateValidationChainResult, register);
 authRouter.post('/sign-in', emailValidator, validateValidationChainResult, signIn);
 
 export { authRouter };
