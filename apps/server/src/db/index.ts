@@ -1,3 +1,3 @@
-import { dbSequelize } from "./db";
+import { dbSequelize } from './db';
 
 export { dbSequelize };

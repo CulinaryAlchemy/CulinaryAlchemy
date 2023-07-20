@@ -1,3 +1,3 @@
-import { idValidator } from "./id";
-import { emailValidator } from "./email";
+import { idValidator } from './id';
+import { emailValidator } from './email';
 export { idValidator, emailValidator };

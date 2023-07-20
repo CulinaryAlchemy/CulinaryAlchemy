@@ -1,3 +1,3 @@
-import { logsMiddw } from "./logs";
+import { logsMiddw } from './logs';
 
-export {logsMiddw}
+export { logsMiddw };

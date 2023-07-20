@@ -1,3 +1,3 @@
-import { deleteById } from "./by-id";
+import { deleteById } from './by-id';
 
 export { deleteById };
