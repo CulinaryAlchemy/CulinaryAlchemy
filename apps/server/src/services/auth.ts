@@ -13,7 +13,7 @@ const jwtOptions = {
 const jwtVerify = async (payload: any, done: any) => {
 	try {
 		if (payload.exp < Date.now()) {
-			return done(null, false, { message: 'token expired' });
+			return done(null, false);
 		}
 
 		let userFromDb: any = null;
@@ -26,7 +26,7 @@ const jwtVerify = async (payload: any, done: any) => {
 		}
 		done(null, userFromDb);
 	} catch (error) {
-		return done(null, false, { message: 'internal server error' });
+		return done(null, false);
 	}
 };
 
