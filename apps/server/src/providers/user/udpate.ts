@@ -31,29 +31,19 @@ export const updateUser = async (
 			}
 
 			if (name) {
-				typeof name !== 'string'
-					? reject('type of name must be string')
-					: (user.name = name);
+				user.name = name;
 			}
 			if (email) {
-				typeof email !== 'string'
-					? reject('type of email must be string')
-					: (user.email = email);
+				user.email = email;
 			}
 			if (password) {
-				typeof password !== 'string'
-					? reject('type of password must be string')
-					: (user.password = password);
+				user.password = password;
 			}
 			if (location) {
-				typeof location !== 'string'
-					? reject('type of location must be string')
-					: (user.location = location);
+				user.location = location;
 			}
 			if (description) {
-				typeof description !== 'string'
-					? reject('type of description must be string')
-					: (user.description = description);
+				user.description = description;
 			}
 
 			user.save().then(() => resolve(''));
