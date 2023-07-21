@@ -18,7 +18,7 @@ export const userRouter = express.Router();
 const passportMiddleware = passport.authenticate('jwt', { session: false });
 
 // get
-userRouter.get('/id/:id', idValidator, getById);
+userRouter.get('/id/:id', idValidator, validateValidationChainResult, getById);
 
 userRouter.get('/username/:username', getByUsername);
 
@@ -43,6 +43,7 @@ userRouter.put(
 userRouter.delete(
 	'/id/:id',
 	idValidator,
+	validateValidationChainResult,
 	passportMiddleware,
 	authMiddleware,
 	deleteById
