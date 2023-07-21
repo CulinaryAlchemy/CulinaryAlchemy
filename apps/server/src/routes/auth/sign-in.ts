@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import Jwt from 'jsonwebtoken';
 import { UserProvider } from '../../providers/user';
 import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
+const secret = process.env.JWT_SECRET || 'secret';
 
 export const signIn = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
@@ -29,9 +30,19 @@ export const signIn = async (req: Request, res: Response) => {
 		return;
 	}
 
-	const secret = process.env.JWT_SECRET || 'secret';
 	const expDate = Date.now() + 1000 * 60 * 60;
 	const token = Jwt.sign({ sub: userFromDb.id, exp: expDate }, secret);
 
-	sendApiResponse(res, HttpStatusCodes.SUCCESS, token);
+	const user = {
+		id: userFromDb.id,
+		username: userFromDb.username,
+		email: userFromDb.email,
+		name: userFromDb.name,
+		avatar: userFromDb.avatar,
+		description: userFromDb.description,
+		location: userFromDb.location,
+		dietaryPreferences: userFromDb.dietaryPreferences,
+	};
+
+	sendApiResponse(res, HttpStatusCodes.SUCCESS, { token, user });
 };
