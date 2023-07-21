@@ -4,7 +4,12 @@ export const getUser = {
 	ById: async (id: string) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const user = await User.findByPk(id);
+				const user = await User.findOne({
+					where: {
+						id: id,
+						isDeleted: false,
+					},
+				});
 				if (!user) {
 					reject('user not found');
 				}
@@ -19,6 +24,7 @@ export const getUser = {
 			const user = await User.findOne({
 				where: {
 					email: email,
+					isDeleted: false,
 				},
 			});
 
@@ -34,6 +40,7 @@ export const getUser = {
 				const user = await User.findOne({
 					where: {
 						username: username,
+						isDeleted: false,
 					},
 				});
 
@@ -52,6 +59,9 @@ export const getUser = {
 			try {
 				const users = await User.findAll({
 					limit: limit,
+					where: {
+						isDeleted: false,
+					},
 				});
 				if (!users) {
 					reject('users not found');

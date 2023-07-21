@@ -22,8 +22,8 @@ export const updateUser = async (
 		try {
 			let user: any = await User.findByPk(id);
 
-			if (!user) {
-				reject('user not found');
+			if (!user || user.isDeleted) {
+				reject('');
 			}
 
 			if (username) {
