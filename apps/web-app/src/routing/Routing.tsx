@@ -1,5 +1,5 @@
 import { Header } from '@/components'
-import { CRoutes, PrivateRoutes } from '@/routing'
+import { AuthGuard, CRoutes } from '@/routing'
 import { Suspense, lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -15,7 +15,7 @@ export const Routing = () => {
       <Header />
       <Suspense>
         <Routes>
-          <Route element={<PrivateRoutes />}>
+          <Route element={<AuthGuard />}>
             <Route path={CRoutes.index} element={<IndexPage />} />
           </Route>
           <Route path={CRoutes.register} element={<RegisterPage />} />

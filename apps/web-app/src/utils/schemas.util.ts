@@ -1,4 +1,4 @@
-import { type TInputsFormData } from '@/types'
+import { type TInputsFormData } from '@/models/types'
 
 export const getDynamicSchemas = (inputsFormData: TInputsFormData) => {
   let tempSchemas = {}

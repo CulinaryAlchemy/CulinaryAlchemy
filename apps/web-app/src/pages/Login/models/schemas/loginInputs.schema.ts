@@ -1,4 +1,4 @@
-import { inputsData } from '@/pages/Login/consts'
+import { inputsData } from '@/pages/Login/models'
 import { getDynamicSchemas } from '@/utils'
 import { z as zValidator } from 'zod'
 

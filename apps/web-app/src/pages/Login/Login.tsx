@@ -3,9 +3,7 @@ import { GlobalLayout } from '@/layouts'
 import { LoginFooter, LoginHeader } from './components'
 
 import { metada } from './config'
-import { inputsData } from './consts'
-import { loginInputsSchema } from './schemas'
-
+import { inputsData, loginInputsSchema } from './models'
 
 const Login = () => {
   return (

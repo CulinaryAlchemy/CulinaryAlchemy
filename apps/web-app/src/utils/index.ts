@@ -1,1 +1,1 @@
-export * from './Schemas.util'
+export * from './schemas.util'

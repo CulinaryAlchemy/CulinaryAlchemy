@@ -1,4 +1,4 @@
-import { type TInputsFormData } from '@/types'
+import { type TInputsFormData } from '@/models/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
@@ -26,10 +26,10 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
     <Sheet variant='outlined'
       sx={{
         width: 300,
-        mx: 'auto', // margin left & right
-        my: 4, // margin top & bottom
-        py: 3, // padding top & bottom
-        px: 2, // padding left & right
+        mx: 'auto',
+        my: 4,
+        py: 3,
+        px: 2,
         display: 'flex',
         flexDirection: 'column',
         gap: 6,

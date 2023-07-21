@@ -1,8 +1,8 @@
-import { useAuthContext } from '@/context'
 import { CRoutes } from '@/routing'
 import { Navigate, Outlet } from 'react-router-dom'
-export const PrivateRoutes = () => {
-  const { isAuth, isLoading } = useAuthContext()
+export const AuthGuard = () => {
+  const isAuth = false
+  const isLoading = false
 
   if (!isAuth) {
     return <Navigate to={CRoutes.login} />

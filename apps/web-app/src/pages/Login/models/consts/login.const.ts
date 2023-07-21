@@ -1,4 +1,4 @@
-import { type TInputsFormData } from '@/types'
+import { type TInputsFormData } from '@/models/'
 import { z as zValidator } from 'zod'
 
 export const inputsData: TInputsFormData = [
