@@ -7,7 +7,7 @@ import { putById } from "./put";
 import { deleteById } from "./delete";
 
 // validators
-import { idValidator, emailValidator } from "../../middlewares/valdiators";
+import { idValidator, emailValidator } from "../../middlewares/validators";
 
 export const userRouter = express.Router();
 

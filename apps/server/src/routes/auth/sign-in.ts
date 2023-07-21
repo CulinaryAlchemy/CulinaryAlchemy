@@ -13,7 +13,6 @@ export const signIn = async (req: Request, res: Response) => {
 		.ByEmail(email)
 		.then((user: any) => {
 			userFromDb = user.user;
-			console.log(userFromDb);
 		})
 		.catch(() =>
 			sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials')

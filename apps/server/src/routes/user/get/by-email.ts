@@ -7,7 +7,6 @@ export const getByEmail = (req: Request, res: Response) => {
 	const { email } = req.body;
 
 	try {
-		console.log(email, typeof email);
 		UserProvider.getUser
 			.ByEmail(email)
 			.then((user) =>
