@@ -1,3 +1,4 @@
+import { AuthContextProvider } from '@/context'
 import { Routing } from '@/routing'
 import '@fontsource/public-sans'
 import CssBaseline from '@mui/joy/CssBaseline'
@@ -10,7 +11,9 @@ function App () {
       defaultMode="dark"
     >
       <CssBaseline />
+      <AuthContextProvider>
         <Routing />
+      </AuthContextProvider>
     </CssVarsProvider>
   )
 }
