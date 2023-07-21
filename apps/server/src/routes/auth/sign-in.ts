@@ -30,7 +30,7 @@ export const signIn = async (req: Request, res: Response) => {
 		return;
 	}
 
-	const expDate = Date.now() + 1000 * 60 * 60;
+	const expDate = Date.now() + 1000 * 60;
 	const token = Jwt.sign({ sub: userFromDb.id, exp: expDate }, secret);
 
 	const user = {

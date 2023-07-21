@@ -3,7 +3,7 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { UserProvider } from '../providers/user';
 import passport from 'passport';
 
-const secret = process.env.JWT_SECRET || 'secret';
+const secret = process.env.JWT_SECRET;
 
 const jwtOptions = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
