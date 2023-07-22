@@ -1,17 +1,22 @@
-import { User } from "../../db/models";
-import { UserInterface } from "../../interfaces";
+import { User } from '../../db/models';
 
-export const createUser = async ({ username, email, password }: any) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const newUser = await User.build({ username, email, password });
+export const createUser = async ({
+	username,
+	email,
+	password,
+}: {
+	username: string;
+	email: string;
+	password: string;
+}) => {
+	return new Promise((resolve, reject) => {
+		try {
+			const newUser = User.build({ username, email, password });
 
-      await newUser.validate();
-
-      await newUser.save();
-      resolve("");
-    } catch (error) {
-      reject({ error });
-    }
-  });
+			newUser.validate().then(() => newUser.save());
+			resolve('');
+		} catch (error) {
+			reject({ error });
+		}
+	});
 };
