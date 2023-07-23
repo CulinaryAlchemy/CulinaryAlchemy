@@ -1,6 +1,6 @@
 import { type TInputsFormData } from '@/models/'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
 
 import Button from '@mui/joy/Button/'
@@ -13,7 +13,7 @@ import Typography from '@mui/joy/Typography'
 interface IForm {
   schema: ZodObject<ZodRawShape>
   inputsData: TInputsFormData
-  onSumbit: (data: any) => void
+  onSumbit: SubmitHandler<FieldValues>
   Header: React.ReactNode
   Footer: React.ReactNode
   buttonSumbitName: string

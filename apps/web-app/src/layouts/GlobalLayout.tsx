@@ -7,7 +7,7 @@ interface IProps {
 export const GlobalLayout: React.FC<IProps> = ({ newTitle, children }) => {
   useEffect(() => {
     document.title = newTitle
-  }, [])
+  }, [newTitle])
 
   return (children)
 }

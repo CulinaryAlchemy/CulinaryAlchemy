@@ -1,18 +1,20 @@
+import { type IUser, type IUserRegiser, type IUserSignIn } from '@/models'
 import { createContext, useContext } from 'react'
 
 interface IContext {
+  user: IUser | undefined
+  signIn: (userData: IUserSignIn) => Promise<void>
+  signUp: (userData: IUserRegiser) => Promise<void>
+  logOut: () => void
   isAuth: boolean
   isLoading: boolean
-  signUp: () => void
-  signIn: () => void
-  logOut: () => void
 }
-
-const defaultState = {
+const defaultState: IContext = {
+  user: undefined,
   isAuth: false,
   isLoading: true,
-  signUp: () => {},
-  signIn: () => {},
+  signIn: async () => { },
+  signUp: async () => { },
   logOut: () => {}
 }
 

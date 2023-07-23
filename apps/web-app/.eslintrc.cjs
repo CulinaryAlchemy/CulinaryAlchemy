@@ -28,6 +28,8 @@ module.exports = {
     'no-multiple-empty-lines': 'off',
     '@typescript-eslint/promise-function-async': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/triple-slash-reference': 'off',
     "no-restricted-imports": [
       "error",
       {

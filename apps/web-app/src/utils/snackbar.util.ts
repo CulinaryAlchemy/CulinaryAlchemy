@@ -2,7 +2,7 @@ import { toast as defaultToast } from 'sonner'
 
 interface IActionToast {
   label: string
-  onClick: () => any
+  onClick: () => void
 }
 export const toastUtils = {
   success (message: string) {
@@ -14,7 +14,7 @@ export const toastUtils = {
   info (message: string) {
     defaultToast(message)
   },
-  promise (promise: Promise<any>, success: string, error: string) {
+  promise (promise: Promise<unknown>, success: string, error: string) {
     defaultToast.promise(promise, {
       loading: 'loading...',
       success: () => {

@@ -4,14 +4,14 @@ import { LoginFooter, LoginHeader } from './components'
 
 import { useAuth } from '@/hooks'
 import { type IUserSignIn } from '@/models'
-import { type SubmitHandler } from 'react-hook-form'
+import { type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { metada } from './config'
 import { inputsData, loginInputsSchema } from './models'
 
 const Login = () => {
   const { signIn } = useAuth()
-  const handleOnSumbit: SubmitHandler<IUserSignIn> = (data) => {
-    void signIn(data)
+  const handleOnSumbit: SubmitHandler<FieldValues> = (data) => {
+    void signIn(data as IUserSignIn)
   }
   return (
     <GlobalLayout newTitle={metada.title}>
