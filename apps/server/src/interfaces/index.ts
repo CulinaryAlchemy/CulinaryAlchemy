@@ -1,3 +1,3 @@
-import { UserInterface } from "./user.interface";
+import { UserInterface } from './user.interface';
 
-export {UserInterface}
+export { UserInterface };

@@ -1,3 +1,4 @@
-import { logsMiddw } from "./logs";
+import { logsMiddw } from './logs';
+import { authMiddleware } from './auth';
 
-export {logsMiddw}
+export { logsMiddw, authMiddleware };

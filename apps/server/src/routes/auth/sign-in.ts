@@ -1,45 +1,48 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import bcrypt from "bcrypt";
-import Jwt from "jsonwebtoken";
-import { UserProvider } from "../../providers/user";
-import { HttpStatusCodes, sendApiError, sendApiResponse } from "../../utils";
+import bcrypt from 'bcrypt';
+import Jwt from 'jsonwebtoken';
+import { UserProvider } from '../../providers/user';
+import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
+const secret = process.env.JWT_SECRET || 'secret';
 
 export const signIn = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    sendApiError(
-      res,
-      HttpStatusCodes.BAD_REQUEST,
-      "Email and password are required"
-    );
-    return;
-  }
-  let userFromDb: any = null;
-  await UserProvider.getUser
-    .ByEmail(email)
-    .then((user: any) => {
-      userFromDb = user.user
-      console.log(userFromDb)
-    })
-    .catch(() =>
-      sendApiError(res, HttpStatusCodes.NOT_FOUND, "bad credentials")
-    );
+	const { email, password } = req.body;
 
-  if (!userFromDb) {
-    return
-  }
+	let userFromDb: any = null;
+	await UserProvider.getUser
+		.ByEmail(email)
+		.then((user: any) => {
+			userFromDb = user.user;
+		})
+		.catch(() =>
+			sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials')
+		);
 
-  const passwordMatches = await bcrypt.compare(password, userFromDb.password);
+	if (!userFromDb) {
+		return;
+	}
 
-  if (!passwordMatches) {
-    sendApiError(res, HttpStatusCodes.NOT_FOUND, "bad credentials");
-    return;
-  }
+	const passwordMatches = await bcrypt.compare(password, userFromDb.password);
 
-  const secret = process.env.JWT_SECRET || "secret";
-  const expDate = Date.now() + (1000 * 60 * 60)
-  const token = Jwt.sign({ sub: userFromDb.id, exp: expDate }, secret);
+	if (!passwordMatches) {
+		sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials');
+		return;
+	}
 
-  sendApiResponse(res, HttpStatusCodes.SUCCESS, token);
+	const expDate = Date.now() + 1000 * 60;
+	const token = Jwt.sign({ sub: userFromDb.id, exp: expDate }, secret);
+
+	const user = {
+		id: userFromDb.id,
+		username: userFromDb.username,
+		email: userFromDb.email,
+		name: userFromDb.name,
+		avatar: userFromDb.avatar,
+		description: userFromDb.description,
+		location: userFromDb.location,
+		dietaryPreferences: userFromDb.dietaryPreferences,
+	};
+
+	sendApiResponse(res, HttpStatusCodes.SUCCESS, { token, user });
 };
