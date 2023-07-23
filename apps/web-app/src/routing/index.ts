@@ -1,4 +1,4 @@
 export * from './Routing'
-export * from './guards/auth.guard'
+export * from './guards'
 export * from './routes.model'
 

@@ -1,5 +1,5 @@
 import { Header } from '@/components'
-import { AuthGuard, CRoutes } from '@/routing'
+import { AuthGuard, CRoutes, PublicGuard } from '@/routing'
 import { Suspense, lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -18,8 +18,10 @@ export const Routing = () => {
           <Route element={<AuthGuard />}>
             <Route path={CRoutes.index} element={<IndexPage />} />
           </Route>
-          <Route path={CRoutes.register} element={<RegisterPage />} />
-          <Route path={CRoutes.login} element={<LoginPage />} />
+          <Route element={<PublicGuard />}>
+            <Route path={CRoutes.register} element={<RegisterPage />} />
+            <Route path={CRoutes.login} element={<LoginPage />} />
+          </Route>
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </Suspense>
