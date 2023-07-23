@@ -3,10 +3,20 @@ import { createContext, useContext } from 'react'
 interface IContext {
   isAuth: boolean
   isLoading: boolean
-  logIn: () => void
+  signUp: () => void
+  signIn: () => void
   logOut: () => void
 }
-const authContext = createContext<IContext>({})
+
+const defaultState = {
+  isAuth: false,
+  isLoading: true,
+  signUp: () => {},
+  signIn: () => {},
+  logOut: () => {}
+}
+
+const authContext = createContext<IContext>(defaultState)
 
 const useAuthContext = () => useContext(authContext)
 

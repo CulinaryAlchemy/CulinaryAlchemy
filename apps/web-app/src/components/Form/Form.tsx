@@ -1,4 +1,4 @@
-import { type TInputsFormData } from '@/models/types'
+import { type TInputsFormData } from '@/models/'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
@@ -13,7 +13,7 @@ import Typography from '@mui/joy/Typography'
 interface IForm {
   schema: ZodObject<ZodRawShape>
   inputsData: TInputsFormData
-  onSumbit: () => void
+  onSumbit: (data: any) => void
   Header: React.ReactNode
   Footer: React.ReactNode
   buttonSumbitName: string
@@ -73,34 +73,3 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
     </Sheet>
   )
 }
-
-/* import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, type SubmitHandler } from 'react-hook-form'
-import { ZodObject, ZodRawShape, z as zValidator } from 'zod'
-
-const schemaForm = zValidator.object({
-  name: zValidator.string().min(3),
-  id: zValidator.coerce.number().positive().finite().safe().min(2)
-}).strict({ message: '*.* What are u trying? *.*' }) */
-
-/* type TForm = zValidator.infer<typeof schemaForm>
-
-export const Form = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<TForm>({
-    resolver: zodResolver(schemaForm)
-  })
-
-  const onSubmit: SubmitHandler<TForm> = (data) => { console.log(data) }
-
-  console.log(errors)
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" {...(register('name'))} />
-      {((errors?.name) != null) && errors.name.message}
-      <input type="text" {...(register('id', { required: 'Please enter a password' }))} />
-      {((errors?.id) != null) && errors.id.message}
-      <button>aaa</button>
-    </form>)
-  // Agregar login and register pages, and use Form to avoid reply code
-}
- */

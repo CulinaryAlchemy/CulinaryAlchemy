@@ -1,3 +1,3 @@
-export * from './consts'
-export * from './schemas'
+export * from './registerInputs.const'
+export * from './registerInputs.schema'
 

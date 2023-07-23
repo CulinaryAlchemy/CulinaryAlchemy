@@ -1,5 +1,9 @@
 import { toast as defaultToast } from 'sonner'
 
+interface IActionToast {
+  label: string
+  onClick: () => any
+}
 export const toastUtils = {
   success (message: string) {
     defaultToast.success(message)
@@ -17,6 +21,11 @@ export const toastUtils = {
         return success
       },
       error
+    })
+  },
+  action (message: string, action: IActionToast) {
+    defaultToast(message, {
+      action
     })
   }
 }

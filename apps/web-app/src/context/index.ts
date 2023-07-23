@@ -1,3 +1,3 @@
-export * from './auth.context'
-export * from './authProvider.context'
+export * from './Auth/auth.context'
+export * from './Auth/authProvider.context'
 

@@ -12,6 +12,6 @@ export const inputsData: TInputsFormData = [
     name: 'password',
     type: 'password',
     placeholder: 'password',
-    validation: zValidator.string().min(5).max(30)
+    validation: zValidator.string().min(12).max(60)
   }
 ]
