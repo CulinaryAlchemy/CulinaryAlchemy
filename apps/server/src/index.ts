@@ -1,19 +1,18 @@
 // libreries
-import express from 'express'
+import express from 'express';
+import cors from 'cors';
 // db
-import { dbSequelize } from './db'
+import { dbSequelize } from './db';
 
 // middlewares
-import { logsMiddw } from './middlewares'
+import { logsMiddw } from './middlewares';
 
 // routers
-import { authRouter } from './routes/auth'
-import { userRouter } from './routes/user'
+import { authRouter } from './routes/auth';
+import { userRouter } from './routes/user';
 
 // PORT
 const PORT = process.env.PORT || 3000;
-
-const cors = require('cors');
 
 // app
 const app = express();
