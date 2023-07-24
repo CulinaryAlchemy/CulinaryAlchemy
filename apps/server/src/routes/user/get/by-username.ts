@@ -8,7 +8,7 @@ export const getByUsername = (req: Request, res: Response) => {
 	const { username } = req.params;
 	try {
 		UserProvider.getUser
-			.ByUsername(username)
+			.ByUsername(username, ['password', 'email', 'createdAt', 'updatedAt', 'deletedAt', 'isDeleted'])
 			.then((user) => sendApiResponse(res, HttpStatusCodes.SUCCESS, user))
 			.catch((error) =>
 				sendApiError(res, HttpStatusCodes.NOT_FOUND, 'user not found', error)
