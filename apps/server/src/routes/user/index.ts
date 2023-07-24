@@ -1,13 +1,13 @@
 import express from 'express';
 import passport from '../../services/auth';
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 // providers
 import { getById, getByUsername, getAll } from './get';
 import { putById } from './put';
 import { deleteById } from './delete';
 
 // validators
-import { idValidator } from '../../middlewares/validators';
+import { idValidator, isInt } from '../../middlewares/validators';
 import { authMiddleware } from '../../middlewares';
 import {
 	validateValidationChainResult,
@@ -22,7 +22,7 @@ userRouter.get('/id/:id', idValidator, validateValidationChainResult, getById);
 
 userRouter.get('/username/:username', getByUsername);
 
-userRouter.get('/all/:limit', getAll);
+userRouter.get('/all/:limit',param('limit').custom(isInt), validateValidationChainResult, getAll);
 
 // put
 userRouter.put(
