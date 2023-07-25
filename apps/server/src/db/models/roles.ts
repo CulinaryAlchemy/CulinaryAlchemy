@@ -1,19 +1,37 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import { dbSequelize } from '..';
+import { User } from '.';
 
-const Role = dbSequelize.define('roles', {
-	id: {
-		primaryKey: true,
-		type: DataTypes.INTEGER,
-		autoIncrement: true,
-	},
-	name: {
-		type: DataTypes.STRING,
-		allowNull: false,
-		unique: true,
-		validate: {
-			isIn: [['admin', 'user']],
+interface RoleInterface {
+	id: number;
+	name: string;
+}
+
+class Role extends Model<RoleInterface> implements RoleInterface {
+	id!: number;
+	name!: string;
+}
+
+Role.init(
+	{
+		id: {
+			primaryKey: true,
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+		},
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			unique: true,
+			validate: {
+				isIn: [['admin', 'user']],
+			},
 		},
 	},
-});
-export { Role };
+	{
+		sequelize: dbSequelize,
+		modelName: 'Role',
+	}
+);
+
+export { Role, RoleInterface };

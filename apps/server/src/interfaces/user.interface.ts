@@ -1,14 +1,16 @@
 export interface UserInterface {
+	id?: number;
 	username: string;
-	name?: string;
-	password: string;
 	email: string;
+	password: string;
 	avatar?: string;
+	name?: string;
 	description?: string;
 	location?: string;
-	dietaryPreferences?: string;
+	dietaryPreferences?: string[];
 	createdAt?: Date;
 	updatedAt?: Date;
-	deletedAt?: Date;
+	deletedAt?: Date | null;
 	isDeleted?: boolean;
+	roleId?: number;
 }

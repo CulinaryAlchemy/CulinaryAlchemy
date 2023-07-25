@@ -1,5 +1,4 @@
 import { User } from '../../db/models';
-
 export const createUser = async ({
 	username,
 	email,
