@@ -28,6 +28,7 @@ export const getUser = {
 					email: email,
 					isDeleted: false,
 				},
+				
 			});
 
 			if (!user) {
