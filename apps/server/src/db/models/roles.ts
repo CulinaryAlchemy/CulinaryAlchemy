@@ -1,11 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { dbSequelize } from '..';
-import { User } from '.';
 
-interface RoleInterface {
-	id: number;
-	name: string;
-}
+import { RoleInterface } from '../../interfaces';
 
 class Role extends Model<RoleInterface> implements RoleInterface {
 	id!: number;
@@ -30,8 +26,8 @@ Role.init(
 	},
 	{
 		sequelize: dbSequelize,
-		modelName: 'Role',
+		modelName: 'Roles',
 	}
 );
 
-export { Role, RoleInterface };
+export { Role };

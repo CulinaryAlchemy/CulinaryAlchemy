@@ -23,18 +23,14 @@ export const getUser = {
 	ByEmail: async (email: string, excludedPropety: string[] | string = []) => {
 		return new Promise(async (resolve, reject) => {
 			const user = await User.findOne({
-				attributes: { exclude: [...excludedPropety] },
 				where: {
 					email: email,
 					isDeleted: false,
 				},
-				
+				attributes: { exclude: [...excludedPropety] },
+				include: 'role',
 			});
-
-			if (!user) {
-				reject('user not found');
-			}
-			resolve({ user });
+			resolve(user);
 		});
 	},
 	ByUsername: async (

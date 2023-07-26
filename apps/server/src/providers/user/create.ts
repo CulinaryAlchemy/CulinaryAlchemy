@@ -1,4 +1,4 @@
-import { User } from '../../db/models';
+import { User, Role } from '../../db/models';
 export const createUser = async ({
 	username,
 	email,
@@ -8,12 +8,21 @@ export const createUser = async ({
 	email: string;
 	password: string;
 }) => {
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
 		try {
 			const newUser = User.build({ username, email, password });
 
-			newUser.validate().then(() => newUser.save());
-			resolve('');
+			await newUser.validate();
+
+			await newUser.save();
+			
+			const userRole = await Role.findOne({ where: { name: 'user' } });
+			if (userRole) {
+				newUser.roleId = userRole.id;
+				await newUser.save();
+			}
+
+			resolve('')
 		} catch (error) {
 			reject({ error });
 		}

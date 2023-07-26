@@ -11,7 +11,7 @@ import {
 const authRouter = express.Router();
 
 authRouter.post(
-	'/register',
+	'/sign-up',
 	body('username').notEmpty().isString(),
 	emailValidator,
 	body('password').notEmpty().isString(),

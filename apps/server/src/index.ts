@@ -11,7 +11,7 @@ import { logsMiddw } from './middlewares';
 // routers
 import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
-
+import { User } from './db/models';
 // PORT
 const PORT = process.env.PORT || 3000;
 
@@ -32,20 +32,24 @@ app.use('/user', userRouter);
 		await dbSequelize.authenticate();
 		console.log('Connection with databse has been established successfully.');
 
-		await Role.findOrCreate({
-			where: {
-				name: 'user',
-			},
-		});
+		await User.sync();
 
-		await Role.findOrCreate({
-			where: {
-				name: 'user',
-			},
-		});
+		await Role.sync();
 
 		await dbSequelize.sync();
 		console.log('all models syncronized');
+
+		await Role.findOrCreate({
+			where: {
+				name: 'user',
+			},
+		});
+
+		await Role.findOrCreate({
+			where: {
+				name: 'admin',
+			},
+		});
 
 		// start server
 		app.listen(PORT, () => {

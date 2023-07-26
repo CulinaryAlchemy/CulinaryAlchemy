@@ -20,6 +20,7 @@ class User extends Model<UserInterface> implements UserInterface {
 	updatedAt!: Date;
 	deletedAt!: Date;
 	isDeleted!: boolean;
+	roleId!: number | null;
 }
 
 User.init(
@@ -32,10 +33,12 @@ User.init(
 		username: {
 			type: DataTypes.STRING,
 			allowNull: false,
+			unique: true,
 		},
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,
+			unique: true,
 			validate: {
 				isEmail: true,
 				len: [4, 254],
@@ -102,16 +105,24 @@ User.init(
 				isBoolean: true,
 			},
 		},
+		roleId: {
+			type: DataTypes.INTEGER,
+			allowNull: true,
+			references: {
+				model: 'Roles', // Note that we are using the table name, not the model name
+				key: 'id',
+			},
+		},
 	},
 	{
 		sequelize: dbSequelize,
-		modelName: 'User',
+		modelName: 'Users',
 	}
 );
 
-User.belongsTo(Role, { foreignKey: 'roleId' });
-Role.hasMany(User);
-User.beforeCreate(async (user: UserInterface) => {
+User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
+
+User.beforeCreate(async (user: User) => {
 	user.password = await bcrypt.hash(user.password, 10);
 });
 
