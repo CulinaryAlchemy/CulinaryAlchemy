@@ -12,9 +12,14 @@ import { logsMiddw } from './middlewares';
 import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
 import { User } from './db/models';
+
+// services
+import { seedDatabaseAdmins } from './db/default-users';
+
+
+
 // PORT
 const PORT = process.env.PORT || 3000;
-
 // app
 const app = express();
 
@@ -36,20 +41,10 @@ app.use('/user', userRouter);
 
 		await Role.sync();
 
-		await dbSequelize.sync({force: true});
+		await dbSequelize.sync();
 		console.log('all models syncronized');
 
-		await Role.findOrCreate({
-			where: {
-				name: 'user',
-			},
-		});
-
-		await Role.findOrCreate({
-			where: {
-				name: 'admin',
-			},
-		});
+		await seedDatabaseAdmins();
 
 		// start server
 		app.listen(PORT, () => {

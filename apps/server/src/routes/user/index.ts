@@ -11,7 +11,6 @@ import { idValidator, isInt } from '../../middlewares/validators';
 import { authMiddleware } from '../../middlewares';
 import {
 	validateValidationChainResult,
-	emailValidator,
 } from '../../middlewares/validators';
 
 import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
@@ -23,7 +22,7 @@ export const userRouter = express.Router();
 const passportMiddleware = passport.authenticate('jwt', { session: false });
 
 // user
-userRouter.get('/id/:id', authMiddleware, idValidator, validateValidationChainResult, getById);
+userRouter.get('/id/:id', idValidator, validateValidationChainResult, getById);
 
 userRouter.get('/username/:username', getByUsername);
 
@@ -40,10 +39,10 @@ userRouter.put(
 	authMiddleware,
 	idValidator,
 	body('name').optional().notEmpty().isString(),
-	emailValidator,
 	body('password').optional().notEmpty().isString(),
 	body('location').optional().notEmpty().isString(),
 	body('description').optional().notEmpty().isString(),
+	body('email').optional().isEmail().notEmpty(),
 	validateValidationChainResult,
 	putById
 );
@@ -63,7 +62,7 @@ userRouter.get(
 	'/roles/:id',
 	idValidator,
 	validateValidationChainResult,
-	async (req: Request, res: Response ) => {
+	async (req: Request, res: Response) => {
 		const { id } = req.params;
 		try {
 			const role: RoleInterface | null = await roleProvider.getById(id);

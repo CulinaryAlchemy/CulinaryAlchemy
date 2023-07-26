@@ -14,7 +14,6 @@ export const signIn = async (req: Request, res: Response) => {
 		await UserProvider.getUser.ByEmail(email).then((user: any) => {
 			userFromDb = user;
 		});
-
 		if (!userFromDb) {
 			return sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials');
 		}
@@ -22,8 +21,8 @@ export const signIn = async (req: Request, res: Response) => {
 		const passwordMatches = await bcrypt.compare(password, userFromDb.password);
 
 		if (!passwordMatches) {
-			sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials');
-			return;
+			console.log(userFromDb, password);
+			return sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials');
 		}
 
 		const expDate = Date.now() + 1000 * 60 * 10;

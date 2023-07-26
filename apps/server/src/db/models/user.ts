@@ -124,6 +124,7 @@ User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
 
 User.beforeCreate(async (user: User) => {
 	user.password = await bcrypt.hash(user.password, 10);
+	console.log(user.password);
 });
 
 export { User };
