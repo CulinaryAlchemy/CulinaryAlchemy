@@ -10,11 +10,12 @@ export const getUser = {
 						id: id,
 						isDeleted: false,
 					},
+					include: 'role',
 				});
 				if (!user) {
 					reject('user not found');
 				}
-				resolve({ user });
+				resolve(user);
 			} catch (error) {
 				reject({ error });
 			}

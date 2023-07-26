@@ -36,7 +36,7 @@ app.use('/user', userRouter);
 
 		await Role.sync();
 
-		await dbSequelize.sync();
+		await dbSequelize.sync({force: true});
 		console.log('all models syncronized');
 
 		await Role.findOrCreate({
