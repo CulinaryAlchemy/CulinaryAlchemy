@@ -9,40 +9,37 @@ const secret = process.env.JWT_SECRET || 'secret';
 export const signIn = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
 
-	let userFromDb: any = null;
-	await UserProvider.getUser
-		.ByEmail(email)
-		.then((user: any) => {
-			userFromDb = user.user;
-		})
-		.catch(() =>
-			sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials')
-		);
+	try {
+		let userFromDb: any = null;
+		await UserProvider.getUser.ByEmail(email).then((user: any) => {
+			userFromDb = user;
+		});
+		if (!userFromDb) {
+			return sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials');
+		}
 
-	if (!userFromDb) {
-		return;
+		const passwordMatches = await bcrypt.compare(password, userFromDb.password);
+
+		if (!passwordMatches) {
+			console.log(userFromDb, password);
+			return sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials');
+		}
+
+		const expDate = Date.now() + 1000 * 60 * 10;
+		const token = Jwt.sign({ sub: userFromDb.id, exp: expDate }, secret);
+
+		const user = await UserProvider.getUser.ByEmail(userFromDb.email, [
+			'password',
+			'email',
+			'createdAt',
+			'updatedAt',
+			'deletedAt',
+			'isDeleted',
+		]);
+		console.log(user);
+		sendApiResponse(res, HttpStatusCodes.SUCCESS, { token, user });
+	} catch (error) {
+		sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials', error);
+		console.log(error);
 	}
-
-	const passwordMatches = await bcrypt.compare(password, userFromDb.password);
-
-	if (!passwordMatches) {
-		sendApiError(res, HttpStatusCodes.NOT_FOUND, 'bad credentials');
-		return;
-	}
-
-	const expDate = Date.now() + 1000 * 60;
-	const token = Jwt.sign({ sub: userFromDb.id, exp: expDate }, secret);
-
-	const user = {
-		id: userFromDb.id,
-		username: userFromDb.username,
-		email: userFromDb.email,
-		name: userFromDb.name,
-		avatar: userFromDb.avatar,
-		description: userFromDb.description,
-		location: userFromDb.location,
-		dietaryPreferences: userFromDb.dietaryPreferences,
-	};
-
-	sendApiResponse(res, HttpStatusCodes.SUCCESS, { token, user });
 };

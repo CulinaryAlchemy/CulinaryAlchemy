@@ -8,14 +8,15 @@ export const signUp = (req: Request, res: Response) => {
 	try {
 		UserProvider.createUser({ username, email, password })
 			.then(() => sendApiResponse(res, HttpStatusCodes.CREATED, null))
-			.catch((error) =>
+			.catch((error) => {
 				sendApiError(
 					res,
 					HttpStatusCodes.INTERNAL_SERVER_ERROR,
 					'internal server error',
 					error
-				)
-			);
+				);
+				console.log(error);
+			});
 	} catch (error) {
 		sendApiError(
 			res,

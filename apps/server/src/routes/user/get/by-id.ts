@@ -8,7 +8,7 @@ export const getById = (req: Request, res: Response) => {
 	const { id } = req.params;
 	try {
 		UserProvider.getUser
-			.ById(id)
+			.ById(id, ['password', 'email', 'createdAt', 'updatedAt', 'deletedAt', 'isDeleted'])
 			.then((users) => {
 				if (users) {
 					sendApiResponse(res, 200, users);

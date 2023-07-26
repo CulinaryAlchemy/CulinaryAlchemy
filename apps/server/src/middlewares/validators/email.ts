@@ -5,7 +5,6 @@ export const emailValidator: ValidationChain[] = [
 	body('email')
 		.notEmpty()
 		.isEmail()
-		.isLength({ min: 4, max: 254 })
 		.custom(validateEmailDomain),
 ];
 

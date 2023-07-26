@@ -8,7 +8,7 @@ export const getByEmail = (req: Request, res: Response) => {
 
 	try {
 		UserProvider.getUser
-			.ByEmail(email)
+			.ByEmail(email, ['password', 'email', 'createdAt', 'updatedAt', 'deletedAt', 'isDeleted'])
 			.then((user) =>
 				user
 					? sendApiResponse(res, HttpStatusCodes.SUCCESS, user)
