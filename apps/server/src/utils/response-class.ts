@@ -22,7 +22,7 @@ export class ApiResponse {
 
 	static error(
 		statusCode: number,
-		message: string,
+		message?: string,
 		details?: any
 	): ApiResponse {
 		const error = new ApiResponseError(statusCode, message, details);
@@ -32,10 +32,10 @@ export class ApiResponse {
 
 export class ApiResponseError {
 	private statusCode: number;
-	private message: string;
+	private message?: string;
 	private details?: any;
 
-	constructor(statusCode: number, message: string, details?: any) {
+	constructor(statusCode: number, message?: string, details?: any) {
 		this.statusCode = statusCode;
 		this.message = message;
 		this.details = details;

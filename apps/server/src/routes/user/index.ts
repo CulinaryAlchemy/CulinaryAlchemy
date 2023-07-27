@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import passport from '../../services/auth';
+import passport from '../../services/passport-jwt-strategy';
 import { body, param } from 'express-validator';
 // providers
 import { getById, getByUsername, getAll } from './get';
