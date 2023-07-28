@@ -22,7 +22,7 @@ export const TabsPage: React.FC<IProps> = ({ tabNames, tabPanels }) => {
       <Tabs
         aria-label="Pipeline"
         value={index}
-        onChange={(event, value) => { setIndex(value as string) }}
+        onChange={(event, value) => { setIndex(value as string); console.log(event) }}
         sx={{ '--Tabs-gap': '0px' }}
       >
         <TabList
