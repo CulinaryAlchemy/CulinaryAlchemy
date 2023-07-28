@@ -13,7 +13,7 @@ export function sendApiResponse(
 export function sendApiError(
 	res: Response,
 	statusCode: number,
-	message: string,
+	message?: string,
 	details?: any
 ): void {
 	const response = ApiResponse.error(statusCode, message, details);

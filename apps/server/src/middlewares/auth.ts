@@ -23,14 +23,14 @@ export async function authMiddleware(
 		}
 
 		// if the user doesnt exist, reject
-		const user: any = await UserProvider.getUser.ById(userIdDecoded as string);
+		const user = await UserProvider.getUser.ById(userIdDecoded as string);
 		//if the user is admin, aprove
 		if (user.roleId && user.roleId === 2) {
 			return next();
 		}
 		// if the user makes a request and the user id doesnt matches the req.params id, reject.
-		if (userIdDecoded !== req.params.id) {
-			return next('unauthorized');
+		if (userIdDecoded.toString() !== req.params.id) {
+			return next('a');
 		}
 		next();
 	} catch (error) {
