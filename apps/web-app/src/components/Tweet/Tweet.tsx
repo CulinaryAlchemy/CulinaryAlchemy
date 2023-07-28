@@ -1,8 +1,8 @@
+import { AppLink } from '@/components'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ReplayIcon from '@mui/icons-material/Replay'
-import { Link } from '@mui/joy'
 import Button from '@mui/joy/Button'
 import IconButton from '@mui/joy/IconButton'
 import Sheet from '@mui/joy/Sheet'
@@ -14,16 +14,16 @@ export const Tweet = () => {
         <Sheet variant='outlined' sx={{ borderRight: 'none', borderLeft: 'none', padding: '1em', paddingBottom: '0.2em', cursor: 'pointer' }}>
             <Stack direction='row' spacing={1}>
                 <Sheet sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%', overflow: 'hidden' }}>
-                    <img src="/wallpaper.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src="/logo.webp" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </Sheet>
                 <Stack flexGrow={1} sx={{ width: '80%' }}>
                     <Stack direction='row' alignItems='center'>
                         <Stack flexGrow={1} alignItems='start'>
-                            <Link level='body1' color='white'>Jes015</Link>
+                            <AppLink level='body1' sx={{ color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))', textDecorationColor: 'inherit' }} color='neutral' to='/Jes015'>Jes015</AppLink>
                         </Stack>
                         <IconButton variant='plain' size="sm" color='neutral' sx={{ width: '1.171875em', height: '1.171875em' }}><MoreVertIcon /></IconButton>
                     </Stack>
-                    <Typography level='body2'>
+                    <Typography level='body2' sx={{ maxHeight: '25em', overflow: 'hidden', textWrap: 'balance' }}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur omnis molestiae distinctio dicta impedit, eaque iure, nihil aliquid fugit ipsum nam, similique reprehenderit? Soluta velit, rem porro voluptatum suscipit tempora.
                     </Typography>
                 </Stack>
