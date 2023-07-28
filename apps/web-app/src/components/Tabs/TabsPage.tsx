@@ -10,6 +10,7 @@ interface IProps {
 }
 export const TabsPage: React.FC<IProps> = ({ tabNames, tabPanels }) => {
   const [index, setIndex] = useState(tabNames[0])
+
   return (
     <Box
       sx={{
@@ -22,7 +23,7 @@ export const TabsPage: React.FC<IProps> = ({ tabNames, tabPanels }) => {
       <Tabs
         aria-label="Pipeline"
         value={index}
-        onChange={(event, value) => { setIndex(value as string); console.log(event) }}
+        onChange={(event, value) => { if (event != null) setIndex(value as string) }}
         sx={{ '--Tabs-gap': '0px' }}
       >
         <TabList
