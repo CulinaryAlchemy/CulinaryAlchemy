@@ -1,6 +1,6 @@
 
 const config = {
-  baseURL: import.meta.env.VITE_BASE_URL as string, // Update this on production by add env
+  baseURL: import.meta.env.VITE_BASE_URL as string || 'http://localhost:3000', // Update this on production by add env
   localStorage: {
     auth: {
       accessToken: 'accesss23', // should be in memory and reset it with the help of api /refresh end point

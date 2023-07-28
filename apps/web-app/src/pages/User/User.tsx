@@ -1,9 +1,10 @@
 import { GlobalLayout } from '@/layouts'
 import { type IUser } from '@/models'
+import { NotFound } from '@/pages'
 import Sheet from '@mui/joy/Sheet'
-import { NotFound } from '..'
 import { UserHeader, UserMain } from './components'
 import { useUserData } from './hooks/'
+import { metadata } from './metadata'
 
 const User = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -22,7 +23,7 @@ const User = () => {
   }
 
   return (
-    <GlobalLayout newTitle={userName as string}>
+    <GlobalLayout newTitle={metadata.title(userName as string)}>
         <Sheet variant='outlined' sx={{ backgroundColor: 'var(--joy-palette-background-surface)', padding: '0px', maxWidth: '37.5em', margin: 'auto', borderRadius: '0.4em', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
           <UserHeader data={data?.data as IUser} />
           <UserMain />
