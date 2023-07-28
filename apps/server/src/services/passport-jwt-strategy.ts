@@ -1,7 +1,7 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
 import { UserProvider } from '../providers/user';
-import passport from 'passport';
+import passport, { DoneCallback } from 'passport';
 
 const secret = process.env.JWT_SECRET;
 
@@ -10,19 +10,16 @@ const jwtOptions = {
 	secretOrKey: secret,
 };
 
-const jwtVerify = async (payload: any, done: any) => {
+const jwtVerify = async (payload: any, done: DoneCallback) => {
 	try {
 		if (payload.exp < Date.now()) {
 			return done(null, false);
 		}
 
-		let userFromDb: any = null;
-		await UserProvider.getUser
-			.ById(payload.sub)
-			.then((user) => (userFromDb = { user }));
+		const userFromDb = await UserProvider.getUser.ById(payload.sub, true);
 
 		if (!userFromDb) {
-			return done(null, false, { message: userFromDb });
+			return done(null, false);
 		}
 		done(null, userFromDb);
 	} catch (error) {

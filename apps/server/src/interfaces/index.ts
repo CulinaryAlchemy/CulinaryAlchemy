@@ -1,3 +1,3 @@
 import { UserInterface } from './user.interface';
-
-export { UserInterface };
+import { RoleInterface } from './role.interface';
+export { UserInterface, RoleInterface };

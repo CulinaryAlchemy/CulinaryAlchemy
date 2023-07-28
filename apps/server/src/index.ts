@@ -1,20 +1,25 @@
 // libreries
-import express from 'express'
+import express from 'express';
+import cors from 'cors';
 // db
-import { dbSequelize } from './db'
+import { dbSequelize } from './db';
+import { Role } from './db/models/roles';
 
 // middlewares
-import { logsMiddw } from './middlewares'
+import { logsMiddw } from './middlewares';
 
 // routers
-import { authRouter } from './routes/auth'
-import { userRouter } from './routes/user'
+import { authRouter } from './routes/auth';
+import { userRouter } from './routes/user';
+import { User } from './db/models';
+
+// services
+import { seedDatabaseAdmins } from './db/default-users';
+
+
 
 // PORT
 const PORT = process.env.PORT || 3000;
-
-const cors = require('cors');
-
 // app
 const app = express();
 
@@ -32,8 +37,14 @@ app.use('/user', userRouter);
 		await dbSequelize.authenticate();
 		console.log('Connection with databse has been established successfully.');
 
+		await User.sync();
+
+		await Role.sync();
+
 		await dbSequelize.sync();
 		console.log('all models syncronized');
+
+		await seedDatabaseAdmins();
 
 		// start server
 		app.listen(PORT, () => {
