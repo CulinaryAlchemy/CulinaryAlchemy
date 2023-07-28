@@ -2,7 +2,7 @@ import { type IApiResponse, type IAuthApiResponse, type IUserRegiser, type IUser
 import axios from 'axios'
 
 export const registerUser = async (userToRegister: IUserRegiser) => {
-  return await axios.post<IApiResponse<IAuthApiResponse>>('/auth/register', userToRegister)
+  return await axios.post<IApiResponse<IAuthApiResponse>>('/auth/sign-up', userToRegister)
 }
 
 
