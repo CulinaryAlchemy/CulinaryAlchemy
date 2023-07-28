@@ -5,10 +5,19 @@ export interface IUser {
   avatar?: string
   description?: string
   location?: string
+  role: Role
+  roleId: number
   dietaryPreferences?: string
   createdAt?: Date
   updatedAt?: Date
   deletedAt?: Date
+}
+
+export interface Role {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface IUserRegiser {

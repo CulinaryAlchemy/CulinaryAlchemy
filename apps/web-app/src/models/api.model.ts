@@ -1,7 +1,7 @@
 import { type IUser } from '@/models'
 
-export interface IApiResponse {
-  data: null | IData
+export interface IApiResponse<T> {
+  data: null | T
   error: IError | null
   statusCode: number
   success: boolean
@@ -12,7 +12,9 @@ interface IError {
   message: string
 }
 
-interface IData {
+export interface IAuthApiResponse {
   token: string
   user: IUser
 }
+
+export type IUserApiResponse = IUser

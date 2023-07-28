@@ -1,7 +1,5 @@
-import { setAxiosDefaults } from './axios.defaults'
-import { setAxiosInterceptors } from './axios.interceptors'
+export * from './axios.defaults'
+export * from './axios.fetcher'
+export * from './axios.interceptors'
+export * from './setup'
 
-export const setDefaultAxiosConfig = () => {
-  setAxiosDefaults()
-  setAxiosInterceptors()
-}
