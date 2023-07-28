@@ -1,3 +1,4 @@
+import { type IUser } from '@/models'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Box from '@mui/joy/Box'
@@ -8,26 +9,28 @@ import Sheet from '@mui/joy/Sheet'
 import Skeleton from '@mui/joy/Skeleton'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
-import { useState } from 'react'
 
-export const UserHeader = () => {
-  const [isLoading] = useState(true)
-
-  if (isLoading) {
+interface IProps {
+  data: IUser | undefined
+  isLoading?: boolean
+}
+export const UserHeader: React.FC<IProps> = ({ data, isLoading = false }) => {
+  if (isLoading || data == null) {
     return <UserHeaderSkeleton />
   }
+
   return (
     <header>
       <Box sx={{ height: '10em', backgroundColor: 'var(--joy-palette-neutral-outlinedBorder)', overflow: 'hidden' }}>
         <img src="/wallpaper.webp" alt="wallpaper image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
       </Box>
-      <Stack sx={{ paddingX: '1em' }}>
+      <Stack sx={{ paddingX: '1em', paddingY: '0.5em' }}>
         <Stack direction='row' sx={{ justifyContent: 'space-between', paddingTop: '0.1em' }}>
           <Stack direction='row' alignItems='center' spacing={0.5}>
             <Sheet variant='outlined' sx={{ width: '8.34375em', height: '8.34375em', borderRadius: '100%', backgroundColor: 'black', marginTop: '-33%', overflow: 'hidden' }}>
               <img src="/logo.webp" alt="logo image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
             </Sheet>
-            <Typography level='h6'>Jes015</Typography>
+            <Typography level='h6'>{data.username}</Typography>
           </Stack>
           <Stack direction='row' alignItems='center' spacing={1}>
             <IconButton variant='outlined' color='neutral'><MoreVertIcon /></IconButton>
@@ -37,7 +40,7 @@ export const UserHeader = () => {
         </Stack>
         <Stack spacing={1} mt={1}>
           <Typography level='body3' sx={{ maxHeight: '4.7em', overflow: 'hidden' }}>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse quam blanditiis quidem laboriosam neque commodi reiciendis quod, perferendis porro, omnis non eligendi doloremque expedita vel quibusdam? Autem aliquid et adipisci?
+            {data.description != null ? data.description : 'No description'}
           </Typography>
           <Stack direction='row' spacing={1}>
             <Link level='body3' href='https://www.google.com' target='_blank'>Twitter</Link>
