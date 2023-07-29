@@ -1,5 +1,5 @@
 import { useAuthContext } from '@/context'
-import { CStaticRoutes } from '@/routing'
+import { frontRoutes } from '@/routing'
 import { Navigate, Outlet } from 'react-router-dom'
 
 export const PublicGuard = () => {
@@ -9,5 +9,5 @@ export const PublicGuard = () => {
     return <h1>Loading</h1>
   }
 
-  return isAuth ? <Navigate to={CStaticRoutes.index} /> : <Outlet />
+  return isAuth ? <Navigate to={frontRoutes.Static.index} /> : <Outlet />
 }
