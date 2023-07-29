@@ -49,6 +49,7 @@ We welcome contributions to enhance RecipeAlchemy. If you have any ideas, bug fi
 
 ## License
 
-RecipeAlchemy is released under the [MIT License](LICENSE). Feel free to use, modify, and distribute this project as permitted by the license.
+
+All Rights Reserved. © CulinaryAlchemy 2023
 
 We hope that RecipeAlchemy becomes your go-to platform for culinary inspiration, recipe sharing, and connecting with fellow food enthusiasts. Happy cooking!
