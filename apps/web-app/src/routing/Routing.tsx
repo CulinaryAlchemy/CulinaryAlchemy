@@ -1,6 +1,6 @@
 import { Header } from '@/components'
-import { AuthGuard, CStaticRoutes, PublicGuard } from '@/routing'
-import { Suspense, lazy } from 'react'
+import { AuthGuard, frontRoutes, PublicGuard } from '@/routing'
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 
@@ -17,14 +17,14 @@ export const Routing = () => {
       <Suspense>
         <Routes>
           <Route element={<AuthGuard />}>
-            <Route path={CStaticRoutes.index} element={<IndexPage />} />
+            <Route path={frontRoutes.Static.index} element={<IndexPage />} />
           </Route>
           <Route element={<PublicGuard />}>
-            <Route path={CStaticRoutes.register} element={<RegisterPage />} />
-            <Route path={CStaticRoutes.login} element={<LoginPage />} />
+            <Route path={frontRoutes.Static.register} element={<RegisterPage />} />
+            <Route path={frontRoutes.Static.login} element={<LoginPage />} />
           </Route>
-          <Route path={CStaticRoutes.user} element={<UserPage />} />
-          <Route path={CStaticRoutes.notFound} element={<NotFoundPage />} />
+          <Route path={frontRoutes.Static.user} element={<UserPage />} />
+          <Route path={frontRoutes.Static.notFound} element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
