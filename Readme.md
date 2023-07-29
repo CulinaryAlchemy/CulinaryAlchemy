@@ -3,7 +3,7 @@
 CulinaryAlchemy is an online platform that aims to revolutionize the way people discover, share, and explore recipes. It provides a vibrant and inclusive community for individuals with diverse dietary needs, home cooks, and food enthusiasts. Our mission is to inspire, connect, and empower users through the sharing and discovery of culinary creations, promoting creativity and healthy eating choices.
 
 # Table of Contents
-- [Introduction](#introduction)
+- [Introduction](#culinaryalchemy)
 - [Key Features](#key-features)
 - [Technologies Used](#technologies-used)
 - [Project Setup](#project-setup)
@@ -37,11 +37,17 @@ CulinaryAlchemy is an online platform that aims to revolutionize the way people 
 To set up the RecipeAlchemy project locally, please follow these steps:
 
 1. Clone this repository to your local machine.
-2. Install the necessary dependencies by running `npm install` in both the backend and frontend directories.
-3. Set up the database connection and environment variables. Refer to the provided configuration files and documentation.
-4. Run the backend server using `npm run dev` in the backend directory.
-5. Run the frontend development server using `npm start` in the frontend directory.
-6. Access the RecipeAlchemy platform in your browser at `http://localhost:3000` or to your environment port var.
+2. Install the necessary dependencies by running `npm install` in apps/server and apps/web-apps.
+
+### backend
+1. Create a `.env` file in the root of `apps/server/` with the next variables:
+ - `JWT_SECRET`: the jwt secret signature
+ - `PORT`: the port in which to run the backend development server (default setted to `3000`).
+2. Run the backend server using `npm run dev` in the directory `apps/server`
+
+### fronted
+1. Run the frontend development server using `npm start` in the directory `apps/web-app`.
+2. Access the CulinaryAlchemy platform in your browser at `http://localhost:3000` or to your environment port var.
 
 ## Contributions
 
@@ -49,6 +55,7 @@ We welcome contributions to enhance RecipeAlchemy. If you have any ideas, bug fi
 
 ## License
 
-RecipeAlchemy is released under the [MIT License](LICENSE). Feel free to use, modify, and distribute this project as permitted by the license.
+
+[Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://github.com/CulinaryAlchemy/CulinaryAlchemy/blob/main/LICENSE.mdAll)
 
 We hope that RecipeAlchemy becomes your go-to platform for culinary inspiration, recipe sharing, and connecting with fellow food enthusiasts. Happy cooking!

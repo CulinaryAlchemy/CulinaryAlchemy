@@ -2,14 +2,14 @@ import { Form } from '@/components'
 import { GlobalLayout } from '@/layouts'
 import { LoginFooter, LoginHeader } from './components'
 
-import { useAuth } from '@/hooks'
+import { useAuthContext } from '@/context'
 import { type IUserSignIn } from '@/models'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { metada } from './config'
 import { inputsData, loginInputsSchema } from './models'
 
 const Login = () => {
-  const { signIn } = useAuth()
+  const { signIn } = useAuthContext()
   const handleOnSumbit: SubmitHandler<FieldValues> = (data) => {
     void signIn(data as IUserSignIn)
   }

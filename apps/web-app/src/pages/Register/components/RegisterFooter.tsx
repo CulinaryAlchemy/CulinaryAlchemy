@@ -1,11 +1,11 @@
-import { Link } from '@/components'
-import { CRoutes } from '@/routing'
+import { CStaticRoutes } from '@/routing'
 import Typography from '@mui/joy/Typography/'
+import { Link } from 'react-router-dom'
 
 export const RegisterFooter = () => {
   return (
         <Typography
-            endDecorator={<Link to={CRoutes.login}>Log in</Link>}
+            endDecorator={<Link to={CStaticRoutes.login}>Log in</Link>}
             fontSize="sm"
             sx={{ alignSelf: 'center' }}
         >
