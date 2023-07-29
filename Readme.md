@@ -50,6 +50,6 @@ We welcome contributions to enhance RecipeAlchemy. If you have any ideas, bug fi
 ## License
 
 
-All Rights Reserved. © CulinaryAlchemy 2023
+[Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://github.com/CulinaryAlchemy/CulinaryAlchemy/blob/main/LICENSE.mdAll)
 
 We hope that RecipeAlchemy becomes your go-to platform for culinary inspiration, recipe sharing, and connecting with fellow food enthusiasts. Happy cooking!
