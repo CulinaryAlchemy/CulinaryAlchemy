@@ -10,14 +10,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/Huilensolis/CulinaryAlchemy.git"
+    "url": "https://github.com/CulinaryAlchemy/CulinaryAlchemy.git"
   },
   "author": "Huilen Solis",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Huilensolis/CulinaryAlchemy/issues"
+    "url": "https://github.com/CulinaryAlchemy/CulinaryAlchemy/issues"
   },
-  "homepage": "https://github.com/Huilensolis/CulinaryAlchemy#readme",
+  "homepage": "https://github.com/CulinaryAlchemy/CulinaryAlchemy#readme",
+  "engines": {
+    "node": "18.17.0"
+  },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
