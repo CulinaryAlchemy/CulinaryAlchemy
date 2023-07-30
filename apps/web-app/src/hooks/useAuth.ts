@@ -10,22 +10,29 @@ export const useAuth = () => {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    const accessToken = getFromLocalStorage(config.localStorage.auth.accessToken)
-    const userData: IUser | null = JSON.parse(getFromLocalStorage(config.localStorage.user) as string) as IUser
+    const { accessToken, userData } = getSession()
 
     if (accessToken == null || userData == null) {
       setLoading(false)
       return
     }
 
-    setIsAuth(true)
     setUser(userData)
     setLoading(false)
-  }, [isAuth])
+    setIsAuth(true)
+  }, [])
+
 
   const saveSession = (userData: { accesToken: string, userData: object }) => {
     setToLocalStorage(config.localStorage.auth.accessToken, userData.accesToken)
     setToLocalStorage(config.localStorage.user, JSON.stringify(userData.userData))
+  }
+
+  const getSession = () => {
+    const accessToken = getFromLocalStorage(config.localStorage.auth.accessToken)
+    const userData: IUser | null = JSON.parse(getFromLocalStorage(config.localStorage.user) as string) as IUser
+
+    return { accessToken, userData }
   }
 
   const signIn = async (userData: IUserSignIn) => {
