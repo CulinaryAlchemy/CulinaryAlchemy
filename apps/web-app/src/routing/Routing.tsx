@@ -1,6 +1,6 @@
 import { Header } from '@/components'
-import { AuthGuard, frontRoutes, PublicGuard } from '@/routing'
-import { lazy, Suspense } from 'react'
+import { AuthGuard, PublicGuard, frontRoutes } from '@/routing'
+import { Suspense, lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 
