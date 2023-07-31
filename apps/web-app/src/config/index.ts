@@ -1,3 +1,4 @@
 export * from './axios'
-export * from './globalConfig'
+export * from './global.config'
+export * from './swr'
 

@@ -1,6 +1,7 @@
-import { setDefaultAxiosConfig } from '@/config'
+import { CSWRConfig, setDefaultAxiosConfig } from '@/config'
 import { AuthContextProvider } from '@/context'
 import { Routing } from '@/routing'
+import { SWRConfig } from 'swr'
 
 import '@fontsource/public-sans'
 import CssBaseline from '@mui/joy/CssBaseline'
@@ -17,8 +18,10 @@ function App () {
     >
       <CssBaseline />
       <AuthContextProvider>
-        <Routing />
-        <Toaster richColors />
+        <SWRConfig value={CSWRConfig}>
+          <Routing />
+          <Toaster richColors />
+        </SWRConfig>
       </AuthContextProvider>
     </CssVarsProvider>
   )
