@@ -39,10 +39,11 @@ app.get('/keep-alive', (req, res) => {
 	try {
 		await dbSequelize.authenticate();
 		console.log('Connection with databse has been established successfully.');
+		
+		await Role.sync();
 
 		await User.sync();
 
-		await Role.sync();
 
 		await dbSequelize.sync();
 		console.log('all models syncronized');
