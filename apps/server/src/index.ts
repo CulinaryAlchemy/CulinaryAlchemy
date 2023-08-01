@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 // db
 import { dbSequelize } from './db';
-import { Role } from './db/models/roles';
 
 // middlewares
 import { logsMiddw } from './middlewares';
@@ -11,7 +10,6 @@ import { logsMiddw } from './middlewares';
 // routers
 import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
-import { User } from './db/models';
 
 // services
 import { seedDatabaseAdmins } from './db/default-users';
@@ -25,28 +23,17 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use(logsMiddw);
+if(process.env.ENVIRONMENT === 'development') {
+	app.use(logsMiddw);
+}
 
 // routes
 app.use('/auth', authRouter);
-app.use('/user', userRouter);
-app.get('/keep-alive', (req, res) => {
-	setTimeout(() => {
-		res.send('alive').end();
-	}, 1000);
-})
+app.use('/user', userRouter)
 ;(async () => {
 	try {
 		await dbSequelize.authenticate();
 		console.log('Connection with databse has been established successfully.');
-		
-		await Role.sync();
-
-		await User.sync();
-
-
-		await dbSequelize.sync();
-		console.log('all models syncronized');
 
 		await seedDatabaseAdmins();
 
@@ -54,15 +41,6 @@ app.get('/keep-alive', (req, res) => {
 		app.listen(PORT, () => {
 			console.log(`Server running on port ${PORT}`);
 		});
-		setInterval(() => {
-			fetch('https://culinaryalchemy.onrender.com/keep-alive', {
-				method: 'GET'
-			}).then(() => {
-				console.log('it looks like the server is alive');
-			}).catch(() => {
-				console.log('the server is dead');
-			});
-		}, (1000 * 60 * 12));
 	} catch (error) {
 		console.error('Unable to connect to the database:', error);
 	}
