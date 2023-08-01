@@ -16,8 +16,6 @@ import { User } from './db/models';
 // services
 import { seedDatabaseAdmins } from './db/default-users';
 
-
-
 // PORT
 const PORT = process.env.PORT || 3000;
 // app
@@ -32,7 +30,12 @@ app.use(logsMiddw);
 // routes
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
-(async () => {
+app.get('/keep-alive', (req, res) => {
+	setTimeout(() => {
+		res.send('alive').end();
+	}, 1000);
+})
+;(async () => {
 	try {
 		await dbSequelize.authenticate();
 		console.log('Connection with databse has been established successfully.');
@@ -50,6 +53,15 @@ app.use('/user', userRouter);
 		app.listen(PORT, () => {
 			console.log(`Server running on port ${PORT}`);
 		});
+		setInterval(() => {
+			fetch('https://culinaryalchemy.onrender.com/keep-alive', {
+				method: 'GET'
+			}).then(() => {
+				console.log('it looks like the server is alive');
+			}).catch(() => {
+				console.log('the server is dead');
+			});
+		}, (1000 * 60 * 12));
 	} catch (error) {
 		console.error('Unable to connect to the database:', error);
 	}

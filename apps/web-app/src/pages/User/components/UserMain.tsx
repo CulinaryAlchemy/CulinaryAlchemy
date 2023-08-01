@@ -1,8 +1,8 @@
 
 import { TabPanel, TabsPage } from '@/components'
 
-const tabs = ['Location', 'Preferences', 'Dietary']
-// and the schemas to global schemas dir, add skeleton de joy ui
+const tabs = ['Recipes', 'Tweets']
+
 export const UserMain = () => {
   return (
         <main>

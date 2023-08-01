@@ -23,7 +23,7 @@ export const signIn = async (req: Request, res: Response) => {
 			return sendApiError(res, HttpStatusCodes.UNAUTHORIZED, 'bad credentials');
 		}
 
-		const expDate = Date.now() + 1000 * 60 * 10;
+		const expDate = Date.now() + 1000 * 60 * 48;
 		const token = Jwt.sign({ sub: userFromDb.id, exp: expDate }, secret);
 
 		const user = await UserProvider.getUser.ByEmail(userFromDb.email);
