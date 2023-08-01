@@ -1,4 +1,5 @@
-import { GlobalLayout } from '@/layouts'
+import { Loading } from '@/components'
+import { GlobalLayout, MessageLayout } from '@/layouts'
 import { type IUser } from '@/models'
 import { NotFound } from '@/pages'
 import Sheet from '@mui/joy/Sheet'
@@ -7,19 +8,18 @@ import { useUserData } from './hooks/'
 import { metadata } from './metadata'
 
 const User = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { userName, data, isLoading, error } = useUserData()
 
   if (isLoading) {
-    return <h1>Loading</h1>
+    return <MessageLayout><Loading size='lg' /></MessageLayout>
+  }
+
+  if (error != null && error.response?.status !== 404) {
+    return <MessageLayout><h1>Something went wrong</h1></MessageLayout>
   }
 
   if (data == null) {
     return <NotFound />
-  }
-
-  if (error != null) {
-    return <h1>Something went wrong</h1>
   }
 
   return (
