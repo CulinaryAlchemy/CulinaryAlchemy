@@ -54,7 +54,7 @@ app.get('/keep-alive', (req, res) => {
 			console.log(`Server running on port ${PORT}`);
 		});
 		setInterval(() => {
-			fetch('http://localhost:3764/keep-alive', {
+			fetch('https://culinaryalchemy.onrender.com/keep-alive', {
 				method: 'GET'
 			}).then(() => {
 				console.log('it looks like the server is alive');
