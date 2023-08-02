@@ -93,21 +93,10 @@ export const getUser = {
 			return Promise.reject('');
 		}
 	},
-	All: async (limit: number, isForInternalServerUse: boolean = false) => {
-		let excludedPropety: string[] = [];
-		if (!isForInternalServerUse) {
-			excludedPropety = [
-				'password',
-				'email',
-				'createdAt',
-				'updatedAt',
-				'deletedAt',
-				'isDeleted',
-			];
-		}
+	All: async (limit: number) => {
 		try {
 			const users = await User.findAll({
-				attributes: { exclude: [...excludedPropety] },
+				attributes: ['id'],
 				limit: limit,
 				where: {
 					isDeleted: false,
