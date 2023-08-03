@@ -4,16 +4,15 @@ import { sendApiError, sendApiResponse } from '../../../utils/index';
 import { HttpStatusCodes } from '../../../utils';
 
 export const getAll = async (req: Request, res: Response) => {
-	const { limit } = req.params;
+	const { limit } = req.query;
 	try {
-		const parsedLimit = parseInt(limit);
-
-		const users = await UserProvider.getUser.All(parsedLimit);
+		let lengthLimit = 10;
+		if (limit) {
+			lengthLimit = parseInt(limit as string);
+		}
+		const users = await UserProvider.getUser.All(lengthLimit);
 		sendApiResponse(res, HttpStatusCodes.SUCCESS, users);
 	} catch (error) {
-		sendApiError(
-			res,
-			HttpStatusCodes.NOT_FOUND,
-		);
+		sendApiError(res, HttpStatusCodes.NOT_FOUND);
 	}
 };
