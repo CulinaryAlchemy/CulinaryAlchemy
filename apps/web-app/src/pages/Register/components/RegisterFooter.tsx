@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export const RegisterFooter = () => {
   return (
         <Typography
-            endDecorator={<Link to={frontRoutes.Static.login}>Log in</Link>}
+            endDecorator={<Link to={frontRoutes.Static.auth.login}>Log in</Link>}
             fontSize="sm"
             sx={{ alignSelf: 'center' }}
         >
