@@ -37,7 +37,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
         boxShadow: 'md'
       }}
     >
-      <form onSubmit={handleSubmit(onSumbit)}>
+      <form onSubmit={handleSubmit(onSumbit)} noValidate>
         <Sheet sx={{
           display: 'flex',
           flexDirection: 'column',
