@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "start": "tsc  && node -r dotenv/config ./dist/index.js",
     "build": "tsc",
@@ -12,8 +13,8 @@
     "type": "git",
     "url": "https://github.com/CulinaryAlchemy/CulinaryAlchemy.git"
   },
-  "author": "Huilen Solis",
-  "license": "MIT",
+  "author": "culinary-alchemy",
+  "license": "CC-BY-NC-4.0",
   "bugs": {
     "url": "https://github.com/CulinaryAlchemy/CulinaryAlchemy/issues"
   },
