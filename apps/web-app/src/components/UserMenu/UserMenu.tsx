@@ -1,8 +1,8 @@
 import { ToggleTheme, ToggleTranslation } from '@/components'
+import { useTranslation } from '@/hooks'
 import Popper from '@mui/base/Popper'
 import Avatar from '@mui/joy/Avatar'
 import Box from '@mui/joy/Box'
-import Chip from '@mui/joy/Chip'
 import IconButton from '@mui/joy/IconButton'
 import List from '@mui/joy/List'
 import ListDivider from '@mui/joy/ListDivider'
@@ -12,6 +12,7 @@ import ListItemContent from '@mui/joy/ListItemContent'
 import { useState } from 'react'
 
 export const UserMenu = () => {
+  const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
 
   const open = Boolean(anchorEl)
@@ -49,10 +50,7 @@ export const UserMenu = () => {
           >
             <ListItem role="none">
               <ListItemButton role="menuitem">
-                <ListItemContent>Settings</ListItemContent>
-                <Chip size="sm" variant="soft" color="danger">
-                  Unavailable
-                </Chip>
+                <ListItemContent>{t('settings')}</ListItemContent>
               </ListItemButton>
             </ListItem>
             <ListDivider />

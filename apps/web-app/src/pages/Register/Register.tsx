@@ -17,11 +17,11 @@ const Register = () => {
   }
 
   return (
-    <GlobalLayout newTitle={t('register.title')}>
+    <GlobalLayout newTitle={t('sign up')}>
       <Form
         inputsData={inputsData}
         schema={registerInputsSchema}
-        buttonSumbitName={t('register.form.main.buttonName')}
+        buttonSumbitName={t('sign up')}
         onSumbit={handleOnSumbit}
         Header= {<RegisterHeader />}
         Footer={<RegisterFooter />}

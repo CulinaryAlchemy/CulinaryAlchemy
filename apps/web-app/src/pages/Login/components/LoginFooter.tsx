@@ -7,11 +7,11 @@ export const LoginFooter = () => {
   const { t } = useTranslation()
   return (
         <Typography
-            endDecorator={<Link to={frontRoutes.Static.auth.register}>{t('login.form.footer.link')}</Link>}
+            endDecorator={<Link to={frontRoutes.Static.auth.register}>{t('sign up')}</Link>}
             fontSize="sm"
             sx={{ alignSelf: 'center' }}
         >
-          {t('login.form.footer.message')}
+          {t('don\'t have an account?')}
         </Typography>
   )
 }

@@ -1,6 +1,6 @@
+export * from './DropDownMenu/DropDownMenu'
 export * from './Form/Form'
 export * from './Header/Header'
-export * from './HeaderMenu/HeaderMenu'
 export * from './Link/Link'
 export * from './Loading/Loading'
 export * from './TabPanel/TabPanel'

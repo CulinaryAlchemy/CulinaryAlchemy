@@ -1,55 +1,19 @@
 {
-    "user": {
-        "header": {
-            "followButton": "Follow",
-            "description": "No description"
-        },
-        "main": {
-            "tabs": {
-                "recipes": "Recipes",
-                "tweets": "Tweets"
-            }
-        }
-    },
-    "register": {
-        "title": "Register",
-        "form": {
-            "header": {
-                "title": "Welcome",
-                "subTitle": "Register to continue."
-            },
-            "main": {
-                "inputs": {
-                    "userName": "Username",
-                    "email": "Email",
-                    "password": "Password"
-                },
-                "buttonName": "Register"
-            },
-            "footer": {
-                "message": "Do you already have an account?",
-                "link": "Log in"
-            }
-        }
-    },
-    "login": {
-        "title": "Log in",
-        "form": {
-            "header": {
-                "title": "Welcome",
-                "subTitle": "Log in to continue."
-            },
-            "main": {
-                "inputs": {
-                    "email": "Email",
-                    "password": "Password"
-                },
-                "buttonName": "Log in"
-            },
-            "footer": {
-                "message": "Don't have an account?",
-                "link": "Register"
-            }
-        }
-    }
+    "theme": "Theme",
+    "language": "Language",
+    "settings": "Settings",
+    "follow": "Follow",
+    "description": "Description",
+    "recipes": "Recipes",
+    "tweets": "Tweets",
+    "sign up": "Sign up",
+    "welcome": "Welcome!",
+    "to continue": "to continue.",
+    "username": "Username",
+    "password": "Password",
+    "email": "Email",
+    "do you already have an account?": "Do you already have an account?",
+    "login": "Log in",
+    "login2": "Log in",
+    "don't have an account?": "Don't have an account?"
 }
