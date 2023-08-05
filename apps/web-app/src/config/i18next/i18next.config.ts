@@ -13,7 +13,6 @@ void i18n
   .init({
     lng: getFromLocalStorage(config.localStorage.language) ?? 'en',
     fallbackLng: false,
-    debug: true,
     backend: {
       backends: [
         PrimaryLocalStorageBackend,
