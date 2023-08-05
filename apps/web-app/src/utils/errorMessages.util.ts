@@ -5,7 +5,8 @@ export const getValidationError = (code: number) => {
     403: 'Wrong Email or Password',
     404: 'Not Found',
     200: 'OK',
-    201: 'Created'
+    201: 'Created',
+    400: 'Bad request'
   }
 
   return httpCodes[code]

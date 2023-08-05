@@ -17,30 +17,30 @@ export const UserMenu = () => {
   const open = Boolean(anchorEl)
   const id = open ? 'admissions-popper' : undefined
   return (
-      <Box onMouseLeave={() => { setAnchorEl(null) }}>
-        <IconButton
-          color='neutral'
-          variant='outlined'
-          sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
-          aria-haspopup
-          aria-expanded={open ? 'true' : 'false'}
-          role="menuitem"
-          onFocus={(event) => { setAnchorEl(event.currentTarget) }}
-          onMouseEnter={(event) => {
-            setAnchorEl(event.currentTarget)
-          }}
-        >
-          <Avatar sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }} alt='user logo' src='/logo.webp' />
-        </IconButton>
-        <Popper id={id} open={open} anchorEl={anchorEl} disablePortal keepMounted>
+    <Box onMouseLeave={() => { setAnchorEl(null) }}>
+      <IconButton
+        color='neutral'
+        variant='outlined'
+        sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
+        aria-haspopup
+        aria-expanded={open ? 'true' : 'false'}
+        role="menuitem"
+        onFocus={(event) => { setAnchorEl(event.currentTarget) }}
+        onMouseEnter={(event) => {
+          setAnchorEl(event.currentTarget)
+        }}
+      >
+        <Avatar sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }} alt='user logo' src='/logo.webp' />
+      </IconButton>
+      <Box sx={{ position: 'relative', zIndex: '2000', '& > *': { backgroundColor: 'var(--joy-palette-background-body)', borderRadius: 'sm' } }}>
+        <Popper id={id} open={open} anchorEl={anchorEl} keepMounted disablePortal>
           <List
             role="menu"
             aria-label="About"
             variant="outlined"
             sx={{
-              my: 2,
+              overflow: 'hidden',
               boxShadow: 'md',
-              borderRadius: 'sm',
               minWidth: 180,
               '--List-radius': '8px',
               '--List-padding': '4px',
@@ -51,7 +51,7 @@ export const UserMenu = () => {
               <ListItemButton role="menuitem">
                 <ListItemContent>Settings</ListItemContent>
                 <Chip size="sm" variant="soft" color="danger">
-                    Unavailable
+                  Unavailable
                 </Chip>
               </ListItemButton>
             </ListItem>
@@ -61,5 +61,6 @@ export const UserMenu = () => {
           </List>
         </Popper>
       </Box>
+    </Box>
   )
 }
