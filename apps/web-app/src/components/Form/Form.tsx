@@ -65,7 +65,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
                 </Typography>
               </FormControl>
             ))}
-            <Button type='submit' sx={{ marginTop: '1em', width: '100%', textTransform: 'capitalize' }}>{buttonSumbitName}</Button>
+            <Button type='submit' sx={{ marginTop: '1em', width: '100%' }}>{buttonSumbitName}</Button>
           </main>
           {Footer}
         </Sheet>

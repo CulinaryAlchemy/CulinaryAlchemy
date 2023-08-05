@@ -6,9 +6,9 @@ export const LoginHeader = () => {
   return (
         <div>
             <Typography level="h4" component="h1">
-                <b>{t('login.form.header.title')}</b>
+                <b>{t('welcome')}</b>
             </Typography>
-            <Typography level="body2">{t('login.form.header.subTitle')}</Typography>
+            <Typography level="body2">{`${t('login')} ${t('to continue')}`}</Typography>
         </div>
   )
 }

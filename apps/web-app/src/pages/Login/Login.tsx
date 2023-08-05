@@ -15,12 +15,12 @@ const Login = () => {
     void signIn(data as IUserSignIn)
   }
   return (
-    <GlobalLayout newTitle={t('login.title')}>
+    <GlobalLayout newTitle={t('login')}>
       <Form
         schema={loginInputsSchema}
         inputsData={inputsData}
         onSumbit={handleOnSumbit}
-        buttonSumbitName={t('login.form.main.buttonName')}
+        buttonSumbitName={t('login2')}
         Header={<LoginHeader />}
         Footer={<LoginFooter />}
       />

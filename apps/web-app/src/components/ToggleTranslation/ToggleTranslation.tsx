@@ -1,9 +1,10 @@
-import { useToggleTranslation } from '@/hooks/'
+import { useToggleTranslation, useTranslation } from '@/hooks/'
 import ListItem from '@mui/joy/ListItem'
 import ListItemButton from '@mui/joy/ListItemButton'
 import Sheet from '@mui/joy/Sheet'
 
 export const ToggleTranslation = () => {
+  const { t } = useTranslation()
   const { language, toggleTranslation } = useToggleTranslation()
 
   const handleOnClick = () => {
@@ -20,7 +21,7 @@ export const ToggleTranslation = () => {
       }
     >
       <ListItemButton onClick={handleOnClick} role="menuitem">
-        Language
+        {t('language')}
       </ListItemButton>
     </ListItem>
   )

@@ -6,9 +6,9 @@ export const RegisterHeader = () => {
   return (
         <div>
             <Typography level="h4" component="h1">
-                <b>{t('register.form.header.title')}!</b>
+                <b>{t('welcome')}</b>
             </Typography>
-            <Typography level="body2">{t('register.form.header.subTitle')}</Typography>
+            <Typography level="body2">{`${t('sign up')} ${t('to continue')}`}</Typography>
         </div>
   )
 }

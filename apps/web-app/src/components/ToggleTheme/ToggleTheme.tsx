@@ -1,4 +1,4 @@
-import { useToggleTheme } from '@/hooks'
+import { useToggleTheme, useTranslation } from '@/hooks'
 import { CThemesModes } from '@/models/UI'
 import DarkMode from '@mui/icons-material/DarkMode'
 import LightMode from '@mui/icons-material/LightMode'
@@ -8,6 +8,7 @@ import ListItemButton from '@mui/joy/ListItemButton'
 import Sheet from '@mui/joy/Sheet'
 
 export const ToggleTheme = () => {
+  const { t } = useTranslation()
   const { actualMode, toggleTheme } = useToggleTheme()
 
   const handleOnClick = () => {
@@ -32,7 +33,7 @@ export const ToggleTheme = () => {
             }
         >
             <ListItemButton onClick={handleOnClick} role="menuitem">
-                Theme
+                {t('theme')}
             </ListItemButton>
         </ListItem>
   )
