@@ -43,11 +43,8 @@ export const UserHeader: React.FC<IProps> = ({ data, isLoading = false }) => {
           <Typography level='body3' sx={{ maxHeight: '4.7em', overflow: 'hidden' }}>
             {data.description != null ? data.description : t('user.header.description')}
           </Typography>
-          <Stack direction='row' spacing={1}>
+          <Stack direction='row' spacing={1} justifyContent='right'>
             <Link level='body3' href='https://www.google.com' target='_blank'>Twitter</Link>
-            <Link level='body3' href='https://www.google.com' target='_blank'>Facebook</Link>
-            <Link level='body3' href='https://www.google.com' target='_blank'>Instagram</Link>
-            <Link level='body3' href='https://www.google.com' target='_blank'>Social</Link>
           </Stack>
         </Stack>
       </Stack>
