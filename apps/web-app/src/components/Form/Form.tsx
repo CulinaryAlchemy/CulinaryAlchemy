@@ -47,7 +47,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
           <main>
             {inputsData.map((inputData) => (
               <FormControl key={inputData.name} sx={{ marginBottom: '0.5em' }}>
-                <FormLabel>{inputData.name}</FormLabel>
+                <FormLabel>{inputData.label}</FormLabel>
                 <Input
                   type={inputData.type}
                   placeholder={inputData.placeholder}

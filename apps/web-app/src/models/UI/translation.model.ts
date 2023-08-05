@@ -1,4 +1,3 @@
-
 export const CLanguages = {
   en: 'en',
   es: 'es'
