@@ -10,7 +10,8 @@ const getFrontendRoutes = () => {
       register: '/register'
     },
     user: BaseRoutes.user + ':userName',
-    notFound: '*'
+    notFound: '*',
+    settings: '/settings'
   }
 
   const Dynamic = {
