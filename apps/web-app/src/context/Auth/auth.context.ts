@@ -5,7 +5,7 @@ interface IContext {
   user: IUser | undefined
   signIn: (userData: IUserSignIn) => Promise<void>
   signUp: (userData: IUserRegister) => Promise<void>
-  logOut: () => void
+  signOut: () => void
   isAuth: boolean
   isLoading: boolean
 }
@@ -15,7 +15,7 @@ const defaultState: IContext = {
   isLoading: true,
   signIn: async () => { },
   signUp: async () => { },
-  logOut: () => {}
+  signOut: () => {}
 }
 
 const authContext = createContext<IContext>(defaultState)
