@@ -3,6 +3,7 @@ import { type ZodType } from 'zod'
 
 export interface IInputFormData {
   name: string
+  label: string
   placeholder: string
   type: HTMLInputTypeAttribute
   validation: ZodType
