@@ -1,4 +1,4 @@
-import { type TInputsFormData } from '@/models/'
+import { type TInputsFormData } from '@/models/UI'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
@@ -47,7 +47,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
           <main>
             {inputsData.map((inputData) => (
               <FormControl key={inputData.name} sx={{ marginBottom: '0.5em' }}>
-                <FormLabel sx={{ textTransform: 'capitalize' }}>{inputData.name}</FormLabel>
+                <FormLabel>{inputData.name}</FormLabel>
                 <Input
                   type={inputData.type}
                   placeholder={inputData.placeholder}

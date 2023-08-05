@@ -2,25 +2,26 @@ import { Form } from '@/components'
 import { GlobalLayout } from '@/layouts'
 
 import { useAuthContext } from '@/context'
-import { type IUserRegiser } from '@/models'
+import { useTranslation } from '@/hooks'
+import { type IUserRegister } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { RegisterFooter, RegisterHeader } from './components/'
-import { metadata } from './config'
 import { inputsData, registerInputsSchema } from './models'
 
 const Register = () => {
+  const { t } = useTranslation()
   const { signUp } = useAuthContext()
 
   const handleOnSumbit: SubmitHandler<FieldValues> = (data) => {
-    void signUp(data as IUserRegiser)
+    void signUp(data as IUserRegister)
   }
 
   return (
-    <GlobalLayout newTitle={metadata.title}>
+    <GlobalLayout newTitle={t('register.title')}>
       <Form
         inputsData={inputsData}
         schema={registerInputsSchema}
-        buttonSumbitName='Register'
+        buttonSumbitName={t('register.form.main.buttonName')}
         onSumbit={handleOnSumbit}
         Header= {<RegisterHeader />}
         Footer={<RegisterFooter />}

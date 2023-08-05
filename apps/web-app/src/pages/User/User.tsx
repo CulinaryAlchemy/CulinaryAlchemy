@@ -1,6 +1,6 @@
 import { Loading } from '@/components'
 import { GlobalLayout, MessageLayout } from '@/layouts'
-import { type IUser } from '@/models'
+import { type IUser } from '@/models/LOGIC'
 import { NotFound } from '@/pages'
 import Sheet from '@mui/joy/Sheet'
 import { UserHeader, UserMain } from './components'

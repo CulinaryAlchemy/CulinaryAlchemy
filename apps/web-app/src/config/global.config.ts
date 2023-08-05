@@ -9,7 +9,8 @@ const config = {
       accessToken: 'accesss23', // should be in memory and reset it with the help of api /refresh end point
       refreshToken: 'shouldn\'t be here'
     },
-    user: 'user-data'
+    user: 'user-data',
+    language: 'language'
   }
 } as const
 

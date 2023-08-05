@@ -2,7 +2,7 @@ import RestaurantRounded from '@mui/icons-material/RestaurantRounded'
 import Box from '@mui/joy/Box'
 import Stack from '@mui/joy/Stack'
 
-import { ToggleTheme } from '@/components'
+import { ToggleTheme, ToggleTranslation } from '@/components'
 import { frontRoutes } from '@/routing'
 import { Link } from 'react-router-dom'
 
@@ -15,6 +15,7 @@ export const Header = () => {
         </Link>
         <Box sx={{ position: 'absolute', top: 0, right: 0, padding: '1em' }}>
           <ToggleTheme />
+          <ToggleTranslation />
         </Box>
       </Stack>
 

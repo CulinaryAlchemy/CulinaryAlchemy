@@ -1,5 +1,5 @@
 import { config } from '@/config'
-import { type IUser, type IUserRegiser, type IUserSignIn } from '@/models'
+import { type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
 import { registerUser, signInUser } from '@/services'
 import { getFromLocalStorage, setToLocalStorage } from '@/utils'
 import { useEffect, useState } from 'react'
@@ -47,7 +47,7 @@ export const useAuth = () => {
     saveSession({ accesToken: token, userData: user })
   }
 
-  const signUp = async (userData: IUserRegiser) => {
+  const signUp = async (userData: IUserRegister) => {
     await registerUser(userData)
   }
 

@@ -1,10 +1,10 @@
-import { type IUser, type IUserRegiser, type IUserSignIn } from '@/models'
+import { type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
 import { createContext, useContext } from 'react'
 
 interface IContext {
   user: IUser | undefined
   signIn: (userData: IUserSignIn) => Promise<void>
-  signUp: (userData: IUserRegiser) => Promise<void>
+  signUp: (userData: IUserRegister) => Promise<void>
   logOut: () => void
   isAuth: boolean
   isLoading: boolean

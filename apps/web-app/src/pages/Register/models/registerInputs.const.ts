@@ -1,23 +1,24 @@
-import { type TInputsFormData } from '@/models/'
+import { type TInputsFormData } from '@/models/UI'
 import { CUserValidations } from '@/models/validations'
+import { t } from 'i18next'
 
 export const inputsData: TInputsFormData = [
   {
-    name: 'username',
+    name: t('register.form.main.inputs.userName'),
     type: 'text',
     validation: CUserValidations.username,
-    placeholder: 'example56'
+    placeholder: 'Joe Bass'
   },
   {
-    name: 'email',
+    name: t('register.form.main.inputs.email'),
     type: 'email',
     validation: CUserValidations.email,
-    placeholder: 'example@gmail.com'
+    placeholder: 'joe@gmail.com'
   },
   {
-    name: 'password',
+    name: t('register.form.main.inputs.password'),
     type: 'password',
     validation: CUserValidations.password,
-    placeholder: 'password'
+    placeholder: 'wua-wau78'
   }
 ]
