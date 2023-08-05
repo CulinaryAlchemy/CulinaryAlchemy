@@ -3,25 +3,37 @@ import { CThemesModes } from '@/models/UI'
 import DarkMode from '@mui/icons-material/DarkMode'
 import LightMode from '@mui/icons-material/LightMode'
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
-import IconButton from '@mui/joy/IconButton'
+import ListItem from '@mui/joy/ListItem'
+import ListItemButton from '@mui/joy/ListItemButton'
+import Sheet from '@mui/joy/Sheet'
 
 export const ToggleTheme = () => {
   const { actualMode, toggleTheme } = useToggleTheme()
 
-  const onClick = () => {
+  const handleOnClick = () => {
     toggleTheme()
   }
 
   return (
-    <IconButton color="neutral" variant="plain" onClick={onClick}>
-        {
-            actualMode === CThemesModes.dark && <DarkMode />
-        }
-        {
-            actualMode === CThemesModes.light && <LightMode />
-        }
-        {
-            actualMode === CThemesModes.system && <SettingsBrightnessIcon />
-        }
-    </IconButton>)
+        <ListItem
+            role="none"
+            endAction={
+                <Sheet variant='outlined' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '2.375em', height: '1.75em', borderRadius: '0.4em' }}>
+                    {
+                        actualMode === CThemesModes.dark && <DarkMode />
+                    }
+                    {
+                        actualMode === CThemesModes.light && <LightMode />
+                    }
+                    {
+                        actualMode === CThemesModes.system && <SettingsBrightnessIcon />
+                    }
+                </Sheet>
+            }
+        >
+            <ListItemButton onClick={handleOnClick} role="menuitem">
+                Theme
+            </ListItemButton>
+        </ListItem>
+  )
 }
