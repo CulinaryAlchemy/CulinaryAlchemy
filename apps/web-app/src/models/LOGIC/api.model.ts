@@ -1,4 +1,4 @@
-import { type IUser } from '@/models/'
+import { type IUser } from '@/models/LOGIC'
 
 export interface IApiResponse<T> {
   data: null | T

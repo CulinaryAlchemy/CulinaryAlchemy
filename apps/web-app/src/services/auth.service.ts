@@ -1,8 +1,8 @@
-import { type IApiResponse, type IAuthApiResponse, type IUserRegiser, type IUserSignIn } from '@/models'
+import { type IApiResponse, type IAuthApiResponse, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
 import { backRoutes } from '@/routing'
 import axios from 'axios'
 
-export const registerUser = async (userToRegister: IUserRegiser) => {
+export const registerUser = async (userToRegister: IUserRegister) => {
   return await axios.post<IApiResponse<IAuthApiResponse>>(backRoutes.Static.auth.signup, userToRegister)
 }
 

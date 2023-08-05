@@ -1,0 +1,55 @@
+{
+    "user": {
+        "header": {
+            "followButton": "Seguir",
+            "description": "No hay descripción"
+        },
+        "main": {
+            "tabs": {
+                "recipes": "Recetas",
+                "tweets": "Tweets"
+            }
+        }
+    },
+    "register": {
+        "title": "Registro",
+        "form": {
+            "header": {
+                "title": "Bienvenido",
+                "subTitle": "Registrate para continuar."
+            },
+            "main": {
+                "inputs": {
+                    "userName": "Nombre de usuario",
+                    "email": "Correo electrónico",
+                    "password": "Contraseña"
+                },
+                "buttonName": "registrarme"
+            },
+            "footer": {
+                "message": "Ya tienes una cuenta?",
+                "link": "Inicia sesión"
+            }
+        }
+    },
+    "login": {
+        "title": "Iniciar sesión",
+        "form": {
+            "header": {
+                "title": "Bienvenido",
+                "subTitle": "Inicia sesión para continuar."
+            },
+            "main": {
+                "inputs": {
+                    "email": "Correo electrónico",
+                    "password": "Contraseña"
+                },
+                "buttonName": "Iniciar sesión"
+            },
+            "footer": {
+                "message": "No tienes una cuenta?",
+                "link": "Crea una"
+            }
+        }
+    }
+}
