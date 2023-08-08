@@ -14,9 +14,9 @@ export async function seedDatabaseAdmins() {
 			.then(() => console.log('admin already exist'))
 			.catch(async () => {
 				await UserProvider.createUser({
-					username: 'admin',
-					email: 'admin@emai.com',
-					password: 'adminadminadmin',
+					username: 'culinaryalchemy',
+					email: 'culinaryalchemyofficial@gmail.com',
+					password: process.env.ADMIN_PASSWORD!,
 					isAdmin: true
 				});
 			});
