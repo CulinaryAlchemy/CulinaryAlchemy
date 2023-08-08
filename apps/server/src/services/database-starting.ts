@@ -2,9 +2,9 @@ import { getEnvironment } from ".";
 import { dbSequelize } from "../config/db";
 import { seedDatabaseAdmins } from "../db/default-users";
 
-const { ENVIRONMENT } = getEnvironment()
 export const startDatabase = async () => {
     try {
+        const { ENVIRONMENT } = getEnvironment();
         await dbSequelize.authenticate();
         console.log('Connection with databse has been established successfully.');
 
