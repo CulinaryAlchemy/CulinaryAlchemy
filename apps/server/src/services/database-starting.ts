@@ -8,7 +8,7 @@ export const startDatabase = async () => {
         await dbSequelize.authenticate();
         console.log('Connection with databse has been established successfully.');
 
-        await dbSequelize.sync({ force: true });
+        await dbSequelize.sync();
         console.log('All models were synchronized successfully.');
 
         if (ENVIRONMENT === 'production') {
