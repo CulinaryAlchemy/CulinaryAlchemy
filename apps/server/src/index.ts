@@ -23,14 +23,14 @@ app.use(express.json());
 
 app.use(cors());
 
-if(process.env.ENVIRONMENT === 'development') {
+if (process.env.ENVIRONMENT === 'development') {
 	app.use(logsMiddw);
 }
 
 // routes
 app.use('/auth', authRouter);
-app.use('/user', userRouter)
-;(async () => {
+app.use('/user', userRouter);
+(async () => {
 	try {
 		await dbSequelize.authenticate();
 		console.log('Connection with databse has been established successfully.');

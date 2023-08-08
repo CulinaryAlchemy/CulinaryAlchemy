@@ -16,6 +16,7 @@ import {
 import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
 import { RoleInterface } from '../../interfaces';
 import { roleProvider } from '../../providers/roles';
+import { upload } from '../../config/multer';
 
 export const userRouter = express.Router();
 
@@ -44,6 +45,7 @@ userRouter.put(
 	body('description').optional().notEmpty().isString(),
 	body('email').optional().isEmail().notEmpty(),
 	validateValidationChainResult,
+	upload.single('avatar'),
 	putById
 );
 
