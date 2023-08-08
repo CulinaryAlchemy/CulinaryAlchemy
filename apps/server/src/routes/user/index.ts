@@ -1,11 +1,9 @@
 import express, { Request, Response } from 'express';
 import passport from '../../services/passport-jwt-strategy';
 import { body, query } from 'express-validator';
-// providers
-import { getById, getByUsername, getAll } from './get';
-import { putById } from './put';
-import { deleteById } from './delete';
 
+// controllers
+import { UserController } from '../../controllers/user';
 // validators
 import { idValidator } from '../../middlewares/validators';
 import { authMiddleware } from '../../middlewares';
@@ -23,15 +21,15 @@ export const userRouter = express.Router();
 const passportMiddleware = passport.authenticate('jwt', { session: false });
 
 // user
-userRouter.get('/id/:id', idValidator, validateValidationChainResult, getById);
+userRouter.get('/id/:id', idValidator, validateValidationChainResult, UserController.get.byId);
 
-userRouter.get('/username/:username', getByUsername);
+userRouter.get('/username/:username', UserController.get.byUsername);
 
 userRouter.get(
 	'/all',
 	query('limit').optional().isInt({ min: 1, max: 10 }),
 	validateValidationChainResult,
-	getAll
+	UserController.get.all
 );
 
 userRouter.put(
@@ -46,7 +44,7 @@ userRouter.put(
 	body('email').optional().isEmail().notEmpty(),
 	validateValidationChainResult,
 	upload.single('avatar'),
-	putById
+	UserController.put.byId
 );
 
 userRouter.delete(
@@ -55,7 +53,7 @@ userRouter.delete(
 	validateValidationChainResult,
 	passportMiddleware,
 	authMiddleware,
-	deleteById
+	UserController.delete.ById
 );
 
 // roles
