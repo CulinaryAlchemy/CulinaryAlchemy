@@ -1,5 +1,5 @@
 import { Header } from '@/components'
-import { AuthGuard, PublicGuard, frontRoutes } from '@/routing'
+import { AuthGuard, frontRoutes } from '@/routing'
 import { Suspense, lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -18,10 +18,8 @@ export const Routing = () => {
         <Routes>
           <Route element={<AuthGuard />}>
             <Route path={frontRoutes.Static.index} element={<IndexPage />} />
-          </Route>
-          <Route element={<PublicGuard />}>
-            <Route path={frontRoutes.Static.register} element={<RegisterPage />} />
-            <Route path={frontRoutes.Static.login} element={<LoginPage />} />
+            <Route path={frontRoutes.Static.auth.register} element={<RegisterPage />} />
+            <Route path={frontRoutes.Static.auth.login} element={<LoginPage />} />
           </Route>
           <Route path={frontRoutes.Static.user} element={<UserPage />} />
           <Route path={frontRoutes.Static.notFound} element={<NotFoundPage />} />

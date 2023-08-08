@@ -1,4 +1,5 @@
 import { CSWRConfig, setDefaultAxiosConfig } from '@/config'
+import '@/config/i18next/i18next.config'
 import { AuthContextProvider } from '@/context'
 import { Routing } from '@/routing'
 import { SWRConfig } from 'swr'

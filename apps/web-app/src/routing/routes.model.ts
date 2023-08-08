@@ -5,11 +5,14 @@ const getFrontendRoutes = () => {
 
   const Static = {
     index: '/',
-    login: '/login',
-    register: '/register',
+    auth: {
+      login: '/login',
+      register: '/register'
+    },
     user: BaseRoutes.user + ':userName',
-    notFound: '*'
-  } as const
+    notFound: '*',
+    settings: '/settings'
+  }
 
   const Dynamic = {
     user (id: string) {

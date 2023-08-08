@@ -93,11 +93,12 @@ export const getUser = {
 			return Promise.reject('');
 		}
 	},
-	All: async (limit: number) => {
+	All: async ({ limit, offset }: { limit: number, offset: number }) => {
 		try {
 			const users = await User.findAll({
 				attributes: ['id'],
 				limit: limit,
+				offset: offset,
 				where: {
 					isDeleted: false,
 				},

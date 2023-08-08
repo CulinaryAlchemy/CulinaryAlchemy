@@ -35,10 +35,10 @@ export const setAxiosInterceptors = () => {
       return success
     },
     (error: AxiosError) => {
-      console.log(error)
+      console.error(error)
       const errorText = (error.response?.status != null) ? getValidationError(error.response?.status) : 'default'
       toastUtils.error(errorText)
-      return Promise.reject(error)
+      return error
     }
   )
 }

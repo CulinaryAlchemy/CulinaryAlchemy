@@ -1,4 +1,5 @@
-import { type IUser } from '@/models'
+import { useTranslation } from '@/hooks'
+import { type IUser } from '@/models/LOGIC'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Box from '@mui/joy/Box'
@@ -15,6 +16,8 @@ interface IProps {
   isLoading?: boolean
 }
 export const UserHeader: React.FC<IProps> = ({ data, isLoading = false }) => {
+  const { t } = useTranslation()
+
   if (isLoading || data == null) {
     return <UserHeaderSkeleton />
   }
@@ -35,18 +38,15 @@ export const UserHeader: React.FC<IProps> = ({ data, isLoading = false }) => {
           <Stack direction='row' alignItems='center' spacing={1}>
             <IconButton variant='outlined' color='neutral'><MoreVertIcon /></IconButton>
             <IconButton variant='outlined' color='neutral'><MailOutlineIcon /></IconButton>
-            <Button variant='outlined' color='neutral'>Follow</Button>
+            <Button variant='outlined' color='neutral'>{t('follow')}</Button>
           </Stack>
         </Stack>
         <Stack spacing={1} mt={1}>
           <Typography level='body3' sx={{ maxHeight: '4.7em', overflow: 'hidden' }}>
-            {data.description != null ? data.description : 'No description'}
+            {data.description != null ? data.description : `No ${t('description')}`}
           </Typography>
-          <Stack direction='row' spacing={1}>
+          <Stack direction='row' spacing={1} justifyContent='right'>
             <Link level='body3' href='https://www.google.com' target='_blank'>Twitter</Link>
-            <Link level='body3' href='https://www.google.com' target='_blank'>Facebook</Link>
-            <Link level='body3' href='https://www.google.com' target='_blank'>Instagram</Link>
-            <Link level='body3' href='https://www.google.com' target='_blank'>Social</Link>
           </Stack>
         </Stack>
       </Stack>

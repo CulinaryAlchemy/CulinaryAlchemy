@@ -1,11 +1,11 @@
-import { type IUser, type IUserRegiser, type IUserSignIn } from '@/models'
+import { type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
 import { createContext, useContext } from 'react'
 
 interface IContext {
   user: IUser | undefined
   signIn: (userData: IUserSignIn) => Promise<void>
-  signUp: (userData: IUserRegiser) => Promise<void>
-  logOut: () => void
+  signUp: (userData: IUserRegister) => Promise<void>
+  signOut: () => void
   isAuth: boolean
   isLoading: boolean
 }
@@ -15,7 +15,7 @@ const defaultState: IContext = {
   isLoading: true,
   signIn: async () => { },
   signUp: async () => { },
-  logOut: () => {}
+  signOut: () => {}
 }
 
 const authContext = createContext<IContext>(defaultState)

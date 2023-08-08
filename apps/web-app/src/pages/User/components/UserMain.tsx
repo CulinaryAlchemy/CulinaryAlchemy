@@ -1,7 +1,8 @@
 
 import { TabPanel, TabsPage } from '@/components'
+import { t } from 'i18next'
 
-const tabs = ['Recipes', 'Tweets']
+const tabs = [t('recipes'), t('tweets')]
 
 export const UserMain = () => {
   return (

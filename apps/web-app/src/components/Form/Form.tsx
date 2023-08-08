@@ -1,4 +1,4 @@
-import { type TInputsFormData } from '@/models/'
+import { type TInputsFormData } from '@/models/UI'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
@@ -37,7 +37,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
         boxShadow: 'md'
       }}
     >
-      <form onSubmit={handleSubmit(onSumbit)}>
+      <form onSubmit={handleSubmit(onSumbit)} noValidate>
         <Sheet sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -47,7 +47,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
           <main>
             {inputsData.map((inputData) => (
               <FormControl key={inputData.name} sx={{ marginBottom: '0.5em' }}>
-                <FormLabel sx={{ textTransform: 'capitalize' }}>{inputData.name}</FormLabel>
+                <FormLabel>{inputData.label}</FormLabel>
                 <Input
                   type={inputData.type}
                   placeholder={inputData.placeholder}
@@ -65,7 +65,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
                 </Typography>
               </FormControl>
             ))}
-            <Button type='submit' sx={{ marginTop: '1em', width: '100%', textTransform: 'capitalize' }}>{buttonSumbitName}</Button>
+            <Button type='submit' sx={{ marginTop: '1em', width: '100%' }}>{buttonSumbitName}</Button>
           </main>
           {Footer}
         </Sheet>

@@ -1,4 +1,4 @@
-import { type IApiResponse, type IUserApiResponse } from '@/models'
+import { type IApiResponse, type IUserApiResponse } from '@/models/LOGIC'
 import { backRoutes } from '@/routing'
 import { type AxiosError } from 'axios'
 import { useParams } from 'react-router-dom'

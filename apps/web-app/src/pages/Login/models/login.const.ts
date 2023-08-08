@@ -1,17 +1,5 @@
-import { type TInputsFormData } from '@/models/'
-import { CUserValidations } from '@/models/validations'
+import { CInputUser, type TInputsFormData } from '@/models/UI'
 
 export const inputsData: TInputsFormData = [
-  {
-    name: 'email',
-    type: 'email',
-    placeholder: 'example@gmail.com',
-    validation: CUserValidations.email
-  },
-  {
-    name: 'password',
-    type: 'password',
-    placeholder: 'password',
-    validation: CUserValidations.password
-  }
+  CInputUser.email, CInputUser.password
 ]

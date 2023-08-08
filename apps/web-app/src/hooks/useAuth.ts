@@ -1,7 +1,7 @@
 import { config } from '@/config'
-import { type IUser, type IUserRegiser, type IUserSignIn } from '@/models'
+import { type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
 import { registerUser, signInUser } from '@/services'
-import { getFromLocalStorage, setToLocalStorage } from '@/utils'
+import { clearLocalStorage, getFromLocalStorage, setToLocalStorage } from '@/utils'
 import { useEffect, useState } from 'react'
 
 export const useAuth = () => {
@@ -47,12 +47,13 @@ export const useAuth = () => {
     saveSession({ accesToken: token, userData: user })
   }
 
-  const signUp = async (userData: IUserRegiser) => {
+  const signUp = async (userData: IUserRegister) => {
     await registerUser(userData)
   }
 
-  const logOut = () => {
+  const signOut = () => {
     setIsAuth(false)
+    clearLocalStorage()
   }
-  return { user, signIn, signUp, logOut, isAuth, isLoading }
+  return { user, signIn, signUp, signOut, isAuth, isLoading }
 }

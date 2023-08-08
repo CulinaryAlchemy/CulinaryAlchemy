@@ -5,17 +5,19 @@ export const updateUser = async (
 	{
 		username,
 		name,
+		avatar,
 		email,
 		password,
 		location,
 		description,
 	}: {
-		username: string;
-		name: string;
-		email: string;
-		password: string;
-		location: string;
-		description: string;
+		username?: string;
+		name?: string;
+		avatar?: string;
+		email?: string;
+		password?: string;
+		location?: string;
+		description?: string;
 	}
 ) => {
 	try {
@@ -31,6 +33,10 @@ export const updateUser = async (
 
 		if (name) {
 			user.name = name;
+		}
+
+		if (avatar) {
+			user.avatar = avatar;
 		}
 
 		if (email) {
