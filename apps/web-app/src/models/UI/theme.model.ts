@@ -1,7 +1,6 @@
-type TModes = Record<string, 'light' | 'dark' | 'system'>
+type TModes = Record<string, 'light' | 'dark'>
 
 export const CThemesModes: TModes = {
   dark: 'dark',
-  light: 'light',
-  system: 'system'
+  light: 'light'
 } as const
