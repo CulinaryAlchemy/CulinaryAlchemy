@@ -29,7 +29,7 @@ const UserController = {
             let finalLimit;
             let finalOffset;
             limit ? finalLimit = parseInt(limit as string) : finalLimit = 10
-            offset ? finalOffset = parseInt(offset as string) : finalOffset = 10
+            offset ? finalOffset = parseInt(offset as string) : finalOffset = 0
             try {
 
                 const users = await UserProvider.getUser.All({ limit: finalLimit, offset: finalOffset });
@@ -42,6 +42,10 @@ const UserController = {
             const { email } = req.body;
             try {
                 const user = await UserProvider.getUser.ByEmail(email);
+                if (!user) {
+                    sendApiError(res, HttpStatusCodes.NOT_FOUND)
+                }
+
                 sendApiResponse(res, HttpStatusCodes.SUCCESS, user);
             } catch (error) {
                 sendApiError(
@@ -54,6 +58,10 @@ const UserController = {
             const { id } = req.params;
             try {
                 const user = await UserProvider.getUser.ById(id);
+                if (!user) {
+                    sendApiError(res, HttpStatusCodes.NOT_FOUND)
+                }
+
                 sendApiResponse(res, HttpStatusCodes.SUCCESS, user);
             } catch (error) {
                 sendApiError(
@@ -66,6 +74,10 @@ const UserController = {
             const { username } = req.params;
             try {
                 const user = await UserProvider.getUser.ByUsername(username);
+                if (!user) {
+                    sendApiError(res, HttpStatusCodes.NOT_FOUND)
+                }
+
                 sendApiResponse(res, HttpStatusCodes.SUCCESS, user);
             } catch (error) {
                 sendApiError(
@@ -116,6 +128,7 @@ const UserController = {
                 }
                 const finalParams = cleanObjectKeys(params)
                 await UserProvider.updateUser(id, { ...finalParams });
+
                 sendApiResponse(res, HttpStatusCodes.CREATED, null);
             } catch (error) {
                 console.log(error);

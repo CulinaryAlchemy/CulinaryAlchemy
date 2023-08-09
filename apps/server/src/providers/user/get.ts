@@ -1,4 +1,4 @@
-import { User } from '../../models';
+import { Role, User } from '../../models';
 
 export const getUser = {
 	ById: async (id: string, isForInternalServerUse: boolean = false) => {
@@ -20,14 +20,11 @@ export const getUser = {
 					isDeleted: false,
 				},
 				attributes: { exclude: [...excludedPropety] },
-				include: 'role',
+				include: { model: Role, as: 'role' },
 			});
-			if (!user) {
-				return Promise.reject('user not found');
-			}
 			return Promise.resolve(user);
 		} catch (error) {
-			return Promise.reject(typeof error === 'string' ? error : error);
+			return Promise.reject(error);
 		}
 	},
 	ByEmail: async (email: string, isForInternalServerUse: boolean = false) => {
@@ -49,14 +46,11 @@ export const getUser = {
 					isDeleted: false,
 				},
 				attributes: { exclude: [...excludedPropety] },
-				include: 'role',
+				include: { model: Role, as: 'role' },
 			});
-			if (!user) {
-				return Promise.reject('user not found');
-			}
 			return Promise.resolve(user);
 		} catch (error) {
-			return Promise.reject(typeof error === 'string' ? error : error);
+			return Promise.reject(error);
 		}
 	},
 	ByUsername: async (
@@ -81,16 +75,11 @@ export const getUser = {
 					username: username,
 					isDeleted: false,
 				},
-				include: 'role',
+				include: { model: Role, as: 'role' },
 			});
-
-			if (!user) {
-				return Promise.reject('user not found');
-			}
-
 			return Promise.resolve(user);
 		} catch (error) {
-			return Promise.reject(typeof error === 'string' ? error : error);
+			return Promise.reject(error);
 		}
 	},
 	All: async ({ limit, offset }: { limit: number, offset: number }) => {
@@ -103,12 +92,11 @@ export const getUser = {
 					isDeleted: false,
 				},
 			});
-			if (!users) {
-				return Promise.reject('users not found');
-			}
 			return Promise.resolve(users);
 		} catch (error) {
-			return Promise.reject(typeof error === 'string' ? error : error);
+			return Promise.reject(error);
 		}
 	},
 };
+
+// REMOVE REJECTION IF THE USER DOESNT EXIST.

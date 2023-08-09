@@ -1,5 +1,6 @@
 import { getEnvironment } from ".";
 import { dbSequelize } from "../config/db";
+import { Role, User } from "../models";
 import { seedDatabaseAdmins } from "./seed-db-default-users";
 
 export const startDatabase = async () => {
@@ -11,13 +12,8 @@ export const startDatabase = async () => {
         await dbSequelize.sync();
         console.log('All models were synchronized successfully.');
 
-        if (ENVIRONMENT === 'production') {
-            await seedDatabaseAdmins()
-                .catch((error) => {
-                    throw new Error(error)
-                })
-            console.log('Default users have been added to the database.');
-        }
+        await seedDatabaseAdmins()
+        console.log('Default users have been added to the database.');
 
         return Promise.resolve()
     } catch (error) {

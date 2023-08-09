@@ -1,31 +1,39 @@
 import { UserProvider } from '../providers/user';
 import { Role } from '../models'; // Import your Role model here
+import { roleProvider } from '../providers/roles';
 
 export async function seedDatabaseAdmins() {
 	try {
 		// Create roles 'user' and 'admin' if they don't exist
-		const [userRole, adminRole] = await Promise.all([
-			Role.findOrCreate({ where: { name: 'user' } }),
-			Role.findOrCreate({ where: { name: 'admin' } }),
-		]);
+		await roleProvider.create('user'),
+			await roleProvider.create('admin')
 
-		await UserProvider.getUser.ByUsername('culinaryalchemy')
-			.catch(async () => await UserProvider.createUser({
+		const doesOfficialUserExist = await UserProvider.getUser.ByUsername('culinaryalchemy')
+		let officialUser = null
+		if (!doesOfficialUserExist) {
+			officialUser = await UserProvider.createUser({
 				username: 'culinaryalchemy',
 				email: 'culinaryalchemyofficial@gmail.com',
 				password: process.env.ADMIN_PASSWORD!,
 				isAdmin: true
 			})
-			)
+		}
+		if (!doesOfficialUserExist && !officialUser) {
+			throw new Error('official user not created')
+		}
 
-		await UserProvider.getUser.ByUsername('test123')
-			.catch(async () => await UserProvider.createUser({
+		const doesTestUserExist = await UserProvider.getUser.ByUsername('test123')
+		let testUser = null
+		if (!doesTestUserExist) {
+			testUser = await UserProvider.createUser({
 				username: 'test123',
 				email: 'test@gmail.com',
 				password: 'password123123',
 			})
-			)
-
+		}
+		if (!doesTestUserExist && !testUser) {
+			throw new Error('test user not created')
+		}
 		Promise.resolve()
 	} catch (error) {
 		console.log(error);

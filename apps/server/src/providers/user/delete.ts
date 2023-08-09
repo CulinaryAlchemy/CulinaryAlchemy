@@ -17,7 +17,6 @@ export const deleteUser = async (id: string) => {
 
 		return Promise.resolve('');
 	} catch (error) {
-		// here we handle the error writing it into the errors.txt file
 		return Promise.reject(error);
 	}
 };

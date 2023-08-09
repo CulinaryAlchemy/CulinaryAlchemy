@@ -8,7 +8,7 @@ export const rolesControllers = {
         byId: async (req: Request, res: Response) => {
             const { id } = req.params;
             try {
-                const role: RoleInterface | null = await roleProvider.getById(id);
+                const role: RoleInterface | null = await roleProvider.get.ById(id);
                 if (!role) {
                     sendApiError(res, HttpStatusCodes.NOT_FOUND, 'role not found', null);
                 }
