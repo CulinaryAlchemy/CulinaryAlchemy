@@ -6,7 +6,6 @@ import { frontRoutes } from '@/routing'
 
 import DarkMode from '@mui/icons-material/DarkMode'
 import LightMode from '@mui/icons-material/LightMode'
-import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
 import List from '@mui/joy/List'
 import ListDivider from '@mui/joy/ListDivider'
 
@@ -43,9 +42,6 @@ export const DropDownListOfItems = () => {
             }
             {
               actualMode === CThemesModes.light && <LightMode />
-            }
-            {
-              actualMode === CThemesModes.system && <SettingsBrightnessIcon />
             }
           </>
         }

@@ -1,4 +1,4 @@
-import { User } from '../../db/models';
+import { User } from '../../models';
 
 export const deleteUser = async (id: string) => {
 	try {
@@ -17,7 +17,6 @@ export const deleteUser = async (id: string) => {
 
 		return Promise.resolve('');
 	} catch (error) {
-		// here we handle the error writing it into the errors.txt file
 		return Promise.reject(error);
 	}
 };

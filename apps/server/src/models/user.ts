@@ -1,10 +1,10 @@
 import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 
-import { dbSequelize } from '../../config/db';
+import { dbSequelize } from '../config/db';
 import { Role } from './roles';
 
-import { UserInterface } from '../../interfaces/user.interface';
+import { UserInterface } from '../interfaces/user.interface';
 
 class User extends Model<UserInterface> implements UserInterface {
 	id!: number;
@@ -124,7 +124,6 @@ User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
 
 User.beforeCreate(async (user: User) => {
 	user.password = await bcrypt.hash(user.password, 10);
-	console.log(user.password);
 });
 
 export { User };

@@ -1,5 +1,6 @@
 import { UserProvider } from '.';
-import { User, Role } from '../../db/models';
+import { User } from '../../models';
+import { roleProvider } from '../roles';
 export const createUser = async ({
 	username,
 	email,
@@ -13,29 +14,38 @@ export const createUser = async ({
 }) => {
 	try {
 		const newUser = User.build({ username, email, password });
-
+		
 		await newUser.validate();
 
 		await newUser.save();
 
-		let userRole;
+		let userRole = null;
 
 		if (!isAdmin) {
-			userRole = await Role.findOne({ where: { name: 'user' } });
+			userRole = await roleProvider.get.byName('user')
+			if(!userRole){
+				console.log(userRole);
+				throw new Error('User role not found')
+			}
 		} else {
-			userRole = await Role.findOne({ where: { name: 'admin' } });
+			userRole = await roleProvider.get.byName('admin')
+			if(!userRole){
+				console.log(userRole);
+				throw new Error('User role not found')
+			}
 		}
 
-		if (userRole) {
+		if (userRole?.id) {
 			newUser.roleId = userRole.id;
 			await newUser.save();
 		}
 
 		const newUserFromDb = await UserProvider.getUser.ByEmail(email);
-
+		if (!newUserFromDb) {
+			return Promise.reject('User not found')
+		}
 		return Promise.resolve(newUserFromDb);
 	} catch (error) {
-		// handle the error printing it intot the errors.txt
 		return Promise.reject(error);
 	}
 };

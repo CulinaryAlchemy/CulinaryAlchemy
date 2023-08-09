@@ -6,7 +6,6 @@ import SecondaryHttpBackend from 'i18next-http-backend'
 import PrimaryLocalStorageBackend from 'i18next-localstorage-backend'
 import { initReactI18next } from 'react-i18next'
 
-console.log(i18n.services)
 void i18n
   .use(Backend)
   .use(initReactI18next)

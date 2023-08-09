@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { UserProvider } from '../../providers/user';
 import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
+import sequelize from 'sequelize';
 
 export const signUp = async (req: Request, res: Response) => {
 	const { username, email, password } = req.body;
@@ -8,30 +9,28 @@ export const signUp = async (req: Request, res: Response) => {
 	try {
 		// check if username is valid
 		const doesUsernameAlreadyExist = await UserProvider.getUser.ByUsername(username)
-			.then(() => true) // case it returns an user
-			.catch(() => null) // case it doesnt returns an user
 
 		if (doesUsernameAlreadyExist) {
-			return sendApiError(res, HttpStatusCodes.CONFLICT, 'Username already exists', null, [{
-				username: 'USERNAME_IS_ALREADY_IN_USE',
-			}]);
+			return sendApiError(res, HttpStatusCodes.CONFLICT, 'Username already exists');
 		}
 
 		// check if email is valid
 		const doesEmailAlreadyExist = await UserProvider.getUser.ByEmail(email)
-			.then(() => true) // case it returns an user
-			.catch(() => null) // case it doesnt returns an user
 
 		if (doesEmailAlreadyExist) {
-			return sendApiError(res, HttpStatusCodes.CONFLICT, 'Email already exists', null, [{
-				email: 'EMAIL_IS_ALREADY_IN_USE',
-			}]);
+			return sendApiError(res, HttpStatusCodes.CONFLICT, 'Email already exists');
 		}
 
-
 		const user = await UserProvider.createUser({ username, email, password });
+		if (!user) {
+			sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+		}
+		
 		sendApiResponse(res, HttpStatusCodes.CREATED, user);
 	} catch (error) {
-		sendApiError(res, HttpStatusCodes.BAD_REQUEST);
+		if (error instanceof sequelize.ValidationError) {
+			sendApiError(res, HttpStatusCodes.BAD_REQUEST);
+		}
+		sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
 	}
 };
