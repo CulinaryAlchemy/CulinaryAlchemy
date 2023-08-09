@@ -9,7 +9,7 @@ export const emailValidator: ValidationChain[] = [
 ];
 
 async function validateEmailDomain(email: string) {
-	await new Promise((resolve, reject) => {
+	return await new Promise((resolve, reject) => {
 		if (!email) {
 			return reject(new Error('invalid email'));
 		}

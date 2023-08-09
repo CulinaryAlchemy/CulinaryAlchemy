@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { dbSequelize } from '..';
+import { dbSequelize } from '../../config/db';
 
 import { RoleInterface } from '../../interfaces';
 

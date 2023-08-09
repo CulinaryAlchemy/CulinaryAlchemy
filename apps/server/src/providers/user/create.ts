@@ -36,6 +36,6 @@ export const createUser = async ({
 		return Promise.resolve(newUserFromDb);
 	} catch (error) {
 		// handle the error printing it intot the errors.txt
-		return Promise.reject('');
+		return Promise.reject(error);
 	}
 };

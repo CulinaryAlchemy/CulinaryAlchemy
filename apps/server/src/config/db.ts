@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
-
-export const dbSequelize = new Sequelize(process.env.POSTGRESQL_DB_URI!, {
+import { getEnvironment } from '../services';
+const { POSTGRESQL_DB_URI } = getEnvironment()
+export const dbSequelize = new Sequelize(POSTGRESQL_DB_URI!, {
 	dialect: 'postgres',
 	dialectOptions: {
 		ssl: true,

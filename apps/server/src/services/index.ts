@@ -1,3 +1,4 @@
 import { cloudinaryService } from './cloudinary';
-
-export { cloudinaryService };
+import { startDatabase } from './database-starting';
+import { getEnvironment } from './get-environment';
+export { cloudinaryService, startDatabase, getEnvironment };

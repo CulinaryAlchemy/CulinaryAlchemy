@@ -23,11 +23,11 @@ export const getUser = {
 				include: 'role',
 			});
 			if (!user) {
-				return Promise.reject(new Error('user not found'));
+				return Promise.reject('user not found');
 			}
 			return Promise.resolve(user);
 		} catch (error) {
-			return Promise.reject('');
+			return Promise.reject(typeof error === 'string' ? error : error);
 		}
 	},
 	ByEmail: async (email: string, isForInternalServerUse: boolean = false) => {
@@ -52,11 +52,11 @@ export const getUser = {
 				include: 'role',
 			});
 			if (!user) {
-				return Promise.reject(new Error('user not found'));
+				return Promise.reject('user not found');
 			}
 			return Promise.resolve(user);
 		} catch (error) {
-			return Promise.reject('');
+			return Promise.reject(typeof error === 'string' ? error : error);
 		}
 	},
 	ByUsername: async (
@@ -85,29 +85,30 @@ export const getUser = {
 			});
 
 			if (!user) {
-				return Promise.reject(new Error('user not found'));
+				return Promise.reject('user not found');
 			}
 
 			return Promise.resolve(user);
 		} catch (error) {
-			return Promise.reject('');
+			return Promise.reject(typeof error === 'string' ? error : error);
 		}
 	},
-	All: async (limit: number) => {
+	All: async ({ limit, offset }: { limit: number, offset: number }) => {
 		try {
 			const users = await User.findAll({
 				attributes: ['id'],
 				limit: limit,
+				offset: offset,
 				where: {
 					isDeleted: false,
 				},
 			});
 			if (!users) {
-				return Promise.reject(new Error('users not found'));
+				return Promise.reject('users not found');
 			}
 			return Promise.resolve(users);
 		} catch (error) {
-			return Promise.reject('');
+			return Promise.reject(typeof error === 'string' ? error : error);
 		}
 	},
 };
