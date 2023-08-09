@@ -1,4 +1,3 @@
-
 const config = {
   baseURL: {
     frontend: 'http://localhost:5173',
@@ -13,8 +12,6 @@ const config = {
     language: 'language'
   }
 } as const
-
-console.log(config.baseURL.frontend)
 
 export { config }
 
