@@ -8,7 +8,7 @@ export const roleProvider = {
 				attributes: { exclude: ['createdAt', 'updatedAt'] },
 			});
 			if (!role) {
-				return reject('');
+				return reject('no role finded');
 			} else {
 				return resolve(role);
 			}

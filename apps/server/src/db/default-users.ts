@@ -9,24 +9,22 @@ export async function seedDatabaseAdmins() {
 			Role.findOrCreate({ where: { name: 'admin' } }),
 		]);
 
-		const officialUser = await UserProvider.getUser.ByUsername('culinaryalchemy')
-		if (!officialUser) {
-			await UserProvider.createUser({
+		await UserProvider.getUser.ByUsername('culinaryalchemy')
+			.catch(async () => await UserProvider.createUser({
 				username: 'culinaryalchemy',
 				email: 'culinaryalchemyofficial@gmail.com',
 				password: process.env.ADMIN_PASSWORD!,
 				isAdmin: true
-			});
-		}
+			})
+			)
 
-		const testUser = await UserProvider.getUser.ByUsername('test123')
-		if (!testUser) {
-			await UserProvider.createUser({
+		await UserProvider.getUser.ByUsername('test123')
+			.catch(async () => await UserProvider.createUser({
 				username: 'test123',
 				email: 'test@gmail.com',
 				password: 'password123123',
-			});
-		}
+			})
+			)
 
 		Promise.resolve()
 	} catch (error) {
