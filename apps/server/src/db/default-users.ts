@@ -10,8 +10,8 @@ export async function seedDatabaseAdmins() {
 		]);
 
 		await UserProvider.getUser
-			.ByUsername('admin')
-			.then(() => console.log('admin already exist'))
+			.ByUsername('culinaryalchemy')
+			.then(() => console.log('culinaryalchemy already exist'))
 			.catch(async () => {
 				await UserProvider.createUser({
 					username: 'culinaryalchemy',
