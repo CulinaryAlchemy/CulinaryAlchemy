@@ -12,7 +12,10 @@ export const startDatabase = async () => {
         console.log('All models were synchronized successfully.');
 
         if (ENVIRONMENT === 'production') {
-            await seedDatabaseAdmins();
+            await seedDatabaseAdmins()
+                .catch((error) => {
+                    throw new Error(error)
+                })
             console.log('Default users have been added to the database.');
         }
 
