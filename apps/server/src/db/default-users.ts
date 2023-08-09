@@ -9,20 +9,28 @@ export async function seedDatabaseAdmins() {
 			Role.findOrCreate({ where: { name: 'admin' } }),
 		]);
 
-		await UserProvider.getUser
-			.ByUsername('culinaryalchemy')
-			.then(() => console.log('culinaryalchemy already exist'))
-			.catch(async () => {
-				await UserProvider.createUser({
-					username: 'culinaryalchemy',
-					email: 'culinaryalchemyofficial@gmail.com',
-					password: process.env.ADMIN_PASSWORD!,
-					isAdmin: true
-				});
+		const officialUser = await UserProvider.getUser.ByUsername('culinaryalchemy')
+		if (!officialUser) {
+			await UserProvider.createUser({
+				username: 'culinaryalchemy',
+				email: 'culinaryalchemyofficial@gmail.com',
+				password: process.env.ADMIN_PASSWORD!,
+				isAdmin: true
 			});
+		}
 
-		console.log('Test users and admins created successfully.');
+		const testUser = await UserProvider.getUser.ByUsername('test123')
+		if (!testUser) {
+			await UserProvider.createUser({
+				username: 'test123',
+				email: 'test@gmail.com',
+				password: 'password123123',
+			});
+		}
+
+		Promise.resolve()
 	} catch (error) {
-		console.error('Error seeding database:', error);
+		console.log(error);
+		Promise.reject(error)
 	}
 }
