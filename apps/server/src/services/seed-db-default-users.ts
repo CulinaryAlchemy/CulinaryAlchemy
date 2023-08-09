@@ -1,5 +1,5 @@
 import { UserProvider } from '../providers/user';
-import { Role } from './models'; // Import your Role model here
+import { Role } from '../models'; // Import your Role model here
 
 export async function seedDatabaseAdmins() {
 	try {

@@ -1,4 +1,4 @@
-import { Role } from '../../db/models';
+import { Role } from '../../models';
 import { RoleInterface } from '../../interfaces';
 
 export const roleProvider = {

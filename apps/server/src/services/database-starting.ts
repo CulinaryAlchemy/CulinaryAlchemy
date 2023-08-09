@@ -1,6 +1,6 @@
 import { getEnvironment } from ".";
 import { dbSequelize } from "../config/db";
-import { seedDatabaseAdmins } from "../db/default-users";
+import { seedDatabaseAdmins } from "./seed-db-default-users";
 
 export const startDatabase = async () => {
     try {

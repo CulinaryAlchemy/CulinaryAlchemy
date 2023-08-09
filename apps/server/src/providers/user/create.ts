@@ -1,5 +1,5 @@
 import { UserProvider } from '.';
-import { User, Role } from '../../db/models';
+import { User, Role } from '../../models';
 export const createUser = async ({
 	username,
 	email,

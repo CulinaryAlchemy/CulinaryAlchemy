@@ -1,4 +1,4 @@
-import { User } from '../../db/models';
+import { User } from '../../models';
 
 export const getUser = {
 	ById: async (id: string, isForInternalServerUse: boolean = false) => {
