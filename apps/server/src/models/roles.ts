@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
-import { dbSequelize } from '../../config/db';
+import { dbSequelize } from '../config/db';
 
-import { RoleInterface } from '../../interfaces';
+import { RoleInterface } from '../interfaces';
 
 class Role extends Model<RoleInterface> implements RoleInterface {
 	id!: number;
