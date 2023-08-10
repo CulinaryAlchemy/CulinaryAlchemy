@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 const login = () => {
+    cy.log('sign-in')
     cy.request('POST','https://culinaryalchemy.onrender.com/auth/sign-in', {
         email: 'test@gmail.com',
         password: 'password123123'
@@ -9,7 +10,6 @@ const login = () => {
 
         window.localStorage.setItem('accesss23', token)
         window.localStorage.setItem('user-data', JSON.stringify(user))
-
         cy.visit('http://localhost:5173/')
     })
 }

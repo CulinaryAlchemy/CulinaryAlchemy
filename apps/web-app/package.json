@@ -10,8 +10,9 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "stop:dev-test": "pkill -f \"pnpm dev\"",
     "cypress:open": "cypress open",
-    "test:2e2": "cypress run"
+    "test:2e2": "pnpm dev & cypress run ; pnpm stop:dev-test"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

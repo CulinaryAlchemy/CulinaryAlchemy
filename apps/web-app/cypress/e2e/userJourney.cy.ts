@@ -18,7 +18,7 @@ describe('user journey', () => {
     })
 
     it('should change the theme', () => {
-      cy.contains('Theme').click().click()
+      cy.contains('Theme').click()
       cy.get('[data-joy-color-scheme="light"]')
     })
 
