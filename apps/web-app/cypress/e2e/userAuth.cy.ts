@@ -1,9 +1,16 @@
 /// <reference types="Cypress" />
 
 describe('user auth', () => {
+    context('checks', () => {
+        it('should activate the server', () => {
+            cy.checkServer()
+        })
+    })
+
     context('register page', () => {
         it('should register a user', () => {
-            cy.visit('http://localhost:5173/register')
+            const registerRoute = Cypress.env('routes').front.signup
+            cy.visit(registerRoute)
 
             cy.contains('Sign up to continue.')
             cy.contains('Do you already have an account?')
@@ -15,13 +22,14 @@ describe('user auth', () => {
 
             cy.get('button').contains('Sign up').click()
 
-            cy.contains('Username or email already exists')
+            cy.contains('Username or email already exists', { timeout: 60000})
         })
     })
 
     context('login page', () => {
         it('should log in a user', () => {
-            cy.visit('http://localhost:5173/login')
+            const signinRoute = Cypress.env('routes').front.signin
+            cy.visit(signinRoute)
             cy.get('input').as('getInputs')
 
             cy.get('@getInputs').eq(0).should('exist').type('test@gmail.com')
