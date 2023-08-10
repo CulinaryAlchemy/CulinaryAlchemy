@@ -9,13 +9,13 @@ describe('user auth', () => {
             cy.contains('Do you already have an account?')
             cy.get('input').as('getInputs')
 
-            cy.get('@getInputs').eq(0).should('exist').type('testcypress')
-            cy.get('@getInputs').eq(1).should('exist').type('testcypress@gmail.com')
-            cy.get('@getInputs').eq(2).should('exist').type('testcypress123123')
+            cy.get('@getInputs').eq(0).should('exist').type('test')
+            cy.get('@getInputs').eq(1).should('exist').type('test@gmail.com')
+            cy.get('@getInputs').eq(2).should('exist').type('password123123')
 
             cy.get('button').contains('Sign up').click()
 
-            cy.contains('Bad request')
+            cy.contains('Username or email already exists')
         })
     })
 
