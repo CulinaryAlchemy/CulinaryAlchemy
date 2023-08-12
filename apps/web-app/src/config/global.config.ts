@@ -1,7 +1,7 @@
 const config = {
   baseURL: {
     frontend: 'http://localhost:5173',
-    backend: import.meta.env.VITE_BACK_BASE_URL as string || 'http://localhost:3000' // Update this on production by add env
+    backend: import.meta.env.VITE_BACK_BASE_URL as string || 'https://culinaryalchemy.onrender.com' // Update this on production by add env
   },
   localStorage: {
     auth: {

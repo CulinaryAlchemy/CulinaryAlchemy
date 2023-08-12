@@ -10,10 +10,19 @@ const login = () => {
 
         window.localStorage.setItem('accesss23', token)
         window.localStorage.setItem('user-data', JSON.stringify(user))
-        cy.visit('http://localhost:5173/')
+
+        const homePath = Cypress.env('routes').front.home
+        cy.visit(homePath)
     })
 }
 
+const checkServer = () => {
+    cy.log('check if the server is on')
+
+    cy.request('GET','https://culinaryalchemy.onrender.com/user/username/culinaryalchemy')
+}
+
 Cypress.Commands.addAll({
-    login
+    login,
+    checkServer
 })
