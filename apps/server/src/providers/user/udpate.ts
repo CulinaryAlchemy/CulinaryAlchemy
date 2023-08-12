@@ -1,4 +1,4 @@
-import { User } from '../../db/models';
+import { User } from '../../models';
 
 export const updateUser = async (
 	id: string,
@@ -24,7 +24,7 @@ export const updateUser = async (
 		let user = await User.findByPk(id);
 
 		if (!user || user.isDeleted) {
-			return Promise.reject('');
+			return Promise.reject('user is already deleted or does not exist');
 		}
 
 		if (username) {
@@ -62,6 +62,6 @@ export const updateUser = async (
 		return Promise.resolve('');
 	} catch (error) {
 		console.log(error);
-		return Promise.reject('');
+		return Promise.reject(error);
 	}
 };

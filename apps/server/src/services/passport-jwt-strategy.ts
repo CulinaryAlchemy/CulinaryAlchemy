@@ -21,6 +21,7 @@ const jwtVerify = async (payload: any, done: DoneCallback) => {
 		if (!userFromDb) {
 			return done(null, false);
 		}
+		
 		done(null, userFromDb);
 	} catch (error) {
 		return done(null, false);

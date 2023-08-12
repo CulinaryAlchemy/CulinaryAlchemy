@@ -23,9 +23,10 @@ export class ApiResponse {
 	static error(
 		statusCode: number,
 		message?: string,
-		details?: any
+		details?: any,
+		invalidAreas: any[] | null = null
 	): ApiResponse {
-		const error = new ApiResponseError(statusCode, message, details);
+		const error = new ApiResponseError(statusCode, message, details, invalidAreas);
 		return new ApiResponse(false, statusCode, null, error);
 	}
 }
@@ -34,10 +35,12 @@ export class ApiResponseError {
 	private statusCode: number;
 	private message?: string;
 	private details?: any;
+	private invalidAreas?: any[] | null;
 
-	constructor(statusCode: number, message?: string, details?: any) {
+	constructor(statusCode: number, message?: string, details?: any, invalidAreas: any[] | null = null) {
 		this.statusCode = statusCode;
 		this.message = message;
 		this.details = details;
+		this.invalidAreas = invalidAreas;
 	}
 }
