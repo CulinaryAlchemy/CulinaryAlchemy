@@ -1,6 +1,5 @@
 import { authContext } from '@/context'
 import { useAuth } from '@/hooks'
-import React from 'react'
 
 interface IProps {
   children: React.ReactNode

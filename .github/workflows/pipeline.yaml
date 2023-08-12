@@ -21,6 +21,7 @@ jobs:
         run: pnpm --filter web-app install
       - name: Lint
         run: pnpm -r lint
+
   test2e2:
     runs-on: ubuntu-latest
     steps:
