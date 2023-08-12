@@ -38,7 +38,7 @@ CulinaryAlchemy is an online platform that aims to revolutionize the way people 
 
 - **Backend:**
   - main:
-    - Node.js, Express, Sequelize, SQLite, and Typescript.
+    - Node.js, Express, Sequelize, Postgress, and Typescript.
   - extra:
     - express validator: validate request params & body
     - bcrypt: encrypt passwords
