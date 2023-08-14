@@ -1,4 +1,4 @@
-import { Loading, Tweet } from '@/components'
+import { Loading } from '@/components'
 import { MessageLayout } from '@/layouts'
 import Box from '@mui/joy/Box'
 import DefaultUIPanel from '@mui/joy/TabPanel'
@@ -14,18 +14,7 @@ export const TabPanel: React.FC<IProps> = ({ value, loading = true, children }) 
       {
         loading
           ? <TabPanelLoading />
-          : <>
-            {children}
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-          </>
+          : children
       }
 
     </DefaultUIPanel>

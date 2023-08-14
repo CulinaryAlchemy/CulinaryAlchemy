@@ -42,7 +42,10 @@ export const useLocalAuth = () => {
 
     const { token, user } = responseSignIn.data.data
 
+    if (token == null || user == null) return
+
     setIsAuth(true)
+    setUser(user)
 
     saveSession({ accesToken: token, userData: user })
   }
