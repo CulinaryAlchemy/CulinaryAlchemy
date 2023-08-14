@@ -1,11 +1,11 @@
-import { useAuthContext } from '@/context'
+import { useGlobalAuth } from '@/hooks'
 import { frontRoutes } from '@/routing'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 export const AuthGuard = () => {
   const { pathname } = useLocation()
 
-  const { isAuth, isLoading } = useAuthContext()
+  const { isAuth, isLoading } = useGlobalAuth()
 
   if (isLoading) {
     return <h1>Loading </h1>

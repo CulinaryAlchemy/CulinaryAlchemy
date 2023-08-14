@@ -1,11 +1,13 @@
 import { Loading } from '@/components'
 import { GlobalLayout, MessageLayout } from '@/layouts'
 import { type IUser } from '@/models/LOGIC'
-import { NotFound } from '@/pages'
 import Sheet from '@mui/joy/Sheet'
+import { Suspense, lazy } from 'react'
 import { UserHeader, UserMain } from './components'
 import { useUserData } from './hooks/'
 import { metadata } from './metadata'
+
+const NotFoundPage = lazy(() => import('@/pages/NotFound/NotFound'))
 
 const User = () => {
   const { userName, data, isLoading, error } = useUserData()
@@ -19,7 +21,7 @@ const User = () => {
   }
 
   if (data == null) {
-    return <NotFound />
+    return <Suspense><NotFoundPage /></Suspense>
   }
 
   return (

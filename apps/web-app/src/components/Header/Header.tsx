@@ -3,13 +3,12 @@ import Box from '@mui/joy/Box'
 import Stack from '@mui/joy/Stack'
 
 import { AppLink, DropDownMenu } from '@/components'
-import { useAuthContext } from '@/context'
-import { useTranslation } from '@/hooks'
+import { useGlobalAuth, useTranslation } from '@/hooks'
 import { frontRoutes } from '@/routing'
 import { Link } from 'react-router-dom'
 
 export const Header = () => {
-  const { isAuth } = useAuthContext()
+  const { isAuth } = useGlobalAuth()
   const { t } = useTranslation()
 
   return (

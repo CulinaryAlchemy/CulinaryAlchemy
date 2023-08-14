@@ -4,7 +4,7 @@ import { registerUser, signInUser } from '@/services'
 import { clearLocalStorage, getFromLocalStorage, setToLocalStorage } from '@/utils'
 import { useEffect, useState } from 'react'
 
-export const useAuth = () => {
+export const useLocalAuth = () => {
   const [user, setUser] = useState<IUser>()
   const [isAuth, setIsAuth] = useState(false)
   const [isLoading, setLoading] = useState(true)
