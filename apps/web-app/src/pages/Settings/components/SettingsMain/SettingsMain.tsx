@@ -8,9 +8,11 @@ export const SettingsMain = () => {
             <TabsPage
                 tabNames={tabNames}
                 tabPanels={
-                    tabNames.map((tabName) => (
-                        <TabPanel key={tabName} value={tabName} />
-                    ))
+                    <>
+                        <TabPanel value={tabNames[0]} loading={false}>
+                            olaaaaaaa
+                        </TabPanel>
+                    </>
                 }
             />
         </main>

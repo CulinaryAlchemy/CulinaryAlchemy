@@ -25,6 +25,7 @@ const Register = () => {
         onSumbit={handleOnSumbit}
         Header= {<RegisterHeader />}
         Footer={<RegisterFooter />}
+        styles={{ gridColumns: 1 }}
       />
     </GlobalLayout>
   )

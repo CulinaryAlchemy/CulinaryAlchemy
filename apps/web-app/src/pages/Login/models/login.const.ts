@@ -1,5 +1,5 @@
-import { CInputUser, type TInputsFormData } from '@/models/UI'
+import { CInputUser, type TFormInputArray } from '@/models/UI'
 
-export const inputsData: TInputsFormData = [
+export const inputsData: TFormInputArray = [
   CInputUser.email, CInputUser.password
 ]
