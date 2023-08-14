@@ -23,6 +23,7 @@ const Login = () => {
         buttonSumbitName={t('login2')}
         Header={<LoginHeader />}
         Footer={<LoginFooter />}
+        styles={{ gridColumns: 1 }}
       />
     </GlobalLayout>
   )

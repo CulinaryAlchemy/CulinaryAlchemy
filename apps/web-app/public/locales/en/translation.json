@@ -1,4 +1,6 @@
 {
+    "location": "Location",
+    "avatar": "Avatar",
     "sign out": "Sign out",
     "theme": "Theme",
     "language": "Language",
