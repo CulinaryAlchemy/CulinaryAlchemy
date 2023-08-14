@@ -3,7 +3,7 @@ import Avatar from '@mui/joy/Avatar'
 import Box from '@mui/joy/Box'
 import IconButton from '@mui/joy/IconButton'
 
-import { DropDownListOfItems } from '@/components'
+import { DropDownListOfItems } from '@/components/DropDownMenu/components'
 import { useState } from 'react'
 
 export const DropDownMenu = () => {

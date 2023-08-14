@@ -1,4 +1,4 @@
-import { DropDownItem } from '@/components'
+import { DropDownItem } from '@/components/DropDownMenu/components'
 import { useGlobalAuth, useToggleTheme, useToggleTranslation, useTranslation } from '@/hooks'
 import { CThemesModes } from '@/models/UI'
 import { frontRoutes } from '@/routing'

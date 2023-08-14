@@ -1,6 +1,4 @@
 export * from './AppLink/AppLink'
-export * from './DropDownItem/DropDownItem'
-export * from './DropDownListOfItems/DropDownListOfItems'
 export * from './DropDownMenu/DropDownMenu'
 export * from './EditorToolbar/EditorToolbar'
 export * from './Form/Form'
