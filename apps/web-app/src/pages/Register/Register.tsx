@@ -1,8 +1,7 @@
 import { Form } from '@/components'
 import { GlobalLayout } from '@/layouts'
 
-import { useAuthContext } from '@/context'
-import { useTranslation } from '@/hooks'
+import { useGlobalAuth, useTranslation } from '@/hooks'
 import { type IUserRegister } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { RegisterFooter, RegisterHeader } from './components/'
@@ -10,7 +9,7 @@ import { inputsData, registerInputsSchema } from './models'
 
 const Register = () => {
   const { t } = useTranslation()
-  const { signUp } = useAuthContext()
+  const { signUp } = useGlobalAuth()
 
   const handleOnSumbit: SubmitHandler<FieldValues> = (data) => {
     void signUp(data as IUserRegister)

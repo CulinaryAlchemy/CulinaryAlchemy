@@ -1,6 +1,5 @@
 import { DropDownItem } from '@/components'
-import { useAuthContext } from '@/context'
-import { useToggleTheme, useToggleTranslation, useTranslation } from '@/hooks'
+import { useGlobalAuth, useToggleTheme, useToggleTranslation, useTranslation } from '@/hooks'
 import { CThemesModes } from '@/models/UI'
 import { frontRoutes } from '@/routing'
 
@@ -13,7 +12,7 @@ export const DropDownListOfItems = () => {
   const { t } = useTranslation()
   const { actualMode, toggleTheme } = useToggleTheme()
   const { language, toggleTranslation } = useToggleTranslation()
-  const { signOut } = useAuthContext()
+  const { signOut, user } = useGlobalAuth()
 
   return (
     <List
@@ -30,6 +29,7 @@ export const DropDownListOfItems = () => {
       }}
     >
 
+      <DropDownItem type='link' itemText={t('my profile')} url={frontRoutes.Dynamic.user(user?.username as string)} />
       <DropDownItem type='link' itemText={t('settings')} url={frontRoutes.Static.settings} />
       <ListDivider />
       <DropDownItem

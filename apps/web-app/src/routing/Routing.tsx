@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 
 const LoginPage = lazy(() => import('@/pages/Login/Login'))
-const IndexPage = lazy(() => import('@/pages/Index'))
+const IndexPage = lazy(() => import('@/pages/Index/Index'))
 const NotFoundPage = lazy(() => import('@/pages/NotFound/NotFound'))
 const RegisterPage = lazy(() => import('@/pages/Register/Register'))
 const UserPage = lazy(() => import('@/pages/User/User'))
