@@ -1,6 +1,6 @@
 # CulinaryAlchemy
 
-[![pipeline](https://github.com/CulinaryAlchemy/CulinaryAlchemy/actions/workflows/pipeline.yaml/badge.svg?branch=main)](https://github.com/CulinaryAlchemy/CulinaryAlchemy/actions/workflows/pipeline.yaml)
+[![pipeline](https://github.com/CulinaryAlchemy/CulinaryAlchemy/actions/workflows/pipeline.yaml/badge.svg)](https://github.com/CulinaryAlchemy/CulinaryAlchemy/actions/workflows/pipeline.yaml)
 
 CulinaryAlchemy is an online platform that aims to revolutionize the way people discover, share, and explore recipes. It provides a vibrant and inclusive community for individuals with diverse dietary needs, home cooks, and food enthusiasts. Our mission is to inspire, connect, and empower users through the sharing and discovery of culinary creations, promoting creativity and healthy eating choices.
 
