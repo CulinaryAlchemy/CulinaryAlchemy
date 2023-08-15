@@ -69,6 +69,36 @@ const DietaryProvider = {
 			return Promise.reject(error);
 		}
 	},
+	put: async (
+		id: number,
+		{
+			title,
+			description,
+		}: {
+			title: string;
+			description: string;
+		}
+	) => {
+		try {
+			// check if dietary exist
+			const doesDietaryExist = await Dietary.findByPk(id);
+			if (!doesDietaryExist) {
+				return Promise.reject('Dietary does not exist');
+			}
+
+			// update
+			if (title) {
+				await doesDietaryExist.update({ title });
+			}
+			if (description) {
+				await doesDietaryExist.update({ description });
+			}
+
+			return Promise.resolve();
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	},
 };
 
 export { DietaryProvider };
