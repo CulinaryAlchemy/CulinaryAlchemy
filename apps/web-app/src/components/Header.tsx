@@ -12,7 +12,7 @@ export const Header = () => {
   const { t } = useTranslation()
 
   return (
-    <>
+    <header>
       <Stack sx={{ position: 'relative' }} padding='1em' direction='row' justifyContent='center' alignItems='center'>
         <Link to={frontRoutes.Static.index} style={{ color: 'inherit' }}>
           <RestaurantRounded sx={{ fontSize: '2.7em' }} />
@@ -27,6 +27,6 @@ export const Header = () => {
         </Box>
       </Stack>
 
-    </>
+    </header>
   )
 }

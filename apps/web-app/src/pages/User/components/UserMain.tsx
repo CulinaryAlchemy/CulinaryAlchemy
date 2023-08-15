@@ -1,18 +1,18 @@
 
 import { TabPanel, TabsPage } from '@/components'
-import { t } from 'i18next'
+import { CTabsData } from '@/pages/User/models/UI/'
 
-const tabs = [t('recipes'), t('tweets')]
+
 
 export const UserMain = () => {
   return (
         <main>
             <TabsPage
-                tabNames={tabs}
+                tabsData={Object.values(CTabsData)}
                 tabPanels={
                     <>
-                        {tabs.map((tabName) => (
-                            <TabPanel key={tabName} value={tabName} />
+                        {Object.values(CTabsData).map((tabName) => (
+                            <TabPanel key={tabName.name} value={tabName.name} />
                         ))}
                     </>
                 }

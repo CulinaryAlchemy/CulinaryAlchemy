@@ -1,3 +1,4 @@
+import { type TTabArray } from '@/models/UI'
 import Box from '@mui/joy/Box'
 import Tab, { tabClasses } from '@mui/joy/Tab'
 import TabList from '@mui/joy/TabList'
@@ -5,11 +6,11 @@ import Tabs from '@mui/joy/Tabs'
 import React, { useState } from 'react'
 
 interface IProps {
-  tabNames: string[]
+  tabsData: TTabArray
   tabPanels: React.ReactNode
 }
-export const TabsPage: React.FC<IProps> = ({ tabNames, tabPanels }) => {
-  const [index, setIndex] = useState(tabNames[0])
+export const TabsPage: React.FC<IProps> = ({ tabsData, tabPanels }) => {
+  const [index, setIndex] = useState(tabsData[0].name)
 
   return (
     <Box
@@ -59,8 +60,8 @@ export const TabsPage: React.FC<IProps> = ({ tabNames, tabPanels }) => {
             }
           }}
         >
-          {tabNames.map((tabName) => (
-            <Tab key={tabName} value={tabName}>{tabName}</Tab>
+          {tabsData.map((tabData) => (
+            <Tab key={tabData.name} value={tabData.name}>{tabData.traduction}</Tab>
           ))}
         </TabList>
         <Box

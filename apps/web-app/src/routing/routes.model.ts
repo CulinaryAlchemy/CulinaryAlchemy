@@ -28,13 +28,21 @@ const getBackendRoutes = () => {
     auth: {
       signup: '/auth/sign-up',
       signin: '/auth/sign-in'
+    },
+    user: {
+      update: '/user/id/'
     }
 
   }
 
   const Dynamic = {
-    user (userName: string) {
-      return `/user/username/${userName}`
+    user: {
+      get (userName: string) {
+        return `/user/username/${userName}`
+      },
+      update (userId: number) {
+        return `/user/id/${userId}`
+      }
     }
   } as const
 

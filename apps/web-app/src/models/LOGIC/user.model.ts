@@ -1,8 +1,9 @@
 export interface IUser {
   username: string
   name?: string
+  id: number
   email: string
-  avatar?: string
+  avatar?: FileList
   description?: string
   location?: string
   role: Role
@@ -11,7 +12,10 @@ export interface IUser {
   createdAt?: Date
   updatedAt?: Date
   deletedAt?: Date
+  password?: string
 }
+
+export type TUserKey = keyof IUser
 
 export interface Role {
   id: number
@@ -30,3 +34,5 @@ export interface IUserSignIn {
   email: string
   password: string
 }
+
+export type IUserUpdate = Partial<IUser>

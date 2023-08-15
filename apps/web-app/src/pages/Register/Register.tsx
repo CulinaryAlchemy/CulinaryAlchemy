@@ -5,7 +5,7 @@ import { useGlobalAuth, useTranslation } from '@/hooks'
 import { type IUserRegister } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { RegisterFooter, RegisterHeader } from './components/'
-import { inputsData, registerInputsSchema } from './models'
+import { inputsArray, registerInputsSchema } from './models'
 
 const Register = () => {
   const { t } = useTranslation()
@@ -18,13 +18,13 @@ const Register = () => {
   return (
     <GlobalLayout newTitle={t('sign up')}>
       <Form
-        inputsData={inputsData}
+        inputsData={inputsArray}
         schema={registerInputsSchema}
         buttonSumbitName={t('sign up')}
         onSumbit={handleOnSumbit}
         Header= {<RegisterHeader />}
         Footer={<RegisterFooter />}
-        styles={{ gridColumns: 1 }}
+        styles={{ gridColumns: 1, width: '300px' }}
       />
     </GlobalLayout>
   )

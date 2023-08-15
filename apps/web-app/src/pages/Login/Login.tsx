@@ -5,7 +5,7 @@ import { LoginFooter, LoginHeader } from './components'
 import { useGlobalAuth, useTranslation } from '@/hooks'
 import { type IUserSignIn } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
-import { inputsData, loginInputsSchema } from './models'
+import { inputsArray, loginInputsSchema } from './models'
 
 const Login = () => {
   const { t } = useTranslation()
@@ -17,12 +17,12 @@ const Login = () => {
     <GlobalLayout newTitle={t('login')}>
       <Form
         schema={loginInputsSchema}
-        inputsData={inputsData}
+        inputsData={inputsArray}
         onSumbit={handleOnSumbit}
         buttonSumbitName={t('login2')}
         Header={<LoginHeader />}
         Footer={<LoginFooter />}
-        styles={{ gridColumns: 1 }}
+        styles={{ gridColumns: 1, width: '300px' }}
       />
     </GlobalLayout>
   )

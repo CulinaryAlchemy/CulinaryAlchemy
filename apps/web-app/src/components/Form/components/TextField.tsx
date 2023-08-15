@@ -17,6 +17,11 @@ const TextField: React.FC<IProps> = ({ data, error, register }) => {
         <FormControl key={data.name} sx={{ marginBottom: '0.5em' }}>
             <FormLabel>{data.label}</FormLabel>
             <Input
+                sx={{
+                  minWidth: '1px',
+                  '--Input-minWidth': '1px'
+                }}
+                defaultValue={data.defaultValue}
                 type={data.type}
                 placeholder={data.placeholder}
                 {...(error !== '' && { error: true })}
