@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import passport from '../../services/passport-jwt-strategy';
 import { body, query } from 'express-validator';
 
@@ -7,9 +7,7 @@ import { UserController } from '../../controllers/user';
 // validators
 import { idValidator } from '../../middlewares/validators';
 import { authMiddleware } from '../../middlewares';
-import {
-	validateValidationChainResult,
-} from '../../middlewares/validators';
+import { validateValidationChainResult } from '../../middlewares/validators';
 import { upload } from '../../config/multer';
 
 export const userRouter = express.Router();
@@ -17,7 +15,12 @@ export const userRouter = express.Router();
 const passportMiddleware = passport.authenticate('jwt', { session: false });
 
 // user
-userRouter.get('/id/:id', idValidator, validateValidationChainResult, UserController.get.byId);
+userRouter.get(
+	'/id/:id',
+	idValidator,
+	validateValidationChainResult,
+	UserController.get.byId
+);
 
 userRouter.get('/username/:username', UserController.get.byUsername);
 
@@ -33,7 +36,7 @@ userRouter.put(
 	passportMiddleware,
 	authMiddleware,
 	idValidator,
-	body('name').optional().notEmpty().isString(),
+	body('name').optional().notEmpty().isString().isLowercase(),
 	body('password').optional().notEmpty().isString(),
 	body('location').optional().notEmpty().isString(),
 	body('description').optional().notEmpty().isString(),

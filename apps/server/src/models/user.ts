@@ -35,6 +35,9 @@ User.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true,
+			validate: {
+				isLowercase: true
+			}
 		},
 		email: {
 			type: DataTypes.STRING,

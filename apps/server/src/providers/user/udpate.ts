@@ -21,6 +21,7 @@ export const updateUser = async (
 	}
 ) => {
 	try {
+		// eslint-disable-next-line prefer-const
 		let user = await User.findByPk(id);
 
 		if (!user || user.isDeleted) {
