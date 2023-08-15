@@ -5,8 +5,9 @@ export function logsMiddw(req: Request, res: Response, next: NextFunction) {
 		method: req.method,
 		url: req.url,
 		headers: req.headers,
-		params: req.params,
+		query: req.query,
 		body: req.body,
+		params: req.params,
 	});
 	next();
 }

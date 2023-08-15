@@ -1,10 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 
-import { dbSequelize } from '../config/db';
+import { dbSequelize } from '../config/db/db';
 import { Role } from './roles';
 
 import { UserInterface } from '../interfaces/user.interface';
+// import { Dietary } from './dietary';
 
 class User extends Model<UserInterface> implements UserInterface {
 	id!: number;
@@ -109,7 +110,7 @@ User.init(
 			type: DataTypes.INTEGER,
 			allowNull: true,
 			references: {
-				model: 'Roles', // Note that we are using the table name, not the model name
+				model: 'Roles',
 				key: 'id',
 			},
 		},
@@ -121,7 +122,8 @@ User.init(
 );
 
 User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
-
+// User.hasMany(Dietary);
+// Hash password before saving to database
 User.beforeCreate(async (user: User) => {
 	user.password = await bcrypt.hash(user.password, 10);
 });

@@ -13,20 +13,22 @@ export const roleProvider = {
 		},
 		byName: async (name: string): Promise<RoleInterface | null> => {
 			try {
-				const role: RoleInterface | null = await Role.findOne({ where: { name: name } });
+				const role: RoleInterface | null = await Role.findOne({
+					where: { name: name },
+				});
 				return Promise.resolve(role);
 			} catch (error) {
 				return Promise.reject(error);
 			}
-		}
+		},
 	},
 	create: async (roleName: string): Promise<RoleInterface | null> => {
 		try {
 			const doesRoleAlreadyExist = await Role.findOne({
 				where: {
-					name: roleName
-				}
-			})
+					name: roleName,
+				},
+			});
 			if (doesRoleAlreadyExist) {
 				return Promise.resolve(doesRoleAlreadyExist);
 			}
@@ -35,5 +37,5 @@ export const roleProvider = {
 		} catch (error) {
 			return Promise.reject(error);
 		}
-	}
+	},
 };
