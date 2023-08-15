@@ -35,5 +35,4 @@ Dietary.init(
 		timestamps: false,
 	}
 );
-
 export { Dietary };

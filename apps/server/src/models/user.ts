@@ -5,7 +5,7 @@ import { dbSequelize } from '../config/db/db';
 import { Role } from './roles';
 
 import { UserInterface } from '../interfaces/user.interface';
-// import { Dietary } from './dietary';
+import { Dietary } from './dietary';
 
 class User extends Model<UserInterface> implements UserInterface {
 	id!: number;
@@ -120,12 +120,14 @@ User.init(
 		modelName: 'Users',
 	}
 );
-
-User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
-// User.hasMany(Dietary);
 // Hash password before saving to database
 User.beforeCreate(async (user: User) => {
 	user.password = await bcrypt.hash(user.password, 10);
 });
+
+// define user relationships
+User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
+Dietary.belongsToMany(User, { through: 'UserDietary' });
+User.belongsToMany(Dietary, { through: 'UserDietary' });
 
 export { User };
