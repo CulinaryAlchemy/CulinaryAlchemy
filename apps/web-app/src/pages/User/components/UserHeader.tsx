@@ -30,7 +30,7 @@ export const UserHeader: React.FC<IProps> = ({ data, isLoading = false }) => {
       <Stack sx={{ paddingX: '1em', paddingY: '0.5em' }}>
         <Stack direction='row' sx={{ justifyContent: 'space-between', paddingTop: '0.1em' }}>
           <Stack direction='row' alignItems='center' spacing={0.5}>
-            <Sheet variant='outlined' sx={{ width: '8.34375em', height: '8.34375em', borderRadius: '100%', border: '0.125em solid var(--joy-palette-background-surface)', backgroundColor: 'black', marginTop: '-30% !important', overflow: 'hidden' }}>
+            <Sheet variant='outlined' sx={{ width: '8.34375em', height: '8.34375em', borderRadius: '100%', border: '0.125em solid var(--joy-palette-background-surface)', backgroundColor: 'black', marginTop: '-5em !important', overflow: 'hidden' }}>
               <img src="/logo.webp" alt="logo image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
             </Sheet>
             <Typography level='h6'>{data.username}</Typography>

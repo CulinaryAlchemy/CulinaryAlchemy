@@ -15,7 +15,7 @@ const TextArea: React.FC<IProps> = ({ data, error, register }) => {
   return (
     <FormControl>
       <FormLabel>{data.label}</FormLabel>
-      <Textarea {...register} {...(error !== '' && { error: true })} placeholder="Placeholder" minRows={2} />
+      <Textarea {...register} {...(error !== '' && { error: true })} placeholder={data.placeholder} minRows={4} />
       <Error text={error} />
     </FormControl>
   )

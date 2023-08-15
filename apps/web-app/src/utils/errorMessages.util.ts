@@ -7,7 +7,8 @@ export const getValidationError = (code: number) => {
     200: 'OK',
     201: 'Created',
     400: 'Bad request or User registered',
-    409: 'Username or email already exists'
+    409: 'Username or email already exists',
+    401: 'Session expired or Not authorized'
   }
 
   return httpCodes[code]

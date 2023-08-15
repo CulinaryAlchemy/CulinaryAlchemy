@@ -6,11 +6,12 @@ import { type ZodObject, type ZodRawShape } from 'zod'
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button/'
 import Sheet from '@mui/joy/Sheet/'
-import { Suspense } from 'react'
+import { Suspense, type SyntheticEvent } from 'react'
 import { DeterminateInput } from './components'
 
 interface IStyles {
   gridColumns: 1 | 2
+  width: string
 }
 
 interface IForm {
@@ -32,7 +33,8 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
   return (
     <Sheet variant='outlined'
       sx={{
-        width: 300,
+        width: '100%',
+        maxWidth: styles.width,
         mx: 'auto',
         my: 4,
         py: 3,
@@ -50,11 +52,24 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
           {Header}
           <main>
             <Suspense>
-              <Box sx={styles.gridColumns === 1 ? gridFormStyles1 : gridFormStyles2}>
+              <Box sx={[styles.gridColumns === 1 ? gridFormStyles1 : gridFormStyles2, { width: '100%' }]}>
                 {inputsData.map((inputData) => (
                   <DeterminateInput
+                    key={inputData.name}
                     data={inputData}
-                    register={register(inputData.name)}
+                    register={register(inputData.name,
+                      {
+                        setValueAs: (value) => {
+                          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                          return value === '' ? undefined : value
+                        },
+                        onChange: (event: SyntheticEvent) => {
+                          const value = (event.target as HTMLInputElement).value
+
+                          return value !== '' ? value : undefined
+                        }
+                      }
+                    )}
                     error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
                   />
                 ))}

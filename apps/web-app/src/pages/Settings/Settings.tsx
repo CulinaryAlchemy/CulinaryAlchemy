@@ -1,5 +1,5 @@
 import Box from '@mui/joy/Box'
-import { SettingsMain } from './components'
+import { SettingsHeader, SettingsMain } from './components'
 
 const Settings = () => {
   return (
@@ -13,10 +13,9 @@ const Settings = () => {
                     md: '32px'
                   },
                   px: {
-                    xs: 2,
+                    xs: 1,
                     md: 3
                   },
-                  pt: 'var(--main-paddingTop)',
                   pb: {
                     xs: 2,
                     sm: 2,
@@ -26,10 +25,10 @@ const Settings = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   minWidth: 0,
-                  height: '100dvh',
-                  overflow: 'auto'
+                  height: '100dvh'
                 })}
             >
+                <SettingsHeader />
                 <SettingsMain />
             </Box>
         </Box>
