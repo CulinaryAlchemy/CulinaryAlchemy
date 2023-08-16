@@ -5,7 +5,6 @@ import Sheet from '@mui/joy/Sheet'
 import { Suspense, lazy } from 'react'
 import { UserHeader, UserMain } from './components'
 import { useUserData } from './hooks/'
-import { metadata } from './metadata'
 
 const NotFoundPage = lazy(() => import('@/pages/NotFound/NotFound'))
 
@@ -25,7 +24,7 @@ const User = () => {
   }
 
   return (
-    <GlobalLayout newTitle={metadata.title(userName as string)}>
+    <GlobalLayout newTitle={userName as string}>
         <Sheet variant='outlined' sx={{ backgroundColor: 'var(--joy-palette-background-surface)', padding: '0px', maxWidth: '37.5em', margin: 'auto', borderRadius: '0.4em', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
           <UserHeader data={data?.data as IUser} />
           <UserMain />
