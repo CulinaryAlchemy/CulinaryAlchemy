@@ -5,6 +5,7 @@ import { LoginFooter, LoginHeader } from './components'
 import { useGlobalAuth, useTranslation } from '@/hooks'
 import { type IUserSignIn } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
+import { metadata } from './config'
 import { inputsArray, loginInputsSchema } from './models'
 
 const Login = () => {
@@ -14,7 +15,7 @@ const Login = () => {
     void signIn(data as IUserSignIn)
   }
   return (
-    <GlobalLayout newTitle={t('login')}>
+    <GlobalLayout newTitle={metadata.title}>
       <Form
         schema={loginInputsSchema}
         inputsData={inputsArray}

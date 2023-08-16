@@ -5,6 +5,7 @@ import { useGlobalAuth, useTranslation } from '@/hooks'
 import { type IUserRegister } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { RegisterFooter, RegisterHeader } from './components/'
+import { metadata } from './config'
 import { inputsArray, registerInputsSchema } from './models'
 
 const Register = () => {
@@ -16,7 +17,7 @@ const Register = () => {
   }
 
   return (
-    <GlobalLayout newTitle={t('sign up')}>
+    <GlobalLayout newTitle={metadata.title}>
       <Form
         inputsData={inputsArray}
         schema={registerInputsSchema}

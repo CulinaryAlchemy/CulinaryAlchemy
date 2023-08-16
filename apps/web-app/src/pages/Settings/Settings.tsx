@@ -1,8 +1,11 @@
+import { GlobalLayout } from '@/layouts'
 import Box from '@mui/joy/Box'
 import { SettingsMain } from './components'
+import { metadata } from './config'
 
 const Settings = () => {
   return (
+    <GlobalLayout newTitle={metadata.title}>
         <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
             <Box
                 component="main"
@@ -31,6 +34,7 @@ const Settings = () => {
                 <SettingsMain />
             </Box>
         </Box>
+    </GlobalLayout>
   )
 }
 
