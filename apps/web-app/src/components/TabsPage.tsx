@@ -61,7 +61,9 @@ export const TabsPage: React.FC<IProps> = ({ tabsData, tabPanels, styles }) => {
         sx={{
           '--Tabs-gap': '0px',
           display: 'flex',
-          flexDirection: styles.direction
+          flexDirection: {
+            md: styles.direction
+          }
         }}
       >
         <TabList
@@ -71,7 +73,9 @@ export const TabsPage: React.FC<IProps> = ({ tabsData, tabPanels, styles }) => {
             maxWidth: 400,
             mx: 'auto',
             alignSelf: 'flex-start',
-            flexDirection: styles.tabs.names.direction,
+            flexDirection: {
+              md: styles.tabs.names.direction
+            },
             [`& .${tabClasses.root}`]: {
               bgcolor: 'bg.body',
               zIndex: 100,
@@ -80,15 +84,23 @@ export const TabsPage: React.FC<IProps> = ({ tabsData, tabPanels, styles }) => {
               borderRadius: styles.tabs.names.element?.borderRadius,
               height: styles.tabs.names.element?.height,
               '&:hover': {
-                bgcolor: styles.tabs.names.element?.hover?.backgroundColor === 'default' ? 'var(--joy-palette-neutral-outlinedHoverBg, var(--joy-palette-neutral-100, #EBEBEF))' : 'transparent'
+                bgcolor: {
+                  md: styles.tabs.names.element?.hover?.backgroundColor === 'default' ? 'var(--joy-palette-neutral-outlinedHoverBg, var(--joy-palette-neutral-100, #EBEBEF))' : 'transparent'
+                }
               },
               [`&.${tabClasses.selected}`]: {
                 fontWeight: 'lg',
-                borderRight: styles.tabs.names.element?.selected?.borderRight && '0.2em solid var(--joy-palette-primary-500)',
-                bgcolor: styles.tabs.names.element?.selected?.backgroundColor === 'default' ? 'var(--joy-palette-neutral-outlinedHoverBg, var(--joy-palette-neutral-100, #EBEBEF))' : 'transparent',
+                borderRight: {
+                  md: styles.tabs.names.element?.selected?.borderRight && '0.2em solid var(--joy-palette-primary-500)'
+                },
+                bgcolor: {
+                  md: styles.tabs.names.element?.selected?.backgroundColor === 'default' ? 'var(--joy-palette-neutral-outlinedHoverBg, var(--joy-palette-neutral-100, #EBEBEF))' : 'transparent'
+                },
                 '&:before': {
                   content: '""',
-                  display: styles.tabs.names.element?.selected?.underLineDisplay ?? 'block',
+                  display: {
+                    md: styles.tabs.names.element?.selected?.underLineDisplay ?? 'block'
+                  },
                   position: 'absolute',
                   zIndex: 1,
                   bottom: '-1px',
@@ -107,9 +119,11 @@ export const TabsPage: React.FC<IProps> = ({ tabsData, tabPanels, styles }) => {
             <Tab key={tabData.name} value={tabData.name}>{tabData.traduction}</Tab>
           ))}
         </TabList>
-        {styles.direction === 'column' &&
           <Box
             sx={(theme) => ({
+              display: {
+                md: styles.direction === 'row' ? 'none' : 'block'
+              },
               '--bg': theme.vars.palette.background.level3,
               height: '1px',
               background: 'var(--bg)',
@@ -117,7 +131,6 @@ export const TabsPage: React.FC<IProps> = ({ tabsData, tabPanels, styles }) => {
               clipPath: 'inset(0 -100vmax)'
             })}
           />
-        }
         <Box
           sx={(theme) => ({
             '--bg': theme.vars.palette.background.surface,
@@ -125,7 +138,9 @@ export const TabsPage: React.FC<IProps> = ({ tabsData, tabPanels, styles }) => {
             boxShadow: '0 0 0 100vmax var(--bg)',
             clipPath: 'inset(0 -100vmax)',
             flexGrow: 1,
-            borderLeft: styles.borderColor && '0.1em solid var(--joy-palette-neutral-outlinedBorder, var(--joy-palette-neutral-200, #D8D8DF))'
+            borderLeft: {
+              md: styles.borderColor && '0.1em solid var(--joy-palette-neutral-outlinedBorder, var(--joy-palette-neutral-200, #D8D8DF))'
+            }
           })}
         >
           {tabPanels}
