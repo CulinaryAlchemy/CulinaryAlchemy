@@ -18,6 +18,7 @@ export const updateUser = async (
 		password?: string;
 		location?: string;
 		description?: string;
+		dietary?: string[]
 	}
 ) => {
 	try {

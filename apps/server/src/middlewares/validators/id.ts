@@ -1,6 +1,6 @@
 import { param } from 'express-validator';
 
-export const isInt = (value: string) => {
+const isInt = (value: string) => {
 	// check if the value can be converted to an integer
 	const parsedValue = parseInt(value, 10);
 	if (isNaN(parsedValue)) {

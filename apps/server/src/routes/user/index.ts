@@ -9,6 +9,7 @@ import { idValidator } from '../../middlewares/validators';
 import { authMiddleware } from '../../middlewares';
 import { validateValidationChainResult } from '../../middlewares/validators';
 import { upload } from '../../config/multer';
+import { validateDietary } from '../../middlewares/validators/dietary-validator';
 
 export const userRouter = express.Router();
 
@@ -33,15 +34,15 @@ userRouter.get(
 
 userRouter.put(
 	'/:id',
-	passportMiddleware,
-	authMiddleware,
+	// passportMiddleware,
+	// authMiddleware,
 	idValidator,
 	body('name').optional().notEmpty().isString().isLowercase(),
 	body('password').optional().notEmpty().isString(),
 	body('location').optional().notEmpty().isString(),
 	body('description').optional().notEmpty().isString(),
 	body('email').optional().isEmail().notEmpty(),
-	body('dietary').optional().notEmpty().isArray(),
+	validateDietary,
 	validateValidationChainResult,
 	upload.single('avatar'),
 	UserController.put.byId

@@ -78,10 +78,6 @@ const UserController = {
 	},
 	put: {
 		byId: async (req: Request, res: Response) => {
-			const { id } = req.params;
-			const { username, name, email, password, location, description } =
-				req.body;
-			const avatar = req.file;
 			interface Params {
 				username: string;
 				name: string;
@@ -90,7 +86,12 @@ const UserController = {
 				password: string;
 				location: string;
 				description: string;
+				dietary: string[]
 			}
+			const { id } = req.params;
+			const { username, name, email, password, location, description, dietary } =
+				req.body;
+			const avatar = req.file;
 			const params: Params = {
 				username,
 				name,
@@ -98,6 +99,7 @@ const UserController = {
 				password,
 				location,
 				description,
+				dietary
 			};
 
 			const requestParamsLength = getObjectKeys(params);
@@ -110,10 +112,9 @@ const UserController = {
 					null
 				);
 			}
-
 			try {
 				if (avatar) {
-					const avatarUrl = await cloudinaryService.uploadImage(avatar);
+					const avatarUrl = await cloudinaryService.uploadImage(avatar!);
 					params.avatar = avatarUrl;
 				}
 				const finalParams = cleanObjectKeys(params);
