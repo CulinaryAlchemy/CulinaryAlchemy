@@ -12,6 +12,9 @@ import { DeterminateInput } from './components'
 interface IStyles {
   gridColumns: 1 | 2
   width: string
+  border?: 'none'
+  paddingY?: string
+  marginY?: string
 }
 
 interface IForm {
@@ -36,11 +39,12 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
         width: '100%',
         maxWidth: styles.width,
         mx: 'auto',
-        my: 4,
-        py: 3,
+        my: styles.marginY ?? 4,
+        py: styles.paddingY ?? 3,
         px: 2,
         borderRadius: 'sm',
-        boxShadow: 'md'
+        boxShadow: styles.border ?? 'md',
+        border: styles.border
       }}
     >
       <form onSubmit={handleSubmit(onSumbit)} noValidate>

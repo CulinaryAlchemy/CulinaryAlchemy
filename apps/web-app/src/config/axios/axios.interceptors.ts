@@ -5,7 +5,6 @@ import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, ty
 export const setAxiosInterceptors = () => {
   const accessToken = getFromLocalStorage(config.localStorage.auth.accessToken)
 
-  console.log(accessToken)
   const updateHeaders = (request: AxiosRequestConfig) => {
     const newHeaders = {
       Authorization: `Bearer ${accessToken as string}`,

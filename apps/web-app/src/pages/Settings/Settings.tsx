@@ -1,5 +1,5 @@
 import Box from '@mui/joy/Box'
-import { SettingsHeader, SettingsMain } from './components'
+import { SettingsMain } from './components'
 
 const Settings = () => {
   return (
@@ -28,7 +28,6 @@ const Settings = () => {
                   height: '100dvh'
                 })}
             >
-                <SettingsHeader />
                 <SettingsMain />
             </Box>
         </Box>

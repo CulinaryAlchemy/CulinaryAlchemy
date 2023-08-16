@@ -16,6 +16,15 @@ export const UserMain = () => {
                         ))}
                     </>
                 }
+                styles={{
+                  background: 'theme',
+                  direction: 'column',
+                  tabs: {
+                    names: {
+                      direction: 'row'
+                    }
+                  }
+                }}
             />
         </main>
   )

@@ -34,11 +34,17 @@ const AccountTabPanel = () => {
         onSumbit={handleOnSumbit}
         inputsData={inputsArray}
         schema={inputsAccountTabSchema}
-        styles={{ gridColumns: 1, width: '400px' }}
+        styles={{
+          gridColumns: 1,
+          width: '400px',
+          border: 'none',
+          marginY: '1em',
+          paddingY: '0px'
+        }}
         Header={
           <header>
             <Typography level="h3" component="h3">
-              <b>{t('settings')}</b>
+              <b>{t('account')}</b>
             </Typography>
           </header>
         }
