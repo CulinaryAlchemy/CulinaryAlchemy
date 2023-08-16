@@ -32,7 +32,7 @@ userRouter.get(
 );
 
 userRouter.put(
-	'/id/:id',
+	'/:id',
 	passportMiddleware,
 	authMiddleware,
 	idValidator,
@@ -41,6 +41,7 @@ userRouter.put(
 	body('location').optional().notEmpty().isString(),
 	body('description').optional().notEmpty().isString(),
 	body('email').optional().isEmail().notEmpty(),
+	body('dietary').optional().notEmpty().isArray(),
 	validateValidationChainResult,
 	upload.single('avatar'),
 	UserController.put.byId
