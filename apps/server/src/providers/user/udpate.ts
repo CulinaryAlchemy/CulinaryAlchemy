@@ -1,4 +1,5 @@
 import { User } from '../../models';
+import { DietaryProvider } from '../dietary';
 
 export const updateUser = async (
 	id: string,
@@ -10,6 +11,7 @@ export const updateUser = async (
 		password,
 		location,
 		description,
+		dietary,
 	}: {
 		username?: string;
 		name?: string;
@@ -18,7 +20,7 @@ export const updateUser = async (
 		password?: string;
 		location?: string;
 		description?: string;
-		dietary?: string[]
+		dietary?: string[];
 	}
 ) => {
 	try {
@@ -55,6 +57,38 @@ export const updateUser = async (
 
 		if (description) {
 			user.description = description;
+		}
+
+		if (dietary) {
+			let doAllDietaryExist = true;
+			dietary.forEach(async (d) => {
+				try {
+					const doesDietaryExist = await DietaryProvider.get.byId(parseInt(d));
+					if (!doesDietaryExist) {
+						doAllDietaryExist = false;
+					}
+				} catch (error) {
+					return Promise.reject(error);
+				}
+			});
+
+			if (!doAllDietaryExist) {
+				return Promise.reject('dietary does not exist');
+			}
+
+			const errorsArray: Error[] = [];
+			dietary.forEach(async (d) => {
+				try {
+					const dietary = await DietaryProvider.get.byId(parseInt(d));
+					await user?.setDietary(dietary);
+				} catch (error) {
+					errorsArray.push(new Error(error as string));
+				}
+			});
+			if (errorsArray.length > 0) {
+				console.log(errorsArray);
+				return Promise.reject('INTERNAL SERVER ERROR');
+			}
 		}
 
 		await user.validate();

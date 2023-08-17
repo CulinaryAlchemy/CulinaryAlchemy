@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { UserProvider } from '../../providers/user';
 import { sendApiError, sendApiResponse } from '../../utils/index';
 import { HttpStatusCodes } from '../../utils';
-import { cleanObjectKeys, getObjectKeys } from '../../utils/object.utils';
+import { cleanObjectNullKeys, getObjectKeys } from '../../utils/object.utils';
 import { cloudinaryService } from '../../services';
 
 const UserController = {
@@ -117,7 +117,7 @@ const UserController = {
 					const avatarUrl = await cloudinaryService.uploadImage(avatar!);
 					params.avatar = avatarUrl;
 				}
-				const finalParams = cleanObjectKeys(params);
+				const finalParams = cleanObjectNullKeys(params);
 				await UserProvider.updateUser(id, { ...finalParams });
 
 				return sendApiResponse(res, HttpStatusCodes.CREATED, null);

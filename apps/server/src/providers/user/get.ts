@@ -1,4 +1,4 @@
-import { Role, User } from '../../models';
+import { Dietary, Role, User } from '../../models';
 
 export const getUser = {
 	ById: async (id: string, isForInternalServerUse: boolean = false) => {
@@ -20,7 +20,10 @@ export const getUser = {
 					isDeleted: false,
 				},
 				attributes: { exclude: [...excludedPropety] },
-				include: { model: Role, as: 'role' },
+				include: [
+					{ model: Role, as: 'role' },
+					{ model: Dietary, as: 'Dietary' },
+				],
 			});
 			return Promise.resolve(user);
 		} catch (error) {
@@ -82,7 +85,7 @@ export const getUser = {
 			return Promise.reject(error);
 		}
 	},
-	All: async ({ limit, offset }: { limit: number, offset: number }) => {
+	All: async ({ limit, offset }: { limit: number; offset: number }) => {
 		try {
 			const users = await User.findAll({
 				attributes: ['id'],

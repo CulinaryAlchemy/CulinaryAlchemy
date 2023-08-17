@@ -1,4 +1,4 @@
-import { DataTypes, Model } from 'sequelize';
+import { Association, DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 
 import { dbSequelize } from '../config/db/db';
@@ -36,8 +36,8 @@ User.init(
 			allowNull: false,
 			unique: true,
 			validate: {
-				isLowercase: true
-			}
+				isLowercase: true,
+			},
 		},
 		email: {
 			type: DataTypes.STRING,
@@ -128,9 +128,8 @@ User.beforeCreate(async (user: User) => {
 	user.password = await bcrypt.hash(user.password, 10);
 });
 
-// define user relationships
 User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
-Dietary.belongsToMany(User, { through: 'UserDietary' });
-User.belongsToMany(Dietary, { through: 'UserDietary' });
+User.hasMany(Dietary);
+
 
 export { User };
