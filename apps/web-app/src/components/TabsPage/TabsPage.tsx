@@ -34,14 +34,15 @@ interface IStyles {
 }
 
 interface IProps {
+  defaultTab: string
   type: TTabPageType
   tabsData: TTabArray
   tabPanels: React.ReactNode
   styles: IStyles
 }
 
-export const TabsPage: React.FC<IProps> = ({ type, tabsData, tabPanels, styles }) => {
-  const [index, setIndex] = useState(tabsData[0].name)
+export const TabsPage: React.FC<IProps> = ({ defaultTab, type, tabsData, tabPanels, styles }) => {
+  const [index, setIndex] = useState(defaultTab)
 
   return (
     <Box
@@ -57,6 +58,7 @@ export const TabsPage: React.FC<IProps> = ({ type, tabsData, tabPanels, styles }
       }}
     >
       <Tabs
+        component={Box}
         aria-label="Pipeline"
         value={index}
         onChange={(event, value) => { if (event != null) setIndex(value as string) }}
@@ -118,14 +120,15 @@ export const TabsPage: React.FC<IProps> = ({ type, tabsData, tabPanels, styles }
           }}
         >
           {
-            tabsData.map((tabData) => (
-              <TabListElement
+            tabsData.map((tabData, index) => {
+              if (index === 0) return null
+              return (<TabListElement
                 type={type}
                 key={tabData.name}
                 tabData={tabData}
                 to={tabData.to}
-              />
-            ))
+              />)
+            })
           }
         </TabList>
         <Box
@@ -147,6 +150,10 @@ export const TabsPage: React.FC<IProps> = ({ type, tabsData, tabPanels, styles }
             boxShadow: '0 0 0 100vmax var(--bg)',
             clipPath: 'inset(0 -100vmax)',
             flexGrow: 1,
+            justifyContent: 'center',
+            maxWidth: '29.875em',
+            width: '100%',
+            margin: 'auto',
             borderLeft: {
               md: styles.borderColor && '0.1em solid var(--joy-palette-neutral-outlinedBorder, var(--joy-palette-neutral-200, #D8D8DF))'
             }

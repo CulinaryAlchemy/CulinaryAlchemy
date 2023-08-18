@@ -26,9 +26,7 @@ const Settings = () => {
                   },
                   flex: 1,
                   display: 'flex',
-                  flexDirection: 'column',
-                  minWidth: 0,
-                  height: '100dvh'
+                  flexDirection: 'column'
                 })}
             >
                 <SettingsMain />

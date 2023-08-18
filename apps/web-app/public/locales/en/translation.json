@@ -1,4 +1,5 @@
 {
+    "home": "Home",
     "account": "Account",
     "save": "Save",
     "my profile": "My profile",
@@ -18,7 +19,9 @@
     "username": "Username",
     "password": "Password",
     "email": "Email",
+    "welcome to settings page": "Welcome to the settings page!",
     "do you already have an account?": "Do you already have an account?",
+    "settings default message": "Here you can personalize your experience according to your preferences. Below, you will find several options to adjust your account and make this platform adapt to you.",
     "login": "Log in",
     "login2": "Log in",
     "don't have an account?": "Don't have an account?"
