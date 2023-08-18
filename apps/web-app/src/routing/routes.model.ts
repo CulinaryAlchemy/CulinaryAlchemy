@@ -1,6 +1,7 @@
 const getFrontendRoutes = () => {
   const BaseRoutes = {
-    user: '/'
+    user: '/',
+    settings: '/settings'
   } as const
 
   const Static = {
@@ -11,7 +12,19 @@ const getFrontendRoutes = () => {
     },
     user: BaseRoutes.user + ':userName',
     notFound: '*',
-    settings: '/settings'
+    settings: {
+      home: {
+        absolute: BaseRoutes.settings
+      },
+      account: {
+        absolute: BaseRoutes.settings + '/account',
+        relative: 'account'
+      },
+      test: {
+        absolute: BaseRoutes.settings + '/test',
+        relative: 'test'
+      }
+    }
   }
 
   const Dynamic = {
@@ -49,5 +62,5 @@ const getBackendRoutes = () => {
   return { Static, Dynamic }
 }
 
-export const frontRoutes = getFrontendRoutes()
-export const backRoutes = getBackendRoutes()
+export const CFrontRoutes = getFrontendRoutes()
+export const CBackRoutes = getBackendRoutes()

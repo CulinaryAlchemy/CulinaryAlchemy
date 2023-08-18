@@ -1,6 +1,7 @@
-import { type TTabArray } from '@/models/UI'
+import { TabListElement } from '@/components/TabsPage/components'
+import { type TTabArray, type TTabPageType } from '@/models/UI'
 import Box from '@mui/joy/Box'
-import Tab, { tabClasses } from '@mui/joy/Tab'
+import { tabClasses } from '@mui/joy/Tab'
 import TabList from '@mui/joy/TabList'
 import Tabs from '@mui/joy/Tabs'
 import React, { useState } from 'react'
@@ -33,12 +34,13 @@ interface IStyles {
 }
 
 interface IProps {
+  type: TTabPageType
   tabsData: TTabArray
   tabPanels: React.ReactNode
   styles: IStyles
 }
 
-export const TabsPage: React.FC<IProps> = ({ tabsData, tabPanels, styles }) => {
+export const TabsPage: React.FC<IProps> = ({ type, tabsData, tabPanels, styles }) => {
   const [index, setIndex] = useState(tabsData[0].name)
 
   return (
@@ -115,22 +117,29 @@ export const TabsPage: React.FC<IProps> = ({ tabsData, tabPanels, styles }) => {
             }
           }}
         >
-          {tabsData.map((tabData) => (
-            <Tab key={tabData.name} value={tabData.name}>{tabData.traduction}</Tab>
-          ))}
+          {
+            tabsData.map((tabData) => (
+              <TabListElement
+                type={type}
+                key={tabData.name}
+                tabData={tabData}
+                to={tabData.to}
+              />
+            ))
+          }
         </TabList>
-          <Box
-            sx={(theme) => ({
-              display: {
-                md: styles.direction === 'row' ? 'none' : 'block'
-              },
-              '--bg': theme.vars.palette.background.level3,
-              height: '1px',
-              background: 'var(--bg)',
-              boxShadow: '0 0 0 100vmax var(--bg)',
-              clipPath: 'inset(0 -100vmax)'
-            })}
-          />
+        <Box
+          sx={(theme) => ({
+            display: {
+              md: styles.direction === 'row' ? 'none' : 'block'
+            },
+            '--bg': theme.vars.palette.background.level3,
+            height: '1px',
+            background: 'var(--bg)',
+            boxShadow: '0 0 0 100vmax var(--bg)',
+            clipPath: 'inset(0 -100vmax)'
+          })}
+        />
         <Box
           sx={(theme) => ({
             '--bg': theme.vars.palette.background.surface,

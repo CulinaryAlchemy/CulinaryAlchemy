@@ -1,7 +1,7 @@
 import { DropDownItem } from '@/components/DropDownMenu/components'
 import { useGlobalAuth, useToggleTheme, useToggleTranslation, useTranslation } from '@/hooks'
 import { CThemesModes } from '@/models/UI'
-import { frontRoutes } from '@/routing'
+import { CFrontRoutes } from '@/routing'
 
 import DarkMode from '@mui/icons-material/DarkMode'
 import LightMode from '@mui/icons-material/LightMode'
@@ -29,8 +29,8 @@ export const DropDownListOfItems = () => {
       }}
     >
 
-      <DropDownItem type='link' itemText={t('my profile')} url={frontRoutes.Dynamic.user(user?.username as string)} />
-      <DropDownItem type='link' itemText={t('settings')} url={frontRoutes.Static.settings} />
+      <DropDownItem type='link' itemText={t('my profile')} url={CFrontRoutes.Dynamic.user(user?.username as string)} />
+      <DropDownItem type='link' itemText={t('settings')} url={CFrontRoutes.Static.settings.home.absolute} />
       <ListDivider />
       <DropDownItem
         type='button'
