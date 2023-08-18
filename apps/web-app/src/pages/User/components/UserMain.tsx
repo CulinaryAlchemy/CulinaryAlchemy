@@ -8,6 +8,7 @@ export const UserMain = () => {
   return (
         <main>
             <TabsPage
+                defaultTab={CTabsData.recipes.name}
                 type='no-routing'
                 tabsData={Object.values(CTabsData)}
                 tabPanels={

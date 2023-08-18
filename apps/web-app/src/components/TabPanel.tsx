@@ -4,7 +4,7 @@ import Box from '@mui/joy/Box'
 import DefaultUIPanel from '@mui/joy/TabPanel'
 
 interface IProps {
-  value: string
+  value?: string
   loading?: boolean
   children?: React.ReactNode
 }

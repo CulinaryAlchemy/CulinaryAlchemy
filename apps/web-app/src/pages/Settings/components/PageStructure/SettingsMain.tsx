@@ -2,12 +2,18 @@ import { TabsPage } from '@/components'
 import { CTabsData } from '@/pages/Settings/models/UI'
 import { SettingsRouting } from '@/pages/Settings/routing'
 import Box from '@mui/joy/Box'
+import { useLocation } from 'react-router-dom'
 
 export const SettingsMain = () => {
+  const loc = useLocation()
+
+  const defaultTabName = Object.values(CTabsData).find((tabData) => tabData.to?.includes(loc.pathname))?.name ?? CTabsData.home.name
+
   return (
     <main>
       <Box>
         <TabsPage
+          defaultTab={defaultTabName}
           type='routing'
           tabsData={Object.values(CTabsData)}
           tabPanels={

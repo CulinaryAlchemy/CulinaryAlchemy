@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && tsc --noemit",
     "preview": "NODE_ENV=production vite preview",
     "stop:dev-test": "pkill -f \"pnpm dev\"",
     "test:2e2:dev": "NODE_ENV=development pnpm dev & cypress open; pnpm stop:dev-test",
