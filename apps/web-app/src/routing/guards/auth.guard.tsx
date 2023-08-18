@@ -1,5 +1,5 @@
 import { useGlobalAuth } from '@/hooks'
-import { frontRoutes } from '@/routing'
+import { CFrontRoutes } from '@/routing'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 export const AuthGuard = () => {
@@ -11,18 +11,18 @@ export const AuthGuard = () => {
     return <h1>Loading </h1>
   }
 
-  if (isAuth && Object.values(frontRoutes.Static.auth).includes(pathname)) {
-    return <Navigate to={frontRoutes.Static.index} />
+  if (isAuth && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {
+    return <Navigate to={CFrontRoutes.Static.index} />
   }
 
   if (isAuth) {
     return <Outlet />
   }
 
-  if (!isAuth && Object.values(frontRoutes.Static.auth).includes(pathname)) {
+  if (!isAuth && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {
     return <Outlet />
   }
 
 
-  return <Navigate to={frontRoutes.Static.auth.login} />
+  return <Navigate to={CFrontRoutes.Static.auth.login} />
 }

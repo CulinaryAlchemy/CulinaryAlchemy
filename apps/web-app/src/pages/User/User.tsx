@@ -25,11 +25,11 @@ const User = () => {
 
   return (
     <GlobalLayout newTitle={userName as string}>
-        <Sheet variant='outlined' sx={{ backgroundColor: 'var(--joy-palette-background-surface)', padding: '0px', maxWidth: '37.5em', margin: 'auto', borderRadius: '0.4em', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-          <UserHeader data={data?.data as IUser} />
-          <UserMain />
+      <Sheet variant='outlined' sx={{ backgroundColor: 'var(--joy-palette-background-surface)', padding: '0px', maxWidth: '37.5em', margin: 'auto', borderRadius: '0.4em', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <UserHeader data={data?.data as IUser} />
+        <UserMain />
 
-        </Sheet>
+      </Sheet>
     </GlobalLayout>
   )
 }
