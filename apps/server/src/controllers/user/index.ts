@@ -52,7 +52,7 @@ const UserController = {
 		byId: async (req: Request, res: Response) => {
 			const { id } = req.params;
 			try {
-				const user = await UserProvider.getUser.ById(id);
+				const user = await UserProvider.getUser.ById(parseInt(id));
 				if (!user) {
 					return sendApiError(res, HttpStatusCodes.NOT_FOUND);
 				}
@@ -87,7 +87,6 @@ const UserController = {
 				password: string;
 				location: string;
 				description: string;
-				dietary: string[];
 			}
 			const { id } = req.params;
 			const {
@@ -97,7 +96,6 @@ const UserController = {
 				password,
 				location,
 				description,
-				dietary,
 			} = req.body;
 			const avatar = req.file;
 			const params: Params = {
@@ -107,7 +105,6 @@ const UserController = {
 				password,
 				location,
 				description,
-				dietary,
 			};
 
 			const requestParamsLength = getObjectKeys(params);

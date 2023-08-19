@@ -1,6 +1,6 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
-import { UserProvider } from '../providers/user';
+import { UserProvider } from '../../providers/user';
 import passport, { DoneCallback } from 'passport';
 
 const secret = process.env.JWT_SECRET;
@@ -21,7 +21,7 @@ const jwtVerify = async (payload: any, done: DoneCallback) => {
 		if (!userFromDb) {
 			return done(null, false);
 		}
-		
+
 		done(null, userFromDb);
 	} catch (error) {
 		return done(null, false);
@@ -32,4 +32,5 @@ const jwtStrategy = new Strategy(jwtOptions, jwtVerify);
 
 passport.use('jwt', jwtStrategy);
 
-export default passport;
+const passportMiddleware = passport.authenticate('jwt', { session: false });
+export { passportMiddleware };

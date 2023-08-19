@@ -1,4 +1,4 @@
-import { rolesControllers } from '../../controllers/roles';
+import { rolesControllers } from '../../controllers/user/roles';
 import express from 'express';
 // validators
 import { idValidator } from '../../middlewares/validators';

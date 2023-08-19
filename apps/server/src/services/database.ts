@@ -6,7 +6,7 @@ import { DietaryInterface } from '../interfaces/dietary.interface';
 
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { DietaryProvider } from '../providers/dietary';
+import { DietaryProvider } from '../providers/user/dietary';
 
 async function syncDb() {
 	try {

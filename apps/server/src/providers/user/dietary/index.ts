@@ -1,6 +1,60 @@
-import { Dietary } from '../../models/user/index';
+import { UserProvider } from '..';
+import { Dietary, UserDietary } from '../../../models/user';
 
-const DietaryProvider = {
+export const DietaryProvider = {
+	Associations: {
+		addToUser: async (dietaryId: number, userId: number) => {
+			// we verify the dietary and the user exist
+			let doBothExist = false;
+			try {
+				const dietary = await DietaryProvider.get.byId(dietaryId);
+				const user = await UserProvider.getUser.ById(userId);
+
+				if (dietary && user) {
+					doBothExist = true;
+				}
+			} catch (error) {
+				return Promise.reject(error);
+			}
+
+			// if it doesnt exist, we reject the promise
+			if (!doBothExist) {
+				return Promise.reject('dietary does not exist');
+			}
+
+			// we check if the user already has the dietary
+			let doesTheUserAlreadyHaveTheDietary = true;
+			try {
+				const userDietary = await UserDietary.findOne({
+					where: {
+						userId: userId,
+						dietaryId: dietaryId,
+					},
+				});
+				if (!userDietary) {
+					doesTheUserAlreadyHaveTheDietary = false;
+				}
+			} catch (error) {
+				return Promise.reject('internal server error');
+			}
+
+			if (doesTheUserAlreadyHaveTheDietary) {
+				return Promise.reject('user already has the dietary');
+			}
+
+			// we associate the dietary with he user
+			try {
+				UserDietary.create({
+					userId: userId,
+					dietaryId: dietaryId,
+				});
+			} catch (error) {
+				return Promise.reject('internal server error');
+			}
+			return Promise.resolve();
+		},
+		// removeFromUser: async (dietaryId: number, userId: number) => {},
+	},
 	get: {
 		byId: async (dietaryId: number) => {
 			try {
@@ -100,5 +154,3 @@ const DietaryProvider = {
 		}
 	},
 };
-
-export { DietaryProvider };

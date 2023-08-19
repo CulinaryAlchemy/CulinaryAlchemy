@@ -1,7 +1,7 @@
 import { Role, User, UserDietary } from '../../models/user/index';
 
 export const getUser = {
-	ById: async (id: string, isForInternalServerUse: boolean = false) => {
+	ById: async (id: number, isForInternalServerUse: boolean = false) => {
 		let excludedPropety: string[] = [];
 		if (!isForInternalServerUse) {
 			excludedPropety = [

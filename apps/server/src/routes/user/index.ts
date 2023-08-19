@@ -1,6 +1,6 @@
 import express from 'express';
-import passport from '../../services/passport-jwt-strategy';
-import { body, query } from 'express-validator';
+import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
+import { body, param, query } from 'express-validator';
 
 // controllers
 import { UserController } from '../../controllers/user';
@@ -10,10 +10,9 @@ import { authMiddleware } from '../../middlewares';
 import { validateValidationChainResult } from '../../middlewares/validators';
 import { upload } from '../../config/multer';
 import { validateDietary } from '../../middlewares/validators/dietary-validator';
+import { dietaryController } from '../../controllers/user/dietary';
 
 export const userRouter = express.Router();
-
-const passportMiddleware = passport.authenticate('jwt', { session: false });
 
 // user
 userRouter.get(
@@ -34,15 +33,14 @@ userRouter.get(
 
 userRouter.put(
 	'/:id',
-	// passportMiddleware,
-	// authMiddleware,
+	passportMiddleware,
+	authMiddleware,
 	idValidator,
 	body('name').optional().notEmpty().isString().isLowercase(),
 	body('password').optional().notEmpty().isString(),
 	body('location').optional().notEmpty().isString(),
 	body('description').optional().notEmpty().isString(),
 	body('email').optional().isEmail().notEmpty(),
-	validateDietary,
 	validateValidationChainResult,
 	upload.single('avatar'),
 	UserController.put.byId
@@ -55,4 +53,16 @@ userRouter.delete(
 	passportMiddleware,
 	authMiddleware,
 	UserController.delete.ById
+);
+
+// user dietaries
+userRouter.post(
+	'/dietary/:id',
+	passportMiddleware,
+	authMiddleware,
+	body('dietaryId').notEmpty().isInt(),
+	param('id').notEmpty().isInt(),
+	validateDietary,
+	validateValidationChainResult,
+	dietaryController.post
 );
