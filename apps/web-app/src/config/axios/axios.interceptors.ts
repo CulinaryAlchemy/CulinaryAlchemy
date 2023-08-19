@@ -3,11 +3,14 @@ import { getFromLocalStorage, getValidationError, toastUtils } from '@/utils'
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
 
 export const setAxiosInterceptors = () => {
-  const accessToken = getFromLocalStorage(config.localStorage.auth.accessToken)
+  const getAccessToken = () => {
+    const accessToken = getFromLocalStorage(config.localStorage.auth.accessToken)
+    return accessToken
+  }
 
   const updateHeaders = (request: AxiosRequestConfig) => {
     const newHeaders = {
-      Authorization: `Bearer ${accessToken as string}`,
+      Authorization: `Bearer ${getAccessToken() as string}`,
       'Content-Type': 'application/json'
     }
 
@@ -19,7 +22,7 @@ export const setAxiosInterceptors = () => {
   axios.interceptors.request.use((request) => {
     toastUtils.success('request sended')
     console.log({ request })
-    if (accessToken == null || request.url == null || request.url.includes('static-file paths')) return request
+    if (getAccessToken() == null || request.url == null || request.url.includes('static-file paths')) return request
 
     const newRequest = updateHeaders(request) as InternalAxiosRequestConfig
 
