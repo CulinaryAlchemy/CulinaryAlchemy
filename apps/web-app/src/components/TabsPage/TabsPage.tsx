@@ -120,8 +120,7 @@ export const TabsPage: React.FC<IProps> = ({ defaultTab, type, tabsData, tabPane
           }}
         >
           {
-            tabsData.map((tabData, index) => {
-              if (index === 0) return null
+            tabsData.map((tabData) => {
               return (<TabListElement
                 type={type}
                 key={tabData.name}
