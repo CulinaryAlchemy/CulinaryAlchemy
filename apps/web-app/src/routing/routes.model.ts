@@ -44,7 +44,8 @@ const getBackendRoutes = () => {
     },
     user: {
       update: '/user/id/'
-    }
+    },
+    health: '/health/live'
 
   }
 

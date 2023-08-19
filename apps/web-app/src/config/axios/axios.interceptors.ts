@@ -1,5 +1,5 @@
 import { config } from '@/config'
-import { getFromLocalStorage, getValidationError, toastUtils } from '@/utils'
+import { checkServerStatus, getFromLocalStorage, getValidationError, toastUtils } from '@/utils'
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
 
 export const setAxiosInterceptors = () => {
@@ -20,7 +20,6 @@ export const setAxiosInterceptors = () => {
   }
 
   axios.interceptors.request.use((request) => {
-    toastUtils.success('request sended')
     console.log({ request })
     if (getAccessToken() == null || request.url == null || request.url.includes('static-file paths')) return request
 
@@ -33,15 +32,19 @@ export const setAxiosInterceptors = () => {
 
   axios.interceptors.response.use(
     (success: AxiosResponse) => {
-      toastUtils.success(getValidationError(success.status))
+      toastUtils.success('OK')
       console.log(success)
       return success
     },
     (error: AxiosError) => {
-      console.error(error)
-      const errorText = (error.response?.status != null) ? getValidationError(error.response?.status) : 'default'
-      toastUtils.error(errorText)
-      return error
+      console.error({ error })
+      if (error.code === 'ERR_NETWORK') {
+        checkServerStatus()
+      } else {
+        const errorText = (error.response?.status != null) ? getValidationError(error.response?.status) : 'no found'
+        toastUtils.error(errorText)
+      }
+      return Promise.reject(error)
     }
   )
 }

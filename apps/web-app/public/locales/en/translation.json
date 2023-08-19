@@ -19,9 +19,11 @@
     "username": "Username",
     "password": "Password",
     "email": "Email",
+    "wait some seconds": "Wait some seconds",
     "welcome to settings page": "Welcome to the settings page!",
     "do you already have an account?": "Do you already have an account?",
     "settings default message": "Here you can personalize your experience according to your preferences. Below, you will find several options to adjust your account and make this platform adapt to you.",
+    "server offline message": "Due to user inactivity, the server is currently offline. Please wait a few moments. Your request will activate the server, but responses may take longer than 30 seconds as we are operating on a limited budget for server resources. Once the message in the bottom right corner of the page displays a checkmark, the server is ready for testing. Thank you very much for reading. ❤️",
     "login": "Log in",
     "login2": "Log in",
     "don't have an account?": "Don't have an account?"

@@ -6,5 +6,6 @@ export * from './Header'
 export * from './Loading'
 export * from './TabPanel'
 export * from './TabsPage/TabsPage'
+export * from './TestServerStatus'
 export * from './Tweet'
 

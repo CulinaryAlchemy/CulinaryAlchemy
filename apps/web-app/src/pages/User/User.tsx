@@ -15,7 +15,7 @@ const User = () => {
     return <MessageLayout><Loading size='lg' /></MessageLayout>
   }
 
-  if (error != null && error.response?.status !== 404) {
+  if (error != null && error.response == null) {
     return <MessageLayout><h1>Something went wrong</h1></MessageLayout>
   }
 
