@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { RoleInterface } from '../../interfaces';
-import { roleProvider } from '../../providers/roles';
+import { roleProvider } from '../../providers/user/roles';
 import { HttpStatusCodes, sendApiError, sendApiResponse } from "../../utils";
 
 export const rolesControllers = {

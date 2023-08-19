@@ -1,4 +1,4 @@
-import { User } from '../../models';
+import { User, UserDietary } from '../../models/user/index';
 import { DietaryProvider } from '../dietary';
 
 export const updateUser = async (
@@ -60,31 +60,37 @@ export const updateUser = async (
 		}
 
 		if (dietary) {
+			// we verify all dietaries exist
 			let doAllDietaryExist = true;
-			dietary.forEach(async (d) => {
+			for (const id of dietary) {
 				try {
-					const doesDietaryExist = await DietaryProvider.get.byId(parseInt(d));
+					const doesDietaryExist = await DietaryProvider.get.byId(parseInt(id));
 					if (!doesDietaryExist) {
 						doAllDietaryExist = false;
 					}
 				} catch (error) {
 					return Promise.reject(error);
 				}
-			});
+			}
 
+			// if they dont exist, we reject the promise
 			if (!doAllDietaryExist) {
 				return Promise.reject('dietary does not exist');
 			}
 
 			const errorsArray: Error[] = [];
-			dietary.forEach(async (d) => {
+			for (const stringId of dietary) {
+				const id = parseInt(stringId);
 				try {
-					const dietary = await DietaryProvider.get.byId(parseInt(d));
-					await user?.setDietary(dietary);
+					// const dietaryFromDb = await DietaryProvider.get.byId(parseInt(id));
+					await UserDietary.create({
+						userId: user.id,
+						dietaryId: id,
+					});
 				} catch (error) {
 					errorsArray.push(new Error(error as string));
 				}
-			});
+			}
 			if (errorsArray.length > 0) {
 				console.log(errorsArray);
 				return Promise.reject('INTERNAL SERVER ERROR');

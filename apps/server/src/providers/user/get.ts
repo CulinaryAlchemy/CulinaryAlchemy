@@ -1,4 +1,4 @@
-import { Dietary, Role, User } from '../../models';
+import { Role, User, UserDietary } from '../../models/user/index';
 
 export const getUser = {
 	ById: async (id: string, isForInternalServerUse: boolean = false) => {
@@ -22,7 +22,11 @@ export const getUser = {
 				attributes: { exclude: [...excludedPropety] },
 				include: [
 					{ model: Role, as: 'role' },
-					{ model: Dietary, as: 'Dietary' },
+					{
+						model: UserDietary,
+						as: 'userDietary',
+						attributes: ['id'],
+					},
 				],
 			});
 			return Promise.resolve(user);

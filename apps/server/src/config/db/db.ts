@@ -1,4 +1,4 @@
-import { Sequelize} from 'sequelize';
+import { Sequelize } from 'sequelize';
 import { getEnvironment } from '../../services';
 
 const { POSTGRESQL_DB_URI, ENVIRONMENT } = getEnvironment();
@@ -9,7 +9,7 @@ if (ENVIRONMENT === 'development') {
 	sslConfig = { require: true, rejectUnauthorized: false };
 }
 
-export const dbSequelize = new Sequelize(POSTGRESQL_DB_URI!, {
+const sequelize = new Sequelize(POSTGRESQL_DB_URI!, {
 	dialect: 'postgres',
 	dialectOptions: {
 		ssl: { ...sslConfig },
@@ -23,3 +23,5 @@ export const dbSequelize = new Sequelize(POSTGRESQL_DB_URI!, {
 		},
 	},
 });
+
+export { sequelize };

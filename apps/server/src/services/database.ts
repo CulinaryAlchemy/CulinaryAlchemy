@@ -1,8 +1,8 @@
-import { dbSequelize } from '../config/db/db';
+import { sequelize } from '../config/db/db';
 import { UserProvider } from '../providers/user';
-import { roleProvider } from '../providers/roles';
+import { roleProvider } from '../providers/user/roles';
 import { getEnvironment } from '.';
-import { DietaryInterface } from '../interfaces/dietary';
+import { DietaryInterface } from '../interfaces/dietary.interface';
 
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -12,10 +12,10 @@ async function syncDb() {
 	try {
 		const { ENVIRONMENT } = getEnvironment();
 		if (ENVIRONMENT === 'development') {
-			await dbSequelize.sync({ force: true });
+			await sequelize.sync({ force: true });
 			console.log('All models were deleted and initialized again successfully');
 		} else {
-			await dbSequelize.sync();
+			await sequelize.sync();
 			console.log('All models were synchronized successfully.');
 		}
 	} catch (error) {
@@ -111,17 +111,16 @@ async function seedDbDietaries() {
 					dietaryPreference.title
 				);
 				if (!doesDietaryExist) {
-					return;
+					console.log(doesDietaryExist);
+					try {
+						await DietaryProvider.post({ ...dietaryPreference });
+					} catch (error) {
+						console.log(error);
+						return Promise.reject();
+					}
 				}
 			} catch (error) {
 				return;
-			}
-
-			try {
-				await DietaryProvider.post({ ...dietaryPreference });
-			} catch (error) {
-				console.log(error);
-				return Promise.reject();
 			}
 		}
 		return Promise.resolve();
@@ -132,7 +131,7 @@ async function seedDbDietaries() {
 
 export async function checkDbHealth() {
 	try {
-		await dbSequelize.authenticate();
+		await sequelize.authenticate();
 		Promise.resolve();
 	} catch (error) {
 		Promise.reject(error);
@@ -141,7 +140,7 @@ export async function checkDbHealth() {
 
 export async function startDatabase() {
 	try {
-		await dbSequelize.authenticate();
+		await sequelize.authenticate();
 		console.log('Connection with databse has been established successfully.');
 
 		await syncDb();

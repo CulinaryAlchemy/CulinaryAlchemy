@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 
-import { dbSequelize } from '../config/db/db';
-import { DietaryInterface } from '../interfaces/dietary';
+import { sequelize } from '../../config/db/db';
+import { DietaryInterface } from '../../interfaces/dietary.interface';
 
 class Dietary extends Model<DietaryInterface> implements DietaryInterface {
 	id!: number;
@@ -30,7 +30,7 @@ Dietary.init(
 		},
 	},
 	{
-		sequelize: dbSequelize,
+		sequelize: sequelize,
 		modelName: 'Dietary',
 		timestamps: false,
 	}

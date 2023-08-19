@@ -59,6 +59,7 @@ const UserController = {
 
 				sendApiResponse(res, HttpStatusCodes.SUCCESS, user);
 			} catch (error) {
+				console.log(error);
 				return sendApiError(res, HttpStatusCodes.NOT_FOUND);
 			}
 		},
@@ -86,11 +87,18 @@ const UserController = {
 				password: string;
 				location: string;
 				description: string;
-				dietary: string[]
+				dietary: string[];
 			}
 			const { id } = req.params;
-			const { username, name, email, password, location, description, dietary } =
-				req.body;
+			const {
+				username,
+				name,
+				email,
+				password,
+				location,
+				description,
+				dietary,
+			} = req.body;
 			const avatar = req.file;
 			const params: Params = {
 				username,
@@ -99,7 +107,7 @@ const UserController = {
 				password,
 				location,
 				description,
-				dietary
+				dietary,
 			};
 
 			const requestParamsLength = getObjectKeys(params);

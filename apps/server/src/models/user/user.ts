@@ -1,11 +1,9 @@
-import { Association, DataTypes, Model } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 
-import { dbSequelize } from '../config/db/db';
-import { Role } from './roles';
+import { sequelize } from '../../config/db/db';
 
-import { UserInterface } from '../interfaces/user.interface';
-import { Dietary } from './dietary';
+import { UserInterface } from '../../interfaces/user.interface';
 
 class User extends Model<UserInterface> implements UserInterface {
 	id!: number;
@@ -119,7 +117,7 @@ User.init(
 		},
 	},
 	{
-		sequelize: dbSequelize,
+		sequelize: sequelize,
 		modelName: 'Users',
 	}
 );
@@ -127,9 +125,5 @@ User.init(
 User.beforeCreate(async (user: User) => {
 	user.password = await bcrypt.hash(user.password, 10);
 });
-
-User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
-User.hasMany(Dietary);
-
 
 export { User };

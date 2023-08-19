@@ -1,4 +1,4 @@
-import { Dietary } from '../../models';
+import { Dietary } from '../../models/user/index';
 
 const DietaryProvider = {
 	get: {

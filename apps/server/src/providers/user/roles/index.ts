@@ -1,5 +1,5 @@
-import { Role } from '../../models';
-import { RoleInterface } from '../../interfaces';
+import { Role } from '../../../models/user/index';
+import { RoleInterface } from '../../../interfaces';
 
 export const roleProvider = {
 	get: {
