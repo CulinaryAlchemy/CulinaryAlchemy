@@ -16,7 +16,10 @@ void i18n
       backends: [
         PrimaryLocalStorageBackend,
         SecondaryHttpBackend
-      ]
+      ],
+      backendOptions: [{
+        expirationTime: 0.5 * 24 * 60 * 60 * 1000 // 12 hours
+      }]
     },
     interpolation: {
       escapeValue: false // not needed for react as it escapes by default
