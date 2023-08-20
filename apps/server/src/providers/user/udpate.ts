@@ -22,9 +22,14 @@ export const updateUser = async (
 ) => {
 	try {
 		// eslint-disable-next-line prefer-const
-		let user = await User.findByPk(id);
+		let user = await User.findOne({
+			where: {
+				id: id,
+				deletedAt: null,
+			},
+		});
 
-		if (!user || user.isDeleted) {
+		if (!user || user.deletedAt) {
 			return Promise.reject('user is already deleted or does not exist');
 		}
 

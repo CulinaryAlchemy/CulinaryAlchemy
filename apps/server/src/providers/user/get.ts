@@ -10,14 +10,13 @@ export const getUser = {
 				'createdAt',
 				'updatedAt',
 				'deletedAt',
-				'isDeleted',
 			];
 		}
 		try {
 			const user = await User.findOne({
 				where: {
 					id: id,
-					isDeleted: false,
+					deletedAt: null,
 				},
 				attributes: { exclude: [...excludedPropety] },
 				include: [
@@ -43,14 +42,13 @@ export const getUser = {
 				'createdAt',
 				'updatedAt',
 				'deletedAt',
-				'isDeleted',
 			];
 		}
 		try {
 			const user = await User.findOne({
 				where: {
 					email: email,
-					isDeleted: false,
+					deletedAt: null,
 				},
 				attributes: { exclude: [...excludedPropety] },
 				include: { model: Role, as: 'role' },
@@ -72,7 +70,6 @@ export const getUser = {
 				'createdAt',
 				'updatedAt',
 				'deletedAt',
-				'isDeleted',
 			];
 		}
 		try {
@@ -80,7 +77,7 @@ export const getUser = {
 				attributes: { exclude: [...excludedPropety] },
 				where: {
 					username: username,
-					isDeleted: false,
+					deletedAt: null,
 				},
 				include: { model: Role, as: 'role' },
 			});
@@ -96,7 +93,7 @@ export const getUser = {
 				limit: limit,
 				offset: offset,
 				where: {
-					isDeleted: false,
+					deletedAt: null,
 				},
 			});
 			return Promise.resolve(users);
@@ -105,5 +102,3 @@ export const getUser = {
 		}
 	},
 };
-
-// REMOVE REJECTION IF THE USER DOESNT EXIST.

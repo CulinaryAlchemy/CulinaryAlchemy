@@ -18,7 +18,6 @@ class User extends Model<UserInterface> implements UserInterface {
 	createdAt!: Date;
 	updatedAt!: Date;
 	deletedAt!: Date;
-	isDeleted!: boolean;
 	roleId!: number | null;
 }
 
@@ -97,14 +96,6 @@ User.init(
 			defaultValue: null,
 			validate: {
 				isDate: true,
-			},
-		},
-		isDeleted: {
-			type: DataTypes.BOOLEAN,
-			defaultValue: false,
-			allowNull: true,
-			validate: {
-				isBoolean: true,
 			},
 		},
 		roleId: {
