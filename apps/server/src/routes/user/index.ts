@@ -48,9 +48,9 @@ userRouter.put(
 userRouter.delete(
 	'/id/:id',
 	idValidator,
-	validateValidationChainResult,
 	passportMiddleware,
 	authMiddleware,
+	validateValidationChainResult,
 	UserController.delete.ById
 );
 
