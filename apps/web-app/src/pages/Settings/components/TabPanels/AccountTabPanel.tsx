@@ -23,7 +23,7 @@ const AccountTabPanel = () => {
     if (areValuesNull) {
       toastUtils.error('All fields are empty')
     } else {
-      updateUser((user as IUser).id, { description: data.description })
+      updateUser((user as IUser).id, data)
     }
   }
 

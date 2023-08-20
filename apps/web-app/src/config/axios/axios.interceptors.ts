@@ -11,7 +11,7 @@ export const setAxiosInterceptors = () => {
   const updateHeaders = (request: AxiosRequestConfig) => {
     const newHeaders = {
       Authorization: `Bearer ${getAccessToken() as string}`,
-      'Content-Type': 'application/json'
+      'Content-Type': request.headers?.['Content-Type'] == null ? 'application/json' : request.headers?.['Content-Type'] as string
     }
 
     request.headers = newHeaders
