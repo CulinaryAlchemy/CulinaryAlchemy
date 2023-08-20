@@ -1,15 +1,17 @@
-import { frontRoutes } from '@/routing'
+import { useTranslation } from '@/hooks'
+import { CFrontRoutes } from '@/routing'
 import Typography from '@mui/joy/Typography/'
 import { Link } from 'react-router-dom'
 
 export const LoginFooter = () => {
+  const { t } = useTranslation()
   return (
         <Typography
-            endDecorator={<Link to={frontRoutes.Static.auth.register}>Sign up</Link>}
+            endDecorator={<Link to={CFrontRoutes.Static.auth.register}>{t('sign up')}</Link>}
             fontSize="sm"
             sx={{ alignSelf: 'center' }}
         >
-            Don&apos;t have an account?
+          {t('don\'t have an account?')}
         </Typography>
   )
 }

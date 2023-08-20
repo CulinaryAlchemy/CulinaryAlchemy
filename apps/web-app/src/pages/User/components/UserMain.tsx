@@ -1,20 +1,32 @@
 
 import { TabPanel, TabsPage } from '@/components'
+import { CTabsData } from '@/pages/User/models/UI/'
 
-const tabs = ['Recipes', 'Tweets']
+
 
 export const UserMain = () => {
   return (
         <main>
             <TabsPage
-                tabNames={tabs}
+                defaultTab={CTabsData.recipes.name}
+                type='no-routing'
+                tabsData={Object.values(CTabsData)}
                 tabPanels={
                     <>
-                        {tabs.map((tabName) => (
-                            <TabPanel key={tabName} value={tabName} />
+                        {Object.values(CTabsData).map((tabName) => (
+                            <TabPanel key={tabName.name} value={tabName.name} />
                         ))}
                     </>
                 }
+                styles={{
+                  background: 'theme',
+                  direction: 'column',
+                  tabs: {
+                    names: {
+                      direction: 'row'
+                    }
+                  }
+                }}
             />
         </main>
   )

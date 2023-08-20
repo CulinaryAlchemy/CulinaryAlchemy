@@ -1,15 +1,18 @@
 {
-  "name": "CulinaryAlchemy",
+  "name": "culinary-alchemy",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "prepare": "husky install"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "culinary-alchemy",
+  "license": "CC-BY-NC-4.0",
   "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
     "husky": "^8.0.3"
   }
 }

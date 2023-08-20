@@ -14,8 +14,9 @@ export function sendApiError(
 	res: Response,
 	statusCode: number,
 	message?: string,
-	details?: any
+	details?: any,
+	invalidAreas?: any[]
 ): void {
-	const response = ApiResponse.error(statusCode, message, details);
+	const response = ApiResponse.error(statusCode, message, details, invalidAreas);
 	res.status(statusCode).json(response);
 }

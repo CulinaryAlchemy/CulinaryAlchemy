@@ -2,26 +2,28 @@ import { Form } from '@/components'
 import { GlobalLayout } from '@/layouts'
 import { LoginFooter, LoginHeader } from './components'
 
-import { useAuthContext } from '@/context'
-import { type IUserSignIn } from '@/models'
+import { useGlobalAuth, useTranslation } from '@/hooks'
+import { type IUserSignIn } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
-import { metada } from './config'
-import { inputsData, loginInputsSchema } from './models'
+import { metadata } from './config'
+import { inputsArray, loginInputsSchema } from './models'
 
 const Login = () => {
-  const { signIn } = useAuthContext()
+  const { t } = useTranslation()
+  const { signIn } = useGlobalAuth()
   const handleOnSumbit: SubmitHandler<FieldValues> = (data) => {
     void signIn(data as IUserSignIn)
   }
   return (
-    <GlobalLayout newTitle={metada.title}>
+    <GlobalLayout newTitle={metadata.title}>
       <Form
         schema={loginInputsSchema}
-        inputsData={inputsData}
+        inputsData={inputsArray}
         onSumbit={handleOnSumbit}
-        buttonSumbitName='log in'
+        buttonSumbitName={t('login2')}
         Header={<LoginHeader />}
         Footer={<LoginFooter />}
+        styles={{ gridColumns: 1, width: '300px' }}
       />
     </GlobalLayout>
   )

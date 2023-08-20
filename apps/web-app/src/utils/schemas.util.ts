@@ -1,6 +1,6 @@
-import { type TInputsFormData } from '@/models/'
+import { type TFormInputArray } from '@/models/UI'
 
-export const getDynamicSchemas = (inputsFormData: TInputsFormData) => {
+export const getDynamicSchemas = (inputsFormData: TFormInputArray) => {
   let tempSchemas = {}
 
   inputsFormData.forEach((inputData) => {

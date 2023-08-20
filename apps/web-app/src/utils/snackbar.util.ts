@@ -14,13 +14,13 @@ export const toastUtils = {
   info (message: string) {
     defaultToast(message)
   },
-  promise (promise: Promise<unknown>, success: string, error: string) {
+  promise (loadingMessage: string, successMessage: string, errorMessage: string, promise: Promise<unknown>) {
     defaultToast.promise(promise, {
-      loading: 'loading...',
+      loading: loadingMessage,
       success: () => {
-        return success
+        return successMessage
       },
-      error
+      error: errorMessage
     })
   },
   action (message: string, action: IActionToast) {

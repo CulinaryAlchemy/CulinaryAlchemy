@@ -8,7 +8,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react-hooks/recommended',
-    'standard-with-typescript'
+    'standard-with-typescript',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -17,7 +17,7 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', 'cypress'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
@@ -37,5 +37,5 @@ module.exports = {
         "patterns": ["@mui/*/*/*"]
       }
     ]
-  },
+  }
 }

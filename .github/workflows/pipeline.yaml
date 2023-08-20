@@ -1,0 +1,44 @@
+name: pipeline
+
+on:
+  pull_request:
+    branches: ['main']
+    types: ['opened','synchronize']
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Setup repository'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.7.0
+      - name: Setup pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
+      - name: install dependencies
+        run: pnpm --filter web-app install
+      - name: Lint
+        run: pnpm -r lint
+
+  test2e2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Setup repository'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.7.0
+      - name: Setup pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
+      - name: install dependencies
+        run: pnpm --filter web-app install
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          build: pnpm --filter web-app build
+          start: pnpm --filter web-app preview
+          install-command: pnpm --filter web-app install
+          command: pnpm --filter web-app test:2e2

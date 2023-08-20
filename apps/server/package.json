@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "tsc  && node -r dotenv/config ./dist/index.js",
+    "start": "tsc && node ./dist/bin/www.js",
     "build": "tsc",
-    "dev": "concurrently \"nodemon -r dotenv/config -q src/index.ts\""
+    "dev": "concurrently \"nodemon -q src/bin/www.ts\""
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/CulinaryAlchemy/CulinaryAlchemy.git"
   },
-  "author": "Huilen Solis",
-  "license": "MIT",
+  "author": "culinary-alchemy",
+  "license": "CC-BY-NC-4.0",
   "bugs": {
     "url": "https://github.com/CulinaryAlchemy/CulinaryAlchemy/issues"
   },
