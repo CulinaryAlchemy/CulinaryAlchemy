@@ -10,7 +10,6 @@ import { authMiddleware } from '../../middlewares';
 import { validateValidationChainResult } from '../../middlewares/validators';
 import { upload } from '../../config/multer';
 import { validateDietary } from '../../middlewares/validators/dietary-validator';
-import { dietaryController } from '../../controllers/user/dietary';
 
 export const userRouter = express.Router();
 
@@ -64,7 +63,7 @@ userRouter.post(
 	param('id').notEmpty().isInt(),
 	validateDietary,
 	validateValidationChainResult,
-	dietaryController.post
+	UserController.manageDietary.add
 );
 userRouter.delete(
 	'/dietary/:id',
@@ -74,5 +73,5 @@ userRouter.delete(
 	param('id').notEmpty().isInt(),
 	validateDietary,
 	validateValidationChainResult,
-	dietaryController.delete
+	UserController.manageDietary.remove
 );

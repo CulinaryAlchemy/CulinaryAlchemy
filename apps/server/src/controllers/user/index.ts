@@ -132,5 +132,46 @@ const UserController = {
 			}
 		},
 	},
+	manageDietary: {
+		add: async (req: Request, res: Response) => {
+			const { dietaryId } = req.body;
+			const { id: userId } = req.params;
+
+			try {
+				await UserProvider.AssociateWith.dietary.add(dietaryId, parseInt(userId));
+				sendApiResponse(res, HttpStatusCodes.CREATED, 'dietary added to user');
+			} catch (error) {
+				console.log(error);
+				sendApiError(
+					res,
+					HttpStatusCodes.INTERNAL_SERVER_ERROR,
+					'internal server error'
+				);
+			}
+		},
+		remove: async (req: Request, res: Response) => {
+			const { dietaryId } = req.body;
+			const { id: userId } = req.params;
+
+			try {
+				await UserProvider.AssociateWith.dietary.remove(
+					dietaryId,
+					parseInt(userId)
+				);
+				sendApiResponse(
+					res,
+					HttpStatusCodes.CREATED,
+					'dietary removed from user'
+				);
+			} catch (error) {
+				console.log(error);
+				sendApiError(
+					res,
+					HttpStatusCodes.INTERNAL_SERVER_ERROR,
+					'internal server error'
+				);
+			}
+		},
+	}
 };
 export { UserController };
