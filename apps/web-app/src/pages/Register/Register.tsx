@@ -13,7 +13,7 @@ const Register = () => {
   const { signUp } = useGlobalAuth()
 
   const handleOnSumbit: SubmitHandler<FieldValues> = (data) => {
-    void signUp(data as IUserRegister)
+    signUp(data as IUserRegister)
   }
 
   return (
