@@ -1,8 +1,8 @@
-import { AppLink } from '@/components'
 import ListItem from '@mui/joy/ListItem'
 import ListItemButton from '@mui/joy/ListItemButton'
 import Sheet from '@mui/joy/Sheet'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface IProps {
   type: 'link' | 'button'
@@ -18,28 +18,29 @@ export const DropDownItem: React.FC<IProps> = ({ type, itemAtTheEnd, itemText, o
   }
 
   return (
-        <ListItem
-            role="none"
-            endAction={
-              itemAtTheEnd != null &&
-                <Sheet variant='outlined' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '2.375em', height: '1.75em', borderRadius: '0.4em' }}>
-                    {itemAtTheEnd}
-                </Sheet>
-            }
-        >
-          {
-            type === 'link' &&
-              <ListItemButton>
-                <AppLink style={{ width: '100%', height: '100%' }} to={url as string}>{itemText}</AppLink>
-              </ListItemButton>
+    <ListItem
+      {...(type === 'link' && { to: url, component: Link, sx: { textDecoration: 'none' } })}
+      role="none"
+      endAction={
+        itemAtTheEnd != null &&
+        <Sheet variant='outlined' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '2.375em', height: '1.75em', borderRadius: '0.4em' }}>
+          {itemAtTheEnd}
+        </Sheet>
+      }
+    >
+      <ListItemButton
+        onClick={handleOnClick}
+        role="menuitem"
+        sx={{
+          color: type === 'link' ? 'rgba(var(--joy-palette-primary-mainChannel) / 1)' : 'initial',
+          '&:hover': {
+            color: type === 'link' ? 'rgba(var(--joy-palette-primary-mainChannel) / 1)' : 'initial',
+            textDecoration: type === 'link' ? 'underline' : 'initial'
           }
-          {
-            type === 'button' &&
-              <ListItemButton onClick={handleOnClick} role="menuitem">
-                  {itemText}
-              </ListItemButton>
-          }
-
-        </ListItem>
+        }}
+      >
+        {itemText}
+      </ListItemButton>
+    </ListItem>
   )
 }
