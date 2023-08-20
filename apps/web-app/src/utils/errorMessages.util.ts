@@ -9,7 +9,8 @@ export const getValidationError = (code: number) => {
     403: 'Wrong Email or Password',
     404: 'Not Found or Bad credentials',
     409: 'Username or email already exists',
-    503: 'Sever is down. Wait 2 minutes. thnks <3'
+    500: 'Internal server error',
+    503: 'Sever is down. Wait 2 minutes. thanks <3'
   }
 
   return httpCodes[code]
