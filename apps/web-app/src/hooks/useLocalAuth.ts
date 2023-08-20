@@ -50,8 +50,18 @@ export const useLocalAuth = () => {
     saveSession({ accesToken: token, userData: user })
   }
 
-  const signUp = async (userData: IUserRegister) => {
-    await registerUser(userData)
+  const signUp = (userData: IUserRegister) => {
+    void registerUser(userData)
+      .then((res) => {
+        if (res.status !== 201) return
+
+        const { email, password } = userData
+
+        void signIn({ email, password })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   const signOut = () => {
