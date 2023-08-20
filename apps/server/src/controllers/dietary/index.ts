@@ -7,8 +7,8 @@ export const Dietary = {
 		all: async (req: Request, res: Response) => {
 			const { limit, offset } = req.query;
 			const options = {
-				limit: parseInt(limit as string, 10),
-				offset: parseInt(offset as string, 10),
+				limit: limit ? parseInt(limit as string, 10) : 10,
+				offset: offset ? parseInt(offset as string, 10) : 0,
 			};
 
 			try {
