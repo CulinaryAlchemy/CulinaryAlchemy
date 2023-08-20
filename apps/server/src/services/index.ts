@@ -1,11 +1,5 @@
 import { cloudinaryService } from './cloudinary';
-import { getEnvironment } from './get-environment';
-import { startDatabase } from './database';
-import { checkDbHealth } from './database';
+import { getEnvironment } from './environment';
+import { DatabaseService, sequelize } from './database';
 
-export {
-	cloudinaryService,
-	startDatabase,
-	getEnvironment,
-	checkDbHealth,
-};
+export { cloudinaryService, getEnvironment, sequelize, DatabaseService };

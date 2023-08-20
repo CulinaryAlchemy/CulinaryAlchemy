@@ -58,7 +58,7 @@ export const getUser = {
 			return Promise.reject(error);
 		}
 	},
-	ByUsername: async (
+	byUsername: async (
 		username: string,
 		isForInternalServerUse: boolean = false
 	) => {
@@ -70,6 +70,8 @@ export const getUser = {
 				'createdAt',
 				'updatedAt',
 				'deletedAt',
+				'userDietary',
+				'role',
 			];
 		}
 		try {

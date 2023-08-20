@@ -1,7 +1,8 @@
 import { UserProvider } from '.';
 import { User } from '../../models/user/index';
 import { RoleType } from '../../interfaces/role.interface';
-import { sequelize } from '../../config/db/db';
+import { DatabaseService } from '../../services';
+
 export const createUser = async ({
 	username,
 	email,
@@ -13,7 +14,7 @@ export const createUser = async ({
 	password: string;
 	role?: RoleType;
 }) => {
-	const transaction = await sequelize.transaction();
+	const transaction = await DatabaseService.getTransaction();
 	try {
 		const user = User.build({ username, email, password });
 

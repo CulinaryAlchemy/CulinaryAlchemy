@@ -1,7 +1,7 @@
-import { Sequelize } from 'sequelize';
+import { Options } from 'sequelize';
 import { getEnvironment } from '../../services';
 
-const { POSTGRESQL_DB_URI, ENVIRONMENT } = getEnvironment();
+const { ENVIRONMENT } = getEnvironment();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let sslConfig: any = { require: true };
@@ -9,7 +9,7 @@ if (ENVIRONMENT === 'development') {
 	sslConfig = { require: true, rejectUnauthorized: false };
 }
 
-const sequelize = new Sequelize(POSTGRESQL_DB_URI!, {
+const dbConfig: Options = {
 	dialect: 'postgres',
 	dialectOptions: {
 		ssl: { ...sslConfig },
@@ -22,6 +22,6 @@ const sequelize = new Sequelize(POSTGRESQL_DB_URI!, {
 			},
 		},
 	},
-});
+};
 
-export { sequelize };
+export { dbConfig };

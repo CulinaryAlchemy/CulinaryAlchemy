@@ -1,7 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
-
-import { sequelize } from '../../config/db/db';
+import { sequelize } from '../../services';
 
 import { UserInterface } from '../../interfaces/user.interface';
 

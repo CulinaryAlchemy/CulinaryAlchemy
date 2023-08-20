@@ -1,4 +1,4 @@
-import { rolesControllers } from '../../controllers/roles';
+import { Controllers } from '../../controllers';
 import express from 'express';
 // validators
 import { idValidator } from '../../middlewares/validators';
@@ -10,5 +10,5 @@ roleRouter.get(
 	'/:id',
 	idValidator,
 	validateValidationChainResult,
-	rolesControllers.get.byId
+	Controllers.Role.get.byId
 );

@@ -10,6 +10,7 @@ const jwtOptions = {
 	secretOrKey: secret,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const jwtVerify = async (payload: any, done: DoneCallback) => {
 	try {
 		if (payload.exp < Date.now()) {

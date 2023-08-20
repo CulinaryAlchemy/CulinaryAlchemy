@@ -3,7 +3,7 @@ import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy
 import { body, param, query } from 'express-validator';
 
 // controllers
-import { UserController } from '../../controllers/user';
+import { Controllers } from '../../controllers';
 // validators
 import { idValidator } from '../../middlewares/validators';
 import { authMiddleware } from '../../middlewares';
@@ -18,16 +18,16 @@ userRouter.get(
 	'/id/:id',
 	idValidator,
 	validateValidationChainResult,
-	UserController.get.byId
+	Controllers.User.get.byId
 );
 
-userRouter.get('/username/:username', UserController.get.byUsername);
+userRouter.get('/profile/:username', Controllers.User.get.byUsername);
 
 userRouter.get(
 	'/all',
 	query('limit').optional().isInt({ min: 1, max: 10 }),
 	validateValidationChainResult,
-	UserController.get.all
+	Controllers.User.get.all
 );
 
 userRouter.put(
@@ -42,7 +42,7 @@ userRouter.put(
 	body('email').optional().isEmail().notEmpty(),
 	validateValidationChainResult,
 	upload.single('avatar'),
-	UserController.put.byId
+	Controllers.User.put.byId
 );
 
 userRouter.delete(
@@ -51,27 +51,27 @@ userRouter.delete(
 	passportMiddleware,
 	authMiddleware,
 	validateValidationChainResult,
-	UserController.delete.ById
+	Controllers.User.delete.ById
 );
 
 // user dietaries
 userRouter.post(
-	'/dietary/:id',
+	'/:id/dietary',
 	passportMiddleware,
 	authMiddleware,
 	body('dietaryId').notEmpty().isInt(),
 	param('id').notEmpty().isInt(),
 	validateDietary,
 	validateValidationChainResult,
-	UserController.manageDietary.add
+	Controllers.User.manageDietary.add
 );
 userRouter.delete(
-	'/dietary/:id',
+	'/:id/dietary',
 	passportMiddleware,
 	authMiddleware,
 	body('dietaryId').notEmpty().isInt(),
 	param('id').notEmpty().isInt(),
 	validateDietary,
 	validateValidationChainResult,
-	UserController.manageDietary.remove
+	Controllers.User.manageDietary.remove
 );

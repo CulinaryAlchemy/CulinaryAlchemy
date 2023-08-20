@@ -8,7 +8,7 @@ export const signUp = async (req: Request, res: Response) => {
 
 	try {
 		// check if username is valid
-		const doesUsernameAlreadyExist = await UserProvider.getUser.ByUsername(
+		const doesUsernameAlreadyExist = await UserProvider.getUser.byUsername(
 			username
 		);
 

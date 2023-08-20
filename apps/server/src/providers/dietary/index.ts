@@ -24,8 +24,8 @@ export const DietaryProvider = {
 			limit = 10,
 			offset = 0,
 		}: {
-			limit: number;
-			offset: number;
+			limit?: number;
+			offset?: number;
 		}) => {
 			try {
 				const dietaries = await Dietary.findAll({

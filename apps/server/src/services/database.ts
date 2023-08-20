@@ -1,48 +1,85 @@
-import { sequelize } from '../config/db/db';
 import { UserProvider } from '../providers/user';
-import { roleProvider } from '../providers/user/roles';
+import { roleProvider } from '../providers/roles';
 import { getEnvironment } from '.';
 import { DietaryInterface } from '../interfaces/dietary.interface';
+
+import { sequelize } from '../database/database.config';
 
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { DietaryProvider } from '../providers/dietary';
+import { TransactionOptions } from 'sequelize';
 
-async function syncDb() {
-	try {
-		const { ENVIRONMENT } = getEnvironment();
-		if (ENVIRONMENT === 'development') {
-			await sequelize.sync({ force: true });
-			console.log('All models were deleted and initialized again successfully');
-		} else {
-			await sequelize.sync();
-			console.log('All models were synchronized successfully.');
+const DatabaseService = {
+	seed: {
+		all: async () => {
+			try {
+				await seedDbRoles();
+				console.log('Default roles have been added to the database');
+
+				await seedDbUsers();
+				console.log('Default users have been added to the database');
+
+				await seedDbDietaries();
+				console.log('Default dietaries have been added to the database');
+
+				Promise.resolve();
+			} catch (error) {
+				Promise.reject(error);
+			}
+		},
+	},
+	health: {
+		check: async () => {
+			try {
+				await sequelize.authenticate();
+				Promise.resolve();
+			} catch (error) {
+				Promise.reject(error);
+			}
+		},
+	},
+	sync: async (force: boolean = false) => {
+		try {
+			const { ENVIRONMENT } = getEnvironment();
+			if (ENVIRONMENT === 'development') {
+				await sequelize.sync({ force });
+				console.log(
+					'All models were deleted and initialized again successfully'
+				);
+			} else {
+				await sequelize.sync();
+				console.log('All models were synchronized successfully.');
+			}
+		} catch (error) {
+			Promise.reject(error);
 		}
-	} catch (error) {
-		Promise.reject(error);
-	}
-}
+	},
+	start: async () => {
+		try {
+			await DatabaseService.health.check();
+			console.log('Connection with databse has been established successfully.');
 
-async function seedAllDb() {
-	try {
-		await seedDbRoles();
-		console.log('Default roles have been added to the database');
+			await DatabaseService.sync();
+			console.log('Database has been synchronized successfully.');
 
-		await seedDbUsers();
-		console.log('Default users have been added to the database');
+			await DatabaseService.seed.all();
+			console.log('Databse seeded succesfully');
 
-		await seedDbDietaries();
-		console.log('Default dietaries have been added to the database');
-
-		Promise.resolve();
-	} catch (error) {
-		Promise.reject(error);
-	}
-}
+			return Promise.resolve();
+		} catch (error) {
+			console.error('Unable to start database:', error);
+			return Promise.reject(error as string);
+		}
+	},
+	getTransaction: async (options?: TransactionOptions) => {
+		return Promise.resolve(await sequelize.transaction(options));
+	},
+};
 
 async function seedDbUsers() {
 	try {
-		const doesOfficialUserExist = await UserProvider.getUser.ByUsername(
+		const doesOfficialUserExist = await UserProvider.getUser.byUsername(
 			'culinaryalchemy'
 		);
 		let officialUser = null;
@@ -51,14 +88,14 @@ async function seedDbUsers() {
 				username: 'culinaryalchemy',
 				email: 'culinaryalchemyofficial@gmail.com',
 				password: process.env.ADMIN_PASSWORD!,
-				role: 'admin'
+				role: 'admin',
 			});
 		}
 		if (!doesOfficialUserExist && !officialUser) {
 			throw new Error('official user not created');
 		}
 
-		const doesTestUserExist = await UserProvider.getUser.ByUsername('test123');
+		const doesTestUserExist = await UserProvider.getUser.byUsername('test123');
 		let testUser = null;
 		if (!doesTestUserExist) {
 			testUser = await UserProvider.createUser({
@@ -129,29 +166,4 @@ async function seedDbDietaries() {
 	}
 }
 
-export async function checkDbHealth() {
-	try {
-		await sequelize.authenticate();
-		Promise.resolve();
-	} catch (error) {
-		Promise.reject(error);
-	}
-}
-
-export async function startDatabase() {
-	try {
-		await sequelize.authenticate();
-		console.log('Connection with databse has been established successfully.');
-
-		await syncDb();
-		console.log('Database has been synchronized successfully.');
-
-		await seedAllDb();
-		console.log('Databse seeded succesfully');
-
-		return Promise.resolve();
-	} catch (error) {
-		console.error('Unable to start database:', error);
-		return Promise.reject(error as string);
-	}
-}
+export { sequelize, DatabaseService };

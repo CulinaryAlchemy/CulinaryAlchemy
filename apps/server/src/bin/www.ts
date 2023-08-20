@@ -1,10 +1,11 @@
 import { app } from '../app';
-import { getEnvironment, startDatabase } from '../services/index';
+import { DatabaseService, getEnvironment } from '../services/index';
+
 (async () => {
 	// PORT
-	const { PORT } = await getEnvironment();
+	const { PORT } = getEnvironment();
 	try {
-		await startDatabase();
+		await DatabaseService.start();
 		// start server
 		app.listen(PORT, () => {
 			console.log(`Server running on port ${PORT}`);

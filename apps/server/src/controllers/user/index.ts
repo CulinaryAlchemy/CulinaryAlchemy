@@ -6,7 +6,7 @@ import { HttpStatusCodes } from '../../utils';
 import { cleanObjectNullKeys, getObjectKeys } from '../../utils/object.utils';
 import { cloudinaryService } from '../../services';
 
-const UserController = {
+const User = {
 	delete: {
 		ById: async (req: Request, res: Response) => {
 			const { id } = req.params;
@@ -66,7 +66,7 @@ const UserController = {
 		byUsername: async (req: Request, res: Response) => {
 			const { username } = req.params;
 			try {
-				const user = await UserProvider.getUser.ByUsername(username);
+				const user = await UserProvider.getUser.byUsername(username);
 				if (!user) {
 					return sendApiError(res, HttpStatusCodes.NOT_FOUND);
 				}
@@ -174,4 +174,4 @@ const UserController = {
 		},
 	}
 };
-export { UserController };
+export { User };

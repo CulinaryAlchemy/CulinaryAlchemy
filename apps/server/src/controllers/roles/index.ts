@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { RoleInterface } from '../../interfaces';
-import { roleProvider } from '../../providers/user/roles';
+import { roleProvider } from '../../providers/roles';
 import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
 
-export const rolesControllers = {
+export const Role = {
 	get: {
 		byId: async (req: Request, res: Response) => {
 			const { id } = req.params;
