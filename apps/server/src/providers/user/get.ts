@@ -25,7 +25,7 @@ export const getUser = {
 					{
 						model: UserDietary,
 						as: 'userDietary',
-						attributes: ['id'],
+						attributes: ['dietaryId'],
 					},
 				],
 			});

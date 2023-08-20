@@ -1,45 +1,69 @@
 import { UserProvider } from '..';
 import { Dietary, UserDietary } from '../../../models/user';
 
+async function validateUserAlreadyHasDietary(
+	userId: number,
+	dietaryId: number
+) {
+	// we check if the user already has the dietary
+	let doesTheUserAlreadyHaveTheDietary = true;
+	try {
+		const userDietary = await UserDietary.findOne({
+			where: {
+				userId: userId,
+				dietaryId: dietaryId,
+			},
+		});
+		if (!userDietary) {
+			doesTheUserAlreadyHaveTheDietary = false;
+		}
+	} catch (error) {
+		throw new Error('internal server error');
+	}
+
+	if (doesTheUserAlreadyHaveTheDietary) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+async function validateUserAndDietaryExist(userId: number, dietaryId: number) {
+	let doBothExist = false;
+	try {
+		const dietary = await DietaryProvider.get.byId(dietaryId);
+		const user = await UserProvider.getUser.ById(userId);
+
+		if (dietary && user) {
+			doBothExist = true;
+		}
+	} catch (error) {
+		return Promise.reject(error);
+	}
+
+	// if it doesnt exist, we reject the promise
+	if (!doBothExist) {
+		return Promise.reject('dietary does not exist');
+	}
+
+	return Promise.resolve();
+}
+
 export const DietaryProvider = {
 	Associations: {
 		addToUser: async (dietaryId: number, userId: number) => {
-			// we verify the dietary and the user exist
-			let doBothExist = false;
+			// verifications before associating
 			try {
-				const dietary = await DietaryProvider.get.byId(dietaryId);
-				const user = await UserProvider.getUser.ById(userId);
-
-				if (dietary && user) {
-					doBothExist = true;
-				}
-			} catch (error) {
-				return Promise.reject(error);
-			}
-
-			// if it doesnt exist, we reject the promise
-			if (!doBothExist) {
-				return Promise.reject('dietary does not exist');
-			}
-
-			// we check if the user already has the dietary
-			let doesTheUserAlreadyHaveTheDietary = true;
-			try {
-				const userDietary = await UserDietary.findOne({
-					where: {
-						userId: userId,
-						dietaryId: dietaryId,
-					},
-				});
-				if (!userDietary) {
-					doesTheUserAlreadyHaveTheDietary = false;
+				await validateUserAndDietaryExist(userId, dietaryId);
+				const userHasTheDietary = await validateUserAlreadyHasDietary(
+					userId,
+					dietaryId
+				);
+				if (userHasTheDietary) {
+					return Promise.reject('user already has this dietary');
 				}
 			} catch (error) {
 				return Promise.reject('internal server error');
-			}
-
-			if (doesTheUserAlreadyHaveTheDietary) {
-				return Promise.reject('user already has the dietary');
 			}
 
 			// we associate the dietary with he user
@@ -53,7 +77,36 @@ export const DietaryProvider = {
 			}
 			return Promise.resolve();
 		},
-		// removeFromUser: async (dietaryId: number, userId: number) => {},
+		removeFromUser: async (dietaryId: number, userId: number) => {
+			// verifications before associating
+			try {
+				await validateUserAndDietaryExist(userId, dietaryId);
+				const userHasTheDietary = await validateUserAlreadyHasDietary(
+					userId,
+					dietaryId
+				);
+				if (!userHasTheDietary) {
+					return Promise.reject('user does not have this dietary');
+				}
+			} catch (error) {
+				console.log(error);
+				return Promise.reject('internal server error');
+			}
+
+			try {
+				const thisUserDietary = await UserDietary.findOne({
+					where: {
+						userId: userId,
+						dietaryId: dietaryId,
+					},
+				});
+				await thisUserDietary?.destroy({ force: true });
+
+				return Promise.resolve();
+			} catch (error) {
+				return Promise.reject('internal server error');
+			}
+		},
 	},
 	get: {
 		byId: async (dietaryId: number) => {

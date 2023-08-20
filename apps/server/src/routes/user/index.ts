@@ -66,3 +66,13 @@ userRouter.post(
 	validateValidationChainResult,
 	dietaryController.post
 );
+userRouter.delete(
+	'/dietary/:id',
+	passportMiddleware,
+	authMiddleware,
+	body('dietaryId').notEmpty().isInt(),
+	param('id').notEmpty().isInt(),
+	validateDietary,
+	validateValidationChainResult,
+	dietaryController.delete
+);
