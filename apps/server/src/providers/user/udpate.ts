@@ -67,7 +67,6 @@ export const updateUser = async (
 
 		return Promise.resolve('');
 	} catch (error) {
-		console.log(error);
 		return Promise.reject(error);
 	}
 };

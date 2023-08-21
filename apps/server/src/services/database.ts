@@ -138,7 +138,6 @@ async function seedDbDietaries() {
 					dietaryPreference.title
 				);
 				if (!doesDietaryExist) {
-					console.log(doesDietaryExist);
 					try {
 						await DietaryProvider.post({ ...dietaryPreference });
 					} catch (error) {

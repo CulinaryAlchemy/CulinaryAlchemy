@@ -4,7 +4,6 @@ function validateTypeofInArray(
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	value: any
 ) {
-	console.log('valueee: ', value);
 	const validType = 'string';
 	// we receive a param name, and extract the param nae in the request
 	const paramArray = value;

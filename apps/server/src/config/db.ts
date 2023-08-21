@@ -22,7 +22,6 @@ const dbConfig: Options = {
 			},
 		},
 	},
-	logging: console.log,
 };
 
 export { dbConfig };
