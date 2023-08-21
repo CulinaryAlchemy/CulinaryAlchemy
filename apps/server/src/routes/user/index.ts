@@ -15,7 +15,13 @@ export const userRouter = express.Router();
 
 // user
 userRouter.get(
-	'/id/:id',
+	'/all',
+	query('limit').optional().isInt({ min: 1, max: 10 }),
+	validateValidationChainResult,
+	Controllers.User.get.all
+);
+userRouter.get(
+	'/:id',
 	idValidator,
 	validateValidationChainResult,
 	Controllers.User.get.byId
@@ -23,12 +29,6 @@ userRouter.get(
 
 userRouter.get('/profile/:username', Controllers.User.get.byUsername);
 
-userRouter.get(
-	'/all',
-	query('limit').optional().isInt({ min: 1, max: 10 }),
-	validateValidationChainResult,
-	Controllers.User.get.all
-);
 
 userRouter.put(
 	'/:id',
@@ -46,7 +46,7 @@ userRouter.put(
 );
 
 userRouter.delete(
-	'/id/:id',
+	'/:id',
 	idValidator,
 	passportMiddleware,
 	authMiddleware,

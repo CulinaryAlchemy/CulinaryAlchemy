@@ -1,10 +1,10 @@
 import { app } from '../app';
-import { DatabaseService, getEnvironment } from '../services/index';
-
+import { getEnvironment, DatabaseService } from '../services/index';
 (async () => {
 	// PORT
 	const { PORT } = getEnvironment();
 	try {
+		console.log('before database sync');
 		await DatabaseService.start();
 		// start server
 		app.listen(PORT, () => {

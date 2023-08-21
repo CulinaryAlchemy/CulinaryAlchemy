@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 import { getEnvironment } from '../services';
-import { dbConfig } from '../config/db/config';
+import { dbConfig } from '../config/db';
 
 const { POSTGRESQL_DB_URI } = getEnvironment();
 

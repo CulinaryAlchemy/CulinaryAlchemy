@@ -1,4 +1,4 @@
-import { Role, User, UserDietary } from '../../models/user/index';
+import { User, UserDietary } from '../../models/user/index';
 
 export const getUser = {
 	ById: async (id: number, isForInternalServerUse: boolean = false) => {
@@ -20,7 +20,6 @@ export const getUser = {
 				},
 				attributes: { exclude: [...excludedPropety] },
 				include: [
-					{ model: Role, as: 'role' },
 					{
 						model: UserDietary,
 						as: 'userDietary',
@@ -51,7 +50,6 @@ export const getUser = {
 					deletedAt: null,
 				},
 				attributes: { exclude: [...excludedPropety] },
-				include: { model: Role, as: 'role' },
 			});
 			return Promise.resolve(user);
 		} catch (error) {
@@ -71,7 +69,6 @@ export const getUser = {
 				'updatedAt',
 				'deletedAt',
 				'userDietary',
-				'role',
 			];
 		}
 		try {
@@ -81,7 +78,6 @@ export const getUser = {
 					username: username,
 					deletedAt: null,
 				},
-				include: { model: Role, as: 'role' },
 			});
 			return Promise.resolve(user);
 		} catch (error) {

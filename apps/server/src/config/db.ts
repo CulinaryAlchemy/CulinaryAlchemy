@@ -1,5 +1,5 @@
 import { Options } from 'sequelize';
-import { getEnvironment } from '../../services';
+import { getEnvironment } from '../services';
 
 const { ENVIRONMENT } = getEnvironment();
 
@@ -22,6 +22,7 @@ const dbConfig: Options = {
 			},
 		},
 	},
+	logging: console.log,
 };
 
 export { dbConfig };

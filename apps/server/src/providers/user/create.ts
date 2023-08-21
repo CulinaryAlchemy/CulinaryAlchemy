@@ -20,6 +20,8 @@ export const createUser = async ({
 
 		const userWithRole = await UserProvider.AssociateWith.role.add(user, role);
 
+		await userWithRole.validate();
+
 		await userWithRole.save({ transaction });
 
 		await transaction.commit();

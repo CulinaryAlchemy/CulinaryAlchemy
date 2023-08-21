@@ -3,7 +3,7 @@ import Jwt from 'jsonwebtoken';
 import { UserProvider } from '../../providers/user';
 export async function authMiddleware(
 	req: Request,
-	res: Response,
+	_res: Response,
 	next: NextFunction
 ) {
 	const bearerFromHeaders = req.headers['authorization'];

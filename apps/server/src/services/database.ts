@@ -1,12 +1,12 @@
 import { UserProvider } from '../providers/user';
 import { roleProvider } from '../providers/roles';
 import { getEnvironment } from '.';
-import { DietaryInterface } from '../interfaces/dietary.interface';
 
 import { sequelize } from '../database/database.config';
 
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
+// import { readFile } from 'node:fs/promises';
+// import path from 'node:path';
+import dietaryArray from '../database/seed-data/dietary.json';
 import { DietaryProvider } from '../providers/dietary';
 import { TransactionOptions } from 'sequelize';
 
@@ -43,14 +43,10 @@ const DatabaseService = {
 		try {
 			const { ENVIRONMENT } = getEnvironment();
 			if (ENVIRONMENT === 'development') {
-				await sequelize.sync({ force });
-				console.log(
-					'All models were deleted and initialized again successfully'
-				);
-			} else {
-				await sequelize.sync();
-				console.log('All models were synchronized successfully.');
+				force = true;
 			}
+			await sequelize.sync({ force });
+			Promise.resolve();
 		} catch (error) {
 			Promise.reject(error);
 		}
@@ -136,13 +132,7 @@ async function seedDbRoles() {
 
 async function seedDbDietaries() {
 	try {
-		const filePath = path.join(__dirname, '../config/db/seedData/dietary.json');
-		const dietariesFile = await readFile(filePath, {
-			encoding: 'utf-8',
-		});
-
-		const dietariesArray: DietaryInterface[] = JSON.parse(dietariesFile);
-		for (const dietaryPreference of dietariesArray) {
+		for (const dietaryPreference of dietaryArray) {
 			try {
 				const doesDietaryExist = await DietaryProvider.get.byTitle(
 					dietaryPreference.title

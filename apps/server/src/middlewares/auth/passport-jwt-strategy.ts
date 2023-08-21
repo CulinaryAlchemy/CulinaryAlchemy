@@ -34,4 +34,5 @@ const jwtStrategy = new Strategy(jwtOptions, jwtVerify);
 passport.use('jwt', jwtStrategy);
 
 const passportMiddleware = passport.authenticate('jwt', { session: false });
+
 export { passportMiddleware };

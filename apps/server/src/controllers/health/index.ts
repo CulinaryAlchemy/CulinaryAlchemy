@@ -4,7 +4,7 @@ import { DatabaseService } from '../../services';
 import { HttpStatusCodes, sendApiResponse } from '../../utils';
 
 export const Health = {
-	get: async (req: Request, res: Response) => {
+	get: async (_req: Request, res: Response) => {
 		try {
 			await DatabaseService.health.check();
 			return sendApiResponse(res, HttpStatusCodes.SUCCESS, null);
