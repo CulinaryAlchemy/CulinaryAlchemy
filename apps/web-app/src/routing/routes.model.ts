@@ -64,6 +64,11 @@ const getBackendRoutes = () => {
       delete (userId: number) {
         return `/user/${userId}`
       }
+    },
+    role: {
+      get (roleId: number) {
+        return `/role/${roleId}`
+      }
     }
   } as const
 
