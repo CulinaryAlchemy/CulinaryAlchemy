@@ -1,51 +1,33 @@
 import { UserProvider } from '.';
-import { User } from '../../models';
-import { roleProvider } from '../roles';
+import { User } from '../../models/user/index';
+import { RoleType } from '../../interfaces/role.interface';
+import { DatabaseService } from '../../services';
+
 export const createUser = async ({
 	username,
 	email,
 	password,
-	isAdmin = false,
+	role = 'user',
 }: {
 	username: string;
 	email: string;
 	password: string;
-	isAdmin?: boolean;
+	role?: RoleType;
 }) => {
+	const transaction = await DatabaseService.getTransaction();
 	try {
-		const newUser = User.build({ username, email, password });
-		
-		await newUser.validate();
+		const user = User.build({ username, email, password });
 
-		await newUser.save();
+		const userWithRole = await UserProvider.AssociateWith.role.add(user, role);
 
-		let userRole = null;
+		await userWithRole.validate();
 
-		if (!isAdmin) {
-			userRole = await roleProvider.get.byName('user')
-			if(!userRole){
-				console.log(userRole);
-				throw new Error('User role not found')
-			}
-		} else {
-			userRole = await roleProvider.get.byName('admin')
-			if(!userRole){
-				console.log(userRole);
-				throw new Error('User role not found')
-			}
-		}
+		await userWithRole.save({ transaction });
 
-		if (userRole?.id) {
-			newUser.roleId = userRole.id;
-			await newUser.save();
-		}
-
-		const newUserFromDb = await UserProvider.getUser.ByEmail(email);
-		if (!newUserFromDb) {
-			return Promise.reject('User not found')
-		}
-		return Promise.resolve(newUserFromDb);
+		await transaction.commit();
+		return Promise.resolve(userWithRole);
 	} catch (error) {
+		await transaction.rollback();
 		return Promise.reject(error);
 	}
 };

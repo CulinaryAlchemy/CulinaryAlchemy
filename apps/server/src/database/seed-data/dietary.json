@@ -1,0 +1,30 @@
+[
+	{
+		"title": "Vegetarian",
+		"description": "Embrace a plant-focused lifestyle by excluding meat and sometimes other animal products. Enjoy a wide variety of vegetables, fruits, grains, legumes, nuts, and seeds to ensure a balanced and fulfilling diet."
+	},
+	{
+		"title": "Vegan",
+		"description": "Experience a compassionate and plant-powered diet that avoids all animal products, including dairy, eggs, and honey. Explore diverse options from vegetables, fruits, grains, legumes, nuts, and seeds to maintain your health and well-being."
+	},
+	{
+		"title": "Gluten-Free",
+		"description": "Opt for a gluten-free diet that excludes gluten, a protein found in wheat, barley, and rye. This choice is essential for individuals with celiac disease or gluten sensitivity, promoting a healthier digestive system."
+	},
+	{
+		"title": "Paleo",
+		"description": "Embrace the spirit of our ancestors with a paleo diet that emphasizes whole foods like lean meats, fish, fruits, vegetables, nuts, and seeds. This diet supports natural nutrition and minimizes processed foods."
+	},
+	{
+		"title": "Low Calorie",
+		"description": "Achieve your health goals by following a low-calorie diet. Savor nutrient-dense foods that provide satisfaction while managing your caloric intake, helping you maintain a balanced weight and lifestyle."
+	},
+	{
+		"title": "High Calorie",
+		"description": "Pursue muscle gain and energy needs with a high-calorie diet. Embrace nutrient-rich foods that support your fitness journey and healthy weight gain, helping you achieve your physical goals."
+	},
+	{
+		"title": "Carnivorous",
+		"description": "Explore the carnivorous diet that centers around animal-based foods like meat, fish, and poultry. This preference excludes most or all plant-based foods, focusing on animal sources for nutrition."
+	}
+]

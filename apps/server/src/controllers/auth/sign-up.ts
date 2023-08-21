@@ -8,25 +8,35 @@ export const signUp = async (req: Request, res: Response) => {
 
 	try {
 		// check if username is valid
-		const doesUsernameAlreadyExist = await UserProvider.getUser.ByUsername(username)
+		const doesUsernameAlreadyExist = await UserProvider.getUser.byUsername(
+			username
+		);
 
 		if (doesUsernameAlreadyExist) {
-			return sendApiError(res, HttpStatusCodes.CONFLICT, 'Username already exists');
+			return sendApiError(
+				res,
+				HttpStatusCodes.CONFLICT,
+				'Username already exists'
+			);
 		}
 
 		// check if email is valid
-		const doesEmailAlreadyExist = await UserProvider.getUser.ByEmail(email)
+		const doesEmailAlreadyExist = await UserProvider.getUser.ByEmail(email);
 
 		if (doesEmailAlreadyExist) {
-			return sendApiError(res, HttpStatusCodes.CONFLICT, 'Email already exists');
+			return sendApiError(
+				res,
+				HttpStatusCodes.CONFLICT,
+				'Email already exists'
+			);
 		}
 
 		const user = await UserProvider.createUser({ username, email, password });
 		if (!user) {
 			sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
 		}
-		
-		sendApiResponse(res, HttpStatusCodes.CREATED, user);
+
+		sendApiResponse(res, HttpStatusCodes.CREATED, null);
 	} catch (error) {
 		if (error instanceof sequelize.ValidationError) {
 			sendApiError(res, HttpStatusCodes.BAD_REQUEST);

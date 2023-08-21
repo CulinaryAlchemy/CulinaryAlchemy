@@ -1,8 +1,11 @@
+import { GlobalLayout } from '@/layouts'
 import Box from '@mui/joy/Box'
 import { SettingsMain } from './components'
+import { metadata } from './config'
 
 const Settings = () => {
   return (
+    <GlobalLayout newTitle={metadata.title}>
         <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
             <Box
                 component="main"
@@ -13,10 +16,9 @@ const Settings = () => {
                     md: '32px'
                   },
                   px: {
-                    xs: 2,
+                    xs: 1,
                     md: 3
                   },
-                  pt: 'var(--main-paddingTop)',
                   pb: {
                     xs: 2,
                     sm: 2,
@@ -24,15 +26,13 @@ const Settings = () => {
                   },
                   flex: 1,
                   display: 'flex',
-                  flexDirection: 'column',
-                  minWidth: 0,
-                  height: '100dvh',
-                  overflow: 'auto'
+                  flexDirection: 'column'
                 })}
             >
                 <SettingsMain />
             </Box>
         </Box>
+    </GlobalLayout>
   )
 }
 

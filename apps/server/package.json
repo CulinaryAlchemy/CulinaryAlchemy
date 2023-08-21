@@ -7,6 +7,7 @@
   "scripts": {
     "start": "tsc && node ./dist/bin/www.js",
     "build": "tsc",
+    "lint": "eslint .",
     "dev": "concurrently \"nodemon -q src/bin/www.ts\""
   },
   "repository": {
@@ -31,10 +32,10 @@
     "@types/node": "^20.4.5",
     "@types/passport": "^1.0.12",
     "@types/passport-jwt": "^3.0.9",
-    "@typescript-eslint/eslint-plugin": "^6.1.0",
-    "@typescript-eslint/parser": "^6.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
     "concurrently": "^8.2.0",
-    "eslint": "^8.45.0",
+    "eslint": "^8.47.0",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"

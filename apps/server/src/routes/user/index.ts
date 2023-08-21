@@ -1,53 +1,77 @@
-import express, { Request, Response } from 'express';
-import passport from '../../services/passport-jwt-strategy';
-import { body, query } from 'express-validator';
+import express from 'express';
+import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
+import { body, param, query } from 'express-validator';
 
 // controllers
-import { UserController } from '../../controllers/user';
+import { Controllers } from '../../controllers';
 // validators
 import { idValidator } from '../../middlewares/validators';
 import { authMiddleware } from '../../middlewares';
-import {
-	validateValidationChainResult,
-} from '../../middlewares/validators';
+import { validateValidationChainResult } from '../../middlewares/validators';
 import { upload } from '../../config/multer';
+import { validateDietary } from '../../middlewares/validators/dietary-validator';
 
 export const userRouter = express.Router();
 
-const passportMiddleware = passport.authenticate('jwt', { session: false });
-
 // user
-userRouter.get('/id/:id', idValidator, validateValidationChainResult, UserController.get.byId);
-
-userRouter.get('/username/:username', UserController.get.byUsername);
-
 userRouter.get(
 	'/all',
 	query('limit').optional().isInt({ min: 1, max: 10 }),
 	validateValidationChainResult,
-	UserController.get.all
+	Controllers.User.get.all
+);
+userRouter.get(
+	'/:id',
+	idValidator,
+	validateValidationChainResult,
+	Controllers.User.get.byId
 );
 
+userRouter.get('/profile/:username', Controllers.User.get.byUsername);
+
+
 userRouter.put(
-	'/id/:id',
+	'/:id',
 	passportMiddleware,
 	authMiddleware,
 	idValidator,
-	body('name').optional().notEmpty().isString(),
+	body('name').optional().notEmpty().isString().isLowercase(),
 	body('password').optional().notEmpty().isString(),
 	body('location').optional().notEmpty().isString(),
 	body('description').optional().notEmpty().isString(),
 	body('email').optional().isEmail().notEmpty(),
 	validateValidationChainResult,
 	upload.single('avatar'),
-	UserController.put.byId
+	Controllers.User.put.byId
 );
 
 userRouter.delete(
-	'/id/:id',
+	'/:id',
 	idValidator,
-	validateValidationChainResult,
 	passportMiddleware,
 	authMiddleware,
-	UserController.delete.ById
+	validateValidationChainResult,
+	Controllers.User.delete.ById
+);
+
+// user dietaries
+userRouter.post(
+	'/:id/dietary',
+	passportMiddleware,
+	authMiddleware,
+	body('dietaryId').notEmpty().isInt(),
+	param('id').notEmpty().isInt(),
+	validateDietary,
+	validateValidationChainResult,
+	Controllers.User.manageDietary.add
+);
+userRouter.delete(
+	'/:id/dietary',
+	passportMiddleware,
+	authMiddleware,
+	body('dietaryId').notEmpty().isInt(),
+	param('id').notEmpty().isInt(),
+	validateDietary,
+	validateValidationChainResult,
+	Controllers.User.manageDietary.remove
 );

@@ -15,11 +15,12 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-const { ENVIRONMENT } = getEnvironment()
+
+const { ENVIRONMENT } = getEnvironment();
 if (ENVIRONMENT === 'development') {
 	app.use(logsMiddw);
 }
 // routes
-app.use('/', appRouter)
+app.use('/', appRouter);
 
-export { app }
+export { app };

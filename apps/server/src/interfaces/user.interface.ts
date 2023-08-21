@@ -11,6 +11,5 @@ export interface UserInterface {
 	createdAt?: Date;
 	updatedAt?: Date;
 	deletedAt?: Date | null;
-	isDeleted?: boolean;
 	roleId?: number | null;
 }

@@ -1,6 +1,7 @@
 const getFrontendRoutes = () => {
   const BaseRoutes = {
-    user: '/'
+    user: '/',
+    settings: '/settings'
   } as const
 
   const Static = {
@@ -11,7 +12,23 @@ const getFrontendRoutes = () => {
     },
     user: BaseRoutes.user + ':userName',
     notFound: '*',
-    settings: '/settings'
+    settings: {
+      home: {
+        absolute: BaseRoutes.settings
+      },
+      account: {
+        absolute: BaseRoutes.settings + '/account',
+        relative: 'account'
+      },
+      information: {
+        absolute: BaseRoutes.settings + '/information',
+        relative: 'information'
+      },
+      deactivate: {
+        absolute: BaseRoutes.settings + '/deactivate',
+        relative: 'deactivate'
+      }
+    }
   }
 
   const Dynamic = {
@@ -28,18 +45,30 @@ const getBackendRoutes = () => {
     auth: {
       signup: '/auth/sign-up',
       signin: '/auth/sign-in'
-    }
+    },
+    user: {
+      update: '/user/id/'
+    },
+    health: '/health/live'
 
   }
 
   const Dynamic = {
-    user (userName: string) {
-      return `/user/username/${userName}`
+    user: {
+      get (userName: string) {
+        return `/user/profile/${userName}`
+      },
+      update (userId: number) {
+        return `/user/${userId}`
+      },
+      delete (userId: number) {
+        return `/user/${userId}`
+      }
     }
   } as const
 
   return { Static, Dynamic }
 }
 
-export const frontRoutes = getFrontendRoutes()
-export const backRoutes = getBackendRoutes()
+export const CFrontRoutes = getFrontendRoutes()
+export const CBackRoutes = getBackendRoutes()
