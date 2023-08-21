@@ -14,7 +14,7 @@ export const UserMain = () => {
                 tabPanels={
                     <>
                         {Object.values(CTabsData).map((tabName) => (
-                            <TabPanel key={tabName.name} value={tabName.name} />
+                            <TabPanel routingBy='defaultUISystem' key={tabName.name} value={tabName.name} />
                         ))}
                     </>
                 }

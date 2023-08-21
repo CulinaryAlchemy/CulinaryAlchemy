@@ -1,31 +1,33 @@
+import { Modal } from '@/components'
 import { getServerStatus } from '@/services'
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const Modal = lazy(() => import('@/components/Modal/Modal'))
-
 export const TestServerStatus = () => {
-  const [isOffLine, setIsOffline] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { t } = useTranslation()
+
+  const handleOnClickModal = () => {
+    setIsModalOpen(!isModalOpen)
+  }
 
   useEffect(() => {
     getServerStatus()
       .then(() => {
-        setIsOffline(false)
+        setIsModalOpen(false)
       })
       .catch(() => {
-        setIsOffline(true)
+        setIsModalOpen(true)
       })
   }, [])
 
   return (
-    isOffLine &&
-        <Suspense>
-            <Modal
-                title={t('wait some seconds')}
-                text={t('server offline message')}
-                styles={{ maxWidth: '35em' }}
-            />
-        </Suspense>
+    <Modal
+      open={isModalOpen}
+      handleOnClickModal={handleOnClickModal}
+      title={t('wait some seconds')}
+      text={t('server offline message')}
+      styles={{ maxWidth: '35em', buttonColor: 'neutral' }}
+    />
   )
 }

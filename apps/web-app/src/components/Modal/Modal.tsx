@@ -1,66 +1,72 @@
-import WarningRoundedIcon from '@mui/icons-material/WarningRounded'
-import Box from '@mui/joy/Box'
-import Button from '@mui/joy/Button'
-import Divider from '@mui/joy/Divider'
-import DefaultModal from '@mui/joy/Modal'
-import ModalDialog from '@mui/joy/ModalDialog'
-import Typography from '@mui/joy/Typography'
-import { useState } from 'react'
+import { Suspense, lazy } from 'react'
+
+const WarningRoundedIcon = lazy(() => import('@mui/icons-material/WarningRounded'))
+const Box = lazy(() => import('@mui/joy/Box'))
+const Button = lazy(() => import('@mui/joy/Button'))
+const Divider = lazy(() => import('@mui/joy/Divider'))
+const DefaultModal = lazy(() => import('@mui/joy/Modal'))
+const ModalDialog = lazy(() => import('@mui/joy/ModalDialog'))
+const Typography = lazy(() => import('@mui/joy/Typography'))
 
 interface IStyles {
-  maxWidth: string
+  maxWidth?: string
+  buttonColor?: 'neutral' | 'danger'
 }
 
 interface IProps {
+  open: boolean
   title: string
   text: string
   styles: IStyles
+  buttonAcceptText?: string
+  handleOnClickModal: () => void
+  onAccept?: () => unknown
 }
 
-const Modal: React.FC<IProps> = ({ title, text, styles }) => {
-  const [open, setOpen] = useState(true)
-
-  const handleOnClose = () => {
-    setOpen(false)
+export const Modal: React.FC<IProps> = ({ title, text, styles, onAccept, buttonAcceptText, open, handleOnClickModal }) => {
+  const handleOnAccept = () => {
+    handleOnClickModal()
+    if (onAccept != null) onAccept()
   }
 
   return (
-    <>
-      <DefaultModal open={open} onClose={handleOnClose}>
-        <ModalDialog
-          variant="outlined"
-          role="alertdialog"
-          aria-labelledby="alert-dialog-modal-title"
-          aria-describedby="alert-dialog-modal-description"
-          sx={{
-            maxWidth: styles.maxWidth
-          }}
-        >
-          <Typography
-            id="alert-dialog-modal-title"
-            level="h2"
-            startDecorator={<WarningRoundedIcon />}
-            sx={{ texWrap: 'balance' }}
+    <Suspense>
+      {
+        open &&
+        <DefaultModal open={open} onClose={handleOnClickModal}>
+          <ModalDialog
+            variant="outlined"
+            role="alertdialog"
+            aria-labelledby="alert-dialog-modal-title"
+            aria-describedby="alert-dialog-modal-description"
+            sx={{
+              maxWidth: styles.maxWidth
+            }}
           >
-            {title}
-          </Typography>
-          <Divider />
-          <Typography
-            id="alert-dialog-modal-description"
-            textColor="text.tertiary"
-            sx={{ texWrap: 'balance' }}
-          >
-            {text}
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', pt: 2 }}>
-            <Button variant="outlined" color="neutral" onClick={handleOnClose}>
-              OK
-            </Button>
-          </Box>
-        </ModalDialog>
-      </DefaultModal>
-    </>
+            <Typography
+              id="alert-dialog-modal-title"
+              level="h2"
+              startDecorator={<WarningRoundedIcon />}
+              sx={{ texWrap: 'balance' }}
+            >
+              {title}
+            </Typography>
+            <Divider />
+            <Typography
+              id="alert-dialog-modal-description"
+              textColor="text.tertiary"
+              sx={{ texWrap: 'balance' }}
+            >
+              {text}
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', pt: 2 }}>
+              <Button variant="outlined" color={styles.buttonColor} onClick={handleOnAccept}>
+                {buttonAcceptText ?? 'OK'}
+              </Button>
+            </Box>
+          </ModalDialog>
+        </DefaultModal>
+      }
+    </Suspense>
   )
 }
-
-export default Modal

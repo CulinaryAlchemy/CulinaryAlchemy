@@ -121,6 +121,7 @@ export const TabsPage: React.FC<IProps> = ({ defaultTab, type, tabsData, tabPane
         >
           {
             tabsData.map((tabData) => {
+              if (tabData.showTabHeader === false) return null
               return (<TabListElement
                 type={type}
                 key={tabData.name}
@@ -152,6 +153,7 @@ export const TabsPage: React.FC<IProps> = ({ defaultTab, type, tabsData, tabPane
             justifyContent: 'center',
             maxWidth: '29.875em',
             width: '100%',
+            minHeight: '80vh',
             margin: 'auto',
             borderLeft: {
               md: styles.borderColor && '0.1em solid var(--joy-palette-neutral-outlinedBorder, var(--joy-palette-neutral-200, #D8D8DF))'

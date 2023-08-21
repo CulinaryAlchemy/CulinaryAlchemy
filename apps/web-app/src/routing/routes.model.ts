@@ -20,9 +20,13 @@ const getFrontendRoutes = () => {
         absolute: BaseRoutes.settings + '/account',
         relative: 'account'
       },
-      test: {
-        absolute: BaseRoutes.settings + '/test',
-        relative: 'test'
+      information: {
+        absolute: BaseRoutes.settings + '/information',
+        relative: 'information'
+      },
+      deactivate: {
+        absolute: BaseRoutes.settings + '/deactivate',
+        relative: 'deactivate'
       }
     }
   }
@@ -55,6 +59,9 @@ const getBackendRoutes = () => {
         return `/user/username/${userName}`
       },
       update (userId: number) {
+        return `/user/id/${userId}`
+      },
+      delete (userId: number) {
         return `/user/id/${userId}`
       }
     }
