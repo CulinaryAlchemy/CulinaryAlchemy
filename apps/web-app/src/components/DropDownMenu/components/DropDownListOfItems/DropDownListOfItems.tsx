@@ -17,7 +17,7 @@ export const DropDownListOfItems = () => {
   return (
     <List
       role="menu"
-      aria-label="About"
+      aria-label="User menu"
       variant="outlined"
       sx={{
         overflow: 'hidden',
