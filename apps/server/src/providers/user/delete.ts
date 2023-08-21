@@ -1,4 +1,4 @@
-import { User } from '../../models';
+import { User } from '../../models/user/index';
 
 export const deleteUser = async (id: string) => {
 	try {
@@ -7,11 +7,11 @@ export const deleteUser = async (id: string) => {
 			return Promise.reject('user does not exist');
 		}
 
-		if (user.isDeleted) {
+		if (user.deletedAt) {
 			return Promise.reject('user already deleted');
 		}
 
-		user.isDeleted = true;
+		user.deletedAt = new Date();
 
 		await user.save();
 

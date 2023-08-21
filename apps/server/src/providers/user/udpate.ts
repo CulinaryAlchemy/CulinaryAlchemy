@@ -1,4 +1,4 @@
-import { User } from '../../models';
+import { User } from '../../models/user/index';
 
 export const updateUser = async (
 	id: string,
@@ -21,9 +21,15 @@ export const updateUser = async (
 	}
 ) => {
 	try {
-		let user = await User.findByPk(id);
+		// eslint-disable-next-line prefer-const
+		let user = await User.findOne({
+			where: {
+				id: id,
+				deletedAt: null,
+			},
+		});
 
-		if (!user || user.isDeleted) {
+		if (!user || user.deletedAt) {
 			return Promise.reject('user is already deleted or does not exist');
 		}
 
@@ -61,7 +67,6 @@ export const updateUser = async (
 
 		return Promise.resolve('');
 	} catch (error) {
-		console.log(error);
 		return Promise.reject(error);
 	}
 };

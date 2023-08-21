@@ -1,10 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
+import { sequelize } from '../../services';
 
-import { dbSequelize } from '../config/db';
-import { Role } from './roles';
-
-import { UserInterface } from '../interfaces/user.interface';
+import { UserInterface } from '../../interfaces/user.interface';
 
 class User extends Model<UserInterface> implements UserInterface {
 	id!: number;
@@ -19,7 +17,6 @@ class User extends Model<UserInterface> implements UserInterface {
 	createdAt!: Date;
 	updatedAt!: Date;
 	deletedAt!: Date;
-	isDeleted!: boolean;
 	roleId!: number | null;
 }
 
@@ -34,6 +31,9 @@ User.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true,
+			validate: {
+				isLowercase: true,
+			},
 		},
 		email: {
 			type: DataTypes.STRING,
@@ -97,31 +97,21 @@ User.init(
 				isDate: true,
 			},
 		},
-		isDeleted: {
-			type: DataTypes.BOOLEAN,
-			defaultValue: false,
-			allowNull: true,
-			validate: {
-				isBoolean: true,
-			},
-		},
 		roleId: {
 			type: DataTypes.INTEGER,
 			allowNull: true,
 			references: {
-				model: 'Roles', // Note that we are using the table name, not the model name
+				model: 'Roles',
 				key: 'id',
 			},
 		},
 	},
 	{
-		sequelize: dbSequelize,
+		sequelize: sequelize,
 		modelName: 'Users',
 	}
 );
-
-User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
-
+// Hash password before saving to database
 User.beforeCreate(async (user: User) => {
 	user.password = await bcrypt.hash(user.password, 10);
 });

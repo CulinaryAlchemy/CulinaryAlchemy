@@ -12,7 +12,7 @@ const authRouter = express.Router();
 
 authRouter.post(
 	'/sign-up',
-	body('username').notEmpty().isString(),
+	body('username').notEmpty().isString().isLowercase(),
 	emailValidator,
 	body('password').notEmpty().isString(),
 	validateValidationChainResult,

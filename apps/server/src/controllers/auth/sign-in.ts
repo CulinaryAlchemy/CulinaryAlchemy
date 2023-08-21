@@ -9,15 +9,19 @@ const secret = process.env.JWT_SECRET || 'secret';
 
 export const signIn = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
-	
-	const userFromDb: UserInterface | null = await UserProvider.getUser.ByEmail(email, true)
-	try {
 
+	const userFromDb: UserInterface | null = await UserProvider.getUser.ByEmail(
+		email,
+		true
+	);
+	try {
 		if (!userFromDb) {
-			return sendApiError(res, HttpStatusCodes.NOT_FOUND, 'User doesnt exist')
+			return sendApiError(res, HttpStatusCodes.NOT_FOUND, 'User doesnt exist');
 		}
 
-		const passwordMatches = userFromDb?.password ? await bcrypt.compare(password, userFromDb.password) : ''
+		const passwordMatches = userFromDb?.password
+			? await bcrypt.compare(password, userFromDb.password)
+			: '';
 
 		if (!passwordMatches) {
 			return sendApiError(res, HttpStatusCodes.UNAUTHORIZED, 'bad credentials');
@@ -28,7 +32,11 @@ export const signIn = async (req: Request, res: Response) => {
 
 		const user = await UserProvider.getUser.ByEmail(userFromDb.email);
 		if (!user) {
-			sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'bad credentials');
+			sendApiError(
+				res,
+				HttpStatusCodes.INTERNAL_SERVER_ERROR,
+				'bad credentials'
+			);
 		}
 
 		sendApiResponse(res, HttpStatusCodes.SUCCESS, { token, user });

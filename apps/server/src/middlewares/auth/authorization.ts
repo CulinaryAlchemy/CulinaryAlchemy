@@ -1,38 +1,46 @@
 import { Request, Response, NextFunction } from 'express';
 import Jwt from 'jsonwebtoken';
-import { UserProvider } from '../providers/user';
+import { UserProvider } from '../../providers/user';
 export async function authMiddleware(
 	req: Request,
-	res: Response,
+	_res: Response,
 	next: NextFunction
 ) {
 	const bearerFromHeaders = req.headers['authorization'];
 	const token = bearerFromHeaders?.split(' ')[1];
 
 	if (!token) {
-		next('internal server error');
+		next('no token provided');
 	}
 
 	try {
-		const userIdDecoded = Jwt.verify(token!, process.env.JWT_SECRET!).sub;
+		const userIdFromJwt = Jwt.verify(token!, process.env.JWT_SECRET!).sub;
 
-		const id = req.params.id;
+		const idInParams = req.params.id;
 
-		if (!id || !userIdDecoded) {
-			return next('unauthorized');
+		if (!idInParams) {
+			return next(
+				'there migth be an issue. please contact us throght https://github.com/CulinaryAlchemy/CulinaryAlchemy/issues'
+			);
+		}
+		if (!userIdFromJwt) {
+			return next('Missing token');
 		}
 
 		// if the user doesnt exist, reject
-		const user = await UserProvider.getUser.ById(userIdDecoded as string);
+		const user = await UserProvider.getUser.ById(
+			parseInt(userIdFromJwt as string)
+		);
 		if (!user) {
 			return next('unauthorized');
 		}
 		//if the user is admin, aprove
-		if (user.roleId && user.roleId === 2) {
+		const adminRoleId = 2;
+		if (user.roleId && user.roleId === adminRoleId) {
 			return next();
 		}
 		// if the user makes a request and the user id doesnt matches the req.params id, reject.
-		if (userIdDecoded.toString() !== req.params.id) {
+		if (userIdFromJwt.toString() !== idInParams) {
 			return next('a');
 		}
 		next();

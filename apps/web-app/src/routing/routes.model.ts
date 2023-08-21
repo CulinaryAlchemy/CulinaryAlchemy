@@ -56,13 +56,13 @@ const getBackendRoutes = () => {
   const Dynamic = {
     user: {
       get (userName: string) {
-        return `/user/username/${userName}`
+        return `/user/profile/${userName}`
       },
       update (userId: number) {
-        return `/user/id/${userId}`
+        return `/user/${userId}`
       },
       delete (userId: number) {
-        return `/user/id/${userId}`
+        return `/user/${userId}`
       }
     }
   } as const
