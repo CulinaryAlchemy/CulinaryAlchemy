@@ -22,7 +22,11 @@ function App () {
       <AuthContextProvider>
         <SWRConfig value={CSWRConfig}>
           <Routing />
-          <Toaster richColors />
+          <Toaster
+            richColors
+            theme='light'
+            visibleToasts={3}
+          />
           <TestServerStatus />
         </SWRConfig>
       </AuthContextProvider>

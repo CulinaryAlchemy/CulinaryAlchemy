@@ -19,11 +19,23 @@ export const setAxiosInterceptors = () => {
     return request
   }
 
-  axios.interceptors.request.use((request) => {
+  const addSignal = (request: AxiosRequestConfig) => {
+    request.signal = AbortSignal.timeout(10000)
+    return request
+  }
+
+  const updateRequest = (request: AxiosRequestConfig) => {
+    updateHeaders(request)
+    addSignal(request)
+
+    return request
+  }
+
+  axios.interceptors.request.use((request: InternalAxiosRequestConfig) => {
     console.log({ request })
     if (getAccessToken() == null || request.url == null || request.url.includes('static-file paths')) return request
 
-    const newRequest = updateHeaders(request) as InternalAxiosRequestConfig
+    const newRequest = updateRequest(request) as InternalAxiosRequestConfig
 
     console.log({ request, newRequest })
 
