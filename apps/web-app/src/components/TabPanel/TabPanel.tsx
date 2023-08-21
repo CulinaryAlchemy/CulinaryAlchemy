@@ -1,34 +1,34 @@
-import { Loading, Tweet } from '@/components'
+import { Loading } from '@/components'
 import { MessageLayout } from '@/layouts'
 import Box from '@mui/joy/Box'
-import DefaultUIPanel from '@mui/joy/TabPanel'
-import { useState } from 'react'
+
+import { DeterminateTabPanel, TabPanelHeader } from './components'
+
+
+
+type TRoutingBy = 'defaultUISystem' | 'routingSystem' // if routing system is enabled, it will render by route otherwise by UI Tabs system
 
 interface IProps {
-  value: string
+  value?: string
+  loading?: boolean
+  children?: React.ReactNode
+  title?: string | React.ReactNode
+  description?: string | React.ReactNode
+  showBackNavigation?: boolean
+  routingBy: TRoutingBy
 }
-export const TabPanel: React.FC<IProps> = ({ value }) => {
-  const [loading] = useState(true)
 
+export const TabPanel: React.FC<IProps> = ({ title, description, showBackNavigation, value, loading = true, children, routingBy }) => {
   return (
-    <DefaultUIPanel value={value}>
+    <DeterminateTabPanel routingBy={routingBy} value={value}>
+      <TabPanelHeader {...{ title, description, showBackNavigation }} />
       {
         loading
           ? <TabPanelLoading />
-          : <>
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-          </>
+          : children
       }
 
-    </DefaultUIPanel>
+    </DeterminateTabPanel>
   )
 }
 

@@ -1,3 +1,2 @@
-export * from './SettingsHeader/SettingsHeader'
-export * from './SettingsMain/SettingsMain'
+export * from './PageStructure/'
 
