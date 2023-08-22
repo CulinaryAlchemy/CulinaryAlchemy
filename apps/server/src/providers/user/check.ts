@@ -2,19 +2,19 @@ import { User } from '../../models/user';
 
 export const checkAvaiability = {
 	username: async (username: string): Promise<boolean> => {
-		return await isValueAvaiable({
+		return await isValueavailable({
 			value: username,
 			column: 'username',
 		});
 	},
 	email: async (email: string) => {
-		return await isValueAvaiable({
+		return await isValueavailable({
 			value: email,
 			column: 'email',
 		});
 	},
 };
-async function isValueAvaiable({
+async function isValueavailable({
 	column,
 	value,
 }: {
@@ -23,12 +23,12 @@ async function isValueAvaiable({
 }): Promise<boolean> {
 	const whereCondition: any = {};
 	whereCondition[column] = value;
-	const isValueNotAvaiable = await User.findOne({
+	const isValueNotavailable = await User.findOne({
 		where: {
 			...whereCondition,
 		},
 	});
-	if (isValueNotAvaiable) {
+	if (isValueNotavailable) {
 		return false;
 	} else {
 		return true;

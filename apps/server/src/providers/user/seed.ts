@@ -13,15 +13,15 @@ export const seed = async ({
 	password: string;
 	role?: RoleType;
 }): Promise<void> => {
-	const [isUsernameAvaiable, isEmailAvaiable] = await Promise.all([
+	const [isUsernameavailable, isEmailavailable] = await Promise.all([
 		UserProvider.checkAvaiability.username(username),
 		UserProvider.checkAvaiability.email(email),
 	]);
-	if (!isEmailAvaiable) {
+	if (!isEmailavailable) {
 		return Promise.reject(new Error('Email is already taken'));
 	}
 	let finalUsername = username;
-	if (!isUsernameAvaiable) {
+	if (!isUsernameavailable) {
 		console.log(
 			'username is alread taken, seeding the user with a different one'
 		);
@@ -31,14 +31,14 @@ export const seed = async ({
 	
 	async function findUsernameOrDie(): Promise<string> {
 		const usernameMaxLength = 15;
-		let isUsernameAvaiable = false;
+		let isUsernameavailable = false;
 		let randomUsername: string = 'aaaa';
-		while (!isUsernameAvaiable) {
+		while (!isUsernameavailable) {
 			randomUsername = generateRandomString(usernameMaxLength);
-			const isNewUsernameAvaiable =
+			const isNewUsernameavailable =
 				await UserProvider.checkAvaiability.username(randomUsername);
-			if (isNewUsernameAvaiable) {
-				isUsernameAvaiable = true;
+			if (isNewUsernameavailable) {
+				isUsernameavailable = true;
 			}
 		}
 		console.log('randomusername: ', randomUsername);

@@ -34,13 +34,13 @@ userRouter.get('/profile/:username', Controllers.User.get.byUsername);
 
 userRouter.get(
 	'/check-username/:username',
-	Controllers.User.checkIfAvaiable.username
+	Controllers.User.checkIfAvailable.username
 );
 userRouter.get(
 	'/check-email/:email',
 	param('email').notEmpty().isString().isEmail().custom(validateEmailDomain),
 	validateValidationChainResult,
-	Controllers.User.checkIfAvaiable.email
+	Controllers.User.checkIfAvailable.email
 );
 
 userRouter.put(

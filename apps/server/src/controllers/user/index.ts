@@ -77,14 +77,14 @@ const User = {
 			}
 		},
 	},
-	checkIfAvaiable: {
+	checkIfAvailable: {
 		username: async (req: Request, res: Response) => {
 			const { username } = req.params;
-			const isUsernameAvaiable = await UserProvider.checkAvaiability.username(
+			const isUsernameavailable = await UserProvider.checkAvaiability.username(
 				username
 			);
 
-			if (isUsernameAvaiable) {
+			if (isUsernameavailable) {
 				return sendApiResponse(res, HttpStatusCodes.SUCCESS, null);
 			} else {
 				return sendApiError(res, HttpStatusCodes.CONFLICT);
@@ -92,11 +92,11 @@ const User = {
 		},
 		email: async (req: Request, res: Response) => {
 			const { email } = req.params;
-			const isEmailAvaiable = await UserProvider.checkAvaiability.email(
+			const isEmailavailable = await UserProvider.checkAvaiability.email(
 				email
 			);
 
-			if (isEmailAvaiable) {
+			if (isEmailavailable) {
 				return sendApiResponse(res, HttpStatusCodes.SUCCESS, null);
 			} else {
 				return sendApiError(res, HttpStatusCodes.CONFLICT);

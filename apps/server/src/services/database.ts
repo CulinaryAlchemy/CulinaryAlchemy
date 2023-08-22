@@ -75,12 +75,12 @@ const DatabaseService = {
 
 async function seedDbUsers() {
 	try {
-		// we check if the official user is avaiable
-		const isOfficialUserAvaiable = await UserProvider.checkAvaiability.email(
+		// we check if the official user is available
+		const isOfficialUseravailable = await UserProvider.checkAvaiability.email(
 			'culinaryalchemyofficial@gmail.com'
 		);
 
-		if (isOfficialUserAvaiable) {
+		if (isOfficialUseravailable) {
 			await UserProvider.seed({
 				username: 'culinaryalchemy',
 				email: 'culinaryalchemyofficial@gmail.com',
@@ -89,12 +89,12 @@ async function seedDbUsers() {
 			});
 		}
 
-		// we check if the test user is avaiable
-		const isTestUserAvaiable = await UserProvider.checkAvaiability.email(
+		// we check if the test user is available
+		const isTestUseravailable = await UserProvider.checkAvaiability.email(
 			'test@gmail.com'
 		);
 
-		if (isTestUserAvaiable) {
+		if (isTestUseravailable) {
 			await UserProvider.seed({
 				username: 'test123',
 				email: 'test@gmail.com',
