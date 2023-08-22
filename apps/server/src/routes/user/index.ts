@@ -7,7 +7,10 @@ import { Controllers } from '../../controllers';
 // validators
 import { idValidator } from '../../middlewares/validators';
 import { authMiddleware } from '../../middlewares';
-import { validateValidationChainResult } from '../../middlewares/validators';
+import {
+	validateValidationChainResult,
+	validateEmailDomain,
+} from '../../middlewares/validators';
 import { upload } from '../../config/multer';
 import { validateDietary } from '../../middlewares/validators/dietary-validator';
 
@@ -29,6 +32,16 @@ userRouter.get(
 
 userRouter.get('/profile/:username', Controllers.User.get.byUsername);
 
+userRouter.get(
+	'/check-username/:username',
+	Controllers.User.checkIfAvaiable.username
+);
+userRouter.get(
+	'/check-email/:email',
+	param('email').notEmpty().isString().isEmail().custom(validateEmailDomain),
+	validateValidationChainResult,
+	Controllers.User.checkIfAvaiable.email
+);
 
 userRouter.put(
 	'/:id',
