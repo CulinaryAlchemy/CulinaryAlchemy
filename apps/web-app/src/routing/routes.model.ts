@@ -47,7 +47,11 @@ const getBackendRoutes = () => {
       signin: '/auth/sign-in'
     },
     user: {
-      update: '/user/id/'
+      update: '/user/id',
+      check: {
+        username: '/user/check-username',
+        email: '/user/check-email'
+      }
     },
     health: '/health/live'
 
