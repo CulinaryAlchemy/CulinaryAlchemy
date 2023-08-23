@@ -1,4 +1,4 @@
-import { type IUser } from '@/models/LOGIC'
+import { type IRole, type IUser } from '@/models/LOGIC'
 
 export interface IApiResponse<T> {
   data: null | T
@@ -18,3 +18,5 @@ export interface IAuthApiResponse {
 }
 
 export type IUserApiResponse = IUser
+
+export type IRoleApiResponse = IRole

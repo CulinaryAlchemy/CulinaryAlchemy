@@ -79,7 +79,7 @@ const User = {
 	},
 	checkIfAvailable: {
 		username: async (req: Request, res: Response) => {
-			const { username } = req.params;
+			const { username } = req.body;
 			const isUsernameavailable = await UserProvider.checkAvaiability.username(
 				username
 			);
@@ -91,7 +91,7 @@ const User = {
 			}
 		},
 		email: async (req: Request, res: Response) => {
-			const { email } = req.params;
+			const { email } = req.body;
 			const isEmailavailable = await UserProvider.checkAvaiability.email(
 				email
 			);

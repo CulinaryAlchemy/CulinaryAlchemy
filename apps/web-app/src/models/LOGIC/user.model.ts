@@ -6,7 +6,7 @@ export interface IUser {
   avatar?: FileList
   description?: string
   location?: string
-  role: Role
+  role: IRole
   roleId: number
   dietaryPreferences?: string
   createdAt?: Date
@@ -17,11 +17,9 @@ export interface IUser {
 
 export type TUserKey = keyof IUser
 
-export interface Role {
+export interface IRole {
   id: number
   name: string
-  createdAt: Date
-  updatedAt: Date
 }
 
 export interface IUserRegister {

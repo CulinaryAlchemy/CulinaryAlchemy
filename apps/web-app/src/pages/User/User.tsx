@@ -9,7 +9,7 @@ import { useUserData } from './hooks/'
 const NotFoundPage = lazy(() => import('@/pages/NotFound/NotFound'))
 
 const User = () => {
-  const { userName, data, isLoading, error } = useUserData()
+  const { userName, userData, isLoading, error } = useUserData()
 
   if (isLoading) {
     return <MessageLayout><Loading size='lg' /></MessageLayout>
@@ -19,14 +19,14 @@ const User = () => {
     return <MessageLayout><h1>Something went wrong</h1></MessageLayout>
   }
 
-  if (data == null) {
+  if (userData == null) {
     return <Suspense><NotFoundPage /></Suspense>
   }
 
   return (
     <GlobalLayout newTitle={userName as string}>
       <Sheet variant='outlined' sx={{ backgroundColor: 'var(--joy-palette-background-surface)', padding: '0px', maxWidth: '37.5em', margin: 'auto', borderRadius: '0.4em', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        <UserHeader data={data?.data as IUser} />
+        <UserHeader data={userData?.data as IUser} />
         <UserMain />
 
       </Sheet>
