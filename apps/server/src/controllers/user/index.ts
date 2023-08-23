@@ -77,6 +77,32 @@ const User = {
 			}
 		},
 	},
+	checkIfAvailable: {
+		username: async (req: Request, res: Response) => {
+			const { username } = req.body;
+			const isUsernameavailable = await UserProvider.checkAvaiability.username(
+				username
+			);
+
+			if (isUsernameavailable) {
+				return sendApiResponse(res, HttpStatusCodes.SUCCESS, null);
+			} else {
+				return sendApiError(res, HttpStatusCodes.CONFLICT);
+			}
+		},
+		email: async (req: Request, res: Response) => {
+			const { email } = req.body;
+			const isEmailavailable = await UserProvider.checkAvaiability.email(
+				email
+			);
+
+			if (isEmailavailable) {
+				return sendApiResponse(res, HttpStatusCodes.SUCCESS, null);
+			} else {
+				return sendApiError(res, HttpStatusCodes.CONFLICT);
+			}
+		},
+	},
 	put: {
 		byId: async (req: Request, res: Response) => {
 			interface Params {
@@ -89,14 +115,8 @@ const User = {
 				description: string;
 			}
 			const { id } = req.params;
-			const {
-				username,
-				name,
-				email,
-				password,
-				location,
-				description,
-			} = req.body;
+			const { username, name, email, password, location, description } =
+				req.body;
 			const avatar = req.file;
 			const params: Params = {
 				username,
@@ -138,7 +158,10 @@ const User = {
 			const { id: userId } = req.params;
 
 			try {
-				await UserProvider.AssociateWith.dietary.add(dietaryId, parseInt(userId));
+				await UserProvider.AssociateWith.dietary.add(
+					dietaryId,
+					parseInt(userId)
+				);
 				sendApiResponse(res, HttpStatusCodes.CREATED, 'dietary added to user');
 			} catch (error) {
 				console.log(error);
@@ -172,6 +195,6 @@ const User = {
 				);
 			}
 		},
-	}
+	},
 };
 export { User };

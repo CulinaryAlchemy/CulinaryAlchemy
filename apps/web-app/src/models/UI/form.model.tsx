@@ -1,8 +1,8 @@
+import { type TUserKey } from '@/models/LOGIC'
 import { Trans } from 'react-i18next'
 import { z as zValidator, type ZodType } from 'zod'
-import { type TUserKey } from '../LOGIC'
 
-export type TFormInputType = 'textField' | 'textArea' | 'dropZone'
+export type TFormInputType = 'textField' | 'textArea' | 'dropZone' | 'textFieldFetch'
 
 
 interface IBaseInputForm {
@@ -43,7 +43,11 @@ export const CInputUser: TFormInputRecordObject = {
     name: 'username',
     label: <Trans>username</Trans>,
     type: 'text',
-    validation: zValidator.string().min(3).refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
+    validation: zValidator
+      .string()
+      .min(3)
+      .max(15)
+      .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
     placeholder: 'Joe Bass',
     formInputType: 'textField'
   },
@@ -51,7 +55,11 @@ export const CInputUser: TFormInputRecordObject = {
     name: 'email',
     label: <Trans>email</Trans>,
     type: 'email',
-    validation: zValidator.string().min(4).max(254).email(),
+    validation: zValidator
+      .string()
+      .min(4)
+      .max(254)
+      .email(),
     placeholder: 'joe@gmail.com',
     formInputType: 'textField'
   },
