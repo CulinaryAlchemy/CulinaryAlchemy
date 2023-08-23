@@ -33,12 +33,14 @@ userRouter.get(
 userRouter.get('/profile/:username', Controllers.User.get.byUsername);
 
 userRouter.get(
-	'/check-username/:username',
+	'/check-username',
+	body('username').notEmpty().isString().isLength({ min: 1, max: 15 }),
+	validateValidationChainResult,
 	Controllers.User.checkIfAvailable.username
 );
 userRouter.get(
-	'/check-email/:email',
-	param('email').notEmpty().isString().isEmail().custom(validateEmailDomain),
+	'/check-email',
+	body('email').notEmpty().isString().isEmail().custom(validateEmailDomain),
 	validateValidationChainResult,
 	Controllers.User.checkIfAvailable.email
 );
