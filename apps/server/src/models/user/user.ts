@@ -33,6 +33,7 @@ User.init(
 			unique: true,
 			validate: {
 				isLowercase: true,
+				len: [1, 15],
 			},
 		},
 		email: {

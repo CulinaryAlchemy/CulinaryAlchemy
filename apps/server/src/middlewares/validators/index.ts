@@ -1,5 +1,5 @@
 import { idValidator } from './id';
-import { emailValidator } from './email';
+import { validateEmailDomain } from './email';
 import { validateValidationChainResult } from './result-valdiator';
 
-export { idValidator, emailValidator, validateValidationChainResult };
+export { idValidator, validateEmailDomain, validateValidationChainResult };

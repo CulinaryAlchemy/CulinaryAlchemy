@@ -51,8 +51,8 @@ export const UserHeader: React.FC<IProps> = ({ data }) => {
           </Stack>
         </Stack>
         <Stack spacing={1} mt={1}>
-          <Typography level='body3' sx={{ maxHeight: '4.7em', overflow: 'hidden' }}>
-            {data?.description != null ? data?.description : `No ${t('description')}`}
+          <Typography level='body2' sx={{ maxHeight: '4.7em', overflow: 'hidden', fontSize: '0.938em' }}>
+            {data?.description != null ? data.description : `No ${t('description')}`}
           </Typography>
           <Stack direction='row' spacing={1} justifyContent='right'>
             <Link level='body3' href='https://www.google.com' target='_blank'>Twitter</Link>

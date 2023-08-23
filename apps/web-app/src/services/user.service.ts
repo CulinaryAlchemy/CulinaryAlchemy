@@ -9,3 +9,7 @@ export const updateApiUser = (userId: number, newUser: IUserUpdate) => {
 export const deleteApiUser = (userId: number) => {
   return axios.delete(CBackRoutes.Dynamic.user.update(userId))
 }
+
+export const checkApiUserKey = (key: 'email' | 'username', value: string) => {
+  return axios.get(CBackRoutes.Static.user.check[key], { data: { [key]: value } })
+}

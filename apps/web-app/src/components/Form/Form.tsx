@@ -31,7 +31,7 @@ const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
 export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Footer, buttonSumbitName = 'sumbit', styles }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema) })
+  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema, { async: true }) })
 
   return (
     <Sheet variant='outlined'

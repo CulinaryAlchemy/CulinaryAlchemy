@@ -39,13 +39,13 @@ const DatabaseService = {
 			}
 		},
 	},
-	sync: async (force: boolean = false) => {
+	sync: async (forceValue: boolean = false) => {
 		try {
 			const { ENVIRONMENT } = getEnvironment();
 			if (ENVIRONMENT === 'development') {
-				force = true;
+				forceValue = true;
 			}
-			await sequelize.sync({ force });
+			await sequelize.sync({ force: forceValue });
 			Promise.resolve();
 		} catch (error) {
 			Promise.reject(error);
@@ -75,33 +75,31 @@ const DatabaseService = {
 
 async function seedDbUsers() {
 	try {
-		const doesOfficialUserExist = await UserProvider.getUser.byUsername(
-			'culinaryalchemy'
+		// we check if the official user is available
+		const isOfficialUseravailable = await UserProvider.checkAvaiability.email(
+			'culinaryalchemyofficial@gmail.com'
 		);
-		let officialUser = null;
-		if (!doesOfficialUserExist) {
-			officialUser = await UserProvider.createUser({
+
+		if (isOfficialUseravailable) {
+			await UserProvider.seed({
 				username: 'culinaryalchemy',
 				email: 'culinaryalchemyofficial@gmail.com',
 				password: process.env.ADMIN_PASSWORD!,
 				role: 'admin',
 			});
 		}
-		if (!doesOfficialUserExist && !officialUser) {
-			throw new Error('official user not created');
-		}
 
-		const doesTestUserExist = await UserProvider.getUser.byUsername('test123');
-		let testUser = null;
-		if (!doesTestUserExist) {
-			testUser = await UserProvider.createUser({
+		// we check if the test user is available
+		const isTestUseravailable = await UserProvider.checkAvaiability.email(
+			'test@gmail.com'
+		);
+
+		if (isTestUseravailable) {
+			await UserProvider.seed({
 				username: 'test123',
 				email: 'test@gmail.com',
 				password: 'password123123',
 			});
-		}
-		if (!doesTestUserExist && !testUser) {
-			throw new Error('test user not created');
 		}
 
 		Promise.resolve();

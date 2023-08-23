@@ -5,7 +5,7 @@ import { signUp } from '../../controllers/auth/sign-up';
 import { signIn } from '../../controllers/auth/sign-in';
 import {
 	validateValidationChainResult,
-	emailValidator,
+	validateEmailDomain,
 } from '../../middlewares/validators';
 
 const authRouter = express.Router();
@@ -13,14 +13,14 @@ const authRouter = express.Router();
 authRouter.post(
 	'/sign-up',
 	body('username').notEmpty().isString().isLowercase(),
-	emailValidator,
+	body('email').notEmpty().isString().isEmail().custom(validateEmailDomain),
 	body('password').notEmpty().isString(),
 	validateValidationChainResult,
 	signUp
 );
 authRouter.post(
 	'/sign-in',
-	emailValidator,
+	body('email').notEmpty().isString().isEmail().custom(validateEmailDomain),
 	body('password').notEmpty().isString(),
 	validateValidationChainResult,
 	signIn
