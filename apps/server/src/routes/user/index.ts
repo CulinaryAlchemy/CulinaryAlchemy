@@ -24,15 +24,6 @@ userRouter.get(
 	Controllers.User.get.all
 );
 userRouter.get(
-	'/:id',
-	idValidator,
-	validateValidationChainResult,
-	Controllers.User.get.byId
-);
-
-userRouter.get('/profile/:username', Controllers.User.get.byUsername);
-
-userRouter.get(
 	'/check-username',
 	body('username').notEmpty().isString().isLength({ min: 1, max: 15 }),
 	validateValidationChainResult,
@@ -44,6 +35,14 @@ userRouter.get(
 	validateValidationChainResult,
 	Controllers.User.checkIfAvailable.email
 );
+userRouter.get(
+	'/:id',
+	idValidator,
+	validateValidationChainResult,
+	Controllers.User.get.byId
+);
+
+userRouter.get('/profile/:username', Controllers.User.get.byUsername);
 
 userRouter.put(
 	'/:id',
