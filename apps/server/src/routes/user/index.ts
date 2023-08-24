@@ -23,13 +23,13 @@ userRouter.get(
 	validateValidationChainResult,
 	Controllers.User.get.all
 );
-userRouter.get(
+userRouter.post(
 	'/check-username',
 	body('username').notEmpty().isString().isLength({ min: 1, max: 15 }),
 	validateValidationChainResult,
 	Controllers.User.checkIfAvailable.username
 );
-userRouter.get(
+userRouter.post(
 	'/check-email',
 	body('email').notEmpty().isString().isEmail().custom(validateEmailDomain),
 	validateValidationChainResult,
