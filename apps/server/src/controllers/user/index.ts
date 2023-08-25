@@ -92,9 +92,7 @@ const User = {
 		},
 		email: async (req: Request, res: Response) => {
 			const { email } = req.body;
-			const isEmailavailable = await UserProvider.checkAvaiability.email(
-				email
-			);
+			const isEmailavailable = await UserProvider.checkAvaiability.email(email);
 
 			if (isEmailavailable) {
 				return sendApiResponse(res, HttpStatusCodes.SUCCESS, null);
@@ -127,6 +125,14 @@ const User = {
 				description,
 			};
 
+			if (avatar) {
+				try {
+					const avatarUrl = await cloudinaryService.uploadImage(avatar!);
+					params.avatar = avatarUrl;
+				} catch (error) {
+					console.log(error);
+				}
+			}
 			const requestParamsLength = getObjectKeys(params);
 
 			if (requestParamsLength <= 0) {
@@ -138,10 +144,6 @@ const User = {
 				);
 			}
 			try {
-				if (avatar) {
-					const avatarUrl = await cloudinaryService.uploadImage(avatar!);
-					params.avatar = avatarUrl;
-				}
 				const finalParams = cleanObjectNullKeys(params);
 				await UserProvider.updateUser(id, { ...finalParams });
 

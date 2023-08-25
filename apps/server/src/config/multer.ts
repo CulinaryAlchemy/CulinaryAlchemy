@@ -1,11 +1,11 @@
 import multer from 'multer';
 
-const storage = multer.diskStorage({});
-
 const upload = multer({
-	storage,
+	dest: '../temporary-images',
 	fileFilter(_req, file, callback) {
-		if (file.mimetype.startsWith('image')) {
+		const imageFileType = file.mimetype;
+		const AllowedFileTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+		if (AllowedFileTypes.includes(imageFileType)) {
 			callback(null, true);
 		} else {
 			callback(null, false);
