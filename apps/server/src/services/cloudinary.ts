@@ -1,4 +1,5 @@
 import cloudinary from 'cloudinary';
+import { deleteFile } from './files-service';
 
 export const cloudinaryService = {
 	uploadImage: async (file: Express.Multer.File) => {
@@ -16,8 +17,10 @@ export const cloudinaryService = {
 			const result = await cloudinary.v2.uploader.upload(file.path, {
 				transformation: [...transformOptions],
 			});
-			console.log('result: ', { result });
 			const imageUrl = result.secure_url;
+
+			await deleteFile(file.path);
+
 			return Promise.resolve(imageUrl);
 		} catch (error) {
 			return Promise.reject(error);

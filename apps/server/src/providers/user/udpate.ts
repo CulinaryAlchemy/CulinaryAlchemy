@@ -65,7 +65,7 @@ export const updateUser = async (
 
 		await user.save();
 
-		return Promise.resolve('');
+		return Promise.resolve();
 	} catch (error) {
 		return Promise.reject(error);
 	}

@@ -129,6 +129,7 @@ const User = {
 				try {
 					const avatarUrl = await cloudinaryService.uploadImage(avatar!);
 					params.avatar = avatarUrl;
+
 				} catch (error) {
 					console.log(error);
 				}
