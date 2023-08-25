@@ -21,7 +21,7 @@ export const UserHeader: React.FC<IProps> = ({ data }) => {
   return (
     <header>
       <Box sx={{ height: '10em', backgroundColor: 'var(--joy-palette-neutral-outlinedBorder)', overflow: 'hidden' }}>
-        <img src="/wallpaper.webp" alt="wallpaper image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+        <img src={data?.header as unknown as string} alt="wallpaper image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
       </Box>
       <Stack sx={{ paddingX: '1em', paddingY: '0.5em' }}>
         <Stack direction='row' sx={{ justifyContent: 'space-between', paddingTop: '0.1em' }}>
