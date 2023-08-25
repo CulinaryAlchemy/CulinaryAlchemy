@@ -19,8 +19,8 @@ const Login = () => {
       <Form
         schema={loginInputsSchema}
         inputsData={inputsArray}
-        onSumbit={handleOnSumbit}
-        buttonSumbitName={t('login2')}
+        onSubmit={handleOnSumbit}
+        buttonSubmitName={t('login2')}
         Header={<LoginHeader />}
         Footer={<LoginFooter />}
         styles={{ gridColumns: 1, width: '300px' }}

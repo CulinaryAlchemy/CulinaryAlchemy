@@ -9,7 +9,7 @@ export const Error: React.FC<IProps> = ({ text }) => {
         <Typography
             level="body3"
             color='danger'
-            sx={{ alignSelf: 'flex-end' }}
+            sx={{ alignSelf: 'flex-end', textTransform: 'capitalize' }}
         >
             {text !== '' && text}
         </Typography>

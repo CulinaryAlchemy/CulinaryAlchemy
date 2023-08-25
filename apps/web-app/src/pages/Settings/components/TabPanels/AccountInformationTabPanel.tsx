@@ -36,8 +36,8 @@ const AccountInformationTabPanel = () => {
           loading={false}
         >
             <Form
-                buttonSumbitName={t('save')}
-                onSumbit={handleOnSumbit}
+                buttonSubmitName={t('save')}
+                onSubmit={handleOnSumbit}
                 inputsData={inputsArray}
                 schema={inputsAccountTabSchema}
                 styles={{
