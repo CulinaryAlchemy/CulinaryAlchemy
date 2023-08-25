@@ -27,7 +27,7 @@ export const UserHeader: React.FC<IProps> = ({ data }) => {
         <Stack direction='row' sx={{ justifyContent: 'space-between', paddingTop: '0.1em' }}>
           <Stack direction='row' alignItems='center' spacing={0.5}>
             <Sheet variant='outlined' sx={{ width: '8.34375em', height: '8.34375em', borderRadius: '100%', border: '0.125em solid var(--joy-palette-background-surface)', backgroundColor: 'black', marginTop: '-5em !important', overflow: 'hidden' }}>
-              <img src="/logo.webp" alt="logo image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+              <img src={data?.avatar as unknown as string} alt="logo image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
             </Sheet>
             <Stack direction='row' sx={{ gap: '0.4em', alignItems: 'center' }}>
               <Typography level='h6'>{data?.username}</Typography>

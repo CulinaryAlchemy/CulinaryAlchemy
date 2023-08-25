@@ -3,7 +3,7 @@ export interface IUser {
   name?: string
   id: number
   email: string
-  avatar?: FileList
+  avatar?: File
   description?: string
   location?: string
   role: IRole

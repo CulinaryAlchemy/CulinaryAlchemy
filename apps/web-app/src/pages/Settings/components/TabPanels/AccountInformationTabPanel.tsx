@@ -13,6 +13,7 @@ const AccountInformationTabPanel = () => {
   const handleOnSumbit: SubmitHandler<IUserUpdate> = (data) => {
     const areValuesNull = Object.values(data).every((actualData) => {
       if (actualData instanceof FileList) {
+        data.avatar = actualData[0]
         return actualData.length === 0
       } else {
         return actualData == null
