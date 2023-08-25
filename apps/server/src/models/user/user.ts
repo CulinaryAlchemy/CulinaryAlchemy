@@ -10,6 +10,7 @@ class User extends Model<UserInterface> implements UserInterface {
 	email!: string;
 	password!: string;
 	avatar!: string;
+	header!: string;
 	name!: string;
 	description!: string;
 	location!: string;
@@ -55,7 +56,17 @@ User.init(
 		avatar: {
 			type: DataTypes.STRING,
 			allowNull: true,
-			defaultValue: 'https://res.cloudinary.com/dy9gxuv2j/image/upload/v1692989889/Leonardo_Diffusion_Imagine_an_enchanting_profile_picture_tailo_0_1_-min_huqll6.jpg',
+			defaultValue:
+				'https://res.cloudinary.com/dy9gxuv2j/image/upload/v1692989889/Leonardo_Diffusion_Imagine_an_enchanting_profile_picture_tailo_0_1_-min_huqll6.jpg',
+			validate: {
+				isUrl: true,
+			},
+		},
+		header: {
+			type: DataTypes.STRING,
+			allowNull: true,
+			defaultValue:
+				'https://res.cloudinary.com/dy9gxuv2j/image/upload/v1692994795/Leonardo_Diffusion_cooking_illustration_ghibli_studio_style_il_1_jyla7q.jpg',
 			validate: {
 				isUrl: true,
 			},
