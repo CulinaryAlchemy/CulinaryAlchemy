@@ -1,4 +1,4 @@
-import { type IUserUpdate } from '@/models/LOGIC'
+import { type IApiResponse, type IUserUpdate } from '@/models/LOGIC'
 import { CBackRoutes } from '@/routing'
 import axios from 'axios'
 
@@ -11,5 +11,5 @@ export const deleteApiUser = (userId: number) => {
 }
 
 export const checkApiUserKey = (key: 'email' | 'username', value: string) => {
-  return axios.get(CBackRoutes.Static.user.check[key], { data: { [key]: value } })
+  return axios.post<IApiResponse<unknown>>(CBackRoutes.Static.user.check[key], { [key]: value })
 }

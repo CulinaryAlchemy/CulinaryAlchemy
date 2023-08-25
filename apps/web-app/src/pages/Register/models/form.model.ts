@@ -1,5 +1,4 @@
 import { CInputUser, type TFormInputArray } from '@/models/UI'
-import { checkApiUserKey } from '@/services'
 import { getDynamicSchemas } from '@/utils'
 import { z as zValidator } from 'zod'
 
@@ -7,12 +6,21 @@ export const inputsArray: TFormInputArray = [
   {
     ...CInputUser.username,
     validation: CInputUser.username.validation
-      .refine(async (value) => (await checkApiUserKey('username', value as string)).status === 200, { message: 'Username isn\'t available' })
+    /* .refine(async (value) => {
+        const response = await checkApiUserKey('username', value as string).catch(() => {})
+        return response?.status === 200
+      }
+      , { message: 'Username isn\'t available' }) */
   },
   {
+    formInputType: 'textFieldAsync',
     ...CInputUser.email,
     validation: CInputUser.email.validation
-      .refine(async (value) => (await checkApiUserKey('email', value as string)).status === 200, { message: 'Email isn\'t available ' })
+    /* .refine(async (value) => {
+        const response = await checkApiUserKey('email', value as string).catch(() => {})
+        return response?.status === 200
+      }
+      , { message: 'email isn\'t available' }) */
   },
   CInputUser.password
 ]

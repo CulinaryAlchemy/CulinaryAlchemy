@@ -1,11 +1,11 @@
 import { config } from '@/config'
 import { toastUtils } from '@/utils'
 
-let isTThereARequestRunning = false
+let isRequestRunningForServerStatus = false
 
 export const checkServerStatus = () => {
-  if (!isTThereARequestRunning) {
-    isTThereARequestRunning = true
+  if (!isRequestRunningForServerStatus) {
+    isRequestRunningForServerStatus = true
 
     const checkServer = () => {
       return new Promise((resolve) => {
@@ -14,7 +14,7 @@ export const checkServerStatus = () => {
             .then(() => {
               resolve('ok')
               clearInterval(timeout)
-              isTThereARequestRunning = false
+              isRequestRunningForServerStatus = false
             })
             .catch(() => {
               console.log('the server is still offline')
