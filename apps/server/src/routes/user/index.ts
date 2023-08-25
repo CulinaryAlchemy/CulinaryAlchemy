@@ -49,7 +49,7 @@ userRouter.put(
 	passportMiddleware,
 	authMiddleware,
 	idValidator,
-	upload.single('avatar'),
+	upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'header', maxCount: 1}]),
 	body('name').optional().notEmpty().isString().isLowercase(),
 	body('password').optional().notEmpty().isString(),
 	body('location').optional().notEmpty().isString(),

@@ -2,7 +2,7 @@ import cloudinary from 'cloudinary';
 import { deleteFile } from './files-service';
 
 export const cloudinaryService = {
-	uploadImage: async (file: Express.Multer.File) => {
+	uploadImage: async (file: Express.Multer.File, width: number, height: number) => {
 		cloudinary.v2.config({
 			cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 			api_key: process.env.CLOUDINARY_API_KEY,
@@ -11,7 +11,7 @@ export const cloudinaryService = {
 		});
 		try {
 			const transformOptions = [
-				{ width: 400, height: 400, crop: 'fill', gravity: 'center' },
+				{ width: width, height: height, crop: 'fill', gravity: 'center' },
 				{ quality: 'auto', fetch_format: 'auto' },
 			];
 			const result = await cloudinary.v2.uploader.upload(file.path, {
