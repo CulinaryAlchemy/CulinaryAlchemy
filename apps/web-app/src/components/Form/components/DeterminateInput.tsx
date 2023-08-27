@@ -14,10 +14,9 @@ interface IProps {
   watch: UseFormWatch<FieldValues>
   setError: UseFormSetError<FieldValues>
   clearErrors: UseFormClearErrors<FieldValues>
-  isSubmitted: boolean
 }
 
-export const DeterminateInput: React.FC<IProps> = ({ data, register, error, watch, setError, clearErrors, isSubmitted }) => {
+export const DeterminateInput: React.FC<IProps> = ({ data, register, error, watch, setError, clearErrors }) => {
   if (data.formInputType === 'textField') {
     return <TextField {...{ data, register, error }} />
   }
@@ -28,7 +27,7 @@ export const DeterminateInput: React.FC<IProps> = ({ data, register, error, watc
     return <DropZone {...{ data, register, error }}/>
   }
   if (data.formInputType === 'textFieldAsync') {
-    return <TextFieldAsync {...{ data, register, error, watch, setError, clearErrors, isSubmitted }} />
+    return <TextFieldAsync {...{ data, register, error, watch, setError, clearErrors }} />
   }
 
   return <h1>Invalid input type</h1>

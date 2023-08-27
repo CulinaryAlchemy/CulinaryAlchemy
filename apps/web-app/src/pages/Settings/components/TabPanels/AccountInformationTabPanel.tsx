@@ -10,7 +10,7 @@ const AccountInformationTabPanel = () => {
   const { updateUser } = useUserMethods()
   const { user } = useGlobalAuth()
 
-  const handleOnSumbit: SubmitHandler<IUserUpdate> = (data) => {
+  const handleOnSubmit: SubmitHandler<IUserUpdate> = (data) => {
     const areValuesNull = Object.values(data).every((actualData) => {
       if (actualData instanceof FileList) {
         return actualData.length === 0
@@ -37,7 +37,7 @@ const AccountInformationTabPanel = () => {
         >
             <Form
                 buttonSubmitName={t('save')}
-                onSubmit={handleOnSumbit}
+                onSubmit={handleOnSubmit}
                 inputsData={inputsArray}
                 schema={inputsAccountTabSchema}
                 styles={{

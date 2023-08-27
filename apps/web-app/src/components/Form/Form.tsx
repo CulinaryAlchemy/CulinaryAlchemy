@@ -2,7 +2,7 @@ import { type TFormInputArray } from '@/models/UI'
 import { DeterminateInput } from './components'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Suspense, useEffect, type SyntheticEvent } from 'react'
+import { Suspense, type SyntheticEvent } from 'react'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
 
@@ -33,11 +33,8 @@ const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
 export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles }) => {
-  const { register, handleSubmit, watch, setError, clearErrors, formState: { errors, isSubmitting, isSubmitted } } = useForm<FieldValues>({ mode: 'onChange', resolver: zodResolver(schema, { async: true }, { mode: 'async' }) })
+  const { register, handleSubmit: defaultHandleSubmit, watch, setError, clearErrors, formState: { errors, isSubmitting } } = useForm<FieldValues>({ mode: 'onChange', resolver: zodResolver(schema, { async: true }, { mode: 'async' }) })
 
-  useEffect(() => {
-    console.log({ isSubmitted, isSubmitting })
-  }, [isSubmitted, isSubmitting])
   return (
     <Sheet variant='outlined'
       sx={{
@@ -52,7 +49,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
         border: styles.border
       }}
     >
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={defaultHandleSubmit(onSubmit)} noValidate>
         <Sheet sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -84,7 +81,6 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
                       setError,
                       clearErrors
                     }}
-                      isSubmitted={isSubmitting}
                     error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
                   />
                 ))}
@@ -99,6 +95,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
                 marginTop: '1em',
                 width: '100%'
               }}
+              disabled={Object.keys(errors).length !== 0 && true}
             >
               {isSubmitting
                 ? <CircularProgress variant="plain" />

@@ -8,9 +8,8 @@ interface IParams {
   watchValue: string
   setError: UseFormSetError<FieldValues>
   clearErrors: UseFormClearErrors<FieldValues>
-  isSubmitted: boolean
 }
-export const useAsyncValidations = ({ inputName, watchValue, setError, clearErrors, isSubmitted }: IParams) => {
+export const useAsyncValidations = ({ inputName, watchValue, setError, clearErrors }: IParams) => {
   const { newValue } = useDebounce(watchValue, 500)
   const [loading, setLoading] = useState(false)
 
@@ -22,17 +21,17 @@ export const useAsyncValidations = ({ inputName, watchValue, setError, clearErro
     if (inputName === 'username' || inputName === 'email') {
       checkApiUserKey(inputName, newValue as string)
         .then(() => {
-          clearErrors(['username', 'email'])
+          clearErrors([inputName])
         })
         .catch(() => {
           setError(inputName, { message: inputName + ' isn\'t Available' }, { shouldFocus: true })
-          setError('globalStoop', { message: '' })
         })
         .finally(() => {
           setLoading(false)
         })
     }
-  }, [newValue, inputName, setError, clearErrors, isSubmitted])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newValue, setError, clearErrors])
 
   return { loading }
 }

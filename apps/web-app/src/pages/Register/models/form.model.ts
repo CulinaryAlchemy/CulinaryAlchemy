@@ -6,21 +6,11 @@ export const inputsArray: TFormInputArray = [
   {
     ...CInputUser.username,
     validation: CInputUser.username.validation
-    /* .refine(async (value) => {
-        const response = await checkApiUserKey('username', value as string).catch(() => {})
-        return response?.status === 200
-      }
-      , { message: 'Username isn\'t available' }) */
   },
   {
     formInputType: 'textFieldAsync',
     ...CInputUser.email,
     validation: CInputUser.email.validation
-    /* .refine(async (value) => {
-        const response = await checkApiUserKey('email', value as string).catch(() => {})
-        return response?.status === 200
-      }
-      , { message: 'email isn\'t available' }) */
   },
   CInputUser.password
 ]
