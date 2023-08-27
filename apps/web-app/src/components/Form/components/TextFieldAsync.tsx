@@ -15,12 +15,13 @@ interface IProps {
   watch: UseFormWatch<FieldValues>
   setError: UseFormSetError<FieldValues>
   clearErrors: UseFormClearErrors<FieldValues>
+  isDirty: boolean
 }
 
-const TextFieldAsync: React.FC<IProps> = ({ data, error, register, watch, setError, clearErrors }) => {
+const TextFieldAsync: React.FC<IProps> = ({ data, error, register, watch, setError, clearErrors, isDirty }) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const watchValue = error === '' ? watch(data.name) : null
-  const { loading } = useAsyncValidations({ inputName: data.name, watchValue: watchValue as string, setError, clearErrors })
+  const { loading } = useAsyncValidations({ inputName: data.name, watchValue: watchValue as string, setError, clearErrors, isDirty })
 
   return (
     <FormControl key={data.name} sx={{ marginBottom: '0.5em' }}>

@@ -8,25 +8,39 @@ interface IParams {
   watchValue: string
   setError: UseFormSetError<FieldValues>
   clearErrors: UseFormClearErrors<FieldValues>
+  isDirty: boolean
 }
-export const useAsyncValidations = ({ inputName, watchValue, setError, clearErrors }: IParams) => {
+export const useAsyncValidations = ({ inputName, watchValue, setError, clearErrors, isDirty }: IParams) => {
   const { newValue } = useDebounce(watchValue, 500)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    if (newValue != null || isDirty) {
+      setError('root.writingError', { message: 'writing error' })
+    }
+
+    if (!isDirty) {
+      clearErrors(['root.writingError', 'root.serverError'])
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchValue, isDirty])
+
+  useEffect(() => {
     if (newValue == null) return
+
     setLoading(true)
-    console.log('making request', { newValue })
     // For best clean code mode this to zod validators and avoid the complexity
     if (inputName === 'username' || inputName === 'email') {
       checkApiUserKey(inputName, newValue as string)
         .then(() => {
-          clearErrors([inputName])
+          clearErrors(['root.serverError', inputName])
         })
         .catch(() => {
-          setError(inputName, { message: inputName + ' isn\'t Available' }, { shouldFocus: true })
+          setError(inputName, { message: inputName + ' isn\'t Available' })
+          setError('root.serverError', { message: 'globalServerError' })
         })
         .finally(() => {
+          clearErrors(['root.writingError'])
           setLoading(false)
         })
     }

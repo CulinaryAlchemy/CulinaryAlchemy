@@ -4,7 +4,6 @@ export const useDebounce = (value: unknown, debounceTime: number) => {
   const [newValue, setNewValue] = useState(value)
 
   useEffect(() => {
-    console.log(value)
     if (value == null) return
 
     const timeOut = setTimeout(() => {
