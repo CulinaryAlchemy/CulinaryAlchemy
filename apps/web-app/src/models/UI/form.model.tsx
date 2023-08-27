@@ -70,8 +70,7 @@ export const CInputUser: TFormInputRecordObject = {
       .min(4)
       .max(254)
       .email(),
-    placeholder: 'joe@gmail.com',
-    formInputType: 'textFieldAsync'
+    placeholder: 'joe@gmail.com'
   },
   password: {
     name: 'password',
