@@ -1,7 +1,7 @@
 import { Form, TabPanel } from '@/components'
 import { useGlobalAuth, useTranslation, useUserMethods } from '@/hooks'
 import { type IUser, type IUserUpdate } from '@/models/LOGIC'
-import { CTabsDataAccountTabPanel, inputsAccountTabSchema, inputsArray } from '@/pages/Settings/models/UI'
+import { CTabsDataAccountTabPanel, inputsAccountTabSchema, selectedInputsArray } from '@/pages/Settings/models/UI'
 import { toastUtils } from '@/utils'
 import { type SubmitHandler } from 'react-hook-form'
 
@@ -38,7 +38,7 @@ const AccountInformationTabPanel = () => {
             <Form
                 buttonSubmitName={t('save')}
                 onSubmit={handleOnSubmit}
-                inputsData={inputsArray}
+                inputsData={selectedInputsArray}
                 schema={inputsAccountTabSchema}
                 styles={{
                   gridColumns: 1,

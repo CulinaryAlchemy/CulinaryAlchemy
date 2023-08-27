@@ -11,20 +11,19 @@ interface IBaseInputForm {
   label: JSX.Element
   validation: ZodType
   validationsOn?: TOnInput
+  defaultValue?: string
 }
 
 interface ITextFieldForm {
   type: 'text' | 'password' | 'email' | 'date'
   formInputType?: 'textField'
   placeholder: string
-  defaultValue?: string
 }
 
 interface ITextFieldAsyncForm {
   type: 'text' | 'password' | 'email' | 'date'
   formInputType?: 'textFieldAsync'
   placeholder: string
-  defaultValue?: string
 }
 
 export interface ITextAreaForm {
@@ -107,6 +106,7 @@ export const CInputUser: TFormInputRecordObject = {
         'Only .jpg, .jpeg, .png and .webp formats are supported.'
       ).optional(),
     formInputType: 'dropZone',
-    accept: 'image/jpeg, image/jpg, image/png, image/webp'
+    accept: 'image/jpeg, image/jpg, image/png, image/webp',
+    defaultValue: undefined
   }
 }
