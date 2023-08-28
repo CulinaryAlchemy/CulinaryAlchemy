@@ -5,7 +5,12 @@ import { CTabsDataAccountTabPanel, inputsAccountTabSchema, inputsArray } from '@
 import { toastUtils } from '@/utils'
 import { type SubmitHandler } from 'react-hook-form'
 
-const AccountInformationTabPanel = () => {
+interface IProps {
+  showBackNavigation?: boolean
+  showHeaders?: boolean
+}
+
+const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, showHeaders }) => {
   const { t } = useTranslation()
   const { updateUser } = useUserMethods()
   const { user } = useGlobalAuth()
@@ -31,7 +36,8 @@ const AccountInformationTabPanel = () => {
           value={CTabsDataAccountTabPanel.information.name}
           title={CTabsDataAccountTabPanel.information.traduction}
           description={CTabsDataAccountTabPanel.information.description}
-          showBackNavigation={true}
+          showBackNavigation={showBackNavigation ?? true}
+          showHeader={showHeaders ?? true}
           routingBy='routingSystem'
           loading={false}
         >

@@ -1,9 +1,11 @@
 import { Loading } from '@/components'
 import { MessageLayout } from '@/layouts'
+import { DeterminateTabPanel } from './components'
+
 import Box from '@mui/joy/Box'
+import { lazy } from 'react'
 
-import { DeterminateTabPanel, TabPanelHeader } from './components'
-
+const TabPanelHeader = lazy(() => import('./components/TabPanelHeader'))
 
 
 type TRoutingBy = 'defaultUISystem' | 'routingSystem' // if routing system is enabled, it will render by route otherwise by UI Tabs system
@@ -16,12 +18,16 @@ interface IProps {
   description?: string | React.ReactNode
   showBackNavigation?: boolean
   routingBy: TRoutingBy
+  showHeader?: boolean
 }
 
-export const TabPanel: React.FC<IProps> = ({ title, description, showBackNavigation, value, loading = true, children, routingBy }) => {
+export const TabPanel: React.FC<IProps> = ({ title, description, showBackNavigation, value, loading = true, children, routingBy, showHeader = true }) => {
   return (
     <DeterminateTabPanel routingBy={routingBy} value={value}>
-      <TabPanelHeader {...{ title, description, showBackNavigation }} />
+      {
+        showHeader &&
+        <TabPanelHeader {...{ title, description, showBackNavigation }} />
+      }
       {
         loading
           ? <TabPanelLoading />

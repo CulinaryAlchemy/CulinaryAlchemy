@@ -34,5 +34,6 @@
     "delete account": "Delete account",
     "deleteAccountTabPanel message": "Deactivate your account.",
     "deleAccountModal message": "Are you sure you want to delete your account? This action cannot be undone.",
-    "are you sure?": "Are you sure?"
+    "are you sure?": "Are you sure?",
+    "edit profile": "Edit profile"
 }
