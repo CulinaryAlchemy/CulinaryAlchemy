@@ -154,7 +154,7 @@ const User = {
 				);
 			}
 			try {
-				const finalParams = cleanObjectNullKeys(params);
+				const finalParams: any = cleanObjectNullKeys(params);
 				await UserProvider.updateUser(id, { ...finalParams });
 
 				return sendApiResponse(res, HttpStatusCodes.CREATED, null);
