@@ -12,6 +12,7 @@ const Typography = lazy(() => import('@mui/joy/Typography'))
 interface IStyles {
   maxWidth?: string
   buttonColor?: 'neutral' | 'danger'
+  width?: string
 }
 
 interface IProps {
@@ -42,7 +43,8 @@ const Modal: React.FC<IProps> = ({ title, text, styles, onAccept, buttonAcceptTe
             aria-labelledby="alert-dialog-modal-title"
             aria-describedby="alert-dialog-modal-description"
             sx={{
-              maxWidth: styles.maxWidth
+              maxWidth: styles.maxWidth,
+              width: styles.width
             }}
           >
             <header>

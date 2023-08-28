@@ -12,7 +12,7 @@ import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
 import { lazy, useState } from 'react'
 
-const AccountInformationTabPanel = lazy(() => import('@/pages/Settings/components/TabPanels/AccountInformationTabPanel'))
+const AccountInformationTabPanel = lazy(() => import('@/components/AppTabPanels/AccountInformationTabPanel'))
 const Modal = lazy(() => import('@/components/Modal/Modal'))
 
 interface IProps {
@@ -85,7 +85,9 @@ export const HeaderButtonsOwner = () => {
         title={t('edit profile')}
         handleOnClickModal={handleOnClick}
         styles={{
-          buttonColor: 'neutral'
+          buttonColor: 'neutral',
+          maxWidth: '28em',
+          width: '100%'
         }}
       >
         <AccountInformationTabPanel
