@@ -34,5 +34,6 @@
     "delete account": "Borrar cuenta",
     "deleteAccountTabPanel message": "Desactiva tu cuenta.",
     "deleAccountModal message": "¿Estás seguro(a) de que deseas borrar tu cuenta? Esta acción no se puede deshacer.",
-    "are you sure?": "¿Estás seguro?"
+    "are you sure?": "¿Estás seguro?",
+    "edit profile": "Editar perfil"
 }

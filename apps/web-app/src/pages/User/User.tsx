@@ -4,12 +4,12 @@ import { type IUser } from '@/models/LOGIC'
 import Sheet from '@mui/joy/Sheet'
 import { Suspense, lazy } from 'react'
 import { UserHeader, UserMain } from './components'
-import { useUserData } from './hooks/'
+import { useUser } from './hooks/'
 
 const NotFoundPage = lazy(() => import('@/pages/NotFound/NotFound'))
 
 const User = () => {
-  const { userName, userData, isLoading, error } = useUserData()
+  const { userName, userData, isLoading, error, isUserProfileOwner } = useUser()
 
   if (isLoading) {
     return <MessageLayout><Loading size='lg' /></MessageLayout>
@@ -26,7 +26,7 @@ const User = () => {
   return (
     <GlobalLayout newTitle={userName as string}>
       <Sheet variant='outlined' sx={{ backgroundColor: 'var(--joy-palette-background-surface)', padding: '0px', maxWidth: '37.5em', margin: 'auto', borderRadius: '0.4em', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        <UserHeader data={userData?.data as IUser} />
+        <UserHeader data={userData?.data as IUser} isOwner={isUserProfileOwner} />
         <UserMain />
 
       </Sheet>
