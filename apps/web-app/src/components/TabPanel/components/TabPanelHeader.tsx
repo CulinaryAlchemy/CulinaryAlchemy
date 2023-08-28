@@ -12,7 +12,7 @@ interface IProps {
   description: string | React.ReactNode
 }
 
-export const TabPanelHeader: React.FC<IProps> = ({ title, description, showBackNavigation }) => {
+const TabPanelHeader: React.FC<IProps> = ({ title, description, showBackNavigation }) => {
   const { backToLastPage } = useRouting()
 
   const handleOnClick = () => {
@@ -47,3 +47,5 @@ export const TabPanelHeader: React.FC<IProps> = ({ title, description, showBackN
         </header>
   )
 }
+
+export default TabPanelHeader

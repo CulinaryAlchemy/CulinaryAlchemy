@@ -2,23 +2,31 @@ import { type TUserKey } from '@/models/LOGIC'
 import { Trans } from 'react-i18next'
 import { z as zValidator, type ZodType } from 'zod'
 
-export type TFormInputType = 'textField' | 'textArea' | 'dropZone' | 'textFieldFetch'
+export type TFormInputType = 'textField' | 'textFieldAsync' | 'textArea' | 'dropZone' | 'textFieldFetch'
 
+export type TOnInput = 'onChange' | 'onSubmit' | 'onBlur'
 
 interface IBaseInputForm {
   name: TUserKey
   label: JSX.Element
   validation: ZodType
+  validationsOn?: TOnInput
+  defaultValue?: string
 }
 
 interface ITextFieldForm {
   type: 'text' | 'password' | 'email' | 'date'
-  formInputType: 'textField'
+  formInputType?: 'textField'
   placeholder: string
-  defaultValue?: string
 }
 
-interface ITextAreaForm {
+interface ITextFieldAsyncForm {
+  type: 'text' | 'password' | 'email' | 'date'
+  formInputType?: 'textFieldAsync'
+  placeholder: string
+}
+
+export interface ITextAreaForm {
   formInputType: 'textArea'
   placeholder: string
 }
@@ -29,11 +37,12 @@ interface IDropZoneForm {
   type: 'file'
 }
 
-export type TInputForm = IBaseInputForm & (ITextFieldForm | ITextAreaForm | IDropZoneForm)
+export type TInputForm = IBaseInputForm & (ITextFieldForm | ITextAreaForm | IDropZoneForm | ITextFieldAsyncForm)
 
 export type TTextFieldForm = IBaseInputForm & ITextFieldForm
 export type TTextAreaForm = IBaseInputForm & ITextAreaForm
 export type TDropZoneForm = IBaseInputForm & IDropZoneForm
+export type TTextFieldAsyncForm = IBaseInputForm & ITextFieldAsyncForm
 
 export type TFormInputRecordObject = Record<string, TInputForm>
 export type TFormInputArray = TInputForm[]
@@ -49,7 +58,7 @@ export const CInputUser: TFormInputRecordObject = {
       .max(15)
       .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
     placeholder: 'Joe Bass',
-    formInputType: 'textField'
+    formInputType: 'textFieldAsync'
   },
   email: {
     name: 'email',
@@ -60,8 +69,7 @@ export const CInputUser: TFormInputRecordObject = {
       .min(4)
       .max(254)
       .email(),
-    placeholder: 'joe@gmail.com',
-    formInputType: 'textField'
+    placeholder: 'joe@gmail.com'
   },
   password: {
     name: 'password',
@@ -98,6 +106,7 @@ export const CInputUser: TFormInputRecordObject = {
         'Only .jpg, .jpeg, .png and .webp formats are supported.'
       ).optional(),
     formInputType: 'dropZone',
-    accept: 'image/jpeg, image/jpg, image/png, image/webp'
+    accept: 'image/jpeg, image/jpg, image/png, image/webp',
+    defaultValue: undefined
   }
 }

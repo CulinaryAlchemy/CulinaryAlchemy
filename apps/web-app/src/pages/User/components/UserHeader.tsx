@@ -10,12 +10,17 @@ import Link from '@mui/joy/Link'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
+import { lazy, useState } from 'react'
+
+const AccountInformationTabPanel = lazy(() => import('@/pages/Settings/components/TabPanels/AccountInformationTabPanel'))
+const Modal = lazy(() => import('@/components/Modal/Modal'))
 
 interface IProps {
   data: IUser | undefined
+  isOwner: boolean
 }
 
-export const UserHeader: React.FC<IProps> = ({ data }) => {
+export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
   const { t } = useTranslation()
 
   return (
@@ -45,9 +50,11 @@ export const UserHeader: React.FC<IProps> = ({ data }) => {
             </Stack>
           </Stack>
           <Stack direction='row' alignItems='center' spacing={1}>
-            <IconButton variant='outlined' color='neutral'><MoreVertIcon /></IconButton>
-            <IconButton variant='outlined' color='neutral'><MailOutlineIcon /></IconButton>
-            <Button variant='outlined' color='neutral'>{t('follow')}</Button>
+            {
+              isOwner
+                ? <HeaderButtonsOwner />
+                : <HeaderButtonsDefault />
+            }
           </Stack>
         </Stack>
         <Stack spacing={1} mt={1}>
@@ -60,5 +67,50 @@ export const UserHeader: React.FC<IProps> = ({ data }) => {
         </Stack>
       </Stack>
     </header>
+  )
+}
+
+export const HeaderButtonsOwner = () => {
+  const { t } = useTranslation()
+  const [isOpenModal, setIsOpenModal] = useState(false)
+
+  const handleOnClick = () => {
+    setIsOpenModal(!isOpenModal)
+  }
+
+  return (
+    <>
+      <Modal
+        open={isOpenModal}
+        title={t('edit profile')}
+        handleOnClickModal={handleOnClick}
+        styles={{
+          buttonColor: 'neutral'
+        }}
+      >
+        <AccountInformationTabPanel
+          showBackNavigation={false}
+          showHeaders={false}
+        />
+      </Modal>
+      <Button
+        variant='outlined'
+        color='neutral'
+        onClick={handleOnClick}
+      >
+        {t('edit profile')}
+      </Button>
+    </>
+  )
+}
+
+export const HeaderButtonsDefault = () => {
+  const { t } = useTranslation()
+  return (
+    <>
+      <IconButton variant='outlined' color='neutral'><MoreVertIcon /></IconButton>
+      <IconButton variant='outlined' color='neutral'><MailOutlineIcon /></IconButton>
+      <Button variant='outlined' color='neutral'>{t('follow')}</Button>
+    </>
   )
 }

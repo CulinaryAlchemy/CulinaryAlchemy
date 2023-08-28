@@ -21,8 +21,8 @@ const Register = () => {
       <Form
         inputsData={inputsArray}
         schema={registerInputsSchema}
-        buttonSumbitName={t('sign up')}
-        onSumbit={handleOnSumbit}
+        buttonSubmitName={t('sign up')}
+        onSubmit={handleOnSumbit}
         Header= {<RegisterHeader />}
         Footer={<RegisterFooter />}
         styles={{ gridColumns: 1, width: '300px' }}

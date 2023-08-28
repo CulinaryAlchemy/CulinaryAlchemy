@@ -1,7 +1,8 @@
-import { Modal } from '@/components'
 import { getServerStatus } from '@/services'
-import { useEffect, useState } from 'react'
+import { lazy, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+const Modal = lazy(() => import('@/components/Modal/Modal'))
 
 export const TestServerStatus = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
