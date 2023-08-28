@@ -2,6 +2,7 @@ import { UserProvider } from '.';
 import { User } from '../../models/user/index';
 import { RoleType } from '../../interfaces/role.interface';
 import { DatabaseService } from '../../services';
+import { defaultImages } from '../../config/default-images';
 
 export const createUser = async ({
 	username,
@@ -15,8 +16,10 @@ export const createUser = async ({
 	role?: RoleType;
 }) => {
 	const transaction = await DatabaseService.getTransaction();
+	const avatar = defaultImages.avatar;
+	const header = defaultImages.header;
 	try {
-		const user = User.build({ username, email, password });
+		const user = User.build({ username, email, password, avatar, header });
 
 		const userWithRole = await UserProvider.AssociateWith.role.add(user, role);
 

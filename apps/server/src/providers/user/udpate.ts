@@ -1,3 +1,4 @@
+import { cloudinaryService } from '../../services';
 import { User } from '../../models/user/index';
 
 export const updateUser = async (
@@ -6,6 +7,7 @@ export const updateUser = async (
 		username,
 		name,
 		avatar,
+		header,
 		email,
 		password,
 		location,
@@ -14,6 +16,7 @@ export const updateUser = async (
 		username?: string;
 		name?: string;
 		avatar?: string;
+		header?: string;
 		email?: string;
 		password?: string;
 		location?: string;
@@ -42,7 +45,13 @@ export const updateUser = async (
 		}
 
 		if (avatar) {
+			await cloudinaryService.deleteImage(user.avatar);
 			user.avatar = avatar;
+		}
+
+		if(header){
+			await cloudinaryService.deleteImage(user.header);
+			user.header = header;
 		}
 
 		if (email) {
@@ -65,7 +74,7 @@ export const updateUser = async (
 
 		await user.save();
 
-		return Promise.resolve('');
+		return Promise.resolve();
 	} catch (error) {
 		return Promise.reject(error);
 	}

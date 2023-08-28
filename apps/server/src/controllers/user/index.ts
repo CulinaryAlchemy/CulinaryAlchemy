@@ -92,9 +92,7 @@ const User = {
 		},
 		email: async (req: Request, res: Response) => {
 			const { email } = req.body;
-			const isEmailavailable = await UserProvider.checkAvaiability.email(
-				email
-			);
+			const isEmailavailable = await UserProvider.checkAvaiability.email(email);
 
 			if (isEmailavailable) {
 				return sendApiResponse(res, HttpStatusCodes.SUCCESS, null);
@@ -109,6 +107,7 @@ const User = {
 				username: string;
 				name: string;
 				avatar?: string;
+				header?: string;
 				email: string;
 				password: string;
 				location: string;
@@ -117,7 +116,6 @@ const User = {
 			const { id } = req.params;
 			const { username, name, email, password, location, description } =
 				req.body;
-			const avatar = req.file;
 			const params: Params = {
 				username,
 				name,
@@ -126,6 +124,24 @@ const User = {
 				location,
 				description,
 			};
+			if (req.files && 'avatar' in req.files) {
+				const avatarFile = req.files['avatar'][0] as Express.Multer.File;
+				const avatarUrl = await cloudinaryService.uploadImage(
+					avatarFile as unknown as Express.Multer.File,
+					400,
+					400
+				);
+				params.avatar = avatarUrl;
+			}
+			if (req.files && 'header' in req.files) {
+				const headerFile = req.files['header'][0] as Express.Multer.File;
+				const headerUrl = await cloudinaryService.uploadImage(
+					headerFile as unknown as Express.Multer.File,
+					1080,
+					360
+				);
+				params.header = headerUrl;
+			}
 
 			const requestParamsLength = getObjectKeys(params);
 
@@ -138,10 +154,6 @@ const User = {
 				);
 			}
 			try {
-				if (avatar) {
-					const avatarUrl = await cloudinaryService.uploadImage(avatar!);
-					params.avatar = avatarUrl;
-				}
 				const finalParams = cleanObjectNullKeys(params);
 				await UserProvider.updateUser(id, { ...finalParams });
 

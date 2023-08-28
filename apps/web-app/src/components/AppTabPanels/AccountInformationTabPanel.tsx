@@ -18,6 +18,7 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
   const handleOnSubmit: SubmitHandler<IUserUpdate> = (data) => {
     const areValuesNull = Object.values(data).every((actualData) => {
       if (actualData instanceof FileList) {
+        data.avatar = actualData[0]
         return actualData.length === 0
       } else {
         return actualData == null

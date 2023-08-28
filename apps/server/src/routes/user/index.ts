@@ -49,13 +49,13 @@ userRouter.put(
 	passportMiddleware,
 	authMiddleware,
 	idValidator,
+	upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'header', maxCount: 1}]),
 	body('name').optional().notEmpty().isString().isLowercase(),
 	body('password').optional().notEmpty().isString(),
 	body('location').optional().notEmpty().isString(),
 	body('description').optional().notEmpty().isString(),
 	body('email').optional().isEmail().notEmpty(),
 	validateValidationChainResult,
-	upload.single('avatar'),
 	Controllers.User.put.byId
 );
 
