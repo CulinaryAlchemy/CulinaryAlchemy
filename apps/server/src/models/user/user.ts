@@ -10,6 +10,7 @@ class User extends Model<UserInterface> implements UserInterface {
 	email!: string;
 	password!: string;
 	avatar!: string;
+	header!: string;
 	name!: string;
 	description!: string;
 	location!: string;
@@ -55,7 +56,13 @@ User.init(
 		avatar: {
 			type: DataTypes.STRING,
 			allowNull: true,
-			// defaultValue: 'default profile picture url'
+			validate: {
+				isUrl: true,
+			},
+		},
+		header: {
+			type: DataTypes.STRING,
+			allowNull: true,
 			validate: {
 				isUrl: true,
 			},
