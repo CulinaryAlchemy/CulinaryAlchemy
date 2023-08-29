@@ -156,8 +156,14 @@ const User = {
 			try {
 				const finalParams: any = cleanObjectNullKeys(params);
 				await UserProvider.updateUser(id, { ...finalParams });
-
-				return sendApiResponse(res, HttpStatusCodes.CREATED, null);
+				const userWithUpdatedValues = await UserProvider.getUser.ById(
+					parseInt(id)
+				);
+				return sendApiResponse(
+					res,
+					HttpStatusCodes.CREATED,
+					userWithUpdatedValues
+				);
 			} catch (error) {
 				console.log(error);
 				return sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
