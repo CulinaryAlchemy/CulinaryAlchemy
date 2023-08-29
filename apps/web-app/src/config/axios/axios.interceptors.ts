@@ -20,7 +20,7 @@ export const setAxiosInterceptors = () => {
   }
 
   const addSignal = (request: AxiosRequestConfig) => {
-    request.signal = AbortSignal.timeout(10000)
+    request.signal = AbortSignal.timeout(20000)
     return request
   }
 
@@ -50,7 +50,7 @@ export const setAxiosInterceptors = () => {
     },
     (error: AxiosError) => {
       console.error({ error })
-      if (error.code === 'ERR_NETWORK') {
+      if (error.code === 'ERR_NETWORK' || error.code === 'ERR_CANCELED') {
         checkServerStatus()
       } else {
         const errorText = (error.response?.status != null) ? getValidationError(error.response?.status) : 'no found'

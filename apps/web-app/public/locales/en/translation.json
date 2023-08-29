@@ -32,8 +32,11 @@
     "account information": "Account information",
     "accountInformationTabPanel message": "See your account information like your location and email address.",
     "delete account": "Delete account",
+    "deleAccountModal message": "Are you certain you want to delete your account? Remember, you can always reactivate it by logging in again. Reach out to culinaryalchemyofficial@gmail.com for assistance.",
     "deleteAccountTabPanel message": "Deactivate your account.",
-    "deleAccountModal message": "Are you sure you want to delete your account? This action cannot be undone.",
     "are you sure?": "Are you sure?",
-    "edit profile": "Edit profile"
+    "edit profile": "Edit profile",
+    "deleAccount info 1 message": "All the data from your profile, including your posts, comments, and connections, will be deleted.",
+    "deleAccount info 2 message": "You can always reactivate your account by logging in again.",
+    "deleAccount info 3 message": "Any content shared with other users will not be available after the account deletion."
 }

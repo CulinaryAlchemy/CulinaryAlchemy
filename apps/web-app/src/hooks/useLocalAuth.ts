@@ -23,8 +23,8 @@ export const useLocalAuth = () => {
   }, [])
 
 
-  const saveSession = (userData: { accesToken: string, userData: object }) => {
-    setToLocalStorage(config.localStorage.auth.accessToken, userData.accesToken)
+  const saveSession = (userData: { accessToken: string, userData: object }) => {
+    setToLocalStorage(config.localStorage.auth.accessToken, userData.accessToken)
     setToLocalStorage(config.localStorage.user, JSON.stringify(userData.userData))
   }
 
@@ -47,7 +47,7 @@ export const useLocalAuth = () => {
     setIsAuth(true)
     setUser(user)
 
-    saveSession({ accesToken: token, userData: user })
+    saveSession({ accessToken: token, userData: user })
   }
 
   const signUp = (userData: IUserRegister) => {
@@ -68,5 +68,10 @@ export const useLocalAuth = () => {
     setIsAuth(false)
     clearLocalStorage()
   }
-  return { user, signIn, signUp, signOut, isAuth, isLoading }
+
+  const updateSessionData = (userData: IUser) => {
+    setUser(userData)
+  }
+
+  return { user, signIn, signUp, signOut, isAuth, isLoading, updateSessionData }
 }
