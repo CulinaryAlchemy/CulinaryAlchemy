@@ -84,16 +84,18 @@ export const HeaderButtonsOwner = () => {
         open={isOpenModal}
         title={t('edit profile')}
         handleOnClickModal={handleOnClick}
+        showDividers={false}
         styles={{
           buttonColor: 'neutral',
-          maxWidth: '28em',
-          width: '100%'
+          maxWidth: '38em',
+          width: '100%',
+          maxHeight: '85vh'
         }}
       >
-        <AccountInformationTabPanel
-          showBackNavigation={false}
-          showHeaders={false}
-        />
+          <AccountInformationTabPanel
+            showBackNavigation={false}
+            showHeaders={false}
+          />
       </Modal>
       <Button
         variant='outlined'

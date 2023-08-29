@@ -11,13 +11,13 @@ const TabPanelHeader = lazy(() => import('./components/TabPanelHeader'))
 type TRoutingBy = 'defaultUISystem' | 'routingSystem' // if routing system is enabled, it will render by route otherwise by UI Tabs system
 
 interface IProps {
+  routingBy: TRoutingBy
   value?: string
   loading?: boolean
   children?: React.ReactNode
   title?: string | React.ReactNode
   description?: string | React.ReactNode
   showBackNavigation?: boolean
-  routingBy: TRoutingBy
   showHeader?: boolean
 }
 

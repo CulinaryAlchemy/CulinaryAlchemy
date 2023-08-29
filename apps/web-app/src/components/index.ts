@@ -1,6 +1,7 @@
 export * from './AppInfoLink'
 export * from './AppLink'
 export * from './DropDownMenu/DropDownMenu'
+export * from './DropZone'
 export * from './EditorToolbar'
 export * from './Form/Form'
 export * from './Header'
