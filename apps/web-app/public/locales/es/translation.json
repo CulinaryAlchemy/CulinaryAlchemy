@@ -32,8 +32,11 @@
     "account information": "Información de cuenta",
     "accountInformationTabPanel message": "Ve la información de tu cuenta, como tu ubicación y dirección de correo electrónico.",
     "delete account": "Borrar cuenta",
+    "deleAccountModal message": "¿Estás seguro de que deseas eliminar tu cuenta? Recuerda que siempre puedes reactivarla iniciando sesión nuevamente. Ponte en contacto con culinaryalchemyofficial@gmail.com si necesitas ayuda.",
     "deleteAccountTabPanel message": "Desactiva tu cuenta.",
-    "deleAccountModal message": "¿Estás seguro(a) de que deseas borrar tu cuenta? Esta acción no se puede deshacer.",
     "are you sure?": "¿Estás seguro?",
-    "edit profile": "Editar perfil"
+    "edit profile": "Editar perfil",
+    "deleAccount info 1 message": "Todos los datos de tu perfil, incluyendo tus publicaciones, comentarios y conexiones, serán eliminados.",
+    "deleAccount info 2 message": "Siempre puedes reactivar tu cuenta volviendo a iniciar sesión.",
+    "deleAccount info 3 message": "Cualquier contenido compartido con otros usuarios no estará disponible después de la eliminación de la cuenta."
 }
