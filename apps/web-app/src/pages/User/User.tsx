@@ -1,4 +1,5 @@
 import { Loading } from '@/components'
+import { useTranslation } from '@/hooks'
 import { GlobalLayout, MessageLayout } from '@/layouts'
 import { type IUser } from '@/models/LOGIC'
 import Sheet from '@mui/joy/Sheet'
@@ -9,6 +10,7 @@ import { useUser } from './hooks/'
 const NotFoundPage = lazy(() => import('@/pages/NotFound/NotFound'))
 
 const User = () => {
+  const { t } = useTranslation()
   const { userName, userData, isLoading, error, isUserProfileOwner } = useUser()
 
   if (isLoading) {
@@ -16,7 +18,7 @@ const User = () => {
   }
 
   if (error != null && error.response == null) {
-    return <MessageLayout><h1>Something went wrong</h1></MessageLayout>
+    return <MessageLayout><h1>{t('something went wrong')}</h1></MessageLayout>
   }
 
   if (userData == null) {

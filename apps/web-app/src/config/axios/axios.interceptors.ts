@@ -20,7 +20,7 @@ export const setAxiosInterceptors = () => {
   }
 
   const addSignal = (request: AxiosRequestConfig) => {
-    request.signal = AbortSignal.timeout(10000)
+    request.signal = AbortSignal.timeout(30000)
     return request
   }
 
