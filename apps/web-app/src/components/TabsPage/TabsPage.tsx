@@ -146,6 +146,7 @@ export const TabsPage: React.FC<IProps> = ({ defaultTab, type, tabsData, tabPane
         <Box
           sx={(theme) => ({
             '--bg': theme.vars.palette.background.surface,
+            position: 'relative',
             background: styles.background === 'theme' ? 'var(--bg)' : 'transparent',
             boxShadow: '0 0 0 100vmax var(--bg)',
             clipPath: 'inset(0 -100vmax)',

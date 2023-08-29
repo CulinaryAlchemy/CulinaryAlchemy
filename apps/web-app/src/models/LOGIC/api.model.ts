@@ -2,14 +2,15 @@ import { type IRole, type IUser } from '@/models/LOGIC'
 
 export interface IApiResponse<T> {
   data: null | T
-  error: IError | null
+  error: IApiError | null
   statusCode: number
   success: boolean
 }
 
-interface IError {
+interface IApiError {
   statusCode: number
   message: string
+  invalidAreas?: null | string[]
 }
 
 export interface IAuthApiResponse {

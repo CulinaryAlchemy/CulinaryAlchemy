@@ -1,13 +1,17 @@
 import { type TFormInputArray } from '@/models/UI'
+import { adaptDefaultValues } from './adapters'
+import { DeterminateInput } from './components'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Suspense, type SyntheticEvent } from 'react'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
 
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button/'
+import CircularProgress from '@mui/joy/CircularProgress'
 import Sheet from '@mui/joy/Sheet/'
-import { Suspense, type SyntheticEvent } from 'react'
-import { DeterminateInput } from './components'
+import Stack from '@mui/joy/Stack'
 
 interface IStyles {
   gridColumns: 1 | 2
@@ -20,18 +24,42 @@ interface IStyles {
 interface IForm {
   schema: ZodObject<ZodRawShape>
   inputsData: TFormInputArray
-  onSumbit: SubmitHandler<FieldValues>
+  onSubmit: SubmitHandler<FieldValues>
   Header?: React.ReactNode
   Footer?: React.ReactNode
-  buttonSumbitName: string
+  buttonSubmitName: string
   styles: IStyles
+  showResetButton?: boolean
 }
 
 const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1em' }
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
-export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Footer, buttonSumbitName = 'sumbit', styles }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema, { async: true }) })
+export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, showResetButton = true }) => {
+  const {
+    register,
+    handleSubmit: defaultHandleSubmit,
+    watch,
+    setError,
+    clearErrors,
+    reset,
+    formState: {
+      errors,
+      isSubmitting,
+      isValid,
+      dirtyFields,
+      isDirty
+    }
+  } = useForm<FieldValues>({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: adaptDefaultValues(inputsData),
+    resolver: zodResolver(schema, { async: true }, { mode: 'async' })
+  })
+
+  const handleOnClickForReset = () => {
+    reset()
+  }
 
   return (
     <Sheet variant='outlined'
@@ -47,7 +75,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
         border: styles.border
       }}
     >
-      <form onSubmit={handleSubmit(onSumbit)} noValidate>
+      <form onSubmit={defaultHandleSubmit(onSubmit)} noValidate>
         <Sheet sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -57,9 +85,9 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
           <main>
             <Suspense>
               <Box sx={[styles.gridColumns === 1 ? gridFormStyles1 : gridFormStyles2, { width: '100%' }]}>
-                {inputsData.map((inputData) => (
+                {inputsData.map((inputData, index) => (
                   <DeterminateInput
-                    key={inputData.name}
+                    key={index}
                     data={inputData}
                     register={register(inputData.name,
                       {
@@ -74,16 +102,59 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSumbit, Header, Fo
                         }
                       }
                     )}
+                    {...{
+                      watch,
+                      setError,
+                      clearErrors
+                    }}
+                    isDirty={dirtyFields[inputData.name] as boolean}
                     error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
                   />
                 ))}
               </Box>
             </Suspense>
-            <Button type='submit' sx={{ marginTop: '1em', width: '100%' }}>{buttonSumbitName}</Button>
+            <Stack
+              direction='row'
+              spacing={1}
+              marginTop={2}
+            >
+              <Button
+                type='submit'
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: '1em',
+                  width: '100%',
+                  flexGrow: 1
+                }}
+                disabled={(!isValid || Object.values(errors).length > 0 || !isDirty) && true}
+              >
+                {isSubmitting
+                  ? <CircularProgress variant="plain" />
+                  : buttonSubmitName
+                }
+              </Button>
+              {showResetButton &&
+                <Button
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '1em'
+                  }}
+                  size='sm'
+                  variant='outlined'
+                  onClick={handleOnClickForReset}
+                >
+                  Reset
+                </Button>
+              }
+            </Stack>
           </main>
           {Footer}
         </Sheet>
-      </form>
-    </Sheet>
+      </form >
+    </Sheet >
   )
 }

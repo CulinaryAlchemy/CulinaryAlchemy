@@ -1,11 +1,13 @@
-import { List, Modal, TabPanel } from '@/components'
+import { List, TabPanel } from '@/components'
 import { useGlobalAuth, useTranslation, useUserMethods } from '@/hooks'
 import { CTabsDataAccountTabPanel } from '@/pages/Settings/models/UI'
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
-import { useState } from 'react'
+import { lazy, useState } from 'react'
+
+const Modal = lazy(() => import('@/components/Modal/Modal'))
 
 const DeleteAccountTabPanel = () => {
   const { t } = useTranslation()

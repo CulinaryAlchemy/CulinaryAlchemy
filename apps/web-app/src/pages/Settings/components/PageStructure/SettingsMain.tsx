@@ -11,7 +11,7 @@ export const SettingsMain = () => {
 
   return (
     <main>
-      <Box>
+      <Box sx={{ position: 'relative' }}>
         <TabsPage
           defaultTab={defaultTabName}
           type='routing'
