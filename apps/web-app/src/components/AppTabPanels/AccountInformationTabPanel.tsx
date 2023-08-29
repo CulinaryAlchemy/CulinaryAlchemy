@@ -1,8 +1,9 @@
-import { Form, TabPanel } from '@/components'
+import { DropZone, Form, TabPanel } from '@/components'
 import { useGlobalAuth, useTranslation, useUserMethods } from '@/hooks'
 import { type IUser, type IUserUpdate } from '@/models/LOGIC'
 import { CTabsDataAccountTabPanel, inputsAccountTabSchema, selectedInputsArray } from '@/pages/Settings/models/UI'
 import { toastUtils } from '@/utils'
+import Box from '@mui/joy/Box'
 import { type SubmitHandler } from 'react-hook-form'
 
 interface IProps {
@@ -32,30 +33,81 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
     }
   }
 
+  const handleOnImageSuccess = (userKey: 'avatar' | 'header') => (file: File) => {
+    updateUser(user?.id as number, { [userKey]: file })
+  }
+
   return (
-        <TabPanel
-          value={CTabsDataAccountTabPanel.information.name}
-          title={CTabsDataAccountTabPanel.information.traduction}
-          description={CTabsDataAccountTabPanel.information.description}
-          showBackNavigation={showBackNavigation ?? true}
-          showHeader={showHeaders ?? true}
-          routingBy='routingSystem'
-          loading={false}
-        >
-            <Form
-                buttonSubmitName={t('save')}
-                onSubmit={handleOnSubmit}
-                inputsData={selectedInputsArray}
-                schema={inputsAccountTabSchema}
-                styles={{
-                  gridColumns: 1,
-                  width: '400px',
-                  border: 'none',
-                  marginY: '1em',
-                  paddingY: '0px'
-                }}
-            />
-        </TabPanel>
+    <TabPanel
+      value={CTabsDataAccountTabPanel.information.name}
+      title={CTabsDataAccountTabPanel.information.traduction}
+      description={CTabsDataAccountTabPanel.information.description}
+      showBackNavigation={showBackNavigation ?? true}
+      showHeader={showHeaders ?? true}
+      routingBy='routingSystem'
+      loading={false}
+    >
+      <Box
+        sx={{
+          overflow: 'hidden'
+        }}>
+        <Box
+          sx={{
+            height: '10em',
+            backgroundColor: 'var(--joy-palette-neutral-outlinedBorder)',
+            overflow: 'hidden',
+            position: 'relative'
+          }}>
+          <DropZone
+            onSuccess={handleOnImageSuccess('header')}
+            fileType='image/jpeg, image/jpg, image/png, image/webp'
+            styles={{
+              width: '100%',
+              height: '100%',
+              backdropFilter: 'blur(0.5px)',
+              backgroundColor: 'rgba(1,1,1,0.5)'
+            }}
+          />
+          <img src={user?.header as unknown as string} alt="wallpaper image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+        </Box>
+        <Box
+          sx={{
+            position: 'relative',
+            width: '7.34375em',
+            height: '7.34375em',
+            borderRadius: '100%',
+            border: '0.125em solid var(--joy-palette-background-surface)',
+            backgroundColor: 'black',
+            marginTop: '-3.5em !important',
+            overflow: 'hidden',
+            zIndex: '10'
+          }}>
+          <DropZone
+            onSuccess={handleOnImageSuccess('avatar')}
+            fileType='image/jpeg, image/jpg, image/png, image/webp'
+            styles={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(1,1,1,0.5)'
+            }}
+          />
+          <img src={user?.avatar as unknown as string} alt="logo image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+        </Box>
+        <Form
+          buttonSubmitName={t('save')}
+          onSubmit={handleOnSubmit}
+          inputsData={selectedInputsArray}
+          schema={inputsAccountTabSchema}
+          styles={{
+            gridColumns: 1,
+            width: '100%',
+            border: 'none',
+            marginY: '1em',
+            paddingY: '0px'
+          }}
+        />
+      </Box>
+    </TabPanel>
   )
 }
 
