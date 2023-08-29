@@ -13,6 +13,7 @@ interface IStyles {
   maxWidth?: string
   buttonColor?: 'neutral' | 'danger'
   width?: string
+  maxHeight?: string
 }
 
 interface IProps {
@@ -24,9 +25,10 @@ interface IProps {
   buttonAcceptText?: string
   text?: string
   onAccept?: () => unknown
+  showDividers?: boolean
 }
 
-const Modal: React.FC<IProps> = ({ title, text, styles, onAccept, buttonAcceptText, open, handleOnClickModal, children }) => {
+const Modal: React.FC<IProps> = ({ showDividers = true, title, text, styles, onAccept, buttonAcceptText, open, handleOnClickModal, children }) => {
   const handleOnAccept = () => {
     handleOnClickModal()
     if (onAccept != null) onAccept()
@@ -44,7 +46,9 @@ const Modal: React.FC<IProps> = ({ title, text, styles, onAccept, buttonAcceptTe
             aria-describedby="alert-dialog-modal-description"
             sx={{
               maxWidth: styles.maxWidth,
-              width: styles.width
+              width: styles.width,
+              maxHeight: styles.maxHeight,
+              overflowY: 'auto'
             }}
           >
             <header>
@@ -59,7 +63,7 @@ const Modal: React.FC<IProps> = ({ title, text, styles, onAccept, buttonAcceptTe
                 <ModalClose />
               </Stack>
             </header>
-            <Divider />
+            {showDividers && <Divider />}
             <main>
                 {
                   text != null &&
