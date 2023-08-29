@@ -34,6 +34,7 @@ export const getUser = {
 	},
 	ByEmail: async (email: string, isForInternalServerUse: boolean = false) => {
 		let excludedPropety: string[] = [];
+		const whereCondition: any = { email: email };
 		if (!isForInternalServerUse) {
 			excludedPropety = [
 				'password',
@@ -42,12 +43,12 @@ export const getUser = {
 				'updatedAt',
 				'deletedAt',
 			];
+			whereCondition['deletedAt'] = null;
 		}
 		try {
 			const user = await User.findOne({
 				where: {
-					email: email,
-					deletedAt: null,
+					...whereCondition,
 				},
 				attributes: { exclude: [...excludedPropety] },
 			});

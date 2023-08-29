@@ -42,9 +42,9 @@ const DeleteAccountTabPanel = () => {
                         <List
                             items={
                                 [
-                                    <Typography level='body3'>Todos los datos de tu perfil, incluyendo tus publicaciones, comentarios y conexiones, serán eliminados.</Typography>,
-                                    <Typography level='body3'>No podrás acceder nuevamente a esta cuenta y tendrás que crear una nueva cuenta si deseas usar nuestros servicios en el futuro.</Typography>,
-                                    <Typography level='body3'>Cualquier contenido compartido con otros usuarios no estará disponible después de la eliminación de la cuenta.</Typography>
+                                    <Typography level='body3'>{t('deleAccount info 1 message')}</Typography>,
+                                    <Typography level='body3'>{t('deleAccount info 2 message')}</Typography>,
+                                    <Typography level='body3'>{t('deleAccount info 3 message')}</Typography>
                                 ]
                             }
                         />

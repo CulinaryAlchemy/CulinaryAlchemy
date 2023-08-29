@@ -2,7 +2,7 @@ import { cloudinaryService } from '../../services';
 import { User } from '../../models/user/index';
 
 export const updateUser = async (
-	id: string,
+	id: string | number,
 	{
 		username,
 		name,
@@ -12,6 +12,7 @@ export const updateUser = async (
 		password,
 		location,
 		description,
+		deletedAt,
 	}: {
 		username?: string;
 		name?: string;
@@ -21,6 +22,7 @@ export const updateUser = async (
 		password?: string;
 		location?: string;
 		description?: string;
+		deletedAt: Date | null;
 	}
 ) => {
 	try {
@@ -49,7 +51,7 @@ export const updateUser = async (
 			user.avatar = avatar;
 		}
 
-		if(header){
+		if (header) {
 			await cloudinaryService.deleteImage(user.header);
 			user.header = header;
 		}
@@ -68,6 +70,10 @@ export const updateUser = async (
 
 		if (description) {
 			user.description = description;
+		}
+
+		if(deletedAt){
+			user.deletedAt = deletedAt;
 		}
 
 		await user.validate();
