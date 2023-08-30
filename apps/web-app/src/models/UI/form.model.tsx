@@ -54,7 +54,7 @@ export const CInputUser: TFormInputRecordObject = {
     type: 'text',
     validation: zValidator
       .string()
-      .min(3)
+      .min(1)
       .max(15)
       .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
     placeholder: 'Joe Bass',
@@ -67,7 +67,7 @@ export const CInputUser: TFormInputRecordObject = {
     validation: zValidator
       .string()
       .min(4)
-      .max(254)
+      .max(320)
       .email(),
     placeholder: 'joe@gmail.com'
   },
@@ -82,7 +82,7 @@ export const CInputUser: TFormInputRecordObject = {
   description: {
     name: 'description',
     label: <Trans>description</Trans>,
-    validation: zValidator.string().min(12).max(60),
+    validation: zValidator.string().min(1).max(150),
     placeholder: 'Hi, I am Chuck Bass and i like cats :3',
     formInputType: 'textArea'
   },
@@ -90,7 +90,7 @@ export const CInputUser: TFormInputRecordObject = {
     name: 'location',
     label: <Trans>location</Trans>,
     type: 'text',
-    validation: zValidator.string().min(12).max(60),
+    validation: zValidator.string().min(1).max(30),
     placeholder: 'Toronto',
     formInputType: 'textField'
   },
