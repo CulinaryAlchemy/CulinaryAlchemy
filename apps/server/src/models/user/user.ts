@@ -14,7 +14,6 @@ class User extends Model<UserInterface> implements UserInterface {
 	name!: string;
 	description!: string;
 	location!: string;
-	dietaryPreferences!: string[];
 	createdAt!: Date;
 	updatedAt!: Date;
 	deletedAt!: Date;
@@ -70,18 +69,23 @@ User.init(
 		name: {
 			type: DataTypes.STRING,
 			allowNull: true,
+			validate: {
+				len: [1, 30],
+			}
 		},
 		description: {
 			type: DataTypes.STRING,
 			allowNull: true,
+			validate: {
+				len: [1, 150],
+			}
 		},
 		location: {
 			type: DataTypes.STRING,
 			allowNull: true,
-		},
-		dietaryPreferences: {
-			type: DataTypes.STRING,
-			allowNull: true,
+			validate: {
+				len: [1, 30],
+			}
 		},
 		createdAt: {
 			type: DataTypes.DATE,

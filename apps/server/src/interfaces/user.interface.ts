@@ -8,7 +8,6 @@ export interface UserInterface {
 	name?: string;
 	description?: string;
 	location?: string;
-	dietaryPreferences?: string[];
 	createdAt?: Date;
 	updatedAt?: Date;
 	deletedAt?: Date | null;
