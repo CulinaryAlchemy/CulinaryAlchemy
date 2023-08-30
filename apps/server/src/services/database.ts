@@ -60,7 +60,7 @@ const DatabaseService = {
 			console.log('Database has been synchronized successfully.');
 
 			await DatabaseService.seed.all();
-			console.log('Databse seeded succesfully');
+			console.log('Databse seeded successfully');
 
 			return Promise.resolve();
 		} catch (error) {

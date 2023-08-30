@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { UserProvider } from '../../providers/user';
-import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
-import sequelize from 'sequelize';
+import { HttpStatusCodes, ApiResponse } from '../../utils';
+import { ValidationError } from 'sequelize';
 
 export const signUp = async (req: Request, res: Response) => {
 	const { username, email, password } = req.body;
@@ -13,10 +13,10 @@ export const signUp = async (req: Request, res: Response) => {
 		);
 
 		if (doesUsernameAlreadyExist) {
-			return sendApiError(
+			return ApiResponse.error(
 				res,
 				HttpStatusCodes.CONFLICT,
-				'Username already exists'
+				'Username already in use'
 			);
 		}
 
@@ -24,7 +24,7 @@ export const signUp = async (req: Request, res: Response) => {
 		const doesEmailAlreadyExist = await UserProvider.getUser.ByEmail(email);
 
 		if (doesEmailAlreadyExist) {
-			return sendApiError(
+			return ApiResponse.error(
 				res,
 				HttpStatusCodes.CONFLICT,
 				'Email already exists'
@@ -33,14 +33,14 @@ export const signUp = async (req: Request, res: Response) => {
 
 		const user = await UserProvider.createUser({ username, email, password });
 		if (!user) {
-			sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+			ApiResponse.error(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'Error while creating user');
 		}
 
-		sendApiResponse(res, HttpStatusCodes.CREATED, null);
+		ApiResponse.success(res, HttpStatusCodes.CREATED, null, 'User created successfully');
 	} catch (error) {
-		if (error instanceof sequelize.ValidationError) {
-			sendApiError(res, HttpStatusCodes.BAD_REQUEST);
+		if (error instanceof ValidationError) {
+			ApiResponse.error(res, HttpStatusCodes.BAD_REQUEST, 'Validation Error');
 		}
-		sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+		ApiResponse.error(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'There is been an unexpected error');
 	}
 };

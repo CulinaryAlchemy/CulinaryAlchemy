@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { HttpStatusCodes, sendApiError } from '../../utils';
+import { HttpStatusCodes, ApiResponse } from '../../utils';
 
 export const validateValidationChainResult = (
 	req: Request,
@@ -9,7 +9,7 @@ export const validateValidationChainResult = (
 ) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return sendApiError(res, HttpStatusCodes.BAD_REQUEST, 'bad request', {
+		return ApiResponse.error(res, HttpStatusCodes.BAD_REQUEST, 'Bad request', {
 			errors: errors.array(),
 		});
 	} else {
