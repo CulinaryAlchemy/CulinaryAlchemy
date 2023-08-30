@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { DietaryProvider } from '../../providers/dietary';
-import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
+import { HttpStatusCodes, ApiResponse } from '../../utils';
 
 export const Dietary = {
 	get: {
@@ -13,9 +13,18 @@ export const Dietary = {
 
 			try {
 				const allDietaries = await DietaryProvider.get.all(options);
-				return sendApiResponse(res, HttpStatusCodes.SUCCESS, allDietaries);
+				return ApiResponse.success(
+					res,
+					HttpStatusCodes.SUCCESS,
+					allDietaries,
+					''
+				);
 			} catch (error) {
-				return sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+				return ApiResponse.error(
+					res,
+					HttpStatusCodes.INTERNAL_SERVER_ERROR,
+					'Error while getting dietaries'
+				);
 			}
 		},
 		byId: async (req: Request, res: Response) => {
@@ -24,15 +33,19 @@ export const Dietary = {
 			try {
 				const dietary = await DietaryProvider.get.byId(parseInt(id, 10));
 				if (!dietary) {
-					return sendApiError(
+					return ApiResponse.error(
 						res,
 						HttpStatusCodes.NOT_FOUND,
-						'dietary not found'
+						'Dietary not found'
 					);
 				}
-				return sendApiResponse(res, HttpStatusCodes.SUCCESS, dietary);
+				return ApiResponse.success(res, HttpStatusCodes.SUCCESS, dietary, '');
 			} catch (error) {
-				return sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+				return ApiResponse.error(
+					res,
+					HttpStatusCodes.INTERNAL_SERVER_ERROR,
+					'Internal server error while looking for dietary'
+				);
 			}
 		},
 	},

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { RoleInterface } from '../../interfaces';
 import { roleProvider } from '../../providers/roles';
-import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
+import { HttpStatusCodes, ApiResponse } from '../../utils';
 
 export const Role = {
 	get: {
@@ -10,11 +10,21 @@ export const Role = {
 			try {
 				const role: RoleInterface | null = await roleProvider.get.ById(id);
 				if (!role) {
-					sendApiError(res, HttpStatusCodes.NOT_FOUND, 'role not found', null);
+					ApiResponse.error(
+						res,
+						HttpStatusCodes.NOT_FOUND,
+						'Role not found',
+						null
+					);
 				}
-				sendApiResponse(res, HttpStatusCodes.SUCCESS, role);
+				ApiResponse.success(res, HttpStatusCodes.SUCCESS, role, '');
 			} catch (err) {
-				sendApiError(res, HttpStatusCodes.NOT_FOUND, 'role not found', null);
+				ApiResponse.error(
+					res,
+					HttpStatusCodes.NOT_FOUND,
+					'Internal server error while looking for the role',
+					null
+				);
 			}
 		},
 	},
