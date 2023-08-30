@@ -43,7 +43,8 @@ export const signUp = async (req: Request, res: Response) => {
 		const expDate = Date.now() + 1000 * 60 * 48;
 		const token = Jwt.sign({ sub: user.id, exp: expDate }, secret);
 
-		sendApiResponse(res, HttpStatusCodes.CREATED, { token });
+		const userWithPublicData = await UserProvider.get.byUsername(username)
+		sendApiResponse(res, HttpStatusCodes.CREATED, { token, user: userWithPublicData });
 	} catch (error) {
 		if (error instanceof ValidationError) {
 			sendApiError(res, HttpStatusCodes.BAD_REQUEST);
