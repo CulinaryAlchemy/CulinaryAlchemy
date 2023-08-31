@@ -3,20 +3,20 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import Jwt from 'jsonwebtoken';
 import { UserProvider } from '../../providers/user';
-import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
+import { HttpStatusCodes, ApiResponse } from '../../utils';
 import { UserInterface } from '../../interfaces';
 const secret = process.env.JWT_SECRET || 'secret';
 
 export const signIn = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
 
-	const userFromDb: UserInterface | null = await UserProvider.getUser.ByEmail(
-		email,
-		true
-	);
 	try {
+		const userFromDb: UserInterface | null = await UserProvider.getUser.ByEmail(
+			email,
+			true
+		);
 		if (!userFromDb) {
-			return sendApiError(res, HttpStatusCodes.NOT_FOUND, 'User doesnt exist');
+			return ApiResponse.error(res, HttpStatusCodes.NOT_FOUND, 'User not found');
 		}
 
 		const passwordMatches = userFromDb?.password
@@ -24,7 +24,7 @@ export const signIn = async (req: Request, res: Response) => {
 			: '';
 
 		if (!passwordMatches) {
-			return sendApiError(res, HttpStatusCodes.UNAUTHORIZED, 'bad credentials');
+			return ApiResponse.error(res, HttpStatusCodes.UNAUTHORIZED, 'User password invalid');
 		}
 
 		if (userFromDb.deletedAt && userFromDb.id) {
@@ -34,17 +34,17 @@ export const signIn = async (req: Request, res: Response) => {
 		const expDate = Date.now() + 1000 * 60 * 48;
 		const token = Jwt.sign({ sub: userFromDb.id, exp: expDate }, secret);
 
-		const user = await UserProvider.getUser.ByEmail(userFromDb.email);
-		if (!user) {
-			sendApiError(
+		const userPublicInfo = await UserProvider.getUser.ByEmail(userFromDb.email);
+		if (!userPublicInfo) {
+			ApiResponse.error(
 				res,
 				HttpStatusCodes.INTERNAL_SERVER_ERROR,
 				'bad credentials'
 			);
 		}
 
-		sendApiResponse(res, HttpStatusCodes.SUCCESS, { token, user });
+		return ApiResponse.success(res, HttpStatusCodes.SUCCESS, { token, user: userPublicInfo }, 'Sign in successfully');
 	} catch (error) {
-		sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'bad credentials');
+		return ApiResponse.error(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error');
 	}
 };

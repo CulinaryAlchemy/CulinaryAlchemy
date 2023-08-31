@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react'
 
 interface IContext {
   user: IUser | undefined
-  signIn: (userData: IUserSignIn) => Promise<void>
+  signInByApi: (userData: IUserSignIn) => Promise<void>
   signUp: (userData: IUserRegister) => void
   updateSessionData: (userData: IUser) => void
   signOut: () => void
@@ -14,7 +14,7 @@ const defaultState: IContext = {
   user: undefined,
   isAuth: false,
   isLoading: true,
-  signIn: async () => { },
+  signInByApi: async () => { },
   signUp: async () => { },
   signOut: () => {},
   updateSessionData: () => {}
