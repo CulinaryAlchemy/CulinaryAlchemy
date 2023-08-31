@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { UserProvider } from '../../providers/user';
-import { ApiResponse, HttpStatusCodes } from '../../utils/index';
+import { ApiResponse, HttpStatusCodes, MessageCodes } from '../../utils/index';
 import { cleanObjectNullKeys, getObjectKeys } from '../../utils/object.utils';
 import { cloudinaryService } from '../../services';
 
@@ -16,13 +16,13 @@ const User = {
 					res,
 					HttpStatusCodes.SUCCESS,
 					null,
-					'Account desactivated'
+					MessageCodes.ACCOUNT_DESACTIVATED
 				);
 			} catch (error) {
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.NOT_FOUND,
-					'Error while desactivating account, the user is already deleted or doesnt exist'
+					MessageCodes.USER_NOT_FOUND
 				);
 			}
 		},
@@ -39,12 +39,26 @@ const User = {
 					limit: finalLimit,
 					offset: finalOffset,
 				});
-				return ApiResponse.success(res, HttpStatusCodes.SUCCESS, users, '');
+
+				if (users.length <= 0) {
+					return ApiResponse.error(
+						res,
+						HttpStatusCodes.NOT_FOUND,
+						MessageCodes.USERS_NOT_FOUND
+					);
+				}
+
+				return ApiResponse.success(
+					res,
+					HttpStatusCodes.SUCCESS,
+					users,
+					MessageCodes.USER_FOUND
+				);
 			} catch (error) {
 				return ApiResponse.error(
 					res,
-					HttpStatusCodes.NOT_FOUND,
-					'Internal server error while looking for users'
+					HttpStatusCodes.INTERNAL_SERVER_ERROR,
+					MessageCodes.INTERNAL_SERVER_ERROR
 				);
 			}
 		},
@@ -56,16 +70,21 @@ const User = {
 					return ApiResponse.error(
 						res,
 						HttpStatusCodes.NOT_FOUND,
-						'User not found'
+						MessageCodes.USER_NOT_FOUND
 					);
 				}
 
-				ApiResponse.success(res, HttpStatusCodes.SUCCESS, user, '');
+				ApiResponse.success(
+					res,
+					HttpStatusCodes.SUCCESS,
+					user,
+					MessageCodes.USER_FOUND
+				);
 			} catch (error) {
 				ApiResponse.error(
 					res,
 					HttpStatusCodes.NOT_FOUND,
-					'Internal server error while looking for user'
+					MessageCodes.INTERNAL_SERVER_ERROR
 				);
 			}
 		},
@@ -77,16 +96,21 @@ const User = {
 					return ApiResponse.error(
 						res,
 						HttpStatusCodes.NOT_FOUND,
-						'User not found'
+						MessageCodes.USER_NOT_FOUND
 					);
 				}
 
-				ApiResponse.success(res, HttpStatusCodes.SUCCESS, user, '');
+				ApiResponse.success(
+					res,
+					HttpStatusCodes.SUCCESS,
+					user,
+					MessageCodes.USER_FOUND
+				);
 			} catch (error) {
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.NOT_FOUND,
-					'Internal server error while looking for user'
+					MessageCodes.INTERNAL_SERVER_ERROR
 				);
 			}
 		},
@@ -98,16 +122,21 @@ const User = {
 					return ApiResponse.error(
 						res,
 						HttpStatusCodes.NOT_FOUND,
-						'User not found'
+						MessageCodes.USER_NOT_FOUND
 					);
 				}
 
-				ApiResponse.success(res, HttpStatusCodes.SUCCESS, user, '');
+				ApiResponse.success(
+					res,
+					HttpStatusCodes.SUCCESS,
+					user,
+					MessageCodes.USER_FOUND
+				);
 			} catch (error) {
 				ApiResponse.error(
 					res,
 					HttpStatusCodes.NOT_FOUND,
-					'Internal server error while looking for user'
+					MessageCodes.INTERNAL_SERVER_ERROR
 				);
 			}
 		},
@@ -192,7 +221,7 @@ const User = {
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.BAD_REQUEST,
-					'no params provided',
+					'No params provided',
 					null
 				);
 			}
@@ -206,14 +235,14 @@ const User = {
 					res,
 					HttpStatusCodes.CREATED,
 					userWithUpdatedValues,
-					'User updated'
+					MessageCodes.DATA_UPDATED
 				);
 			} catch (error) {
 				console.log(error);
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.INTERNAL_SERVER_ERROR,
-					'Internal server error while updating user'
+					MessageCodes.INTERNAL_SERVER_ERROR
 				);
 			}
 		},
@@ -232,14 +261,14 @@ const User = {
 					res,
 					HttpStatusCodes.CREATED,
 					null,
-					'Dietary added to profile'
+					MessageCodes.DATA_UPDATED
 				);
 			} catch (error) {
 				console.log(error);
 				ApiResponse.error(
 					res,
 					HttpStatusCodes.INTERNAL_SERVER_ERROR,
-					'internal server error while adding dietary to profile'
+					MessageCodes.INTERNAL_SERVER_ERROR
 				);
 			}
 		},
@@ -256,14 +285,14 @@ const User = {
 					res,
 					HttpStatusCodes.CREATED,
 					null,
-					'dietary removed from profile'
+					MessageCodes.DATA_UPDATED
 				);
 			} catch (error) {
 				console.log(error);
 				ApiResponse.error(
 					res,
 					HttpStatusCodes.INTERNAL_SERVER_ERROR,
-					'internal server error while removing dietary from profilef'
+					MessageCodes.INTERNAL_SERVER_ERROR
 				);
 			}
 		},

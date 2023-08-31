@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import { ExtractJwt } from 'passport-jwt';
 import { Secret, verify } from 'jsonwebtoken';
-import { ApiResponse, HttpStatusCodes } from '../../utils';
+import { ApiResponse, HttpStatusCodes, MessageCodes } from '../../utils';
 import { getEnvironment } from '../../services';
 
 export const Token = {
@@ -16,8 +16,10 @@ export const Token = {
 			);
 		}
 		try {
+			// get secret
 			const { SECRET } = getEnvironment();
-			// check signature
+
+			// check secret
 			const tokenDecoded: any = verify(token, SECRET as Secret);
 
 			// check token expiration
@@ -27,7 +29,7 @@ export const Token = {
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.UNAUTHORIZED,
-					'Token Expired',
+					MessageCodes.SESSION_EXPIRED,
 					null
 				);
 			}
@@ -36,7 +38,7 @@ export const Token = {
 			ApiResponse.error(
 				res,
 				HttpStatusCodes.UNAUTHORIZED,
-				'INVALID_TOKEN_SIGNATURE'
+				MessageCodes.SESSION_EXPIRED
 			);
 		}
 	},

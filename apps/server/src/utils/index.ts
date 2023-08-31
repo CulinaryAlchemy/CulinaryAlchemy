@@ -1,3 +1,3 @@
-import { ApiResponse, HttpStatusCodes } from './response-class';
+import { ApiResponse, HttpStatusCodes, MessageCodes } from './response-class';
 
-export { ApiResponse, HttpStatusCodes };
+export { ApiResponse, HttpStatusCodes, MessageCodes };
