@@ -10,9 +10,9 @@ import { inputsArray, loginInputsSchema } from './models'
 
 const Login = () => {
   const { t } = useTranslation()
-  const { signIn } = useGlobalAuth()
+  const { signInByApi } = useGlobalAuth()
   const handleOnSumbit: SubmitHandler<FieldValues> = (data) => {
-    void signIn(data as IUserSignIn)
+    void signInByApi(data as IUserSignIn)
   }
   return (
     <GlobalLayout newTitle={metadata.title}>
