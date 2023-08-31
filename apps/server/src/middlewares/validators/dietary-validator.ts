@@ -18,5 +18,5 @@ function validateTypeofInArray(
 }
 
 export const validateDietary = [
-	body('dietary').optional().isArray().custom(validateTypeofInArray),
+	body('dietary').isArray().custom(validateTypeofInArray),
 ];

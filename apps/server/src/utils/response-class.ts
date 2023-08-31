@@ -1,46 +1,74 @@
+import { Response } from 'express';
+
+const HttpStatusCodes = {
+	SUCCESS: 200,
+	CREATED: 201,
+	BAD_REQUEST: 400,
+	UNAUTHORIZED: 401,
+	FORBIDDEN: 403,
+	NOT_FOUND: 404,
+	METHOD_NOT_ALLOWED: 405,
+	INTERNAL_SERVER_ERROR: 500,
+	CONFLICT: 409,
+};
+
 export class ApiResponse {
 	private success: boolean;
 	private statusCode: number;
 	private data: any;
-	private error: ApiResponseError | null;
+	private error: any = null;
+	private message: string | null = null;
 
 	constructor(
 		success: boolean,
 		statusCode: number,
 		data: any,
-		error: ApiResponseError | null = null
+		error: string | null = null,
+		message: string
 	) {
 		this.success = success;
 		this.data = data;
 		this.error = error;
 		this.statusCode = statusCode;
+		this.message = message;
 	}
 
-	static success(data: any, code: number): ApiResponse {
-		return new ApiResponse(true, code, data, null);
+	private getResponseObject() {
+		return {
+			statusCode: this.statusCode,
+			success: this.success,
+			data: this.data,
+			error: this.error,
+			message: this.message,
+		};
+	}
+
+	protected send(res: Response): void {
+		res.status(this.statusCode).json(this.getResponseObject()).end();
+		return;
+	}
+
+	static success(
+		res: Response,
+		statusCode: number,
+		data: any,
+		message: string
+	) {
+		const response = new ApiResponse(true, statusCode, data, null, message);
+		response.send(res);
+		return;
 	}
 
 	static error(
+		res: Response,
 		statusCode: number,
-		message?: string,
-		details?: any,
-		invalidAreas: any[] | null = null
-	): ApiResponse {
-		const error = new ApiResponseError(statusCode, message, details, invalidAreas);
-		return new ApiResponse(false, statusCode, null, error);
+		message: string,
+		error: any = null
+	) {
+		const response = new ApiResponse(false, statusCode, null, error, message);
+		response.send(res);
+		return;
 	}
 }
 
-export class ApiResponseError {
-	private statusCode: number;
-	private message?: string;
-	private details?: any;
-	private invalidAreas?: any[] | null;
-
-	constructor(statusCode: number, message?: string, details?: any, invalidAreas: any[] | null = null) {
-		this.statusCode = statusCode;
-		this.message = message;
-		this.details = details;
-		this.invalidAreas = invalidAreas;
-	}
-}
+export { HttpStatusCodes };

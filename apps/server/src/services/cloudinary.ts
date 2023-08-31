@@ -53,7 +53,7 @@ export const cloudinaryService = {
 				secure: true,
 			});
 			const result = await cloudinary.v2.uploader.destroy(public_id);
-			console.log('imag deleted succesfully', result);
+			console.log('imag deleted successfully', result);
 			return Promise.resolve();
 		} catch (error) {
 			console.log(error);

@@ -7,6 +7,7 @@ import { HttpStatusCodes, sendApiError, sendApiResponse } from '../../utils';
 
 const secret = process.env.JWT_SECRET || 'secret';
 
+
 export const signUp = async (req: Request, res: Response) => {
 	const { username, email, password } = req.body;
 
@@ -17,10 +18,10 @@ export const signUp = async (req: Request, res: Response) => {
 		);
 
 		if (doesUsernameAlreadyExist) {
-			return sendApiError(
+			return ApiResponse.error(
 				res,
 				HttpStatusCodes.CONFLICT,
-				'Username already exists'
+				'Username already in use'
 			);
 		}
 
@@ -28,7 +29,7 @@ export const signUp = async (req: Request, res: Response) => {
 		const doesEmailAlreadyExist = await UserProvider.getUser.ByEmail(email);
 
 		if (doesEmailAlreadyExist) {
-			return sendApiError(
+			return ApiResponse.error(
 				res,
 				HttpStatusCodes.CONFLICT,
 				'Email already exists'
@@ -37,7 +38,7 @@ export const signUp = async (req: Request, res: Response) => {
 
 		const user = await UserProvider.createUser({ username, email, password });
 		if (!user) {
-			sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+			ApiResponse.error(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'Error while creating user');
 		}
 
 		const expDate = Date.now() + 1000 * 60 * 48;
@@ -49,6 +50,6 @@ export const signUp = async (req: Request, res: Response) => {
 		if (error instanceof ValidationError) {
 			sendApiError(res, HttpStatusCodes.BAD_REQUEST);
 		}
-		sendApiError(res, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+		ApiResponse.error(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'There is been an unexpected error');
 	}
 };
