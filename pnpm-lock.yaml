@@ -128,6 +128,9 @@ importers:
       '@mui/material':
         specifier: ^5.14.7
         version: 5.14.7(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
+      '@types/react-lazy-load-image-component':
+        specifier: ^1.5.3
+        version: 1.5.3
       axios:
         specifier: ^1.5.0
         version: 1.5.0
@@ -1770,6 +1773,13 @@ packages:
     resolution: {integrity: sha512-wyUkmaaSZEzFZivD8F2ftSyAfk6L+DfFliVj/mYdOXbVjRcS87fQJLTnhk6dRZPuJjI+9g6RZJO4PNCngUrmyw==}
     dependencies:
       '@types/react': 18.2.21
+    dev: false
+
+  /@types/react-lazy-load-image-component@1.5.3:
+    resolution: {integrity: sha512-hTzsQQ64mmPR6W03DQr6zhzeBGn17ExnVd7sLHqTQZQVd9Oi0Dy7tfSPgK0+AZV5YNC+e8Jw7oq9kzYfDkCDCA==}
+    dependencies:
+      '@types/react': 18.2.21
+      csstype: 3.1.2
     dev: false
 
   /@types/react-transition-group@4.4.6:
