@@ -5,6 +5,7 @@ export interface IApiResponse<T> {
   error: IApiError | null
   statusCode: number
   success: boolean
+  message: string
 }
 
 interface IApiError {
