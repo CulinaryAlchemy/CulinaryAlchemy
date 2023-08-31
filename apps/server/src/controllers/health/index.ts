@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { DatabaseService } from '../../services';
-import { HttpStatusCodes, ApiResponse } from '../../utils';
+import { HttpStatusCodes, ApiResponse, MessageCodes } from '../../utils';
 export const Health = {
 	get: async (_req: Request, res: Response) => {
 		try {
@@ -10,14 +10,14 @@ export const Health = {
 				res,
 				HttpStatusCodes.SUCCESS,
 				null,
-				'Database health is okay'
+				MessageCodes.SERVER_IS_ON
 			);
 		} catch (error) {
 			console.log(error);
 			return ApiResponse.error(
 				res,
 				HttpStatusCodes.INTERNAL_SERVER_ERROR,
-				'Error while checking database health'
+				MessageCodes.INTERNAL_SERVER_ERROR
 			);
 		}
 	},
