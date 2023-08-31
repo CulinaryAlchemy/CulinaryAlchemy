@@ -12,7 +12,24 @@ const HttpStatusCodes = {
 	CONFLICT: 409,
 };
 
-export class ApiResponse {
+const MessageCodes = {
+	LOGIN_SUCCES: 'LOGIN_SUCCES',
+	LOGIN_DENIED: 'LOGIN_DENIED',
+	REGISER_SUCCES: 'REGISER_SUCCES',
+	REGISER_DENIED: 'REGISER_DENIED',
+	USER_FOUND: 'USER_FOUND',
+	USER_NOT_FOUND: 'USER_NOT_FOUND',
+	USERS_NOT_FOUND: 'USERS_NOT_FOUND',
+	ROLE_NOT_FOUND: 'ROLE_NOT_FOUND',
+	DATA_UPDATED: 'DATA_UPDATED',
+	SESSION_EXPIRED: 'SESSION_EXPIRED',
+	INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+	ACCOUNT_DESACTIVATED: 'ACCOUNT_DESACTIVATED',
+	SERVER_IS_ON: 'SERVER_IS_ON',
+	SERVER_IS_OFF: 'SERVER_IS_OFF',
+};
+
+class ApiResponse {
 	private success: boolean;
 	private statusCode: number;
 	private data: any;
@@ -71,4 +88,4 @@ export class ApiResponse {
 	}
 }
 
-export { HttpStatusCodes };
+export { HttpStatusCodes, MessageCodes, ApiResponse };

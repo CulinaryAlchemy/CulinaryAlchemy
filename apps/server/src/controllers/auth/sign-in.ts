@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import Jwt from 'jsonwebtoken';
 import { UserProvider } from '../../providers/user';
-import { HttpStatusCodes, ApiResponse } from '../../utils';
+import { HttpStatusCodes, ApiResponse, MessageCodes } from '../../utils';
 import { UserInterface } from '../../interfaces';
 const secret = process.env.JWT_SECRET || 'secret';
 
@@ -16,7 +16,11 @@ export const signIn = async (req: Request, res: Response) => {
 			true
 		);
 		if (!userFromDb) {
-			return ApiResponse.error(res, HttpStatusCodes.NOT_FOUND, 'User not found');
+			return ApiResponse.error(
+				res,
+				HttpStatusCodes.NOT_FOUND,
+				MessageCodes.USER_NOT_FOUND
+			);
 		}
 
 		const passwordMatches = userFromDb?.password
@@ -24,7 +28,11 @@ export const signIn = async (req: Request, res: Response) => {
 			: '';
 
 		if (!passwordMatches) {
-			return ApiResponse.error(res, HttpStatusCodes.UNAUTHORIZED, 'User password invalid');
+			return ApiResponse.error(
+				res,
+				HttpStatusCodes.UNAUTHORIZED,
+				MessageCodes.LOGIN_DENIED
+			);
 		}
 
 		if (userFromDb.deletedAt && userFromDb.id) {
@@ -39,12 +47,21 @@ export const signIn = async (req: Request, res: Response) => {
 			ApiResponse.error(
 				res,
 				HttpStatusCodes.INTERNAL_SERVER_ERROR,
-				'bad credentials'
+				MessageCodes.INTERNAL_SERVER_ERROR
 			);
 		}
 
-		return ApiResponse.success(res, HttpStatusCodes.SUCCESS, { token, user: userPublicInfo }, 'Sign in successfully');
+		return ApiResponse.success(
+			res,
+			HttpStatusCodes.SUCCESS,
+			{ token, user: userPublicInfo },
+			MessageCodes.LOGIN_SUCCES
+		);
 	} catch (error) {
-		return ApiResponse.error(res, HttpStatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error');
+		return ApiResponse.error(
+			res,
+			HttpStatusCodes.INTERNAL_SERVER_ERROR,
+			MessageCodes.INTERNAL_SERVER_ERROR
+		);
 	}
 };
