@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import Jwt from 'jsonwebtoken';
 import { UserProvider } from '../../providers/user';
+import { ExtractJwt } from 'passport-jwt';
 export async function authMiddleware(
 	req: Request,
 	_res: Response,
 	next: NextFunction
 ) {
-	const bearerFromHeaders = req.headers['authorization'];
-	const token = bearerFromHeaders?.split(' ')[1];
+	const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
 
 	if (!token) {
 		next('no token provided');

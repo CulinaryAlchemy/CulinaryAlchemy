@@ -36,7 +36,11 @@ export const DropDownMenu = () => {
             setAnchorEl(event.currentTarget)
           }}
         >
-          <Avatar sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }} alt='user logo' src={user?.avatar as string} />
+          <Avatar
+            sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
+            alt='user logo'
+            src={user?.avatar as string}
+          />
         </IconButton>
       </Stack>
       <Box sx={{ position: 'relative', zIndex: '2000', '& > *': { backgroundColor: 'var(--joy-palette-background-body)', borderRadius: 'sm' } }}>
