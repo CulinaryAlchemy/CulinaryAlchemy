@@ -150,7 +150,9 @@ const User = {
 				username: string;
 				name: string;
 				avatar?: string;
+				avatarBlur?: string;
 				header?: string;
+				headerBlur?: string;
 				email: string;
 				password: string;
 				location: string;
@@ -167,25 +169,47 @@ const User = {
 				location,
 				description,
 			};
-			if (req.files && 'avatar' in req.files) {
-				const avatarFile = req.files['avatar'][0] as Express.Multer.File;
-				const avatarUrl = await cloudinaryService.uploadImage(
-					avatarFile as unknown as Express.Multer.File,
-					400,
-					400
-				);
-				params.avatar = avatarUrl;
+			if(req.files){
+				// avatar
+				if ('avatar' in req.files) {
+					const avatarFile = req.files['avatar'][0] as Express.Multer.File;
+					const avatarUrl = await cloudinaryService.uploadImage(
+						avatarFile as unknown as Express.Multer.File,
+						400,
+						400
+					);
+					params.avatar = avatarUrl;
+				}
+				if ('avatarBlur' in req.files) {
+					const avatarBlurFile = req.files['avatarBlur'][0] as Express.Multer.File;
+					const avatarBlurUrl = await cloudinaryService.uploadImage(
+						avatarBlurFile as unknown as Express.Multer.File,
+						32,
+						32
+					);
+					params.avatarBlur = avatarBlurUrl;
+				}
+				
+				// header
+				if ('header' in req.files) {
+					const headerFile = req.files['header'][0] as Express.Multer.File;
+					const headerUrl = await cloudinaryService.uploadImage(
+						headerFile as unknown as Express.Multer.File,
+						1080,
+						360
+					);
+					params.header = headerUrl;
+				}
+				if ('headerBlur' in req.files) {
+					const headerBlurFile = req.files['headerBlur'][0] as Express.Multer.File;
+					const headerBlurUrl = await cloudinaryService.uploadImage(
+						headerBlurFile as unknown as Express.Multer.File,
+						32,
+						32
+					);
+					params.headerBlur = headerBlurUrl;
+				}
 			}
-			if (req.files && 'header' in req.files) {
-				const headerFile = req.files['header'][0] as Express.Multer.File;
-				const headerUrl = await cloudinaryService.uploadImage(
-					headerFile as unknown as Express.Multer.File,
-					1080,
-					360
-				);
-				params.header = headerUrl;
-			}
-
 			const requestParamsLength = getObjectKeys(params);
 
 			if (requestParamsLength <= 0) {
