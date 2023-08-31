@@ -5,6 +5,7 @@ import { authRouter } from './auth';
 import { roleRouter } from './roles';
 import { healthRouter } from './health';
 import { dietaryRouter } from './dietary';
+import { tokenRouter } from './token';
 
 const appRouter = express.Router();
 
@@ -13,5 +14,6 @@ appRouter.use('/user', userRouter);
 appRouter.use('/role', roleRouter);
 appRouter.use('/health', healthRouter);
 appRouter.use('/dietary', dietaryRouter);
+appRouter.use('/token', tokenRouter);
 
 export { appRouter };
