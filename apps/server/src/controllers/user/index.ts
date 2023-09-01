@@ -184,8 +184,8 @@ const User = {
 					const avatarBlurFile = req.files['avatarBlur'][0] as Express.Multer.File;
 					const avatarBlurUrl = await cloudinaryService.uploadImage(
 						avatarBlurFile as unknown as Express.Multer.File,
-						32,
-						32
+						20,
+						20
 					);
 					params.avatarBlur = avatarBlurUrl;
 				}
@@ -204,8 +204,8 @@ const User = {
 					const headerBlurFile = req.files['headerBlur'][0] as Express.Multer.File;
 					const headerBlurUrl = await cloudinaryService.uploadImage(
 						headerBlurFile as unknown as Express.Multer.File,
-						32,
-						32
+						20,
+						20
 					);
 					params.headerBlur = headerBlurUrl;
 				}

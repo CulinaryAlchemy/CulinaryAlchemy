@@ -69,6 +69,7 @@ userRouter.put(
 		{ name: 'headerBlur', maxCount: 1 },
 	]),
 	body('username')
+		.optional()
 		.notEmpty()
 		.isString()
 		.isLowercase()
