@@ -3,7 +3,8 @@ import { Request, Response } from 'express';
 import { ValidationError } from 'sequelize';
 
 import { UserProvider } from '../../providers/user';
-import { HttpStatusCodes, ApiResponse, MessageCodes } from '../../utils';
+
+import { HttpStatusCodes, ApiResponse } from '../../utils';
 
 const secret = process.env.JWT_SECRET || 'secret';
 

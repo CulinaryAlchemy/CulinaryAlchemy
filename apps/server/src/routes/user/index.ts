@@ -64,9 +64,12 @@ userRouter.put(
 	idValidator,
 	upload.fields([
 		{ name: 'avatar', maxCount: 1 },
+		{ name: 'avatarBlur', maxCount: 1 },
 		{ name: 'header', maxCount: 1 },
+		{ name: 'headerBlur', maxCount: 1 },
 	]),
 	body('username')
+		.optional()
 		.notEmpty()
 		.isString()
 		.isLowercase()

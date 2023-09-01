@@ -7,7 +7,9 @@ export const updateUser = async (
 		username,
 		name,
 		avatar,
+		avatarBlur,
 		header,
+		headerBlur,
 		email,
 		password,
 		location,
@@ -17,12 +19,14 @@ export const updateUser = async (
 		username?: string;
 		name?: string;
 		avatar?: string;
+		avatarBlur?: string;
 		header?: string;
+		headerBlur?: string;
 		email?: string;
 		password?: string;
 		location?: string;
 		description?: string;
-		deletedAt: Date | null;
+		deletedAt?: Date | null;
 	}
 ) => {
 	try {
@@ -50,10 +54,19 @@ export const updateUser = async (
 			await cloudinaryService.deleteImage(user.avatar);
 			user.avatar = avatar;
 		}
-
+		if (avatarBlur) {
+			await cloudinaryService.deleteImage(user.avatarBlur);
+			user.avatarBlur = avatarBlur;
+		}
+		
 		if (header) {
 			await cloudinaryService.deleteImage(user.header);
 			user.header = header;
+		}
+
+		if (headerBlur) {
+			await cloudinaryService.deleteImage(user.headerBlur);
+			user.headerBlur = headerBlur;
 		}
 
 		if (email) {
@@ -72,7 +85,7 @@ export const updateUser = async (
 			user.description = description;
 		}
 
-		if(deletedAt){
+		if (deletedAt) {
 			user.deletedAt = deletedAt;
 		}
 

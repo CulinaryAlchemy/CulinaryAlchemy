@@ -18,8 +18,10 @@ export const createUser = async ({
 	const transaction = await DatabaseService.getTransaction();
 	const avatar = defaultImages.avatar;
 	const header = defaultImages.header;
+	const headerBlur = defaultImages.headerBlur;
+	const avatarBlur = defaultImages.avatarBlur;
 	try {
-		const user = User.build({ username, email, password, avatar, header });
+		const user = User.build({ username, email, password, avatar, avatarBlur, header, headerBlur });
 
 		const userWithRole = await UserProvider.AssociateWith.role.add(user, role);
 
