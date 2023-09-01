@@ -25,7 +25,7 @@ export class ImageOptimizerManager {
         const imageProcessed = await this.optimizeToWebP()
         const newFile = new File([imageProcessed], imageFileData.name, { type: 'image/webp' })
         resolve(newFile)
-        URL.revokeObjectURL(imageFileData.toString())
+        URL.revokeObjectURL(defaultImage.src)
       }
 
       defaultImage.addEventListener('load', process)
