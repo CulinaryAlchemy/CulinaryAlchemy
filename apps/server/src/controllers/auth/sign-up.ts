@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { ValidationError } from 'sequelize';
 
 import { UserProvider } from '../../providers/user';
+
 import { HttpStatusCodes, ApiResponse } from '../../utils';
 
 const secret = process.env.JWT_SECRET || 'secret';
@@ -20,7 +21,7 @@ export const signUp = async (req: Request, res: Response) => {
 			return ApiResponse.error(
 				res,
 				HttpStatusCodes.CONFLICT,
-				'Username already in use'
+				MessageCodes.REGISER_DENIED
 			);
 		}
 
@@ -31,7 +32,7 @@ export const signUp = async (req: Request, res: Response) => {
 			return ApiResponse.error(
 				res,
 				HttpStatusCodes.CONFLICT,
-				'Email already exists'
+				MessageCodes.REGISER_DENIED
 			);
 		}
 
@@ -40,7 +41,7 @@ export const signUp = async (req: Request, res: Response) => {
 			ApiResponse.error(
 				res,
 				HttpStatusCodes.INTERNAL_SERVER_ERROR,
-				'Error while creating user'
+				MessageCodes.REGISER_DENIED
 			);
 		}
 
@@ -52,16 +53,20 @@ export const signUp = async (req: Request, res: Response) => {
 			res,
 			HttpStatusCodes.CREATED,
 			{ token, user: userWithPublicData },
-			''
+			MessageCodes.REGISER_SUCCES
 		);
 	} catch (error) {
 		if (error instanceof ValidationError) {
-			ApiResponse.error(res, HttpStatusCodes.BAD_REQUEST, '');
+			ApiResponse.error(
+				res,
+				HttpStatusCodes.BAD_REQUEST,
+				MessageCodes.REGISER_DENIED
+			);
 		}
 		ApiResponse.error(
 			res,
 			HttpStatusCodes.INTERNAL_SERVER_ERROR,
-			'There is been an unexpected error'
+			MessageCodes.INTERNAL_SERVER_ERROR
 		);
 	}
 };
