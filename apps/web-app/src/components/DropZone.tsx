@@ -1,3 +1,4 @@
+import { ImageOptimizerManager } from '@/utils'
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak'
 import Box from '@mui/joy/Box'
 import { useId } from 'react'
@@ -13,15 +14,20 @@ interface IProps {
   styles: IStyles
   onSuccess: (fileData: File) => void
   fileType?: string
+  width: number
+  height: number
 }
 
-export const DropZone: React.FC<IProps> = ({ fileType, styles, onSuccess }) => {
+export const DropZone: React.FC<IProps> = ({ fileType, styles, onSuccess, width, height }) => {
   const id = useId()
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event?.target?.files?.[0] == null) return
     const file: File = event?.target?.files[0]
-    onSuccess(file)
+    const imageInstance = new ImageOptimizerManager()
+    const imageProcessedFile = await imageInstance.optimizeAndResize(file, width, height)
+
+    onSuccess(imageProcessedFile)
   }
 
   return (
@@ -36,7 +42,8 @@ export const DropZone: React.FC<IProps> = ({ fileType, styles, onSuccess }) => {
         width: styles.width,
         height: styles.height,
         backdropFilter: styles.backdropFilter,
-        backgroundColor: styles.backgroundColor
+        backgroundColor: styles.backgroundColor,
+        zIndex: 10
       }}
     >
       <label htmlFor={id}>

@@ -1,4 +1,4 @@
-import { DropZone, Form, TabPanel } from '@/components'
+import { DropZone, Form, Image, TabPanel } from '@/components'
 import { useGlobalAuth, useTranslation, useUserMethods } from '@/hooks'
 import { type IUser, type IUserUpdate } from '@/models/LOGIC'
 import { CTabsDataAccountTabPanel, inputsAccountTabSchema, selectedInputsArray } from '@/pages/Settings/models/UI'
@@ -67,8 +67,14 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
               backdropFilter: 'blur(0.5px)',
               backgroundColor: 'rgba(1,1,1,0.5)'
             }}
+            width={600}
+            height={160}
           />
-          <img src={user?.header as unknown as string} alt="wallpaper image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+          <Image
+            src={user?.header as unknown as string}
+            alt="wallpaper image"
+            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+          />
         </Box>
         <Box
           sx={{
@@ -80,7 +86,7 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
             backgroundColor: 'black',
             marginTop: '-3.5em !important',
             overflow: 'hidden',
-            zIndex: '10'
+            zIndex: '100'
           }}>
           <DropZone
             onSuccess={handleOnImageSuccess('avatar')}
@@ -90,8 +96,14 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
               height: '100%',
               backgroundColor: 'rgba(1,1,1,0.5)'
             }}
+            width={129.5}
+            height={129.5}
           />
-          <img src={user?.avatar as unknown as string} alt="logo image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+          <Image
+            src={user?.avatar as unknown as string}
+            alt="logo image"
+            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+          />
         </Box>
         <Form
           buttonSubmitName={t('save')}
