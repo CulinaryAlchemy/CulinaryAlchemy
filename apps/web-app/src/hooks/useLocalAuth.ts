@@ -1,7 +1,7 @@
 import { config } from '@/config'
 import { type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
-import { registerUser, signInUser } from '@/services'
-import { clearLocalStorage, getFromLocalStorage, setToLocalStorage } from '@/utils'
+import { checkUserSession, registerUser, signInUser } from '@/services'
+import { clearSession, getAuthSession, saveAuthSession, updateUserAuthSession } from '@/utils'
 import { useEffect, useState } from 'react'
 
 export const useLocalAuth = () => {
@@ -10,34 +10,29 @@ export const useLocalAuth = () => {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    const { accessToken, userData } = getSession()
+    const asyncExecContext = async () => {
+      const isValidSession = await checkSession()
 
-    if (accessToken == null || userData == null) {
+      if (!isValidSession) {
+        setLoading(false)
+        signOut()
+        return
+      }
+
+      const { accessToken, userData } = getAuthSession(config.localStorage.auth.accessToken, config.localStorage.user)
+
+      if (accessToken == null || userData == null) {
+        setLoading(false)
+        return
+      }
+
+      setUser(userData)
       setLoading(false)
-      return
+      setIsAuth(true)
     }
 
-    setUser(userData)
-    setLoading(false)
-    setIsAuth(true)
+    void asyncExecContext()
   }, [])
-
-
-  const saveSession = (userData: { accessToken: string, userData: IUser }) => {
-    setToLocalStorage(config.localStorage.auth.accessToken, userData.accessToken)
-    saveUserSession(userData.userData)
-  }
-
-  const saveUserSession = (userData: IUser) => {
-    setToLocalStorage(config.localStorage.user, JSON.stringify(userData))
-  }
-
-  const getSession = () => {
-    const accessToken = getFromLocalStorage(config.localStorage.auth.accessToken)
-    const userData: IUser | null = JSON.parse(getFromLocalStorage(config.localStorage.user) as string) as IUser
-
-    return { accessToken, userData }
-  }
 
   const signIn = async (userData: IUserSignIn) => {
     const responseSignIn = await signInUser(userData)
@@ -51,7 +46,7 @@ export const useLocalAuth = () => {
     setIsAuth(true)
     setUser(user)
 
-    saveSession({ accessToken: token, userData: user })
+    saveAuthSession(config.localStorage.auth.accessToken, config.localStorage.user, { accessToken: token, userData: user })
   }
 
   const signUp = (userData: IUserRegister) => {
@@ -70,12 +65,21 @@ export const useLocalAuth = () => {
 
   const signOut = () => {
     setIsAuth(false)
-    clearLocalStorage()
+    clearSession()
   }
 
   const updateSessionData = (userData: IUser) => {
     setUser(userData)
-    saveUserSession(userData)
+    updateUserAuthSession(config.localStorage.user, userData)
+  }
+
+  const checkSession = async () => {
+    try {
+      const response = await checkUserSession()
+      return response.data.message === 'VALID_TOKEN'
+    } catch (err) {
+      return false
+    }
   }
 
   return { user, signIn, signUp, signOut, isAuth, isLoading, updateSessionData }
