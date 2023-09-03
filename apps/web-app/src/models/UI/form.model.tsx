@@ -60,6 +60,18 @@ export const CInputUser: TFormInputRecordObject = {
     placeholder: 'Joe Bass',
     formInputType: 'textFieldAsync'
   },
+  name: {
+    name: 'name',
+    label: <Trans>name</Trans>,
+    type: 'text',
+    validation: zValidator
+      .string()
+      .min(1)
+      .max(30)
+      .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
+    placeholder: 'Jowi',
+    formInputType: 'textFieldAsync'
+  },
   email: {
     name: 'email',
     label: <Trans>email</Trans>,
