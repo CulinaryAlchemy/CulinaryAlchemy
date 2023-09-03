@@ -1,4 +1,5 @@
 import { config } from '@/config'
+import { type IApiResponse } from '@/models/LOGIC'
 import { checkServerStatus, getFromLocalStorage, getValidationError, toastUtils } from '@/utils'
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
 
@@ -43,17 +44,17 @@ export const setAxiosInterceptors = () => {
   })
 
   axios.interceptors.response.use(
-    (success: AxiosResponse) => {
-      toastUtils.success('OK')
+    (success: AxiosResponse<IApiResponse<unknown>>) => {
       console.log(success)
+      toastUtils.success(getValidationError(success.data.message))
       return success
     },
-    (error: AxiosError) => {
+    (error: AxiosError<IApiResponse<unknown>>) => {
       console.error({ error })
       if (error.code === 'ERR_NETWORK' || error.code === 'ERR_CANCELED') {
         checkServerStatus()
       } else {
-        const errorText = (error.response?.status != null) ? getValidationError(error.response?.status) : 'no found'
+        const errorText = getValidationError(error.response?.data?.message as string) ?? 'Error code not registered'
         toastUtils.error(errorText)
       }
       return Promise.reject(error)

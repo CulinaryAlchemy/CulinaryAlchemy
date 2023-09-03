@@ -1,7 +1,8 @@
 import { config } from '@/config'
-import { type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
+import { type IApiResponse, type IAuthApiResponse, type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
 import { checkUserSession, registerUser, signInUser } from '@/services'
 import { clearSession, getAuthSession, saveAuthSession, updateUserAuthSession } from '@/utils'
+import { type AxiosResponse } from 'axios'
 import { useEffect, useState } from 'react'
 
 export const useLocalAuth = () => {
@@ -34,12 +35,10 @@ export const useLocalAuth = () => {
     void asyncExecContext()
   }, [])
 
-  const signIn = async (userData: IUserSignIn) => {
-    const responseSignIn = await signInUser(userData)
+  const defaultSignIn = (responseForSignIn: AxiosResponse<IApiResponse<IAuthApiResponse>, unknown>) => {
+    if (responseForSignIn.data.data?.token == null) return
 
-    if (responseSignIn.data.data?.token == null) return
-
-    const { token, user } = responseSignIn.data.data
+    const { token, user } = responseForSignIn.data.data
 
     if (token == null || user == null) return
 
@@ -49,14 +48,17 @@ export const useLocalAuth = () => {
     saveAuthSession(config.localStorage.auth.accessToken, config.localStorage.user, { accessToken: token, userData: user })
   }
 
+  const signInByApi = async (userData: IUserSignIn) => {
+    const responseSignIn = await signInUser(userData)
+
+    defaultSignIn(responseSignIn)
+  }
+
   const signUp = (userData: IUserRegister) => {
     void registerUser(userData)
       .then((res) => {
         if (res.status !== 201) return
-
-        const { email, password } = userData
-
-        void signIn({ email, password })
+        defaultSignIn(res)
       })
       .catch((err) => {
         console.log(err)
@@ -82,5 +84,5 @@ export const useLocalAuth = () => {
     }
   }
 
-  return { user, signIn, signUp, signOut, isAuth, isLoading, updateSessionData }
+  return { user, signInByApi, signUp, signOut, isAuth, isLoading, updateSessionData }
 }
