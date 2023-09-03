@@ -1,8 +1,8 @@
-import { Response, Request } from 'express';
-import { ExtractJwt } from 'passport-jwt';
+import { Request, Response } from 'express';
 import { Secret, verify } from 'jsonwebtoken';
-import { ApiResponse, HttpStatusCodes, MessageCodes } from '../../utils';
+import { ExtractJwt } from 'passport-jwt';
 import { getEnvironment } from '../../services';
+import { ApiResponse, HttpStatusCodes, MessageCodes } from '../../utils';
 
 export const Token = {
 	checkToken: (req: Request, res: Response) => {
@@ -11,7 +11,7 @@ export const Token = {
 			return ApiResponse.error(
 				res,
 				HttpStatusCodes.BAD_REQUEST,
-				'Token not found',
+				MessageCodes.TOKEN_NOT_FOUND,
 				null
 			);
 		}

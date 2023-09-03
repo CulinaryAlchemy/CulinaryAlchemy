@@ -21,7 +21,7 @@ const User = () => {
     return <MessageLayout><h1>{t('something went wrong')}</h1></MessageLayout>
   }
 
-  if (userData == null) {
+  if (userData.data == null) {
     return <Suspense><NotFoundPage /></Suspense>
   }
 
