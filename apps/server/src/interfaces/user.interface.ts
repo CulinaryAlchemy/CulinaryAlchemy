@@ -4,7 +4,9 @@ export interface UserInterface {
 	email: string;
 	password: string;
 	avatar?: string;
+	avatarBlur?: string;
 	header?: string;
+	headerBlur?: string;
 	name?: string;
 	description?: string;
 	location?: string;
