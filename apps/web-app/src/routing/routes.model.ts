@@ -44,7 +44,10 @@ const getBackendRoutes = () => {
   const Static = {
     auth: {
       signup: '/auth/sign-up',
-      signin: '/auth/sign-in'
+      signin: '/auth/sign-in',
+      check: {
+        accessToken: '/token/check'
+      }
     },
     user: {
       update: '/user/id',

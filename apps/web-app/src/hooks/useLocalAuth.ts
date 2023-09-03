@@ -1,7 +1,7 @@
 import { config } from '@/config'
 import { type IApiResponse, type IAuthApiResponse, type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
-import { registerUser, signInUser } from '@/services'
-import { clearLocalStorage, getFromLocalStorage, setToLocalStorage } from '@/utils'
+import { checkUserSession, registerUser, signInUser } from '@/services'
+import { clearSession, getAuthSession, saveAuthSession, updateUserAuthSession } from '@/utils'
 import { type AxiosResponse } from 'axios'
 import { useEffect, useState } from 'react'
 
@@ -11,16 +11,28 @@ export const useLocalAuth = () => {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    const { accessToken, userData } = getSession()
+    const asyncExecContext = async () => {
+      const isValidSession = await checkSession()
 
-    if (accessToken == null || userData == null) {
+      if (!isValidSession) {
+        setLoading(false)
+        signOut()
+        return
+      }
+
+      const { accessToken, userData } = getAuthSession(config.localStorage.auth.accessToken, config.localStorage.user)
+
+      if (accessToken == null || userData == null) {
+        setLoading(false)
+        return
+      }
+
+      setUser(userData)
       setLoading(false)
-      return
+      setIsAuth(true)
     }
 
-    setUser(userData)
-    setLoading(false)
-    setIsAuth(true)
+    void asyncExecContext()
   }, [])
 
   const defaultSignIn = (responseForSignIn: AxiosResponse<IApiResponse<IAuthApiResponse>, unknown>) => {
@@ -33,7 +45,7 @@ export const useLocalAuth = () => {
     setIsAuth(true)
     setUser(user)
 
-    saveSession({ accessToken: token, userData: user })
+    saveAuthSession(config.localStorage.auth.accessToken, config.localStorage.user, { accessToken: token, userData: user })
   }
 
   const signInByApi = async (userData: IUserSignIn) => {
@@ -55,28 +67,21 @@ export const useLocalAuth = () => {
 
   const signOut = () => {
     setIsAuth(false)
-    clearLocalStorage()
-  }
-
-  const saveSession = (userData: { accessToken: string, userData: IUser }) => {
-    setToLocalStorage(config.localStorage.auth.accessToken, userData.accessToken)
-    saveUserSession(userData.userData)
+    clearSession()
   }
 
   const updateSessionData = (userData: IUser) => {
     setUser(userData)
-    saveUserSession(userData)
+    updateUserAuthSession(config.localStorage.user, userData)
   }
 
-  const saveUserSession = (userData: IUser) => {
-    setToLocalStorage(config.localStorage.user, JSON.stringify(userData))
-  }
-
-  const getSession = () => {
-    const accessToken = getFromLocalStorage(config.localStorage.auth.accessToken)
-    const userData: IUser | null = JSON.parse(getFromLocalStorage(config.localStorage.user) as string) as IUser
-
-    return { accessToken, userData }
+  const checkSession = async () => {
+    try {
+      const response = await checkUserSession()
+      return response.data.message === 'VALID_TOKEN'
+    } catch (err) {
+      return false
+    }
   }
 
   return { user, signInByApi, signUp, signOut, isAuth, isLoading, updateSessionData }
