@@ -4,6 +4,7 @@ import { z as ZValidator } from 'zod'
 
 export const selectedInputsArray: TFormInputArray = [
   CInputUser.username,
+  CInputUser.name,
   {
     formInputType: 'textFieldAsync',
     ...CInputUser.email
