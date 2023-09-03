@@ -27,6 +27,7 @@ const MessageCodes = {
 	ACCOUNT_DESACTIVATED: 'ACCOUNT_DESACTIVATED',
 	SERVER_IS_ON: 'SERVER_IS_ON',
 	SERVER_IS_OFF: 'SERVER_IS_OFF',
+	TOKEN_NOT_FOUND: 'TOKEN_NOT_FOUND'
 };
 
 class ApiResponse {
@@ -88,4 +89,5 @@ class ApiResponse {
 	}
 }
 
-export { HttpStatusCodes, MessageCodes, ApiResponse };
+export { ApiResponse, HttpStatusCodes, MessageCodes };
+

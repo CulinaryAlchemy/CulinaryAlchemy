@@ -15,7 +15,8 @@ export const getValidationError = (code: string) => {
     INTERNAL_SERVER_ERROR: 'Internal server error',
     ACCOUNT_DESACTIVATED: 'Account deactivated',
     SERVER_IS_ON: 'Server is online',
-    SERVER_IS_OFF: 'Server is offline'
+    SERVER_IS_OFF: 'Server is offline',
+    TOKEN_NOT_FOUND: 'TOKEN_NOT_FOUND'
   }
 
   return CustomMessageCodes[code]
