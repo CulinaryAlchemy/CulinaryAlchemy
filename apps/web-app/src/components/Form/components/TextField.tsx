@@ -4,7 +4,7 @@ import Input from '@mui/joy/Input'
 import { type UseFormRegisterReturn } from 'react-hook-form'
 
 import { Error } from '@/components/Form/components/'
-import { type TTextFieldForm } from '@/models/UI'
+import { type TTextFieldForm } from '@/components/Form/models/'
 
 interface IProps {
   data: TTextFieldForm

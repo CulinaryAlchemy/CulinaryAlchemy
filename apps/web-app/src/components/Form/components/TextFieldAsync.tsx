@@ -5,7 +5,7 @@ import { type FieldValues, type UseFormClearErrors, type UseFormRegisterReturn, 
 
 import { Error } from '@/components/Form/components/'
 import { useAsyncValidations } from '@/components/Form/hooks'
-import { type TTextFieldAsyncForm } from '@/models/UI'
+import { type TTextFieldAsyncForm } from '@/components/Form/models'
 import CircularProgress from '@mui/joy/CircularProgress'
 
 interface IProps {
