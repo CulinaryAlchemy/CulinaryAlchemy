@@ -1,4 +1,4 @@
-import { type TFormInputArray } from '@/models/UI'
+import { type TFormInputArray } from '@/components/Form/models'
 import { adaptDefaultValues } from './adapters'
 import { DeterminateInput } from './components'
 

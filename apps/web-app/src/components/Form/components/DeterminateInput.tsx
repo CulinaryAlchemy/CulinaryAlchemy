@@ -1,4 +1,4 @@
-import { type TInputForm } from '@/models/UI'
+import { type TInputForm } from '@/components/Form/models'
 import { lazy } from 'react'
 import { type FieldValues, type UseFormClearErrors, type UseFormRegisterReturn, type UseFormSetError, type UseFormWatch } from 'react-hook-form'
 

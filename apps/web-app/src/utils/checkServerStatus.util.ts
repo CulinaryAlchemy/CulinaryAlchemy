@@ -10,7 +10,7 @@ export const checkServerStatus = () => {
     const checkServer = () => {
       return new Promise((resolve) => {
         const fetchToServer = () => {
-          fetch(config.baseURL.backend)
+          fetch(config.baseURL.backend, { signal: AbortSignal.timeout(4000) })
             .then(() => {
               resolve('ok')
               clearInterval(timeout)

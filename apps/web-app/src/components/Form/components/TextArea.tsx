@@ -1,5 +1,5 @@
 import { Error } from '@/components/Form/components/'
-import { type TTextAreaForm } from '@/models/UI'
+import { type TTextAreaForm } from '@/components/Form/models'
 import FormControl from '@mui/joy/FormControl'
 import FormLabel from '@mui/joy/FormLabel'
 import Textarea from '@mui/joy/Textarea'

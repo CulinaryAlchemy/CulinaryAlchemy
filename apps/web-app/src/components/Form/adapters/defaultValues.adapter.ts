@@ -1,4 +1,4 @@
-import { type TFormInputArray } from '@/models/UI'
+import { type TFormInputArray } from '@/components/Form/models'
 
 export const adaptDefaultValues = (inputsData: TFormInputArray) => {
   let newInputs = {}
