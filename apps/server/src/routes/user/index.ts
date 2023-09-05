@@ -1,14 +1,18 @@
-import express from 'express'
-import { body, param, query } from 'express-validator'
-import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy'
+import express from 'express';
+import { body, param, query } from 'express-validator';
+import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
 
 // controllers
-import { Controllers } from '../../controllers'
+import { Controllers } from '../../controllers';
 // validators
-import { upload } from '../../config/multer'
-import { authMiddleware } from '../../middlewares'
-import { idValidator, validateEmail, validateValidationChainResult } from '../../middlewares/validators'
-import { validateDietary } from '../../middlewares/validators/dietary-validator'
+import { upload } from '../../config/multer';
+import { authMiddleware } from '../../middlewares';
+import {
+	idValidator,
+	validateEmail,
+	validateValidationChainResult,
+} from '../../middlewares/validators';
+import { validateDietary } from '../../middlewares/validators/dietary-validator';
 
 export const userRouter = express.Router();
 
