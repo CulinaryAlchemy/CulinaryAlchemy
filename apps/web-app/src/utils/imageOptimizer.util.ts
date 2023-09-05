@@ -53,7 +53,13 @@ export class ImageOptimizerManager {
 
   private resize (newWidth: number, defaultImageWidth: number, defaultImageHeight: number) {
     const aspectRatio = defaultImageWidth / defaultImageHeight
-    const newHeight = newWidth / aspectRatio
+    let newHeight = newWidth / aspectRatio
+
+    // Si la nueva altura supera la altura máxima, ajústala
+    if (newHeight < this.canvas.width) {
+      newHeight = this.canvas.width
+      newWidth = this.canvas.width * aspectRatio
+    }
 
     const x = (this.canvas.width - newWidth) / 2
     const y = (this.canvas.height - newHeight) / 2
