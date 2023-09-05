@@ -1,3 +1,3 @@
-export * from './RegisterFooter'
-export * from './RegisterHeader'
+export * from './PageStructure/RegisterFooter'
+export * from './PageStructure/RegisterHeader'
 

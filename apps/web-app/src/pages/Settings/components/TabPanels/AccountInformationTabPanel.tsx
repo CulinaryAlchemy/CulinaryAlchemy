@@ -1,7 +1,7 @@
 import { DropZone, Form, Image, TabPanel } from '@/components'
 import { useGlobalAuth, useTranslation, useUserMethods } from '@/hooks'
 import { type IUser, type IUserUpdate } from '@/models/LOGIC'
-import { CTabsDataAccountTabPanel, inputsAccountTabSchema, selectedInputsArray } from '@/pages/Settings/models/UI'
+import { CTabsDataAccountTabPanel, accountInformationInputsAccountTabSchema, accountInformationSelectedInputsArray } from '@/pages/Settings/models/UI'
 import { toastUtils } from '@/utils'
 import Box from '@mui/joy/Box'
 import { type SubmitHandler } from 'react-hook-form'
@@ -72,6 +72,7 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
           />
           <Image
             src={user?.header as unknown as string}
+            srcBlurPlaceholder={user?.headerBlur as unknown as string}
             alt="wallpaper image"
             style={{ objectFit: 'cover', width: '100%', height: '100%' }}
           />
@@ -101,6 +102,7 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
           />
           <Image
             src={user?.avatar as unknown as string}
+            srcBlurPlaceholder={user?.avatarBlur as unknown as string}
             alt="logo image"
             style={{ objectFit: 'cover', width: '100%', height: '100%' }}
           />
@@ -108,11 +110,12 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
         <Form
           buttonSubmitName={t('save')}
           onSubmit={handleOnSubmit}
-          inputsData={selectedInputsArray}
-          schema={inputsAccountTabSchema}
+          inputsData={accountInformationSelectedInputsArray}
+          schema={accountInformationInputsAccountTabSchema}
           styles={{
             gridColumns: 1,
             width: '100%',
+            display: 'grid',
             border: 'none',
             marginY: '1em',
             paddingY: '0px'

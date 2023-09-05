@@ -23,7 +23,11 @@ const Login = () => {
         buttonSubmitName={t('login2')}
         Header={<LoginHeader />}
         Footer={<LoginFooter />}
-        styles={{ gridColumns: 1, width: '300px' }}
+        styles={{
+          display: 'grid',
+          gridColumns: 1,
+          width: '300px'
+        }}
       />
     </GlobalLayout>
   )

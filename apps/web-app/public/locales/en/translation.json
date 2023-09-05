@@ -31,14 +31,29 @@
     "wait some seconds": "Wait some seconds",
     "welcome to settings page": "Welcome to the settings page!",
     "welcome": "Welcome!",
-    "account information": "Account information",
     "accountInformationTabPanel message": "See your account information like your location and email address.",
-    "delete account": "Delete account",
-    "deleAccountModal message": "Are you certain you want to delete your account? Remember, you can always reactivate it by logging in again. Reach out to culinaryalchemyofficial@gmail.com for assistance.",
     "deleteAccountTabPanel message": "Deactivate your account.",
+    "dietaryPreferencesTabPanel message": "Welcome to our Dietary Preferences Section! Here, you can choose your dietary preferences, and our app will tailor recipes and posts to match your choices.",
+    "account information": "Account information",
+    "delete account": "Delete account",
+    "dietaryPreferences": "Dietary preferences",
+    "deleAccountModal message": "Are you certain you want to delete your account? Remember, you can always reactivate it by logging in again. Reach out to culinaryalchemyofficial@gmail.com for assistance.",
     "are you sure?": "Are you sure?",
     "edit profile": "Edit profile",
     "deleAccount info 1 message": "All the data from your profile, including your posts, comments, and connections, will be deleted.",
     "deleAccount info 2 message": "You can always reactivate your account by logging in again.",
-    "deleAccount info 3 message": "Any content shared with other users will not be available after the account deletion."
+    "deleAccount info 3 message": "Any content shared with other users will not be available after the account deletion.",
+    "dietaryPreferencesValues": {
+        "vegetarian": "Vegetarian",
+        "vegan": "Vegan",
+        "glutenFree": "Gluten-Free",
+        "dairyFree": "Dairy-Free",
+        "nutFree": "Nut-Free",
+        "pescatarian": "Pescatarian",
+        "kosher": "Kosher",
+        "halal": "Halal",
+        "lowCarb": "Low Carb",
+        "organic": "Organic",
+        "sugarFree": "Sugar-Free"
+    }
 }

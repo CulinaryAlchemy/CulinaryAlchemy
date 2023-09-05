@@ -5,11 +5,11 @@ import { type FieldValues, type UseFormClearErrors, type UseFormRegisterReturn, 
 
 import { Error } from '@/components/Form/components/'
 import { useAsyncValidations } from '@/components/Form/hooks'
-import { type TTextFieldAsyncForm } from '@/components/Form/models'
+import { type TTextFieldForm } from '@/components/Form/models'
 import CircularProgress from '@mui/joy/CircularProgress'
 
 interface IProps {
-  data: TTextFieldAsyncForm
+  data: TTextFieldForm
   error: string
   register: UseFormRegisterReturn<string>
   watch: UseFormWatch<FieldValues>
@@ -24,7 +24,7 @@ const TextFieldAsync: React.FC<IProps> = ({ data, error, register, watch, setErr
   const { loading } = useAsyncValidations({ inputName: data.name, watchValue: watchValue as string, setError, clearErrors, isDirty })
 
   return (
-    <FormControl key={data.name} sx={{ marginBottom: '0.5em' }}>
+    <FormControl sx={{ marginBottom: '0.5em' }}>
       <FormLabel>{data.label}</FormLabel>
       <Input
         endDecorator={
@@ -37,7 +37,7 @@ const TextFieldAsync: React.FC<IProps> = ({ data, error, register, watch, setErr
           minWidth: '1px',
           '--Input-minWidth': '1px'
         }}
-        defaultValue={data.defaultValue}
+        defaultValue={data.defaultValue as string}
         type={data.type}
         placeholder={data.placeholder}
         {...(error !== '' && { error: true })}
