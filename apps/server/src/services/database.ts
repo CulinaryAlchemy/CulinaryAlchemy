@@ -1,6 +1,5 @@
 import { UserProvider } from '../providers/user';
 import { roleProvider } from '../providers/roles';
-import { getEnvironment } from '.';
 
 import { sequelize } from '../database/database.config';
 
@@ -41,7 +40,7 @@ const DatabaseService = {
 	},
 	sync: async (forceValue: boolean = false) => {
 		try {
-			const { ENVIRONMENT } = getEnvironment();
+			const ENVIRONMENT = process.env.ENVIRONMENT;
 			if (ENVIRONMENT === 'development') {
 				forceValue = true;
 			}

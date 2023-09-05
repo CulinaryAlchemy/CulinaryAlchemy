@@ -5,8 +5,10 @@ import { defaultImages } from '../config/default-images';
 export const cloudinaryService = {
 	uploadImage: async (
 		file: Express.Multer.File,
-		width: number,
-		height: number
+		width?: number,
+		height?: number,
+		center?: boolean,
+		optimize?: boolean
 	) => {
 		cloudinary.v2.config({
 			cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -14,20 +16,42 @@ export const cloudinaryService = {
 			api_secret: process.env.CLOUDINARY_API_SECRET,
 			secure: true,
 		});
+		const transformOptions: any = [];
+		if (width) {
+			transformOptions[0] = { ...transformOptions[0], width: width };
+		}
+		if (height) {
+			transformOptions[0] = { ...transformOptions[0], height: height };
+		}
+		if (center) {
+			transformOptions[0] = {
+				...transformOptions[0],
+				gravity: 'center',
+				crop: 'fill',
+			};
+		}
+		if (optimize) {
+			transformOptions[1] = {
+				...transformOptions[1],
+				quality: 'auto',
+				fetch_format: 'auto',
+			};
+		}
 		try {
-			const transformOptions = [
-				{ width: width, height: height, crop: 'fill', gravity: 'center' },
-				{ quality: 'auto', fetch_format: 'auto' },
-			];
-			const result = await cloudinary.v2.uploader.upload(file.path, {
-				transformation: [...transformOptions],
-			});
-			const imageUrl = result.secure_url;
+			console.log([...transformOptions]);
+			const result = await cloudinary.v2.uploader.upload(file.path);
 
-			await deleteFile(file.path);
+			if (!result) {
+				return Promise.reject(result);
+			}
+			
+			const imageUrl = result.secure_url;
 			return Promise.resolve(imageUrl);
 		} catch (error) {
+			console.log(error);
 			return Promise.reject(error);
+		} finally {
+			await deleteFile(file.path);
 		}
 	},
 	deleteImage: async (imageUrl: string) => {

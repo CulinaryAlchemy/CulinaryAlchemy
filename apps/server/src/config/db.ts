@@ -1,11 +1,8 @@
 import { Options } from 'sequelize';
-import { getEnvironment } from '../services';
-
-const { ENVIRONMENT } = getEnvironment();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let sslConfig: any = { require: true };
-if (ENVIRONMENT === 'development') {
+if (process.env.ENVIRONMENT === 'development') {
 	sslConfig = { require: true, rejectUnauthorized: false };
 }
 

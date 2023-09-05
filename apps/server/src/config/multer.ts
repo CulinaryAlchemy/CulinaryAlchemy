@@ -4,17 +4,14 @@ const upload = multer({
 	dest: '../temporary-images',
 	fileFilter(_req, file, callback) {
 		const imageFileType = file.mimetype;
-		const AllowedFileTypes = [
-			'image/png',
-			'image/jpg',
-			'image/jpeg',
-			'image/webp',
-		];
-		if (AllowedFileTypes.includes(imageFileType)) {
-			callback(null, true);
-		} else {
-			callback(null, false);
+
+		const allowedFileTypes = ['image/webp'];
+		const maxFileSize: number =
+			(process.env.FILE_SIZE as unknown as number) || 5000; // we get the env or assing 5000
+		if (allowedFileTypes.includes(imageFileType) && file.size <= maxFileSize) {
+			return callback(null, true);
 		}
+		callback(null, false);
 	},
 });
 
