@@ -4,12 +4,14 @@ export interface IUser {
   id: number
   email: string
   avatar?: File | string
+  avatarBlur?: File | string
   header?: File | string
+  headerBlur?: File | string
   description?: string
   location?: string
   role: IRole
   roleId: number
-  dietaryPreferences?: string
+  dietaryPreferences?: number[]
   createdAt?: Date
   updatedAt?: Date
   deletedAt?: Date

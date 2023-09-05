@@ -13,7 +13,7 @@ import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
 import { lazy, useState } from 'react'
 
-const AccountInformationTabPanel = lazy(() => import('@/components/AppTabPanels/AccountInformationTabPanel'))
+const AccountInformationTabPanel = lazy(() => import('@/pages/Settings/components/TabPanels/AccountInformationTabPanel'))
 const Modal = lazy(() => import('@/components/Modal/Modal'))
 
 interface IProps {
@@ -29,6 +29,7 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
       <Box sx={{ height: '10em', backgroundColor: 'var(--joy-palette-neutral-outlinedBorder)', overflow: 'hidden' }}>
         <Image
           src={data?.header as unknown as string}
+          srcBlurPlaceholder={data?.headerBlur as string}
           alt="wallpaper image"
           style={{ objectFit: 'cover', width: '100%', height: '100%' }}
         />
@@ -39,6 +40,7 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
             <Sheet variant='outlined' sx={{ width: '8.34375em', height: '8.34375em', borderRadius: '100%', border: '0.125em solid var(--joy-palette-background-surface)', backgroundColor: 'black', marginTop: '-5em !important', overflow: 'hidden' }}>
               <Image
                 src={data?.avatar as unknown as string}
+                srcBlurPlaceholder={data?.avatarBlur as string}
                 alt="logo image"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
               />

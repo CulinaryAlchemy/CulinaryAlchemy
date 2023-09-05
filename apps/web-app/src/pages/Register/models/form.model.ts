@@ -9,9 +9,9 @@ export const inputsArray: TFormInputArray = [
     validation: CInputUser.username.validation
   },
   {
-    formInputType: 'textFieldAsync',
     ...CInputUser.email,
-    validation: CInputUser.email.validation
+    // @ts-expect-error ts does not allow this by our types : (
+    async: true
   },
   CInputUser.password
 ]

@@ -1,3 +1,3 @@
-export * from './UserHeader'
-export * from './UserMain'
+export * from './PageStructure/UserHeader'
+export * from './PageStructure/UserMain'
 
