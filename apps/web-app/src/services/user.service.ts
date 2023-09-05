@@ -3,7 +3,7 @@ import { CBackRoutes } from '@/routing'
 import axios from 'axios'
 
 export const updateApiUser = (userId: number, newUser: IUserUpdate) => {
-  return axios.put<IApiResponse<IUser>>(CBackRoutes.Dynamic.user.update(userId), newUser, { headers: { 'Content-Type': 'multipart/form-data' } })
+  return axios.put<IApiResponse<IUser>>(CBackRoutes.Dynamic.user.update(userId), newUser, { headers: { 'Content-Type': 'multipart/form-data' }, signal: AbortSignal.timeout(10000) })
 }
 
 export const deleteApiUser = (userId: number) => {

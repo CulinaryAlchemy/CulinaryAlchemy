@@ -21,7 +21,9 @@ export const setAxiosInterceptors = () => {
   }
 
   const addSignal = (request: AxiosRequestConfig) => {
-    request.signal = AbortSignal.timeout(20000)
+    if (request.signal != null) return request
+
+    request.signal = AbortSignal.timeout(4000)
     return request
   }
 
