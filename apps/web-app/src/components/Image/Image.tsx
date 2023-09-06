@@ -13,15 +13,16 @@ interface IProps {
   style?: object
 }
 
-export const Image: React.FC<IProps> = (props) => {
+export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, ...props }) => {
   useEffect(() => {
     imageCacheManagerInstance.addImage(props.src)
   }, [props.src])
+
   return (
         <LazyLoadImage
             effect="blur"
             {...props}
-            placeholderSrc={props.srcBlurPlaceholder}
+            placeholderSrc={srcBlurPlaceholder}
             threshold={0}
             visibleByDefault={false}
         />

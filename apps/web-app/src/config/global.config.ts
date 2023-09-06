@@ -1,4 +1,4 @@
-const config = {
+export const globalConfig = {
   baseURL: {
     frontend: 'http://localhost:5173',
     backend: import.meta.env.VITE_BACK_BASE_URL as string || 'https://culinaryalchemy.onrender.com' // Update this on production by add env
@@ -10,8 +10,9 @@ const config = {
     },
     user: 'user-data',
     language: 'language'
+  },
+  image: {
+    maxSizeBytes: 200000
   }
 } as const
-
-export { config }
 

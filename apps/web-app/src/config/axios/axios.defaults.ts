@@ -1,6 +1,6 @@
-import { config } from '@/config'
+import { globalConfig } from '@/config'
 import axios from 'axios'
 
 export const setAxiosDefaults = () => {
-  axios.defaults.baseURL = config.baseURL.backend
+  axios.defaults.baseURL = globalConfig.baseURL.backend
 }

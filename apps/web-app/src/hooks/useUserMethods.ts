@@ -6,7 +6,7 @@ export const useUserMethods = () => {
   const { updateSessionData } = useGlobalAuth()
 
   const updateUser = (id: number, newUserDate: IUserUpdate) => {
-    updateApiUser(id, newUserDate)
+    return updateApiUser(id, newUserDate)
       .then((response) => {
         updateSessionData(response.data.data as IUser)
       })
