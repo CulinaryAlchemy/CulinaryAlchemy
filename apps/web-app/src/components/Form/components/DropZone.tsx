@@ -14,7 +14,7 @@ interface IProps {
 
 const DropZone: React.FC<IProps> = ({ data, error, register }) => {
   return (
-    <FormControl key={data.name} sx={{ marginBottom: '0.5em' }}>
+    <FormControl sx={{ marginBottom: '0.5em' }}>
       <FormLabel>{data.label}</FormLabel>
       <Input
         type={data.type}

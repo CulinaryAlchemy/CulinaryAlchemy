@@ -1,3 +1,3 @@
-export * from './LoginFooter'
-export * from './LoginHeader'
+export * from './PageStructure/LoginFooter'
+export * from './PageStructure/LoginHeader'
 

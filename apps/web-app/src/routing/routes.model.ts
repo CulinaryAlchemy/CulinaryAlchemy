@@ -27,6 +27,10 @@ const getFrontendRoutes = () => {
       deactivate: {
         absolute: BaseRoutes.settings + '/deactivate',
         relative: 'deactivate'
+      },
+      dietaryPreferences: {
+        absolute: BaseRoutes.settings + '/dietaryPreferences',
+        relative: 'dietaryPreferences'
       }
     }
   }

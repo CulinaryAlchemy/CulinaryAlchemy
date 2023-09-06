@@ -31,14 +31,29 @@
     "wait some seconds": "Espera unos segundos",
     "welcome to settings page": "Bienvenido/a a la página de configuración!",
     "welcome": "Bienvenido",
-    "account information": "Información de cuenta",
     "accountInformationTabPanel message": "Ve la información de tu cuenta, como tu ubicación y dirección de correo electrónico.",
-    "delete account": "Borrar cuenta",
-    "deleAccountModal message": "¿Estás seguro de que deseas eliminar tu cuenta? Recuerda que siempre puedes reactivarla iniciando sesión nuevamente. Ponte en contacto con culinaryalchemyofficial@gmail.com si necesitas ayuda.",
     "deleteAccountTabPanel message": "Desactiva tu cuenta.",
+    "dietaryPreferencesTabPanel message": "¡Bienvenido a nuestra sección de Preferencias Dietéticas! Aquí puedes seleccionar tus preferencias alimenticias, y nuestra aplicación adaptará las recetas y publicaciones para que coincidan con tus elecciones.",
+    "account information": "Información de cuenta",
+    "delete account": "Borrar cuenta",
+    "dietaryPreferences": "Preferencias dietéticas",
+    "deleAccountModal message": "¿Estás seguro de que deseas eliminar tu cuenta? Recuerda que siempre puedes reactivarla iniciando sesión nuevamente. Ponte en contacto con culinaryalchemyofficial@gmail.com si necesitas ayuda.",
     "are you sure?": "¿Estás seguro?",
     "edit profile": "Editar perfil",
     "deleAccount info 1 message": "Todos los datos de tu perfil, incluyendo tus publicaciones, comentarios y conexiones, serán eliminados.",
     "deleAccount info 2 message": "Siempre puedes reactivar tu cuenta volviendo a iniciar sesión.",
-    "deleAccount info 3 message": "Cualquier contenido compartido con otros usuarios no estará disponible después de la eliminación de la cuenta."
+    "deleAccount info 3 message": "Cualquier contenido compartido con otros usuarios no estará disponible después de la eliminación de la cuenta.",
+    "dietaryPreferencesValues": {
+        "vegetarian": "Vegetariano",
+        "vegan": "Vegano",
+        "glutenFree": "Libre de gluten",
+        "dairyFree": "Libre de lácteos",
+        "nutFree": "Libre de frutos secos",
+        "pescatarian": "Pescetariano",
+        "kosher": "Kosher",
+        "halal": "Halal",
+        "lowCarb": "Bajo en carbohidratos",
+        "organic": "Orgánico",
+        "sugarFree": "Libre de azúcar"
+      }
 }

@@ -13,7 +13,8 @@ export const CInputUser: TFormInputRecordObject = {
       .max(15)
       .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
     placeholder: 'Joe Bass',
-    formInputType: 'textFieldAsync'
+    formInputType: 'textField',
+    async: true
   },
   name: {
     name: 'name',
@@ -25,7 +26,8 @@ export const CInputUser: TFormInputRecordObject = {
       .max(30)
       .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
     placeholder: 'Jowi',
-    formInputType: 'textFieldAsync'
+    formInputType: 'textField',
+    async: false
   },
   email: {
     name: 'email',
@@ -36,7 +38,9 @@ export const CInputUser: TFormInputRecordObject = {
       .min(4)
       .max(320)
       .email(),
-    placeholder: 'joe@gmail.com'
+    placeholder: 'joe@gmail.com',
+    formInputType: 'textField',
+    async: false
   },
   password: {
     name: 'password',
@@ -44,7 +48,8 @@ export const CInputUser: TFormInputRecordObject = {
     type: 'password',
     validation: zValidator.string().min(12).max(60),
     placeholder: 'wua-wau78',
-    formInputType: 'textField'
+    formInputType: 'textField',
+    async: false
   },
   description: {
     name: 'description',
@@ -59,7 +64,8 @@ export const CInputUser: TFormInputRecordObject = {
     type: 'text',
     validation: zValidator.string().min(1).max(30),
     placeholder: 'Toronto',
-    formInputType: 'textField'
+    formInputType: 'textField',
+    async: false
   },
   avatar: {
     name: 'avatar',

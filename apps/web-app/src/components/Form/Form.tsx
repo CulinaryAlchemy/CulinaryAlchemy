@@ -14,11 +14,14 @@ import Sheet from '@mui/joy/Sheet/'
 import Stack from '@mui/joy/Stack'
 
 interface IStyles {
-  gridColumns: 1 | 2
+  gridColumns?: 1 | 2
+  flexWrap?: 'wrap' | 'nowrap'
+  display: 'flex' | 'grid'
   width: string
   border?: 'none'
   paddingY?: string
   marginY?: string
+  justifyContent?: 'center' | 'start'
 }
 
 interface IForm {
@@ -84,7 +87,19 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
           {Header}
           <main>
             <Suspense>
-              <Box sx={[styles.gridColumns === 1 ? gridFormStyles1 : gridFormStyles2, { width: '100%' }]}>
+              <Box sx={
+                [
+                  {
+                    display: styles.display,
+                    width: '100%',
+                    flexWrap: styles.flexWrap,
+                    justifyContent: styles.justifyContent
+                  },
+                  styles.gridColumns === 1 && gridFormStyles1,
+                  styles.gridColumns === 2 && gridFormStyles2
+                ]
+              }
+              >
                 {inputsData.map((inputData, index) => (
                   <DeterminateInput
                     key={index}
