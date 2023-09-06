@@ -29,12 +29,12 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
     if (areValuesNull) {
       toastUtils.error('All fields are empty')
     } else {
-      updateUser((user as IUser).id, data)
+      void updateUser((user as IUser).id, data)
     }
   }
 
   const handleOnImageSuccess = (userKey: 'avatar' | 'header') => (file: File) => {
-    updateUser(user?.id as number, { [userKey]: file })
+    return updateUser(user?.id as number, { [userKey]: file })
   }
 
   return (

@@ -1,4 +1,4 @@
-import { config } from '@/config'
+import { globalConfig } from '@/config'
 import { toastUtils } from '@/utils'
 
 let isRequestRunningForServerStatus = false
@@ -10,7 +10,7 @@ export const checkServerStatus = () => {
     const checkServer = () => {
       return new Promise((resolve) => {
         const fetchToServer = () => {
-          fetch(config.baseURL.backend, { signal: AbortSignal.timeout(4000) })
+          fetch(globalConfig.baseURL.backend, { signal: AbortSignal.timeout(4000) })
             .then(() => {
               resolve('ok')
               clearInterval(timeout)

@@ -10,7 +10,6 @@ export const AuthGuard = () => {
   const { isAuth, isLoading } = useGlobalAuth()
 
   if (isLoading) {
-    console.log(isLoading)
     return <MessageLayout><Loading size='lg' /></MessageLayout>
   }
 

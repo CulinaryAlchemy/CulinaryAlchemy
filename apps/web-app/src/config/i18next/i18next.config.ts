@@ -1,4 +1,4 @@
-import { config } from '@/config'
+import { globalConfig } from '@/config'
 import { getFromLocalStorage } from '@/utils'
 import i18n from 'i18next'
 import Backend from 'i18next-chained-backend'
@@ -10,7 +10,7 @@ void i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    lng: getFromLocalStorage(config.localStorage.language) ?? 'en',
+    lng: getFromLocalStorage(globalConfig.localStorage.language) ?? 'en',
     fallbackLng: false,
     backend: {
       backends: [

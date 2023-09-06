@@ -1,4 +1,4 @@
-import { config } from '@/config'
+import { globalConfig } from '@/config'
 import { type IApiResponse, type IAuthApiResponse, type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
 import { checkUserSession, registerUser, signInUser } from '@/services'
 import { clearSession, getAuthSession, saveAuthSession, updateUserAuthSession } from '@/utils'
@@ -20,7 +20,7 @@ export const useLocalAuth = () => {
         return
       }
 
-      const { accessToken, userData } = getAuthSession(config.localStorage.auth.accessToken, config.localStorage.user)
+      const { accessToken, userData } = getAuthSession(globalConfig.localStorage.auth.accessToken, globalConfig.localStorage.user)
 
       if (accessToken == null || userData == null) {
         setLoading(false)
@@ -45,7 +45,7 @@ export const useLocalAuth = () => {
     setIsAuth(true)
     setUser(user)
 
-    saveAuthSession(config.localStorage.auth.accessToken, config.localStorage.user, { accessToken: token, userData: user })
+    saveAuthSession(globalConfig.localStorage.auth.accessToken, globalConfig.localStorage.user, { accessToken: token, userData: user })
   }
 
   const signInByApi = async (userData: IUserSignIn) => {
@@ -72,7 +72,7 @@ export const useLocalAuth = () => {
 
   const updateSessionData = (userData: IUser) => {
     setUser(userData)
-    updateUserAuthSession(config.localStorage.user, userData)
+    updateUserAuthSession(globalConfig.localStorage.user, userData)
   }
 
   const checkSession = async () => {

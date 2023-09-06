@@ -1,4 +1,4 @@
-import { config } from '@/config'
+import { globalConfig } from '@/config'
 import { useTranslation } from '@/hooks'
 import { CLanguages } from '@/models/UI'
 import { setToLocalStorage } from '@/utils'
@@ -16,7 +16,7 @@ export const useToggleTranslation = () => {
     }
 
     void changeLanguage(newLanguage).then(() => {
-      setToLocalStorage(config.localStorage.language, newLanguage)
+      setToLocalStorage(globalConfig.localStorage.language, newLanguage)
       window.location.reload()
     })
   }

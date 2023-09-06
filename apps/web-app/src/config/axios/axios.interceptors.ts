@@ -1,11 +1,11 @@
-import { config } from '@/config'
+import { globalConfig } from '@/config'
 import { type IApiResponse } from '@/models/LOGIC'
 import { checkServerStatus, getFromLocalStorage, getValidationError, toastUtils } from '@/utils'
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
 
 export const setAxiosInterceptors = () => {
   const getAccessToken = () => {
-    const accessToken = getFromLocalStorage(config.localStorage.auth.accessToken)
+    const accessToken = getFromLocalStorage(globalConfig.localStorage.auth.accessToken)
     return accessToken
   }
 
