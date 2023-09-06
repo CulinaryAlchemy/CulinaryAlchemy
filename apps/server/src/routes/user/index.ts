@@ -12,7 +12,6 @@ import {
 	validateEmail,
 	validateValidationChainResult,
 } from '../../middlewares/validators';
-import { validateDietary } from '../../middlewares/validators/dietary-validator';
 
 export const userRouter = express.Router();
 
@@ -74,12 +73,7 @@ userRouter.put(
 		.isString()
 		.isLowercase()
 		.isLength({ min: 1, max: 15 }),
-	body('name')
-		.optional()
-		.notEmpty()
-		.isString()
-		.isLowercase()
-		.isLength({ min: 1, max: 30 }),
+	body('name').optional().notEmpty().isString().isLength({ min: 1, max: 30 }),
 	body('password')
 		.optional()
 		.notEmpty()
@@ -116,20 +110,20 @@ userRouter.delete(
 
 // user dietaries
 userRouter.post(
-	'/:id/dietary', // the :id param is the user id
+	'/:id/dietary/:dietaryId', // the :id param is the user id
 	passportMiddleware,
 	authMiddleware,
-	idValidator, // the :id param is the user id
-	validateDietary, // dietary validator
+	idValidator,
+	param('dietaryId').notEmpty().isInt({ min: 1 }),
 	validateValidationChainResult,
 	Controllers.User.manageDietary.add
 );
 userRouter.delete(
-	'/:id/dietary', // the :id param is the user id
+	'/:id/dietary/:dietaryId', // the :id param is the user id
 	passportMiddleware,
 	authMiddleware,
-	idValidator, // the :id param is the user id
-	validateDietary, // dietary validator
+	idValidator,
+	param('dietaryId').notEmpty().isInt({ min: 1 }),
 	validateValidationChainResult,
 	Controllers.User.manageDietary.remove
 );

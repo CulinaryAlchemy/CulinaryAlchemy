@@ -278,12 +278,12 @@ const User = {
 	},
 	manageDietary: {
 		add: async (req: Request, res: Response) => {
-			const { dietaryId } = req.body;
+			const { dietaryId } = req.params;
 			const { id: userId } = req.params;
 
 			try {
 				await UserProvider.AssociateWith.dietary.add(
-					dietaryId,
+					parseInt(dietaryId, 10),
 					parseInt(userId)
 				);
 				ApiResponse.success(
@@ -302,12 +302,12 @@ const User = {
 			}
 		},
 		remove: async (req: Request, res: Response) => {
-			const { dietaryId } = req.body;
+			const { dietaryId } = req.params;
 			const { id: userId } = req.params;
 
 			try {
 				await UserProvider.AssociateWith.dietary.remove(
-					dietaryId,
+					parseInt(dietaryId, 10),
 					parseInt(userId)
 				);
 				ApiResponse.success(
