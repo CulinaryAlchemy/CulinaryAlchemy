@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 
 import { UserProvider } from '../../providers/user';
-import { ApiResponse, HttpStatusCodes, MessageCodes } from '../../utils/index';
+import {
+	ApiResponse,
+	HttpStatusCodes,
+	MessageCodes,
+} from '../../utils/index';
 import { cleanObjectNullKeys, getObjectLength } from '../../utils/object.utils';
 import { cloudinaryService } from '../../services';
 
