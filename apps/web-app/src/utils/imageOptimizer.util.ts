@@ -32,8 +32,6 @@ export class ImageOptimizerManager {
     })
   }
 
-  public resizeForBlur () {}
-
   private optimizeToWebP (): Promise<Blob> {
     return new Promise((resolve) => {
       this.canvas.toBlob((imageBlob) => {
