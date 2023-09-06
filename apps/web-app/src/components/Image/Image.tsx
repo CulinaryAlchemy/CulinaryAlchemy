@@ -24,7 +24,7 @@ export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, ...props }) => {
             {...props}
             placeholderSrc={srcBlurPlaceholder}
             threshold={0}
-            visibleByDefault={false}
+            visibleByDefault={imageCacheManagerInstance.shouldLoadWithCache(props.src)}
         />
   )
 }

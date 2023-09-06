@@ -14,7 +14,7 @@ interface IStyles {
 
 interface IProps {
   styles: IStyles
-  onSuccess: (fileData: File) => Promise<unknown>
+  onSuccess: (fileData: File, fileBlurData: File) => Promise<unknown>
   fileType?: string
   width: number
   height: number
@@ -60,7 +60,9 @@ export const DropZone: React.FC<IProps> = ({ fileType, styles, onSuccess, width,
       return
     }
 
-    onSuccess(imageProcessedFile)
+    const imageBlur = await imageOptimizerInstance.optimizeAndResize(imageProcessedFile, 20, 20)
+
+    onSuccess(imageProcessedFile, imageBlur)
       .finally(() => {
         setIsLoading(false)
       })

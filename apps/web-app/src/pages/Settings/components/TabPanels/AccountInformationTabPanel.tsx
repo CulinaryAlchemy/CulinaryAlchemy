@@ -33,8 +33,8 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
     }
   }
 
-  const handleOnImageSuccess = (userKey: 'avatar' | 'header') => (file: File) => {
-    return updateUser(user?.id as number, { [userKey]: file })
+  const handleOnImageSuccess = (userKey: 'avatar' | 'header') => (imageFile: File, imageBlurFile: File) => {
+    return updateUser(user?.id as number, { [userKey]: imageFile, [userKey + 'Blur']: imageBlurFile })
   }
 
   return (
