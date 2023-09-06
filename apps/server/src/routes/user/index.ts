@@ -12,6 +12,7 @@ import {
 	validateEmail,
 	validateValidationChainResult,
 } from '../../middlewares/validators';
+import { profileImage, headerImage } from '../../middlewares/image';
 
 export const userRouter = express.Router();
 
@@ -67,6 +68,8 @@ userRouter.put(
 		{ name: 'header', maxCount: 1 },
 		{ name: 'headerBlur', maxCount: 1 },
 	]),
+	profileImage,
+	headerImage,
 	body('username')
 		.optional()
 		.notEmpty()
