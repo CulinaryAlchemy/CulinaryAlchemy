@@ -1,5 +1,4 @@
 import { type TFormInputArray } from '@/components/Form/models'
-import { adaptDefaultValues } from './adapters'
 import { DeterminateInput } from './components'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -30,6 +29,7 @@ interface IForm {
   onSubmit: SubmitHandler<FieldValues>
   Header?: React.ReactNode
   Footer?: React.ReactNode
+  defaultValues?: object
   buttonSubmitName: string
   styles: IStyles
   showResetButton?: boolean
@@ -38,7 +38,7 @@ interface IForm {
 const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1em' }
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
-export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, showResetButton = true }) => {
+export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, showResetButton = true }) => {
   const {
     register,
     handleSubmit: defaultHandleSubmit,
@@ -49,14 +49,13 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
     formState: {
       errors,
       isSubmitting,
-      isValid,
       dirtyFields,
       isDirty
     }
   } = useForm<FieldValues>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues: adaptDefaultValues(inputsData),
+    defaultValues,
     resolver: zodResolver(schema, { async: true }, { mode: 'async' })
   })
 
@@ -108,7 +107,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
                       {
                         setValueAs: (value) => {
                           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                          return value === '' ? undefined : value
+                          return value !== '' ? value : undefined
                         },
                         onChange: (event: SyntheticEvent) => {
                           const value = (event.target as HTMLInputElement).value
@@ -143,7 +142,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
                   width: '100%',
                   flexGrow: 1
                 }}
-                disabled={(!isValid || Object.values(errors).length > 0 || !isDirty) && true}
+                disabled={Object.values(errors).length > 0 || !isDirty}
               >
                 {isSubmitting
                   ? <CircularProgress variant="plain" />
