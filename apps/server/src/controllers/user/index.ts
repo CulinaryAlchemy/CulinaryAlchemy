@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 
 import { UserProvider } from '../../providers/user';
-import { ApiResponse, HttpStatusCodes, MessageCodes } from '../../utils/index';
+import {
+	ApiResponse,
+	HttpStatusCodes,
+	MessageCodes,
+} from '../../utils/index';
 import { cleanObjectNullKeys, getObjectLength } from '../../utils/object.utils';
 import { cloudinaryService } from '../../services';
 
@@ -278,12 +282,12 @@ const User = {
 	},
 	manageDietary: {
 		add: async (req: Request, res: Response) => {
-			const { dietaryId } = req.body;
+			const { dietaryId } = req.params;
 			const { id: userId } = req.params;
 
 			try {
 				await UserProvider.AssociateWith.dietary.add(
-					dietaryId,
+					parseInt(dietaryId, 10),
 					parseInt(userId)
 				);
 				ApiResponse.success(
@@ -302,12 +306,12 @@ const User = {
 			}
 		},
 		remove: async (req: Request, res: Response) => {
-			const { dietaryId } = req.body;
+			const { dietaryId } = req.params;
 			const { id: userId } = req.params;
 
 			try {
 				await UserProvider.AssociateWith.dietary.remove(
-					dietaryId,
+					parseInt(dietaryId, 10),
 					parseInt(userId)
 				);
 				ApiResponse.success(
