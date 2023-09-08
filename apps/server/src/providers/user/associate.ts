@@ -117,7 +117,7 @@ export const AssociateWith = {
 				{
 					const role = await roleProvider.get.byName('admin');
 					if (!role) {
-						console.log(role);
+						console.log('Admin role not found, role varaiable: ', role);
 						return Promise.reject('Admin role not found');
 					}
 					userRole = role;
@@ -127,7 +127,7 @@ export const AssociateWith = {
 				{
 					const role = await roleProvider.get.byName('user');
 					if (!role) {
-						console.log(role);
+						console.log('User role not found, role varaiable: ', role);
 						return Promise.reject('User role not found');
 					}
 					userRole = role;

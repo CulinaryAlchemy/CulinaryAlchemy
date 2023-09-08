@@ -1,7 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
-import { UserDietaryInterface } from '../../interfaces/shared/user.dietary.interface';
+import { UserDietaryInterface } from '../../interfaces';
 import { sequelize } from '../../services';
-
 
 class UserDietary
 	extends Model<UserDietaryInterface>
