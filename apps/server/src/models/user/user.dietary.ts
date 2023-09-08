@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { UserDietaryInterface } from '../../interfaces/user.dietary.interface';
+import { UserDietaryInterface } from '../../interfaces/shared/user.dietary.interface';
 import { sequelize } from '../../services';
 
 

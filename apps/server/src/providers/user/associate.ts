@@ -1,5 +1,5 @@
 import { UserProvider } from '.';
-import { RoleType } from '../../interfaces/role.interface';
+import { RoleType } from '../../interfaces/role/role.interface';
 import { User, UserDietary } from '../../models/user';
 import { DietaryProvider } from '../dietary';
 import { roleProvider } from '../roles';

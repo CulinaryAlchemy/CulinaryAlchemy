@@ -1,6 +1,6 @@
 import { generateRandomString } from '../../utils/random-string';
 import { UserProvider } from '.';
-import { RoleType } from '../../interfaces/role.interface';
+import { RoleType } from '../../interfaces/role/role.interface';
 
 export const seed = async ({
 	username,
