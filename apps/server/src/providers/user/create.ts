@@ -1,6 +1,6 @@
 import { UserProvider } from '.';
 import { User } from '../../models/user/index';
-import { RoleType } from '../../interfaces/role.interface';
+import { RoleType } from '../../interfaces/role/role.interface';
 import { DatabaseService } from '../../services';
 import { defaultImages } from '../../config/default-images';
 

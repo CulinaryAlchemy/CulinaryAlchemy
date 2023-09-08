@@ -259,7 +259,6 @@ const User = {
 			}
 			try {
 				const finalParams: any = cleanObjectNullKeys(params);
-				console.log(finalParams);
 				await UserProvider.updateUser(id, { ...finalParams });
 				const userWithUpdatedValues = await UserProvider.getUser.ById(
 					parseInt(id)

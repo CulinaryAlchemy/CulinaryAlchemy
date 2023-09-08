@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { sequelize } from '../../services';
 
-import { UserInterface } from '../../interfaces/user.interface';
+import { UserInterface } from '../../interfaces';
 
 class User extends Model<UserInterface> implements UserInterface {
 	id!: number;

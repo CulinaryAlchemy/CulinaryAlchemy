@@ -1,12 +1,12 @@
 import { generateRandomString } from '../../utils/random-string';
 import { UserProvider } from '.';
-import { RoleType } from '../../interfaces/role.interface';
+import { RoleType } from '../../interfaces/role/role.interface';
 
 export const seed = async ({
 	username,
 	email,
 	password,
-	role
+	role,
 }: {
 	username: string;
 	email: string;
@@ -22,13 +22,9 @@ export const seed = async ({
 	}
 	let finalUsername = username;
 	if (!isUsernameavailable) {
-		console.log(
-			'username is alread taken, seeding the user with a different one'
-		);
 		finalUsername = await findUsernameOrDie();
-		console.log('new username is: ', finalUsername);
 	}
-	
+
 	async function findUsernameOrDie(): Promise<string> {
 		const usernameMaxLength = 15;
 		let isUsernameavailable = false;
@@ -41,7 +37,6 @@ export const seed = async ({
 				isUsernameavailable = true;
 			}
 		}
-		console.log('randomusername: ', randomUsername);
 		return randomUsername;
 	}
 
