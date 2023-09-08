@@ -1,11 +1,10 @@
 import { DataTypes, Model } from 'sequelize';
-import { UserDietaryInterface } from '../../interfaces';
+import { UserXDietaryInterface } from '../../interfaces';
 import { sequelize } from '../../services';
 
 class UserDietary
-	extends Model<UserDietaryInterface>
-	implements UserDietaryInterface
-{
+	extends Model<UserXDietaryInterface>
+	implements UserXDietaryInterface {
 	id!: number;
 	userId!: number;
 	dietaryId!: number;
