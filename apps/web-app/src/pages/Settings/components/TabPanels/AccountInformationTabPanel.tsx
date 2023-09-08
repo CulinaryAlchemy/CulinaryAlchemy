@@ -113,6 +113,7 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
           inputsData={accountInformationSelectedInputsArray}
           schema={accountInformationInputsAccountTabSchema}
           defaultValues={user}
+          buttonSubmitSide='default'
           styles={{
             gridColumns: 1,
             width: '100%',

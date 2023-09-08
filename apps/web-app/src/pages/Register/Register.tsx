@@ -25,6 +25,7 @@ const Register = () => {
         onSubmit={handleOnSumbit}
         Header= {<RegisterHeader />}
         Footer={<RegisterFooter />}
+        buttonSubmitSide='default'
         styles={{
           display: 'grid',
           gridColumns: 1,
