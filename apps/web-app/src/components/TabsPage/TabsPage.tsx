@@ -39,9 +39,10 @@ interface IProps {
   tabsData: TTabArray
   tabPanels: React.ReactNode
   styles: IStyles
+  showHeaderLine?: boolean
 }
 
-export const TabsPage: React.FC<IProps> = ({ defaultTab, type, tabsData, tabPanels, styles }) => {
+export const TabsPage: React.FC<IProps> = ({ defaultTab, type, tabsData, tabPanels, styles, showHeaderLine = true }) => {
   const [index, setIndex] = useState(defaultTab)
 
   return (
@@ -131,18 +132,21 @@ export const TabsPage: React.FC<IProps> = ({ defaultTab, type, tabsData, tabPane
             })
           }
         </TabList>
-        <Box
-          sx={(theme) => ({
-            display: {
-              md: styles.direction === 'row' ? 'none' : 'block'
-            },
-            '--bg': theme.vars.palette.background.level3,
-            height: '1px',
-            background: 'var(--bg)',
-            boxShadow: '0 0 0 100vmax var(--bg)',
-            clipPath: 'inset(0 -100vmax)'
-          })}
-        />
+        {
+          showHeaderLine &&
+          <Box
+            sx={(theme) => ({
+              display: {
+                md: styles.direction === 'row' ? 'none' : 'block'
+              },
+              '--bg': theme.vars.palette.background.level3,
+              height: '1px',
+              background: 'var(--bg)',
+              boxShadow: '0 0 0 100vmax var(--bg)',
+              clipPath: 'inset(0 -100vmax)'
+            })}
+          />
+        }
         <Box
           sx={(theme) => ({
             '--bg': theme.vars.palette.background.surface,
@@ -152,7 +156,7 @@ export const TabsPage: React.FC<IProps> = ({ defaultTab, type, tabsData, tabPane
             clipPath: 'inset(0 -100vmax)',
             flexGrow: 1,
             justifyContent: 'center',
-            maxWidth: '29.875em',
+            maxWidth: '100%',
             width: '100%',
             minHeight: '80vh',
             margin: 'auto',

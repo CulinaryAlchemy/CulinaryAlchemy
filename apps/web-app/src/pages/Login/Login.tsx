@@ -23,6 +23,7 @@ const Login = () => {
         buttonSubmitName={t('login2')}
         Header={<LoginHeader />}
         Footer={<LoginFooter />}
+        buttonSubmitSide='default'
         styles={{
           display: 'grid',
           gridColumns: 1,

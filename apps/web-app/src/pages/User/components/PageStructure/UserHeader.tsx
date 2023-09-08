@@ -31,7 +31,12 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
           src={data?.header as unknown as string}
           srcBlurPlaceholder={data?.headerBlur as string}
           alt="wallpaper image"
-          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+          style={{
+            objectFit: 'cover',
+            width: '100%',
+            height: '10em',
+            aspectRatio: '4 / 1'
+          }}
         />
       </Box>
       <Stack sx={{ paddingX: '1em', paddingY: '0.5em' }}>

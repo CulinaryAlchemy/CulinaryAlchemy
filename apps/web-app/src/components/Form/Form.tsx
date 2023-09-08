@@ -19,8 +19,10 @@ interface IStyles {
   width: string
   border?: 'none'
   paddingY?: string
+  paddingX?: string
   marginY?: string
   justifyContent?: 'center' | 'start'
+  gap?: number
 }
 
 interface IForm {
@@ -31,6 +33,7 @@ interface IForm {
   Footer?: React.ReactNode
   defaultValues?: object
   buttonSubmitName: string
+  buttonSubmitSide: 'default' | 'start' | 'end'
   styles: IStyles
   showResetButton?: boolean
 }
@@ -38,7 +41,7 @@ interface IForm {
 const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1em' }
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
-export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, showResetButton = true }) => {
+export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, showResetButton = true, buttonSubmitSide }) => {
   const {
     register,
     handleSubmit: defaultHandleSubmit,
@@ -71,7 +74,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
         mx: 'auto',
         my: styles.marginY ?? 4,
         py: styles.paddingY ?? 3,
-        px: 2,
+        px: styles.paddingX ?? 2,
         borderRadius: 'sm',
         boxShadow: styles.border ?? 'md',
         border: styles.border
@@ -130,7 +133,8 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
             <Stack
               direction='row'
               spacing={1}
-              marginTop={2}
+              marginTop={1}
+              justifyContent={buttonSubmitSide}
             >
               <Button
                 type='submit'
@@ -139,8 +143,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginTop: '1em',
-                  width: '100%',
-                  flexGrow: 1
+                  flexGrow: buttonSubmitSide === 'default' ? 1 : 0
                 }}
                 disabled={Object.values(errors).length > 0 || !isDirty}
               >

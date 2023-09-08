@@ -24,6 +24,7 @@ const DietaryPreferencesPanel = () => {
             onSubmit={handleOnSubmit}
             inputsData={dietaryPreferencesSelectedInputsArray}
             schema={dietaryPreferencesInputsSchema}
+            buttonSubmitSide='default'
             styles={{
               flexWrap: 'wrap',
               width: '100%',
