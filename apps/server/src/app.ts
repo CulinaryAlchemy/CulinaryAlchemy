@@ -7,13 +7,14 @@ import { logsMiddw } from './middlewares';
 
 // routers
 import { appRouter } from './routes';
+import { corsConfig } from './config';
 
 // app
 const app = express();
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors(corsConfig));
 
 if (process.env.ENVIRONMENT === 'development') {
 	app.use(logsMiddw);

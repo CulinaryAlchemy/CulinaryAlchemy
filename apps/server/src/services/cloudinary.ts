@@ -1,6 +1,6 @@
 import cloudinary from 'cloudinary';
 import { deleteFile } from './files-service';
-import { defaultImages } from '../config/default-images';
+import { defaultImages } from '../config';
 
 export const cloudinaryService = {
 	uploadImage: async (
@@ -43,7 +43,7 @@ export const cloudinaryService = {
 			if (!result) {
 				return Promise.reject(result);
 			}
-			
+
 			const imageUrl = result.secure_url;
 			return Promise.resolve(imageUrl);
 		} catch (error) {

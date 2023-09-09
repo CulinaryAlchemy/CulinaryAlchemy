@@ -2,7 +2,7 @@ import { UserProvider } from '.';
 import { User } from '../../models/user/index';
 import { RoleType } from '../../interfaces/role/role.interface';
 import { DatabaseService } from '../../services';
-import { defaultImages } from '../../config/default-images';
+import { defaultImages } from '../../config';
 
 export const createUser = async ({
 	username,
@@ -21,7 +21,15 @@ export const createUser = async ({
 	const headerBlur = defaultImages.headerBlur;
 	const avatarBlur = defaultImages.avatarBlur;
 	try {
-		const user = User.build({ username, email, password, avatar, avatarBlur, header, headerBlur });
+		const user = User.build({
+			username,
+			email,
+			password,
+			avatar,
+			avatarBlur,
+			header,
+			headerBlur,
+		});
 
 		const userWithRole = await UserProvider.AssociateWith.role.add(user, role);
 
