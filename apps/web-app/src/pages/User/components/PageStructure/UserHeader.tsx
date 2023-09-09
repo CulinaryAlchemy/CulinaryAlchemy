@@ -9,7 +9,7 @@ import IconButton from '@mui/joy/IconButton'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined'
 
 import { Image } from '@/components'
 import { useTranslation } from '@/hooks'
@@ -26,8 +26,6 @@ interface IProps {
 }
 
 export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
-  const { t } = useTranslation()
-
   return (
     <header>
       <Box
@@ -82,9 +80,22 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
         <Stack spacing={1} mt={1}>
           <Stack direction="row" sx={{ gap: '0.4em', alignItems: 'center' }}>
             <Stack>
-              <Typography sx={{ fontWeight: 'bold', fontSize: '1.25em' }}>
-                {data?.name ?? data?.username}
-              </Typography>
+              <Stack direction={'row'} sx={{ gap: '0.4em' }}>
+                <Typography sx={{ fontWeight: 'bold', fontSize: '1.25em' }}>
+                  {data?.name ?? data?.username}
+                </Typography>
+                {data?.role?.name && (
+                  <Chip
+                    size="sm"
+                    variant="outlined"
+                    sx={{
+                      borderRadius: '0.7em'
+                    }}
+                  >
+                    {data.role?.name}
+                  </Chip>
+                )}
+              </Stack>
               <Typography
                 sx={{
                   fontSize: '0.938em',
@@ -95,29 +106,19 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
                 @{data?.username}
               </Typography>
             </Stack>
-            {data?.role?.name && (
-              <Chip
-                size="sm"
-                variant="outlined"
-                sx={{
-                  borderRadius: '0.7em'
-                }}
-              >
-                {data.role?.name}
-              </Chip>
-            )}
           </Stack>
           <Typography
             level="body1"
             sx={{ maxHeight: '4.7em', overflow: 'hidden', fontSize: '0.938em' }}
           >
-            {data?.description != null
-              ? data.description
-              : `No ${t('description')}`}
+            {data?.description != null ? data.description : ''}
           </Typography>
-          <Stack direction="row" spacing={1} justifyContent="left">
-            <LocationOnIcon /> <span>{data?.location}</span>
-          </Stack>
+          {data?.location && (
+            <Stack direction="row" spacing={1} justifyContent="left">
+              <PlaceOutlinedIcon sx={{ color: '#b9b9c6' }} />
+              <Typography level="body2">{data?.location}</Typography>
+            </Stack>
+          )}
         </Stack>
       </Stack>
     </header>
