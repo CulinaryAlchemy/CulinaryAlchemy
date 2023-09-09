@@ -14,7 +14,10 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 import { Image } from '@/components'
 import { useTranslation } from '@/hooks'
 
-const AccountInformationTabPanel = lazy(() => import('@/pages/Settings/components/TabPanels/AccountInformationTabPanel'))
+const AccountInformationTabPanel = lazy(
+  () =>
+    import('@/pages/Settings/components/TabPanels/AccountInformationTabPanel')
+)
 const Modal = lazy(() => import('@/components/Modal/Modal'))
 
 interface IProps {
@@ -27,7 +30,13 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
 
   return (
     <header>
-      <Box sx={{ height: '10em', backgroundColor: 'var(--joy-palette-neutral-outlinedBorder)', overflow: 'hidden' }}>
+      <Box
+        sx={{
+          height: '10em',
+          backgroundColor: 'var(--joy-palette-neutral-outlinedBorder)',
+          overflow: 'hidden'
+        }}
+      >
         <Image
           src={data?.header as unknown as string}
           srcBlurPlaceholder={data?.headerBlur as string}
@@ -41,9 +50,23 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
         />
       </Box>
       <Stack sx={{ paddingX: '1em', paddingY: '0.5em' }}>
-        <Stack direction='row' sx={{ justifyContent: 'space-between', paddingTop: '0.1em' }}>
-          <Stack direction='row' alignItems='center' spacing={0.5}>
-            <Sheet variant='outlined' sx={{ width: '8.34375em', height: '8.34375em', borderRadius: '100%', border: '0.125em solid var(--joy-palette-background-surface)', backgroundColor: 'black', marginTop: '-5em !important', overflow: 'hidden' }}>
+        <Stack
+          direction="row"
+          sx={{ justifyContent: 'space-between', paddingTop: '0.1em' }}
+        >
+          <Stack direction="row" alignItems="center" spacing={0.5}>
+            <Sheet
+              variant="outlined"
+              sx={{
+                width: '8.34375em',
+                height: '8.34375em',
+                borderRadius: '100%',
+                border: '0.125em solid var(--joy-palette-background-surface)',
+                backgroundColor: 'black',
+                marginTop: '-5em !important',
+                overflow: 'hidden'
+              }}
+            >
               <Image
                 src={data?.avatar as unknown as string}
                 srcBlurPlaceholder={data?.avatarBlur as string}
@@ -51,40 +74,48 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
               />
             </Sheet>
-            <Stack direction='row' sx={{ gap: '0.4em', alignItems: 'center' }}>
-              <Stack>
-                <Typography sx={{ fontWeight: 'bold', fontSize: '1.25em' }}>{data?.name ?? data?.username }</Typography>
-                <Typography sx={{
-                  fontSize: '0.938em',
-                  color: 'var(--joy-palette-text-secondary, var(--joy-palette-neutral-600, #5A5A72));'
-                }}>@{data?.username}</Typography>
-              </Stack>
-              {data?.role?.name &&
-                <Chip
-                  size='sm'
-                  variant='outlined'
-                  sx={{
-                    borderRadius: '0.7em'
-                  }}
-                >
-                  {data.role?.name}
-                </Chip>
-              }
-            </Stack>
           </Stack>
-          <Stack direction='row' alignItems='center' spacing={1}>
-            {
-              isOwner
-                ? <HeaderButtonsOwner />
-                : <HeaderButtonsDefault />
-            }
+          <Stack direction="row" alignItems="center" spacing={1}>
+            {isOwner ? <HeaderButtonsOwner /> : <HeaderButtonsDefault />}
           </Stack>
         </Stack>
         <Stack spacing={1} mt={1}>
-          <Typography level='body2' sx={{ maxHeight: '4.7em', overflow: 'hidden', fontSize: '0.938em' }}>
-            {data?.description != null ? data.description : `No ${t('description')}`}
+          <Stack direction="row" sx={{ gap: '0.4em', alignItems: 'center' }}>
+            <Stack>
+              <Typography sx={{ fontWeight: 'bold', fontSize: '1.25em' }}>
+                {data?.name ?? data?.username}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '0.938em',
+                  color:
+                    'var(--joy-palette-text-secondary, var(--joy-palette-neutral-600, #5A5A72));'
+                }}
+              >
+                @{data?.username}
+              </Typography>
+            </Stack>
+            {data?.role?.name && (
+              <Chip
+                size="sm"
+                variant="outlined"
+                sx={{
+                  borderRadius: '0.7em'
+                }}
+              >
+                {data.role?.name}
+              </Chip>
+            )}
+          </Stack>
+          <Typography
+            level="body1"
+            sx={{ maxHeight: '4.7em', overflow: 'hidden', fontSize: '0.938em' }}
+          >
+            {data?.description != null
+              ? data.description
+              : `No ${t('description')}`}
           </Typography>
-          <Stack direction='row' spacing={1} justifyContent='left'>
+          <Stack direction="row" spacing={1} justifyContent="left">
             <LocationOnIcon /> <span>{data?.location}</span>
           </Stack>
         </Stack>
@@ -120,11 +151,7 @@ export const HeaderButtonsOwner = () => {
           showHeaders={false}
         />
       </Modal>
-      <Button
-        variant='outlined'
-        color='neutral'
-        onClick={handleOnClick}
-      >
+      <Button variant="outlined" color="neutral" onClick={handleOnClick}>
         {t('edit profile')}
       </Button>
     </>
@@ -135,9 +162,15 @@ export const HeaderButtonsDefault = () => {
   const { t } = useTranslation()
   return (
     <>
-      <IconButton variant='outlined' color='neutral'><MoreVertIcon /></IconButton>
-      <IconButton variant='outlined' color='neutral'><MailOutlineIcon /></IconButton>
-      <Button variant='outlined' color='neutral'>{t('follow')}</Button>
+      <IconButton variant="outlined" color="neutral">
+        <MoreVertIcon />
+      </IconButton>
+      <IconButton variant="outlined" color="neutral">
+        <MailOutlineIcon />
+      </IconButton>
+      <Button variant="outlined" color="neutral">
+        {t('follow')}
+      </Button>
     </>
   )
 }
