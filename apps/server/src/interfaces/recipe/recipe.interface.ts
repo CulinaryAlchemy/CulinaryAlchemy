@@ -1,5 +1,3 @@
-import { ImageXRecipeInterface } from 'interfaces/shared/image-x-recipe.interface';
-
 export interface RecipeInterface {
 	id: number;
 	title: string;
@@ -11,5 +9,4 @@ export interface RecipeInterface {
 	youtube_link: string | null;
 	ingredients: string; // an array in json stringified
 	spices: string | null; // an array in json stringified
-	image: ImageXRecipeInterface | null;
 }
