@@ -23,8 +23,7 @@ export const CInputUser: TFormInputRecordObject = {
     validation: zValidator
       .string()
       .min(1)
-      .max(30)
-      .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
+      .max(30),
     placeholder: 'Jowi',
     formInputType: 'textField',
     async: false
