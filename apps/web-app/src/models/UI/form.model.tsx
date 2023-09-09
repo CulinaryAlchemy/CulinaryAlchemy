@@ -11,7 +11,8 @@ export const CInputUser: TFormInputRecordObject = {
       .string()
       .min(1)
       .max(15)
-      .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
+      .refine((value) => value === value.toLowerCase(), { message: 'Username must be in lower case' })
+      .refine((value) => value.split(' ').length === 1, { message: 'Username cannot contain spaces' }),
     placeholder: 'Joe Bass',
     formInputType: 'textField',
     async: true
@@ -24,7 +25,7 @@ export const CInputUser: TFormInputRecordObject = {
       .string()
       .min(1)
       .max(30)
-      .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
+      .refine((value) => value === value.toLowerCase(), { message: 'Name must be in lower case' }),
     placeholder: 'Jowi',
     formInputType: 'textField',
     async: false
