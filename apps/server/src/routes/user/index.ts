@@ -5,7 +5,7 @@ import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy
 // controllers
 import { Controllers } from '../../controllers';
 // validators
-import { upload } from '../../config/multer';
+import { upload } from '../../config';
 import { authMiddleware } from '../../middlewares';
 import {
 	idValidator,
