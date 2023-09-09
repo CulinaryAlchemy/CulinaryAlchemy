@@ -11,6 +11,7 @@ import Button from '@mui/joy/Button/'
 import CircularProgress from '@mui/joy/CircularProgress'
 import Sheet from '@mui/joy/Sheet/'
 import Stack from '@mui/joy/Stack'
+import { adaptDefaultValues } from './adapters'
 
 interface IStyles {
   gridColumns?: 1 | 2
@@ -58,7 +59,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
   } = useForm<FieldValues>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues,
+    defaultValues: adaptDefaultValues(defaultValues as object),
     resolver: zodResolver(schema, { async: true }, { mode: 'async' })
   })
 
@@ -66,6 +67,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
     reset()
   }
 
+  console.log(watch())
   return (
     <Sheet variant='outlined'
       sx={{
