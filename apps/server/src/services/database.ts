@@ -81,7 +81,7 @@ async function seedDbUsers() {
 			await UserProvider.seed({
 				username: 'culinaryalchemy',
 				email: 'culinaryalchemyofficial@gmail.com',
-				password: process.env.ADMIN_PASSWORD!,
+				password: process.env.ADMIN_PASSWORD || 'adminadminadmin',
 				role: 'admin',
 			});
 		}
@@ -95,7 +95,7 @@ async function seedDbUsers() {
 			await UserProvider.seed({
 				username: 'test123',
 				email: 'test@gmail.com',
-				password: 'password123123',
+				password: process.env.TEST_PASSWORD || 'testtesttest',
 			});
 		}
 

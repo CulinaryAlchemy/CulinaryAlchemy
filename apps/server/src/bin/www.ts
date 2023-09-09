@@ -2,11 +2,15 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { app } from '../app';
-import { DatabaseService } from '../services/index';
+import { DatabaseService } from '../services';
+import { checkEnvironmentEnv } from '../config';
 
 (async () => {
+	// we check all the environment env vars are setted
+	checkEnvironmentEnv();
+
 	// PORT
-	const PORT = process.env.PORT || 3000;
+	const PORT = process.env.PORT;
 	try {
 		await DatabaseService.start();
 		// start server
