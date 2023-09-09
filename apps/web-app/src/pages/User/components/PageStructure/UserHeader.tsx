@@ -7,7 +7,6 @@ import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button'
 import Chip from '@mui/joy/Chip'
 import IconButton from '@mui/joy/IconButton'
-import Link from '@mui/joy/Link'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
@@ -51,7 +50,13 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
               />
             </Sheet>
             <Stack direction='row' sx={{ gap: '0.4em', alignItems: 'center' }}>
-              <Typography level='h6'>{data?.username}</Typography>
+              <Stack>
+                <Typography sx={{ fontWeight: 'bold', fontSize: '1.3em' }}>{data?.name ?? data?.username }</Typography>
+                <Typography sx={{
+                  fontSize: '0.8375em',
+                  color: 'var(--joy-palette-text-secondary, var(--joy-palette-neutral-600, #5A5A72));'
+                }}>@{data?.username}</Typography>
+              </Stack>
               {data?.role?.name &&
                 <Chip
                   size='sm'
@@ -78,7 +83,7 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
             {data?.description != null ? data.description : `No ${t('description')}`}
           </Typography>
           <Stack direction='row' spacing={1} justifyContent='right'>
-            <Link level='body3' href='https://www.google.com' target='_blank'>Twitter</Link>
+            <span>{data?.location}</span>
           </Stack>
         </Stack>
       </Stack>
@@ -108,10 +113,10 @@ export const HeaderButtonsOwner = () => {
           maxHeight: '85vh'
         }}
       >
-          <AccountInformationTabPanel
-            showBackNavigation={false}
-            showHeaders={false}
-          />
+        <AccountInformationTabPanel
+          showBackNavigation={false}
+          showHeaders={false}
+        />
       </Modal>
       <Button
         variant='outlined'
