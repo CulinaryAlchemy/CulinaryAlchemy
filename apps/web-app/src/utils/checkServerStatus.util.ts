@@ -1,4 +1,5 @@
 import { globalConfig } from '@/config'
+import { loggerInstance } from '@/services'
 import { toastUtils } from '@/utils'
 
 let isRequestRunningForServerStatus = false
@@ -17,7 +18,7 @@ export const checkServerStatus = () => {
               isRequestRunningForServerStatus = false
             })
             .catch(() => {
-              console.log('the server is still offline')
+              loggerInstance.log('checkServerStatus.util.ts', 'the server is still offline')
             })
         }
 

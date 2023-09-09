@@ -1,5 +1,6 @@
 import { globalConfig } from '@/config'
 import { type IApiResponse } from '@/models/LOGIC'
+import { loggerInstance } from '@/services'
 import { checkServerStatus, getFromLocalStorage, getValidationError, toastUtils } from '@/utils'
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
 
@@ -35,24 +36,23 @@ export const setAxiosInterceptors = () => {
   }
 
   axios.interceptors.request.use((request: InternalAxiosRequestConfig) => {
-    console.log({ request })
     if (getAccessToken() == null || request.url == null || request.url.includes('static-file paths')) return request
 
     const newRequest = updateRequest(request) as InternalAxiosRequestConfig
 
-    console.log({ request, newRequest })
+    loggerInstance.log('Axios.interceptors.ts - requests', { request, newRequest })
 
     return newRequest
   })
 
   axios.interceptors.response.use(
     (success: AxiosResponse<IApiResponse<unknown>>) => {
-      console.log(success)
+      loggerInstance.log('Axios.interceptors.ts - response', success)
       toastUtils.success(getValidationError(success.data.message))
       return success
     },
     (error: AxiosError<IApiResponse<unknown>>) => {
-      console.error({ error })
+      loggerInstance.err('Axios.interceptors.ts - response', error)
       if (error.code === 'ERR_NETWORK' || error.code === 'ERR_CANCELED') {
         checkServerStatus()
       } else {

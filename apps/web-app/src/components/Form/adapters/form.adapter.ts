@@ -3,10 +3,8 @@ export const adaptDefaultValues = (oldDefaultValues: object) => {
 
   let newDefaultValues: object = {}
 
-  console.log(oldDefaultValues)
   Object.entries(oldDefaultValues)
     .forEach(([key, value]) => {
-      console.log({ key, value: value as string })
       if (value == null) {
         value = undefined
       }

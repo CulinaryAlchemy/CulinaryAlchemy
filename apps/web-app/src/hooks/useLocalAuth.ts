@@ -1,6 +1,6 @@
 import { globalConfig } from '@/config'
 import { type IApiResponse, type IAuthApiResponse, type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
-import { checkUserSession, registerUser, signInUser } from '@/services'
+import { checkUserSession, loggerInstance, registerUser, signInUser } from '@/services'
 import { clearSession, getAuthSession, saveAuthSession, updateUserAuthSession } from '@/utils'
 import { type AxiosResponse } from 'axios'
 import { useEffect, useState } from 'react'
@@ -61,7 +61,7 @@ export const useLocalAuth = () => {
         defaultSignIn(res)
       })
       .catch((err) => {
-        console.log(err)
+        loggerInstance.log('useLocalAuth.ts', err)
       })
   }
 

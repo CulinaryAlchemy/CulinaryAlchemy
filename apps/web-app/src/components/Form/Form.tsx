@@ -67,7 +67,6 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
     reset()
   }
 
-  console.log(watch())
   return (
     <Sheet variant='outlined'
       sx={{
