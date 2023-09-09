@@ -1,13 +1,14 @@
 import { Form, TabPanel } from '@/components'
 import { useTranslation } from '@/hooks'
 import { CTabsData, dietaryPreferencesInputsSchema, dietaryPreferencesSelectedInputsArray } from '@/pages/Settings/models/UI'
+import { loggerInstance } from '@/services'
 import { type SubmitHandler } from 'react-hook-form'
 
 const DietaryPreferencesPanel = () => {
   const { t } = useTranslation()
 
   const handleOnSubmit: SubmitHandler<Record<string, boolean>> = (data) => {
-    console.log(data)
+    loggerInstance.log('DietaryPreferencesTabPanel.tsx', data)
   }
 
   return (
