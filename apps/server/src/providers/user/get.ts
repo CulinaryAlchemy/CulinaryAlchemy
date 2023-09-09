@@ -1,4 +1,4 @@
-import { User, UserDietary } from '../../models/user/index';
+import { User, UserDietary } from '../../models/';
 
 export const getUser = {
 	ById: async (id: number, isForInternalServerUse: boolean = false) => {

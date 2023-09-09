@@ -1,5 +1,5 @@
 import { UserInterface } from './user/user.interface';
-import { RoleInterface } from './role/role.interface';
+import { RoleInterface, RoleType } from './role/role.interface';
 import { DietaryInterface } from './dietary/dietary.interface';
 import {
 	UserXDietaryInterface,
@@ -14,4 +14,5 @@ export {
 	UserXDietaryInterface,
 	ImageXRecipeInterface,
 	RecipeXDietaryInterface,
+	RoleType,
 };

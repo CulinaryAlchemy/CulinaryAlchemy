@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import { dbConfig } from '../config/db';
+import { dbConfig } from '../config/db.config';
 
 const POSTGRESQL_DB_URI = process.env.POSTGRESQL_DB_URI;
 

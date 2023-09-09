@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { UserXDietaryInterface } from '../../interfaces';
-import { sequelize } from '../../services';
+import { sequelize } from '../../database/database.connection';
 
 class UserDietary
 	extends Model<UserXDietaryInterface>
@@ -29,7 +29,7 @@ UserDietary.init(
 		},
 	},
 	{
-		sequelize: sequelize,
+		sequelize,
 		modelName: 'UserDietary',
 		timestamps: false,
 	}

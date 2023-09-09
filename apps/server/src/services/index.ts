@@ -1,4 +1,4 @@
+import { DatabaseService } from './database';
 import { cloudinaryService } from './cloudinary';
-import { DatabaseService, sequelize } from './database';
 
-export { cloudinaryService, sequelize, DatabaseService };
+export { cloudinaryService, DatabaseService };

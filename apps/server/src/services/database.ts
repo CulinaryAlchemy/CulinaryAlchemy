@@ -1,10 +1,8 @@
 import { UserProvider } from '../providers/user';
 import { roleProvider } from '../providers/roles';
 
-import { sequelize } from '../database/database.config';
+import { sequelize } from '../database/database.connection';
 
-// import { readFile } from 'node:fs/promises';
-// import path from 'node:path';
 import dietaryArray from '../database/seed-data/dietary.json';
 import { DietaryProvider } from '../providers/dietary';
 import { TransactionOptions } from 'sequelize';
@@ -152,4 +150,4 @@ async function seedDbDietaries() {
 	}
 }
 
-export { sequelize, DatabaseService };
+export { DatabaseService };
