@@ -8,7 +8,6 @@ import { DatabaseService } from '../services/index';
 	// PORT
 	const PORT = process.env.PORT || 3000;
 	try {
-		console.log('before database sync');
 		await DatabaseService.start();
 		// start server
 		app.listen(PORT, () => {

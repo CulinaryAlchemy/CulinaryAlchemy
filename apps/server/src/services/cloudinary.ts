@@ -38,7 +38,6 @@ export const cloudinaryService = {
 			};
 		}
 		try {
-			console.log([...transformOptions]);
 			const result = await cloudinary.v2.uploader.upload(file.path);
 
 			if (!result) {
@@ -58,7 +57,7 @@ export const cloudinaryService = {
 		// we check the image is not one of the default images
 		const defaultImagesArray = [defaultImages.avatar, defaultImages.header];
 		if (defaultImagesArray.includes(imageUrl)) {
-			console.log('the image is a default one, aborting');
+			// the image is a default one, we return
 			return;
 		}
 
@@ -76,8 +75,8 @@ export const cloudinaryService = {
 				api_secret: process.env.CLOUDINARY_API_SECRET,
 				secure: true,
 			});
-			const result = await cloudinary.v2.uploader.destroy(public_id);
-			console.log('imag deleted successfully', result);
+			await cloudinary.v2.uploader.destroy(public_id);
+
 			return Promise.resolve();
 		} catch (error) {
 			console.log(error);

@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { DietaryInterface } from '../../interfaces/dietary.interface';
+import { DietaryInterface } from '../../interfaces';
 import { sequelize } from '../../database/database.connection';
 
 class Dietary extends Model<DietaryInterface> implements DietaryInterface {
