@@ -10,6 +10,7 @@ import { authMiddleware } from '../../middlewares';
 import {
 	idValidator,
 	validateEmail,
+	hasNoSpaces,
 	validateValidationChainResult,
 } from '../../middlewares/validators';
 import { profileImage, headerImage } from '../../middlewares/image';
@@ -59,8 +60,8 @@ userRouter.get(
 
 userRouter.put(
 	'/:id',
-	passportMiddleware,
-	authMiddleware,
+	// passportMiddleware,
+	// authMiddleware,
 	idValidator,
 	upload.fields([
 		{ name: 'avatar', maxCount: 1 },
@@ -75,7 +76,9 @@ userRouter.put(
 		.notEmpty()
 		.isString()
 		.isLowercase()
-		.isLength({ min: 1, max: 15 }),
+		.isLength({ min: 1, max: 15 })
+		.custom(hasNoSpaces)
+		.withMessage('usenrame cant have spaces'),
 	body('name').optional().notEmpty().isString().isLength({ min: 1, max: 30 }),
 	body('password')
 		.optional()
@@ -96,7 +99,7 @@ userRouter.put(
 		.optional()
 		.isEmail()
 		.notEmpty()
-		.custom(validateEmail)
+		.custom(validateEmail).withMessage('invalid email format')
 		.isLength({ min: 4, max: 320 }),
 	validateValidationChainResult,
 	Controllers.User.put.byId
