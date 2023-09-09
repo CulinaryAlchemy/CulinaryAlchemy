@@ -1,16 +1,18 @@
-import { Image } from '@/components'
-import { useTranslation } from '@/hooks'
-import { type IUser } from '@/models/LOGIC'
+import { lazy, useState } from 'react'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button'
 import Chip from '@mui/joy/Chip'
+import { type IUser } from '@/models/LOGIC'
 import IconButton from '@mui/joy/IconButton'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
-import { lazy, useState } from 'react'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+
+import { Image } from '@/components'
+import { useTranslation } from '@/hooks'
 
 const AccountInformationTabPanel = lazy(() => import('@/pages/Settings/components/TabPanels/AccountInformationTabPanel'))
 const Modal = lazy(() => import('@/components/Modal/Modal'))
@@ -51,9 +53,9 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
             </Sheet>
             <Stack direction='row' sx={{ gap: '0.4em', alignItems: 'center' }}>
               <Stack>
-                <Typography sx={{ fontWeight: 'bold', fontSize: '1.3em' }}>{data?.name ?? data?.username }</Typography>
+                <Typography sx={{ fontWeight: 'bold', fontSize: '1.25em' }}>{data?.name ?? data?.username }</Typography>
                 <Typography sx={{
-                  fontSize: '0.8375em',
+                  fontSize: '0.938em',
                   color: 'var(--joy-palette-text-secondary, var(--joy-palette-neutral-600, #5A5A72));'
                 }}>@{data?.username}</Typography>
               </Stack>
@@ -82,8 +84,8 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
           <Typography level='body2' sx={{ maxHeight: '4.7em', overflow: 'hidden', fontSize: '0.938em' }}>
             {data?.description != null ? data.description : `No ${t('description')}`}
           </Typography>
-          <Stack direction='row' spacing={1} justifyContent='right'>
-            <span>{data?.location}</span>
+          <Stack direction='row' spacing={1} justifyContent='left'>
+            <LocationOnIcon /> <span>{data?.location}</span>
           </Stack>
         </Stack>
       </Stack>
