@@ -1,15 +1,15 @@
-import { lazy, useState } from 'react'
+import { CUserRoles, type IUser } from '@/models/LOGIC'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined'
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button'
 import Chip from '@mui/joy/Chip'
-import { type IUser } from '@/models/LOGIC'
 import IconButton from '@mui/joy/IconButton'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
-import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined'
+import { lazy, useState } from 'react'
 
 import { Image } from '@/components'
 import { useTranslation } from '@/hooks'
@@ -84,7 +84,7 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
                 <Typography sx={{ fontWeight: 'bold', fontSize: '1.25em' }}>
                   {data?.name ?? data?.username}
                 </Typography>
-                {data?.role?.name && (
+                {data?.role?.name === CUserRoles.Admin && (
                   <Chip
                     size="sm"
                     variant="outlined"
