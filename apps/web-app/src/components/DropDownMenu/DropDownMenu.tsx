@@ -27,7 +27,7 @@ export const DropDownMenu = () => {
           <Typography level="body1" sx={{ fontWeight: '600' }}>
             {user?.name}
           </Typography>
-          <Typography level="body2">
+          <Typography level="body2" sx={{ fontSize: '0.75em' }}>
             @{user?.username}
           </Typography>
         </Stack>
