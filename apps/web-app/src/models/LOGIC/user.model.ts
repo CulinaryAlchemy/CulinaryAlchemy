@@ -37,3 +37,8 @@ export interface IUserSignIn {
 }
 
 export type IUserUpdate = Partial<IUser>
+
+export const CUserRoles = {
+  Admin: 'admin',
+  User: 'user'
+}
