@@ -1,1 +1,1 @@
-export * from './defaultValues.adapter'
+export * from './form.adapter'

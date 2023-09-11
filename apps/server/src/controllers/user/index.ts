@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
 
 import { UserProvider } from '../../providers/user';
-import { ApiResponse, HttpStatusCodes, MessageCodes } from '../../utils/index';
-import { cleanObjectNullKeys, getObjectKeys } from '../../utils/object.utils';
+import {
+	ApiResponse,
+	HttpStatusCodes,
+	MessageCodes,
+} from '../../utils/index';
+import { cleanObjectNullKeys, getObjectLength } from '../../utils/object.utils';
 import { cloudinaryService } from '../../services';
 
 const User = {
@@ -198,48 +202,52 @@ const User = {
 				location,
 				description,
 			};
-			if(req.files){
-				// avatar
-				if ('avatar' in req.files) {
-					const avatarFile = req.files['avatar'][0] as Express.Multer.File;
-					const avatarUrl = await cloudinaryService.uploadImage(
-						avatarFile as unknown as Express.Multer.File,
-						400,
-						400
+			if (req.files) {
+				try {
+					// avatar
+					if ('avatar' in req.files) {
+						const avatarFile = req.files['avatar'][0] as Express.Multer.File;
+						const avatarUrl = await cloudinaryService.uploadImage(
+							avatarFile as unknown as Express.Multer.File
+						);
+						params.avatar = avatarUrl;
+					}
+					if ('avatarBlur' in req.files) {
+						const avatarBlurFile = req.files[
+							'avatarBlur'
+						][0] as Express.Multer.File;
+						const avatarBlurUrl = await cloudinaryService.uploadImage(
+							avatarBlurFile as unknown as Express.Multer.File
+						);
+						params.avatarBlur = avatarBlurUrl;
+					}
+
+					// header
+					if ('header' in req.files) {
+						const headerFile = req.files['header'][0] as Express.Multer.File;
+						const headerUrl = await cloudinaryService.uploadImage(
+							headerFile as unknown as Express.Multer.File
+						);
+						params.header = headerUrl;
+					}
+					if ('headerBlur' in req.files) {
+						const headerBlurFile = req.files[
+							'headerBlur'
+						][0] as Express.Multer.File;
+						const headerBlurUrl = await cloudinaryService.uploadImage(
+							headerBlurFile as unknown as Express.Multer.File
+						);
+						params.headerBlur = headerBlurUrl;
+					}
+				} catch (error) {
+					return ApiResponse.error(
+						res,
+						HttpStatusCodes.INTERNAL_SERVER_ERROR,
+						''
 					);
-					params.avatar = avatarUrl;
-				}
-				if ('avatarBlur' in req.files) {
-					const avatarBlurFile = req.files['avatarBlur'][0] as Express.Multer.File;
-					const avatarBlurUrl = await cloudinaryService.uploadImage(
-						avatarBlurFile as unknown as Express.Multer.File,
-						20,
-						20
-					);
-					params.avatarBlur = avatarBlurUrl;
-				}
-				
-				// header
-				if ('header' in req.files) {
-					const headerFile = req.files['header'][0] as Express.Multer.File;
-					const headerUrl = await cloudinaryService.uploadImage(
-						headerFile as unknown as Express.Multer.File,
-						1080,
-						360
-					);
-					params.header = headerUrl;
-				}
-				if ('headerBlur' in req.files) {
-					const headerBlurFile = req.files['headerBlur'][0] as Express.Multer.File;
-					const headerBlurUrl = await cloudinaryService.uploadImage(
-						headerBlurFile as unknown as Express.Multer.File,
-						20,
-						20
-					);
-					params.headerBlur = headerBlurUrl;
 				}
 			}
-			const requestParamsLength = getObjectKeys(params);
+			const requestParamsLength = getObjectLength(params);
 
 			if (requestParamsLength <= 0) {
 				return ApiResponse.error(
@@ -273,12 +281,12 @@ const User = {
 	},
 	manageDietary: {
 		add: async (req: Request, res: Response) => {
-			const { dietaryId } = req.body;
+			const { dietaryId } = req.params;
 			const { id: userId } = req.params;
 
 			try {
 				await UserProvider.AssociateWith.dietary.add(
-					dietaryId,
+					parseInt(dietaryId, 10),
 					parseInt(userId)
 				);
 				ApiResponse.success(
@@ -297,12 +305,12 @@ const User = {
 			}
 		},
 		remove: async (req: Request, res: Response) => {
-			const { dietaryId } = req.body;
+			const { dietaryId } = req.params;
 			const { id: userId } = req.params;
 
 			try {
 				await UserProvider.AssociateWith.dietary.remove(
-					dietaryId,
+					parseInt(dietaryId, 10),
 					parseInt(userId)
 				);
 				ApiResponse.success(

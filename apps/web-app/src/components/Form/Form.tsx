@@ -1,5 +1,4 @@
-import { type TFormInputArray } from '@/models/UI'
-import { adaptDefaultValues } from './adapters'
+import { type TFormInputArray } from '@/components/Form/models'
 import { DeterminateInput } from './components'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,13 +11,19 @@ import Button from '@mui/joy/Button/'
 import CircularProgress from '@mui/joy/CircularProgress'
 import Sheet from '@mui/joy/Sheet/'
 import Stack from '@mui/joy/Stack'
+import { adaptDefaultValues } from './adapters'
 
 interface IStyles {
-  gridColumns: 1 | 2
+  gridColumns?: 1 | 2
+  flexWrap?: 'wrap' | 'nowrap'
+  display: 'flex' | 'grid'
   width: string
   border?: 'none'
   paddingY?: string
+  paddingX?: string
   marginY?: string
+  justifyContent?: 'center' | 'start'
+  gap?: number
 }
 
 interface IForm {
@@ -27,7 +32,9 @@ interface IForm {
   onSubmit: SubmitHandler<FieldValues>
   Header?: React.ReactNode
   Footer?: React.ReactNode
+  defaultValues?: object
   buttonSubmitName: string
+  buttonSubmitSide: 'default' | 'start' | 'end'
   styles: IStyles
   showResetButton?: boolean
 }
@@ -35,7 +42,7 @@ interface IForm {
 const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1em' }
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
-export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, showResetButton = true }) => {
+export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, showResetButton = true, buttonSubmitSide }) => {
   const {
     register,
     handleSubmit: defaultHandleSubmit,
@@ -46,14 +53,13 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
     formState: {
       errors,
       isSubmitting,
-      isValid,
       dirtyFields,
       isDirty
     }
   } = useForm<FieldValues>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues: adaptDefaultValues(inputsData),
+    defaultValues: adaptDefaultValues(defaultValues as object),
     resolver: zodResolver(schema, { async: true }, { mode: 'async' })
   })
 
@@ -69,7 +75,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
         mx: 'auto',
         my: styles.marginY ?? 4,
         py: styles.paddingY ?? 3,
-        px: 2,
+        px: styles.paddingX ?? 2,
         borderRadius: 'sm',
         boxShadow: styles.border ?? 'md',
         border: styles.border
@@ -84,7 +90,19 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
           {Header}
           <main>
             <Suspense>
-              <Box sx={[styles.gridColumns === 1 ? gridFormStyles1 : gridFormStyles2, { width: '100%' }]}>
+              <Box sx={
+                [
+                  {
+                    display: styles.display,
+                    width: '100%',
+                    flexWrap: styles.flexWrap,
+                    justifyContent: styles.justifyContent
+                  },
+                  styles.gridColumns === 1 && gridFormStyles1,
+                  styles.gridColumns === 2 && gridFormStyles2
+                ]
+              }
+              >
                 {inputsData.map((inputData, index) => (
                   <DeterminateInput
                     key={index}
@@ -93,7 +111,7 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
                       {
                         setValueAs: (value) => {
                           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                          return value === '' ? undefined : value
+                          return value !== '' ? value : undefined
                         },
                         onChange: (event: SyntheticEvent) => {
                           const value = (event.target as HTMLInputElement).value
@@ -116,7 +134,8 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
             <Stack
               direction='row'
               spacing={1}
-              marginTop={2}
+              marginTop={1}
+              justifyContent={buttonSubmitSide}
             >
               <Button
                 type='submit'
@@ -125,10 +144,9 @@ export const Form: React.FC<IForm> = ({ schema, inputsData, onSubmit, Header, Fo
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginTop: '1em',
-                  width: '100%',
-                  flexGrow: 1
+                  flexGrow: buttonSubmitSide === 'default' ? 1 : 0
                 }}
-                disabled={(!isValid || Object.values(errors).length > 0 || !isDirty) && true}
+                disabled={Object.values(errors).length > 0 || !isDirty}
               >
                 {isSubmitting
                   ? <CircularProgress variant="plain" />

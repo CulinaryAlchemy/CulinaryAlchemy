@@ -10,7 +10,7 @@ export const useUserApiData = (
 ) => {
   const { isLoading: isLoadingUser, data: userData, error } = useSWR<IApiResponse<IUserApiResponse>, AxiosError<IApiResponse<IUserApiResponse>>>(!isUserProfileOwner ? CBackRoutes.Dynamic.user.get(userName as string) : null)
   const { data: dataRole, isLoading: isLoadingRole } = useSWR<IApiResponse<IRoleApiResponse>, AxiosError<IApiResponse<IRoleApiResponse>>>(userData ? CBackRoutes.Dynamic.role.get(userData?.data?.roleId as number) : null)
-  const defaultUserData = { data: {} }
+  const defaultUserData: { data: unknown } = { data: null }
 
   if (userData?.data != null) {
     userData.data.role = dataRole?.data as IRole

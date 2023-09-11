@@ -1,10 +1,12 @@
-import { config } from '@/config'
+import { globalConfig } from '@/config'
+import { type IApiResponse } from '@/models/LOGIC'
+import { loggerInstance } from '@/services'
 import { checkServerStatus, getFromLocalStorage, getValidationError, toastUtils } from '@/utils'
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
 
 export const setAxiosInterceptors = () => {
   const getAccessToken = () => {
-    const accessToken = getFromLocalStorage(config.localStorage.auth.accessToken)
+    const accessToken = getFromLocalStorage(globalConfig.localStorage.auth.accessToken)
     return accessToken
   }
 
@@ -20,7 +22,9 @@ export const setAxiosInterceptors = () => {
   }
 
   const addSignal = (request: AxiosRequestConfig) => {
-    request.signal = AbortSignal.timeout(20000)
+    if (request.signal != null) return request
+
+    request.signal = AbortSignal.timeout(4000)
     return request
   }
 
@@ -32,28 +36,27 @@ export const setAxiosInterceptors = () => {
   }
 
   axios.interceptors.request.use((request: InternalAxiosRequestConfig) => {
-    console.log({ request })
     if (getAccessToken() == null || request.url == null || request.url.includes('static-file paths')) return request
 
     const newRequest = updateRequest(request) as InternalAxiosRequestConfig
 
-    console.log({ request, newRequest })
+    loggerInstance.log('Axios.interceptors.ts - requests', { request, newRequest })
 
     return newRequest
   })
 
   axios.interceptors.response.use(
-    (success: AxiosResponse) => {
-      toastUtils.success('OK')
-      console.log(success)
+    (success: AxiosResponse<IApiResponse<unknown>>) => {
+      loggerInstance.log('Axios.interceptors.ts - response', success)
+      toastUtils.success(getValidationError(success.data.message))
       return success
     },
-    (error: AxiosError) => {
-      console.error({ error })
+    (error: AxiosError<IApiResponse<unknown>>) => {
+      loggerInstance.err('Axios.interceptors.ts - response', error)
       if (error.code === 'ERR_NETWORK' || error.code === 'ERR_CANCELED') {
         checkServerStatus()
       } else {
-        const errorText = (error.response?.status != null) ? getValidationError(error.response?.status) : 'no found'
+        const errorText = getValidationError(error.response?.data?.message as string) ?? 'Error code not registered'
         toastUtils.error(errorText)
       }
       return Promise.reject(error)

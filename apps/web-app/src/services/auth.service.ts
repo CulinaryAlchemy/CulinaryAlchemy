@@ -10,3 +10,7 @@ export const registerUser = async (userToRegister: IUserRegister) => {
 export const signInUser = async (userToSignIn: IUserSignIn) => {
   return await axios.post<IApiResponse<IAuthApiResponse>>(CBackRoutes.Static.auth.signin, userToSignIn)
 }
+
+export const checkUserSession = async () => {
+  return await axios.get<IApiResponse<IAuthApiResponse>>(CBackRoutes.Static.auth.check.accessToken)
+}

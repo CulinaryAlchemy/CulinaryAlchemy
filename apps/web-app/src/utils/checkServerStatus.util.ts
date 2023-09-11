@@ -1,4 +1,5 @@
-import { config } from '@/config'
+import { globalConfig } from '@/config'
+import { loggerInstance } from '@/services'
 import { toastUtils } from '@/utils'
 
 let isRequestRunningForServerStatus = false
@@ -10,14 +11,14 @@ export const checkServerStatus = () => {
     const checkServer = () => {
       return new Promise((resolve) => {
         const fetchToServer = () => {
-          fetch(config.baseURL.backend)
+          fetch(globalConfig.baseURL.backend, { signal: AbortSignal.timeout(4000) })
             .then(() => {
               resolve('ok')
               clearInterval(timeout)
               isRequestRunningForServerStatus = false
             })
             .catch(() => {
-              console.log('the server is still offline')
+              loggerInstance.log('checkServerStatus.util.ts', 'the server is still offline')
             })
         }
 

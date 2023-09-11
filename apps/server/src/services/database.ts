@@ -1,11 +1,8 @@
 import { UserProvider } from '../providers/user';
 import { roleProvider } from '../providers/roles';
-import { getEnvironment } from '.';
 
-import { sequelize } from '../database/database.config';
+import { sequelize } from '../database/database.connection';
 
-// import { readFile } from 'node:fs/promises';
-// import path from 'node:path';
 import dietaryArray from '../database/seed-data/dietary.json';
 import { DietaryProvider } from '../providers/dietary';
 import { TransactionOptions } from 'sequelize';
@@ -41,7 +38,7 @@ const DatabaseService = {
 	},
 	sync: async (forceValue: boolean = false) => {
 		try {
-			const { ENVIRONMENT } = getEnvironment();
+			const ENVIRONMENT = process.env.ENVIRONMENT;
 			if (ENVIRONMENT === 'development') {
 				forceValue = true;
 			}
@@ -84,7 +81,7 @@ async function seedDbUsers() {
 			await UserProvider.seed({
 				username: 'culinaryalchemy',
 				email: 'culinaryalchemyofficial@gmail.com',
-				password: process.env.ADMIN_PASSWORD!,
+				password: process.env.ADMIN_PASSWORD || 'adminadminadmin',
 				role: 'admin',
 			});
 		}
@@ -98,7 +95,7 @@ async function seedDbUsers() {
 			await UserProvider.seed({
 				username: 'test123',
 				email: 'test@gmail.com',
-				password: 'password123123',
+				password: process.env.TEST_PASSWORD || 'testtesttest',
 			});
 		}
 
@@ -153,4 +150,4 @@ async function seedDbDietaries() {
 	}
 }
 
-export { sequelize, DatabaseService };
+export { DatabaseService };

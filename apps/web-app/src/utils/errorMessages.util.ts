@@ -1,17 +1,23 @@
-type THttpCodes = Record<number, string>
+type THttpCodes = Record<string, string>
 
-export const getValidationError = (code: number) => {
-  const httpCodes: THttpCodes = {
-    200: 'OK',
-    201: 'Created',
-    400: 'Bad request or User registered',
-    401: 'Session expired or Not authorized',
-    403: 'Wrong Email or Password',
-    404: 'Not Found or Bad credentials',
-    409: 'Username or email already exists',
-    500: 'Internal server error',
-    503: 'Sever is down. Wait 2 minutes. thanks <3'
+export const getValidationError = (code: string) => {
+  const CustomMessageCodes: THttpCodes = {
+    LOGIN_SUCCES: 'Login successful',
+    LOGIN_DENIED: 'Login denied',
+    REGISER_SUCCES: 'Registration successful',
+    REGISER_DENIED: 'Registration denied',
+    USER_FOUND: 'User found',
+    USER_NOT_FOUND: 'User not found',
+    USERS_NOT_FOUND: 'Users not found',
+    ROLE_NOT_FOUND: 'Role not found',
+    DATA_UPDATED: 'Data updated',
+    SESSION_EXPIRED: 'Session expired',
+    INTERNAL_SERVER_ERROR: 'Internal server error',
+    ACCOUNT_DESACTIVATED: 'Account deactivated',
+    SERVER_IS_ON: 'Server is online',
+    SERVER_IS_OFF: 'Server is offline',
+    TOKEN_NOT_FOUND: 'TOKEN_NOT_FOUND'
   }
 
-  return httpCodes[code]
+  return CustomMessageCodes[code]
 }

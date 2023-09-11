@@ -26,7 +26,7 @@ export const useAsyncValidations = ({ inputName, watchValue, setError, clearErro
   }, [watchValue, isDirty])
 
   useEffect(() => {
-    if (newValue == null) return
+    if (newValue == null || isDirty == null) return
 
     setLoading(true)
     // For best clean code mode this to zod validators and avoid the complexity

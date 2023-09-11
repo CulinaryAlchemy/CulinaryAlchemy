@@ -17,34 +17,58 @@ export const DropDownMenu = () => {
   const id = open ? 'admissions-popper' : undefined
 
   return (
-    <Box onMouseLeave={() => { setAnchorEl(null) }}>
-      <Stack direction='row' alignItems='center' sx={{ gap: '0.4em' }}>
-        <Stack sx={{ alignItems: 'start' }}>
-          <Typography level='body2'>
+    <Box
+      onMouseLeave={() => {
+        setAnchorEl(null)
+      }}
+    >
+      <Stack direction="row" alignItems="left" sx={{ gap: '0.4em' }}>
+        <Stack sx={{ alignItems: 'end' }}>
+          <Typography level="body1" sx={{ fontWeight: '600' }}>
+            {user?.name}
+          </Typography>
+          <Typography level="body2" sx={{ fontSize: '0.75em' }}>
             @{user?.username}
           </Typography>
         </Stack>
         <IconButton
-          color='neutral'
-          variant='outlined'
+          color="neutral"
+          variant="outlined"
           sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
           aria-haspopup
           aria-expanded={open ? 'true' : 'false'}
           role="menuitem"
-          onFocus={(event) => { setAnchorEl(event.currentTarget) }}
+          onFocus={(event) => {
+            setAnchorEl(event.currentTarget)
+          }}
           onMouseEnter={(event) => {
             setAnchorEl(event.currentTarget)
           }}
         >
           <Avatar
             sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
-            alt='user logo'
+            alt="user logo"
             src={user?.avatar as string}
           />
         </IconButton>
       </Stack>
-      <Box sx={{ position: 'relative', zIndex: '2000', '& > *': { backgroundColor: 'var(--joy-palette-background-body)', borderRadius: 'sm' } }}>
-        <Popper id={id} open={open} anchorEl={anchorEl} keepMounted disablePortal>
+      <Box
+        sx={{
+          position: 'relative',
+          zIndex: '2000',
+          '& > *': {
+            backgroundColor: 'var(--joy-palette-background-body)',
+            borderRadius: 'sm'
+          }
+        }}
+      >
+        <Popper
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          keepMounted
+          disablePortal
+        >
           <DropDownListOfItems />
         </Popper>
       </Box>

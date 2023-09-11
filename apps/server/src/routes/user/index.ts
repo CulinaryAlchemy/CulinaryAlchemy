@@ -1,18 +1,19 @@
 import express from 'express';
-import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
 import { body, param, query } from 'express-validator';
+import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
 
 // controllers
 import { Controllers } from '../../controllers';
 // validators
-import { idValidator } from '../../middlewares/validators';
+import { upload } from '../../config';
 import { authMiddleware } from '../../middlewares';
 import {
-	validateValidationChainResult,
+	idValidator,
 	validateEmail,
+	hasNoSpaces,
+	validateValidationChainResult,
 } from '../../middlewares/validators';
-import { upload } from '../../config/multer';
-import { validateDietary } from '../../middlewares/validators/dietary-validator';
+import { profileImage, headerImage } from '../../middlewares/image';
 
 export const userRouter = express.Router();
 
@@ -59,8 +60,8 @@ userRouter.get(
 
 userRouter.put(
 	'/:id',
-	passportMiddleware,
-	authMiddleware,
+	// passportMiddleware,
+	// authMiddleware,
 	idValidator,
 	upload.fields([
 		{ name: 'avatar', maxCount: 1 },
@@ -68,18 +69,17 @@ userRouter.put(
 		{ name: 'header', maxCount: 1 },
 		{ name: 'headerBlur', maxCount: 1 },
 	]),
+	profileImage,
+	headerImage,
 	body('username')
 		.optional()
 		.notEmpty()
 		.isString()
 		.isLowercase()
-		.isLength({ min: 1, max: 15 }),
-	body('name')
-		.optional()
-		.notEmpty()
-		.isString()
-		.isLowercase()
-		.isLength({ min: 1, max: 30 }),
+		.isLength({ min: 1, max: 15 })
+		.custom(hasNoSpaces)
+		.withMessage('usenrame cant have spaces'),
+	body('name').optional().notEmpty().isString().isLength({ min: 1, max: 30 }),
 	body('password')
 		.optional()
 		.notEmpty()
@@ -99,7 +99,7 @@ userRouter.put(
 		.optional()
 		.isEmail()
 		.notEmpty()
-		.custom(validateEmail)
+		.custom(validateEmail).withMessage('invalid email format')
 		.isLength({ min: 4, max: 320 }),
 	validateValidationChainResult,
 	Controllers.User.put.byId
@@ -116,20 +116,20 @@ userRouter.delete(
 
 // user dietaries
 userRouter.post(
-	'/:id/dietary', // the :id param is the user id
+	'/:id/dietary/:dietaryId', // the :id param is the user id
 	passportMiddleware,
 	authMiddleware,
-	idValidator, // the :id param is the user id
-	validateDietary, // dietary validator
+	idValidator,
+	param('dietaryId').notEmpty().isInt({ min: 1 }),
 	validateValidationChainResult,
 	Controllers.User.manageDietary.add
 );
 userRouter.delete(
-	'/:id/dietary', // the :id param is the user id
+	'/:id/dietary/:dietaryId', // the :id param is the user id
 	passportMiddleware,
 	authMiddleware,
-	idValidator, // the :id param is the user id
-	validateDietary, // dietary validator
+	idValidator,
+	param('dietaryId').notEmpty().isInt({ min: 1 }),
 	validateValidationChainResult,
 	Controllers.User.manageDietary.remove
 );

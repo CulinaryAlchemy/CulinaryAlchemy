@@ -4,7 +4,7 @@ import Input from '@mui/joy/Input'
 import { type UseFormRegisterReturn } from 'react-hook-form'
 
 import { Error } from '@/components/Form/components/'
-import { type TDropZoneForm } from '@/models/UI'
+import { type TDropZoneForm } from '@/components/Form/models'
 
 interface IProps {
   data: TDropZoneForm
@@ -14,7 +14,7 @@ interface IProps {
 
 const DropZone: React.FC<IProps> = ({ data, error, register }) => {
   return (
-    <FormControl key={data.name} sx={{ marginBottom: '0.5em' }}>
+    <FormControl sx={{ marginBottom: '0.5em' }}>
       <FormLabel>{data.label}</FormLabel>
       <Input
         type={data.type}

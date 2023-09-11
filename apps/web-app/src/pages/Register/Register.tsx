@@ -25,7 +25,12 @@ const Register = () => {
         onSubmit={handleOnSumbit}
         Header= {<RegisterHeader />}
         Footer={<RegisterFooter />}
-        styles={{ gridColumns: 1, width: '300px' }}
+        buttonSubmitSide='default'
+        styles={{
+          display: 'grid',
+          gridColumns: 1,
+          width: '300px'
+        }}
       />
     </GlobalLayout>
   )

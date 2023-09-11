@@ -1,10 +1,17 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { app } from '../app';
-import { getEnvironment, DatabaseService } from '../services/index';
+import { DatabaseService } from '../services';
+import { checkEnvironmentEnv } from '../config';
+
 (async () => {
+	// we check all the environment env vars are setted
+	checkEnvironmentEnv();
+
 	// PORT
-	const { PORT } = getEnvironment();
+	const PORT = process.env.PORT;
 	try {
-		console.log('before database sync');
 		await DatabaseService.start();
 		// start server
 		app.listen(PORT, () => {

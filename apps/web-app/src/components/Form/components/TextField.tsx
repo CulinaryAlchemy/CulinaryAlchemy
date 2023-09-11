@@ -4,7 +4,7 @@ import Input from '@mui/joy/Input'
 import { type UseFormRegisterReturn } from 'react-hook-form'
 
 import { Error } from '@/components/Form/components/'
-import { type TTextFieldForm } from '@/models/UI'
+import { type TTextFieldForm } from '@/components/Form/models/'
 
 interface IProps {
   data: TTextFieldForm
@@ -14,14 +14,14 @@ interface IProps {
 
 const TextField: React.FC<IProps> = ({ data, error, register }) => {
   return (
-    <FormControl key={data.name} sx={{ marginBottom: '0.5em' }}>
+    <FormControl sx={{ marginBottom: '0.5em' }}>
       <FormLabel>{data.label}</FormLabel>
       <Input
         sx={{
           Width: '1px',
           '--Input-minWidth': '1px'
         }}
-        defaultValue={data.defaultValue}
+        defaultValue={data.defaultValue as string}
         type={data.type}
         placeholder={data.placeholder}
         {...(error !== '' && { error: true })}

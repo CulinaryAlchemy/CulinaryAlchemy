@@ -1,4 +1,5 @@
-import { CInputUser, type TFormInputArray } from '@/models/UI'
+import { type TFormInputArray } from '@/components/Form/models'
+import { CInputUser } from '@/models/UI'
 import { getDynamicSchemas } from '@/utils'
 import { z as zValidator } from 'zod'
 
@@ -8,9 +9,9 @@ export const inputsArray: TFormInputArray = [
     validation: CInputUser.username.validation
   },
   {
-    formInputType: 'textFieldAsync',
     ...CInputUser.email,
-    validation: CInputUser.email.validation
+    // @ts-expect-error ts does not allow this by our types : (
+    async: true
   },
   CInputUser.password
 ]

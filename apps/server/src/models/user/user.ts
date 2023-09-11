@@ -1,8 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
-import { sequelize } from '../../services';
+import { sequelize } from '../../database/database.connection';
 
-import { UserInterface } from '../../interfaces/user.interface';
+import { UserInterface } from '../../interfaces';
 
 class User extends Model<UserInterface> implements UserInterface {
 	id!: number;
@@ -135,7 +135,7 @@ User.init(
 		},
 	},
 	{
-		sequelize: sequelize,
+		sequelize,
 		modelName: 'Users',
 	}
 );

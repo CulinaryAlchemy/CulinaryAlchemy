@@ -7,10 +7,9 @@ export function cleanObjectNullKeys(objectInput: Record<string, any>): object {
 			cleanObject[key] = objectInput[key];
 		}
 	});
-
 	return cleanObject;
 }
 
-export function getObjectKeys(obejctInput: Record<string, any>): number {
+export function getObjectLength(obejctInput: Record<string, any>): number {
 	return Object.keys(cleanObjectNullKeys(obejctInput)).length;
 }

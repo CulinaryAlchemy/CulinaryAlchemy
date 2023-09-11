@@ -1,5 +1,5 @@
 import { Error } from '@/components/Form/components/'
-import { type TTextAreaForm } from '@/models/UI'
+import { type TTextAreaForm } from '@/components/Form/models'
 import FormControl from '@mui/joy/FormControl'
 import FormLabel from '@mui/joy/FormLabel'
 import Textarea from '@mui/joy/Textarea'
@@ -13,9 +13,17 @@ interface IProps {
 
 const TextArea: React.FC<IProps> = ({ data, error, register }) => {
   return (
-    <FormControl>
+    <FormControl
+      sx={{
+        width: '100%'
+      }}
+    >
       <FormLabel>{data.label}</FormLabel>
-      <Textarea {...register} {...(error !== '' && { error: true })} placeholder={data.placeholder} minRows={4} />
+      <Textarea
+        {...register}
+        {...(error !== '' && { error: true })}
+        placeholder={data.placeholder} minRows={4}
+      />
       <Error text={error} />
     </FormControl>
   )

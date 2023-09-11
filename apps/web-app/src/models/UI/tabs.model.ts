@@ -2,7 +2,7 @@ export type TTabPageType = 'routing' | 'no-routing'
 
 export interface ITab {
   name: string
-  traduction: React.ReactNode
+  traduction?: React.ReactNode
   description?: string | React.ReactNode
   to?: string
   showTabHeader?: boolean

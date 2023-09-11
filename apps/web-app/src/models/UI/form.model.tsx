@@ -1,51 +1,6 @@
-import { type TUserKey } from '@/models/LOGIC'
+import { type TFormInputRecordObject } from '@/components/Form/models'
 import { Trans } from 'react-i18next'
-import { z as zValidator, type ZodType } from 'zod'
-
-export type TFormInputType = 'textField' | 'textFieldAsync' | 'textArea' | 'dropZone' | 'textFieldFetch'
-
-export type TOnInput = 'onChange' | 'onSubmit' | 'onBlur'
-
-interface IBaseInputForm {
-  name: TUserKey
-  label: JSX.Element
-  validation: ZodType
-  validationsOn?: TOnInput
-  defaultValue?: string
-}
-
-interface ITextFieldForm {
-  type: 'text' | 'password' | 'email' | 'date'
-  formInputType?: 'textField'
-  placeholder: string
-}
-
-interface ITextFieldAsyncForm {
-  type: 'text' | 'password' | 'email' | 'date'
-  formInputType?: 'textFieldAsync'
-  placeholder: string
-}
-
-export interface ITextAreaForm {
-  formInputType: 'textArea'
-  placeholder: string
-}
-
-interface IDropZoneForm {
-  formInputType: 'dropZone'
-  accept: string
-  type: 'file'
-}
-
-export type TInputForm = IBaseInputForm & (ITextFieldForm | ITextAreaForm | IDropZoneForm | ITextFieldAsyncForm)
-
-export type TTextFieldForm = IBaseInputForm & ITextFieldForm
-export type TTextAreaForm = IBaseInputForm & ITextAreaForm
-export type TDropZoneForm = IBaseInputForm & IDropZoneForm
-export type TTextFieldAsyncForm = IBaseInputForm & ITextFieldAsyncForm
-
-export type TFormInputRecordObject = Record<string, TInputForm>
-export type TFormInputArray = TInputForm[]
+import { z as zValidator } from 'zod'
 
 export const CInputUser: TFormInputRecordObject = {
   username: {
@@ -56,9 +11,24 @@ export const CInputUser: TFormInputRecordObject = {
       .string()
       .min(1)
       .max(15)
-      .refine((value) => value === value.toLowerCase(), { message: 'String must be in lower case' }),
+      .refine((value) => value === value.toLowerCase(), { message: 'Username must be in lower case' })
+      .refine((value) => value.split(' ').length === 1, { message: 'Username cannot contain spaces' }),
     placeholder: 'Joe Bass',
-    formInputType: 'textFieldAsync'
+    formInputType: 'textField',
+    async: true
+  },
+  name: {
+    name: 'name',
+    label: <Trans>name</Trans>,
+    type: 'text',
+    validation: zValidator
+      .string()
+      .min(1)
+      .max(30)
+      .refine((value) => value === value.toLowerCase(), { message: 'Name must be in lower case' }),
+    placeholder: 'Jowi',
+    formInputType: 'textField',
+    async: false
   },
   email: {
     name: 'email',
@@ -69,7 +39,9 @@ export const CInputUser: TFormInputRecordObject = {
       .min(4)
       .max(320)
       .email(),
-    placeholder: 'joe@gmail.com'
+    placeholder: 'joe@gmail.com',
+    formInputType: 'textField',
+    async: false
   },
   password: {
     name: 'password',
@@ -77,7 +49,8 @@ export const CInputUser: TFormInputRecordObject = {
     type: 'password',
     validation: zValidator.string().min(12).max(60),
     placeholder: 'wua-wau78',
-    formInputType: 'textField'
+    formInputType: 'textField',
+    async: false
   },
   description: {
     name: 'description',
@@ -92,7 +65,8 @@ export const CInputUser: TFormInputRecordObject = {
     type: 'text',
     validation: zValidator.string().min(1).max(30),
     placeholder: 'Toronto',
-    formInputType: 'textField'
+    formInputType: 'textField',
+    async: false
   },
   avatar: {
     name: 'avatar',

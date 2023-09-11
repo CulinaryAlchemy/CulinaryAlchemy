@@ -27,6 +27,10 @@ const getFrontendRoutes = () => {
       deactivate: {
         absolute: BaseRoutes.settings + '/deactivate',
         relative: 'deactivate'
+      },
+      dietaryPreferences: {
+        absolute: BaseRoutes.settings + '/dietaryPreferences',
+        relative: 'dietaryPreferences'
       }
     }
   }
@@ -44,7 +48,10 @@ const getBackendRoutes = () => {
   const Static = {
     auth: {
       signup: '/auth/sign-up',
-      signin: '/auth/sign-in'
+      signin: '/auth/sign-in',
+      check: {
+        accessToken: '/token/check'
+      }
     },
     user: {
       update: '/user/id',

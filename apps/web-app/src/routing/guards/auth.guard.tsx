@@ -1,4 +1,6 @@
+import { Loading } from '@/components'
 import { useGlobalAuth } from '@/hooks'
+import { MessageLayout } from '@/layouts'
 import { CFrontRoutes } from '@/routing'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
@@ -8,7 +10,7 @@ export const AuthGuard = () => {
   const { isAuth, isLoading } = useGlobalAuth()
 
   if (isLoading) {
-    return <h1>Loading </h1>
+    return <MessageLayout><Loading size='lg' /></MessageLayout>
   }
 
   if (isAuth && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {

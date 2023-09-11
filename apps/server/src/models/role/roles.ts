@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { RoleInterface } from '../../interfaces';
-import { sequelize } from '../../services';
+import { sequelize } from '../../database/database.connection';
 
 class Role extends Model<RoleInterface> implements RoleInterface {
 	id!: number;
@@ -24,7 +24,7 @@ Role.init(
 		},
 	},
 	{
-		sequelize: sequelize,
+		sequelize,
 		timestamps: false,
 		modelName: 'Roles',
 	}

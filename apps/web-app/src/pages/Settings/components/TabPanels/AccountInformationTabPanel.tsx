@@ -1,7 +1,7 @@
-import { DropZone, Form, TabPanel } from '@/components'
+import { DropZone, Form, Image, TabPanel } from '@/components'
 import { useGlobalAuth, useTranslation, useUserMethods } from '@/hooks'
 import { type IUser, type IUserUpdate } from '@/models/LOGIC'
-import { CTabsDataAccountTabPanel, inputsAccountTabSchema, selectedInputsArray } from '@/pages/Settings/models/UI'
+import { CTabsDataAccountTabPanel, accountInformationInputsAccountTabSchema, accountInformationSelectedInputsArray } from '@/pages/Settings/models/UI'
 import { toastUtils } from '@/utils'
 import Box from '@mui/joy/Box'
 import { type SubmitHandler } from 'react-hook-form'
@@ -29,12 +29,12 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
     if (areValuesNull) {
       toastUtils.error('All fields are empty')
     } else {
-      updateUser((user as IUser).id, data)
+      void updateUser((user as IUser).id, data)
     }
   }
 
-  const handleOnImageSuccess = (userKey: 'avatar' | 'header') => (file: File) => {
-    updateUser(user?.id as number, { [userKey]: file })
+  const handleOnImageSuccess = (userKey: 'avatar' | 'header') => (imageFile: File, imageBlurFile: File) => {
+    return updateUser(user?.id as number, { [userKey]: imageFile, [userKey + 'Blur']: imageBlurFile })
   }
 
   return (
@@ -67,8 +67,15 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
               backdropFilter: 'blur(0.5px)',
               backgroundColor: 'rgba(1,1,1,0.5)'
             }}
+            width={600}
+            height={160}
           />
-          <img src={user?.header as unknown as string} alt="wallpaper image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+          <Image
+            src={user?.header as unknown as string}
+            srcBlurPlaceholder={user?.headerBlur as unknown as string}
+            alt="wallpaper image"
+            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+          />
         </Box>
         <Box
           sx={{
@@ -80,7 +87,7 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
             backgroundColor: 'black',
             marginTop: '-3.5em !important',
             overflow: 'hidden',
-            zIndex: '10'
+            zIndex: '100'
           }}>
           <DropZone
             onSuccess={handleOnImageSuccess('avatar')}
@@ -90,17 +97,27 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
               height: '100%',
               backgroundColor: 'rgba(1,1,1,0.5)'
             }}
+            width={129.5}
+            height={129.5}
           />
-          <img src={user?.avatar as unknown as string} alt="logo image" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+          <Image
+            src={user?.avatar as unknown as string}
+            srcBlurPlaceholder={user?.avatarBlur as unknown as string}
+            alt="logo image"
+            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+          />
         </Box>
         <Form
           buttonSubmitName={t('save')}
           onSubmit={handleOnSubmit}
-          inputsData={selectedInputsArray}
-          schema={inputsAccountTabSchema}
+          inputsData={accountInformationSelectedInputsArray}
+          schema={accountInformationInputsAccountTabSchema}
+          defaultValues={user}
+          buttonSubmitSide='default'
           styles={{
             gridColumns: 1,
             width: '100%',
+            display: 'grid',
             border: 'none',
             marginY: '1em',
             paddingY: '0px'
