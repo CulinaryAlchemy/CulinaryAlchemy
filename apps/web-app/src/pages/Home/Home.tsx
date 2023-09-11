@@ -1,12 +1,15 @@
-import { GlobalLayout } from '@/layouts'
+import { TabsPage } from '@/components'
+import { DefaultLayout, GlobalLayout } from '@/layouts'
+import { lazy } from 'react'
 import { metadata } from './config'
+import { CHomeTabPanelNames } from './models'
 
-/* const RecipesTabPanel = lazy(() => import('@/pages/Home/components/TabPanels/RecipesTabPanel')) */
+const RecipesTabPanel = lazy(() => import('@/pages/Home/components/TabPanels/RecipesTabPanel'))
 
 const Index = () => {
   return (
     <GlobalLayout newTitle={metadata.title}>
-      {/* <DefaultLayout>
+      <DefaultLayout>
         <TabsPage
           defaultTab={CHomeTabPanelNames.userFeed.name}
           type='no-routing'
@@ -27,7 +30,7 @@ const Index = () => {
             }
           }}
         />
-      </DefaultLayout> */}
+      </DefaultLayout>
     </GlobalLayout>
   )
 }

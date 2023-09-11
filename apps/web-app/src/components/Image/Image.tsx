@@ -7,7 +7,7 @@ interface IProps {
   alt: string
   className?: string
   src: string
-  srcBlurPlaceholder: string
+  srcBlurPlaceholder?: string
   height?: string
   width?: string
   style?: CSSProperties
@@ -22,7 +22,7 @@ export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, ...props }) => {
         <LazyLoadImage
             effect="blur"
             {...props}
-            placeholderSrc={srcBlurPlaceholder}
+            placeholderSrc={srcBlurPlaceholder ?? props.src}
             threshold={0}
             visibleByDefault={imageCacheManagerInstance.shouldLoadWithCache(props.src)}
         />

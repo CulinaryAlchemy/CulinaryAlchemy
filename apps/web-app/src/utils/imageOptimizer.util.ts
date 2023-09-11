@@ -39,7 +39,7 @@ export class ImageOptimizerManager {
           return
         }
         resolve(imageBlob)
-      }, 'image/webp', 0.9)
+      }, 'image/webp', 0.7)
     })
   }
 
