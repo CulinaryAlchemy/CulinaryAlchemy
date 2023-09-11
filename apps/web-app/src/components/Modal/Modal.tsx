@@ -48,19 +48,39 @@ const Modal: React.FC<IProps> = ({ showDividers = true, title, text, styles, onA
               maxWidth: styles.maxWidth,
               width: styles.width,
               maxHeight: styles.maxHeight,
+              padding: 0,
+              paddingBlockEnd: '1.25em',
+              paddingInline: '1.25em',
               overflowY: 'auto'
             }}
           >
-            <header>
-              <Stack direction='row' sx={{ gap: '0.4em' }}>
+            <header style={{ position: 'sticky', top: 0, zIndex: 400, backgroundColor: 'inherit' }}>
+              <Stack
+                sx={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '0.4em',
+                  backgroundColor: 'inherit',
+                  padding: '0',
+                  paddingBlock: '1em 0.5em',
+                  position: 'relative'
+                }}
+              >
                 <Typography
                   id="alert-dialog-modal-title"
                   level="h2"
-                  sx={{ texWrap: 'balance' }}
+                  sx={{ texWrap: 'balance', margin: 0 }}
                 >
                   {title}
                 </Typography>
-                <ModalClose />
+                <ModalClose
+                  sx={{
+                    position: 'relative',
+                    top: 0,
+                    right: 0
+                  }}
+                />
               </Stack>
             </header>
             {showDividers && <Divider />}
