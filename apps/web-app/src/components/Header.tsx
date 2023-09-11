@@ -13,7 +13,16 @@ export const Header = () => {
 
   return (
     <header>
-      <Stack sx={{ position: 'relative' }} padding='1em' direction='row' justifyContent='center' alignItems='center'>
+      <Stack sx={{
+        position: 'relative',
+        flexDirection: 'row',
+        justifyContent: {
+          sm: 'center',
+          xs: 'start'
+        },
+        alignItems: 'center',
+        padding: '1em'
+      }}>
         <Link to={CFrontRoutes.Static.index} style={{ color: 'inherit' }}>
           <RestaurantRounded sx={{ fontSize: '2.7em' }} />
         </Link>
