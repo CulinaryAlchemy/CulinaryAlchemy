@@ -27,10 +27,10 @@ export const Header = () => {
       }}>
         {
           isAuth
-            ? <RestaurantRounded sx={{ fontSize: '2.7em' }} />
-            : <AppLink to={CFrontRoutes.Static.home} style={{ color: 'inherit' }}>
+            ? <AppLink to={CFrontRoutes.Static.home} style={{ color: 'inherit' }}>
               <RestaurantRounded sx={{ fontSize: '2.7em' }} />
             </AppLink>
+            : <RestaurantRounded sx={{ fontSize: '2.7em' }} />
         }
 
         <Box sx={{ position: 'absolute', top: 0, right: 0, padding: '1em' }}>
