@@ -21,5 +21,5 @@ export const useCarousel = ({ imageSources }: IParams) => {
     setActualImage(imageSources[imageIndex.current])
   }
 
-  return { actualImageSource, nextImage, previousImage }
+  return { actualImageSource, nextImage, previousImage, imageIndex: imageIndex.current }
 }

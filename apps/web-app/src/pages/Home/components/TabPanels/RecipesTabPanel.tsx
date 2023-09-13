@@ -16,12 +16,24 @@ const RecipesTabPanel = () => {
                 schema={homeInputsSchema}
             />
             <Sheet sx={{ maxWidth: '37.5em', margin: 'auto' }}>
-                <Recipe />
-                <Recipe />
-                <Recipe />
-                <Recipe />
-                <Recipe />
-                <Recipe />
+                {
+                    Array(5).fill(null).map(() => (
+                        <Recipe
+                            styles={{
+                              content: {
+                                flexDirection: 'column',
+                                gap: '1em',
+                                carrousel: {
+                                  maxWidth: '100%'
+                                },
+                                informationSection: {
+                                  paddingInline: '1em'
+                                }
+                              }
+                            }}
+                        />
+                    ))
+                }
             </Sheet>
         </TabPanel>
   )
