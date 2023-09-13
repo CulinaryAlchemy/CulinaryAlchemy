@@ -1,39 +1,20 @@
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import ReplayIcon from '@mui/icons-material/Replay'
-import Button from '@mui/joy/Button'
 import IconButton from '@mui/joy/IconButton'
 import Sheet from '@mui/joy/Sheet'
 import Skeleton from '@mui/joy/Skeleton'
 import Stack from '@mui/joy/Stack'
-import Typography from '@mui/joy/Typography'
-import React, { lazy, useState } from 'react'
+import React, { useState } from 'react'
+import { PostFooter, PostHeader } from './components'
+
+interface IStyles {
+  border?: 'none'
+  gap?: string
+}
 
 interface IProps {
   children: React.ReactNode
-  styles: 'tweet' | 'recipe'
+  styles?: IStyles
 }
-
-const postData = {
-  buttons: [
-    {
-      name: 'comments',
-      icon: <ChatBubbleOutlineIcon />
-    },
-    {
-      name: 'retweet',
-      icon: <ReplayIcon />
-    },
-    {
-      name: 'likes',
-      icon: <FavoriteBorder />
-    }
-  ]
-}
-
-const PostHeaderForTweet = lazy(() => import('@/layouts/PostLayout/components/PostHeaderForTweet'))
-const PostHeaderForRecipe = lazy(() => import('@/layouts/PostLayout/components/PostHeaderForRecipe'))
 
 export const PostLayout: React.FC<IProps> = ({ children, styles }) => {
   const [isLoading] = useState(false)
@@ -48,7 +29,8 @@ export const PostLayout: React.FC<IProps> = ({ children, styles }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '0.5em',
+        gap: styles?.gap ?? '0.5em',
+        border: styles?.border,
         borderRight: 'none',
         borderLeft: 'none',
         paddingBottom: '0.2em',
@@ -57,43 +39,17 @@ export const PostLayout: React.FC<IProps> = ({ children, styles }) => {
         paddingBlock: '1em'
       }}
     >
-      <header>
-        <Stack sx={{
-          flexDirection: 'row',
-          gap: '1em',
-          justifyContent: 'space-between',
-          paddingInline: '1em'
-        }}
-        >
-          {styles === 'tweet' && <PostHeaderForTweet />}
-          {styles === 'recipe' && <PostHeaderForRecipe />}
-          <IconButton variant='plain' size="sm" color='neutral' sx={{ width: '1.171875em', height: '1.171875em' }}><MoreVertIcon /></IconButton>
-        </Stack>
-      </header>
+      <PostHeader />
       <main>
-        <Stack sx={{ width: '100%' }}>
+        <Stack
+          sx={{
+            width: '100%'
+          }}
+        >
           {children}
         </Stack>
       </main>
-      <footer>
-        <Stack sx={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginTop: '1em',
-          paddingInline: '1em'
-        }}
-        >
-          {
-            postData.buttons.map((button) => (
-              <Button key={button.name} size='sm' variant='plain' color='neutral' startDecorator={
-                button.icon
-              }>
-                <Typography level='body2'>3</Typography>
-              </Button>
-            ))
-          }
-        </Stack>
-      </footer>
+      <PostFooter />
     </Sheet>
   )
 }

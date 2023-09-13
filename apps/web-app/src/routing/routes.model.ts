@@ -1,43 +1,49 @@
 const getFrontendRoutes = () => {
   const BaseRoutes = {
     user: '/',
-    settings: '/settings'
+    settings: '/settings/',
+    recipe: '/recipe/'
   } as const
 
   const Static = {
-    index: '/',
+    base: '/',
+    index: '/home',
     auth: {
       login: '/login',
       register: '/register'
     },
     user: BaseRoutes.user + ':userName',
+    recipe: BaseRoutes.recipe + ':recipeId',
     notFound: '*',
     settings: {
       home: {
         absolute: BaseRoutes.settings
       },
       account: {
-        absolute: BaseRoutes.settings + '/account',
+        absolute: BaseRoutes.settings + 'account',
         relative: 'account'
       },
       information: {
-        absolute: BaseRoutes.settings + '/information',
+        absolute: BaseRoutes.settings + 'information',
         relative: 'information'
       },
       deactivate: {
-        absolute: BaseRoutes.settings + '/deactivate',
+        absolute: BaseRoutes.settings + 'deactivate',
         relative: 'deactivate'
       },
       dietaryPreferences: {
-        absolute: BaseRoutes.settings + '/dietaryPreferences',
+        absolute: BaseRoutes.settings + 'dietaryPreferences',
         relative: 'dietaryPreferences'
       }
     }
   }
 
   const Dynamic = {
-    user (id: string) {
-      return `${BaseRoutes.user}${id}`
+    user (userId: string) {
+      return `${BaseRoutes.user}${userId}`
+    },
+    recipe (recipeId: string) {
+      return `${BaseRoutes.recipe}${recipeId}`
     }
   } as const
 
