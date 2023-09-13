@@ -9,7 +9,7 @@ import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
 import { useState } from 'react'
 
-export const DropDownMenu = () => {
+const DropDownMenu = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
   const { user } = useGlobalAuth()
 
@@ -75,3 +75,5 @@ export const DropDownMenu = () => {
     </Box>
   )
 }
+
+export default DropDownMenu

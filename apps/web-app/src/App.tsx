@@ -3,11 +3,10 @@ import { CSWRConfig, setDefaultAxiosConfig } from '@/config'
 import { AuthContextProvider } from '@/context'
 import { Routing } from '@/routing'
 
+import '@/config/i18next/i18next.config'
 import '@fontsource/public-sans'
 import CssBaseline from '@mui/joy/CssBaseline'
 import { CssVarsProvider } from '@mui/joy/styles'
-
-import '@/config/i18next/i18next.config'
 import { Toaster } from 'sonner'
 import { SWRConfig } from 'swr'
 
@@ -27,6 +26,7 @@ function App () {
             theme='light'
             visibleToasts={3}
           />
+          <div id='portalElement' />
           <TestServerStatus />
         </SWRConfig>
       </AuthContextProvider>

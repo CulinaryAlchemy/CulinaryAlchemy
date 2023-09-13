@@ -7,7 +7,7 @@ const getFrontendRoutes = () => {
 
   const Static = {
     base: '/',
-    index: '/home',
+    home: '/home',
     auth: {
       login: '/login',
       register: '/register'

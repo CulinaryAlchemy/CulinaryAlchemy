@@ -19,8 +19,8 @@ export const Routing = () => {
       <Suspense>
         <Routes>
           <Route element={<AuthGuard />}>
-            <Route path={CFrontRoutes.Static.base} element={<Navigate to={CFrontRoutes.Static.index} />} />
-            <Route path={CFrontRoutes.Static.index} element={<HomePage />} />
+            <Route path={CFrontRoutes.Static.base} element={<Navigate to={CFrontRoutes.Static.home} />} />
+            <Route path={CFrontRoutes.Static.home} element={<HomePage />} />
             <Route path={CFrontRoutes.Static.auth.register} element={<RegisterPage />} />
             <Route path={CFrontRoutes.Static.auth.login} element={<LoginPage />} />
             <Route path={CFrontRoutes.Static.settings.home.absolute + '/*'} element={<SettingsPage />} />

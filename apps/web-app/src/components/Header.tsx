@@ -2,10 +2,12 @@ import RestaurantRounded from '@mui/icons-material/RestaurantRounded'
 import Box from '@mui/joy/Box'
 import Stack from '@mui/joy/Stack'
 
-import { AppLink, DropDownMenu } from '@/components'
 import { useGlobalAuth, useTranslation } from '@/hooks'
 import { CFrontRoutes } from '@/routing'
-import { Link } from 'react-router-dom'
+import { lazy } from 'react'
+
+const DropDownMenu = lazy(() => import('@/components/DropDownMenu/DropDownMenu'))
+const AppLink = lazy(() => import('@/components/AppLink').then((module) => ({ default: module.AppLink })))
 
 export const Header = () => {
   const { isAuth } = useGlobalAuth()
@@ -23,9 +25,14 @@ export const Header = () => {
         alignItems: 'center',
         padding: '1em'
       }}>
-        <Link to={CFrontRoutes.Static.index} style={{ color: 'inherit' }}>
-          <RestaurantRounded sx={{ fontSize: '2.7em' }} />
-        </Link>
+        {
+          isAuth
+            ? <RestaurantRounded sx={{ fontSize: '2.7em' }} />
+            : <AppLink to={CFrontRoutes.Static.home} style={{ color: 'inherit' }}>
+              <RestaurantRounded sx={{ fontSize: '2.7em' }} />
+            </AppLink>
+        }
+
         <Box sx={{ position: 'absolute', top: 0, right: 0, padding: '1em' }}>
           {
             isAuth
