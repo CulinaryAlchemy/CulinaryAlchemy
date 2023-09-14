@@ -9,7 +9,7 @@ import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
 import { useState } from 'react'
 
-export const DropDownMenu = () => {
+const DropDownMenu = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
   const { user } = useGlobalAuth()
 
@@ -25,7 +25,7 @@ export const DropDownMenu = () => {
       <Stack direction="row" alignItems="left" sx={{ gap: '0.4em' }}>
         <Stack sx={{ alignItems: 'end' }}>
           <Typography level="body1" sx={{ fontWeight: '600' }}>
-            {user?.name}
+            {user?.name ?? user?.username}
           </Typography>
           <Typography level="body2" sx={{ fontSize: '0.75em' }}>
             @{user?.username}
@@ -75,3 +75,5 @@ export const DropDownMenu = () => {
     </Box>
   )
 }
+
+export default DropDownMenu

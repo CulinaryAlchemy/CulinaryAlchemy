@@ -3,12 +3,13 @@ import IconButton from '@mui/joy/IconButton'
 import Sheet from '@mui/joy/Sheet'
 import Skeleton from '@mui/joy/Skeleton'
 import Stack from '@mui/joy/Stack'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { PostFooter, PostHeader } from './components'
 
 interface IStyles {
   border?: 'none'
   gap?: string
+  cursor?: 'pointer'
 }
 
 interface IProps {
@@ -34,7 +35,7 @@ export const PostLayout: React.FC<IProps> = ({ children, styles }) => {
         borderRight: 'none',
         borderLeft: 'none',
         paddingBottom: '0.2em',
-        cursor: 'pointer',
+        cursor: styles?.cursor,
         width: '100%',
         paddingBlock: '1em'
       }}

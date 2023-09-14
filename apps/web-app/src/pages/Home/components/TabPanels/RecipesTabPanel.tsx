@@ -17,9 +17,12 @@ const RecipesTabPanel = () => {
             />
             <Sheet sx={{ maxWidth: '37.5em', margin: 'auto' }}>
                 {
-                    Array(5).fill(null).map(() => (
+                    Array(5).fill(null).map((_, index) => (
                         <Recipe
+                            key={String(index)}
+                            showStartCookingButton={false}
                             styles={{
+                              cursor: 'pointer',
                               content: {
                                 flexDirection: 'column',
                                 gap: '1em',

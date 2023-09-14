@@ -14,21 +14,23 @@ interface IStyles {
   buttonColor?: 'neutral' | 'danger'
   width?: string
   maxHeight?: string
+  layout?: 'fullscreen'
 }
 
 interface IProps {
   open: boolean
-  title: string
-  styles: IStyles
+  title?: string
+  styles?: IStyles
   handleOnClickModal: () => void
   children?: React.ReactNode
   buttonAcceptText?: string
   text?: string
   onAccept?: () => unknown
   showDividers?: boolean
+  header?: React.ReactNode
 }
 
-const Modal: React.FC<IProps> = ({ showDividers = true, title, text, styles, onAccept, buttonAcceptText, open, handleOnClickModal, children }) => {
+const Modal: React.FC<IProps> = ({ header, showDividers = true, title, text, styles, onAccept, buttonAcceptText, open, handleOnClickModal, children }) => {
   const handleOnAccept = () => {
     handleOnClickModal()
     if (onAccept != null) onAccept()
@@ -38,53 +40,63 @@ const Modal: React.FC<IProps> = ({ showDividers = true, title, text, styles, onA
     <Suspense>
       {
         open &&
-        <DefaultModal open={open} onClose={handleOnClickModal}>
-          <ModalDialog
-            variant="outlined"
-            role="alertdialog"
-            aria-labelledby="alert-dialog-modal-title"
-            aria-describedby="alert-dialog-modal-description"
-            sx={{
-              maxWidth: styles.maxWidth,
-              width: styles.width,
-              maxHeight: styles.maxHeight,
-              padding: 0,
-              paddingBlockEnd: '1.25em',
-              paddingInline: '1.25em',
-              overflowY: 'auto'
-            }}
+          <DefaultModal
+            open={open}
+            onClose={handleOnClickModal}
           >
-            <header style={{ position: 'sticky', top: 0, zIndex: 400, backgroundColor: 'inherit' }}>
-              <Stack
-                sx={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '0.4em',
-                  backgroundColor: 'inherit',
-                  padding: '0',
-                  paddingBlock: '1em 0.5em',
-                  position: 'relative'
-                }}
-              >
-                <Typography
-                  id="alert-dialog-modal-title"
-                  level="h2"
-                  sx={{ texWrap: 'balance', margin: 0 }}
-                >
-                  {title}
-                </Typography>
-                <ModalClose
+            <ModalDialog
+              layout={styles?.layout ?? 'center'}
+              variant="outlined"
+              role="alertdialog"
+              aria-labelledby="alert-dialog-modal-title"
+              aria-describedby="alert-dialog-modal-description"
+              sx={{
+                maxWidth: styles?.maxWidth,
+                width: styles?.width,
+                maxHeight: styles?.maxHeight,
+                padding: 0,
+                paddingBlockEnd: '1.25em',
+                paddingInline: '1.25em',
+                overflowY: 'auto'
+              }}
+            >
+              <header style={{ position: 'sticky', top: 0, zIndex: 400, backgroundColor: 'inherit' }}>
+                <Stack
                   sx={{
-                    position: 'relative',
-                    top: 0,
-                    right: 0
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '0.4em',
+                    backgroundColor: 'inherit',
+                    padding: '0',
+                    paddingBlock: '1em 0.5em',
+                    position: 'relative'
                   }}
-                />
-              </Stack>
-            </header>
-            {showDividers && <Divider />}
-            <main>
+                >
+                  {
+                    header == null
+                      ? (
+                          <Typography
+                            id="alert-dialog-modal-title"
+                            level="h2"
+                            sx={{ texWrap: 'balance', margin: 0 }}
+                          >
+                            {title}
+                          </Typography>
+                        )
+                      : header
+                  }
+                  <ModalClose
+                    sx={{
+                      position: 'relative',
+                      top: 0,
+                      right: 0
+                    }}
+                  />
+                </Stack>
+              </header>
+              {showDividers && <Divider />}
+              <main>
                 {
                   text != null &&
                   <Typography
@@ -95,19 +107,19 @@ const Modal: React.FC<IProps> = ({ showDividers = true, title, text, styles, onA
                   </Typography>
                 }
                 {children}
-            </main>
-            <footer>
-              {
-                buttonAcceptText != null &&
-                <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', pt: 2 }}>
-                  <Button variant="outlined" color={styles.buttonColor} onClick={handleOnAccept}>
-                    {buttonAcceptText ?? 'OK'}
-                  </Button>
-                </Box>
-              }
-            </footer>
-          </ModalDialog>
-        </DefaultModal>
+              </main>
+              <footer>
+                {
+                  buttonAcceptText != null &&
+                  <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', pt: 2 }}>
+                    <Button variant="outlined" color={styles?.buttonColor} onClick={handleOnAccept}>
+                      {buttonAcceptText ?? 'OK'}
+                    </Button>
+                  </Box>
+                }
+              </footer>
+            </ModalDialog>
+          </DefaultModal>
       }
     </Suspense>
   )

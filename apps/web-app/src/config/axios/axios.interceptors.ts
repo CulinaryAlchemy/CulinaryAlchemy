@@ -36,7 +36,7 @@ export const setAxiosInterceptors = () => {
   }
 
   axios.interceptors.request.use((request: InternalAxiosRequestConfig) => {
-    if (getAccessToken() == null || request.url == null || request.url.includes('static-file paths')) return request
+    if (request.url == null || request.url.includes('static-file paths')) return request
 
     const newRequest = updateRequest(request) as InternalAxiosRequestConfig
 

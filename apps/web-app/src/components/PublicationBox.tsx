@@ -3,7 +3,6 @@ import { type TFormInputArray } from '@/components/Form/models'
 import { useGlobalAuth, useTranslation } from '@/hooks'
 import Box from '@mui/joy/Box'
 import Sheet from '@mui/joy/Sheet'
-import React from 'react'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
 

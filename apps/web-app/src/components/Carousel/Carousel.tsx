@@ -82,7 +82,9 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
         src={actualImageSource}
         alt='previous image'
         style={{
-          height: '100%'
+          height: '100%',
+          width: '100%',
+          objectFit: 'cover'
         }}
       />
     </Box>

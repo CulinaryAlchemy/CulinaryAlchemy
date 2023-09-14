@@ -56,18 +56,21 @@ const DeleteAccountTabPanel = () => {
                     </Stack>
                 </footer>
             </Box>
-            <Modal
-                open={isModalOpen}
-                handleOnClickModal={handleOnClickModal}
-                onAccept={handleOnClickAccept}
-                title={t('are you sure?')}
-                text={t('deleAccountModal message')}
-                styles={{
-                  maxWidth: '25em',
-                  buttonColor: 'danger'
-                }}
-                buttonAcceptText={t('delete account')}
-            />
+            {
+                isModalOpen &&
+                <Modal
+                    open={isModalOpen}
+                    handleOnClickModal={handleOnClickModal}
+                    onAccept={handleOnClickAccept}
+                    title={t('are you sure?')}
+                    text={t('deleAccountModal message')}
+                    styles={{
+                      maxWidth: '25em',
+                      buttonColor: 'danger'
+                    }}
+                    buttonAcceptText={t('delete account')}
+                />
+            }
         </TabPanel>
   )
 }

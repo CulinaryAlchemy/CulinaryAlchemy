@@ -14,7 +14,7 @@ export const AuthGuard = () => {
   }
 
   if (isAuth && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {
-    return <Navigate to={CFrontRoutes.Static.index} />
+    return <Navigate to={CFrontRoutes.Static.home} />
   }
 
   if (isAuth) {

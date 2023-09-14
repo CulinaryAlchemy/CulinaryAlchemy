@@ -20,7 +20,8 @@ export const toastUtils = {
       success: () => {
         return successMessage
       },
-      error: errorMessage
+      error: errorMessage,
+      duration: 980000
     })
   },
   action (message: string, action: IActionToast) {
