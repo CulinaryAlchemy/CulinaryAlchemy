@@ -25,7 +25,7 @@ const DropDownMenu = () => {
       <Stack direction="row" alignItems="left" sx={{ gap: '0.4em' }}>
         <Stack sx={{ alignItems: 'end' }}>
           <Typography level="body1" sx={{ fontWeight: '600' }}>
-            {user?.name}
+            {user?.name ?? user?.username}
           </Typography>
           <Typography level="body2" sx={{ fontSize: '0.75em' }}>
             @{user?.username}

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 const RecipePage = () => {
   const { recipeId } = useParams()
-  console.log(recipeId)
+
   return (
     <GlobalLayout newTitle={recipeId as string}>
       <DefaultLayout
@@ -13,6 +13,8 @@ const RecipePage = () => {
         }}
       >
         <Recipe
+          recipeId={recipeId as string}
+          showStartCookingButton
           styles={{
             border: 'none',
             gap: '0.5em',

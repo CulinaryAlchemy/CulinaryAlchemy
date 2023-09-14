@@ -2,7 +2,8 @@ const getFrontendRoutes = () => {
   const BaseRoutes = {
     user: '/',
     settings: '/settings/',
-    recipe: '/recipe/'
+    recipe: '/recipe/',
+    cooking: '/cooking/'
   } as const
 
   const Static = {
@@ -14,6 +15,7 @@ const getFrontendRoutes = () => {
     },
     user: BaseRoutes.user + ':userName',
     recipe: BaseRoutes.recipe + ':recipeId',
+    cooking: BaseRoutes.cooking + ':recipeId',
     notFound: '*',
     settings: {
       home: {
@@ -44,6 +46,9 @@ const getFrontendRoutes = () => {
     },
     recipe (recipeId: string) {
       return `${BaseRoutes.recipe}${recipeId}`
+    },
+    cooking (recipeId: string) {
+      return `${BaseRoutes.cooking}${recipeId}`
     }
   } as const
 

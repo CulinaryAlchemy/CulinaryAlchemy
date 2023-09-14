@@ -32,14 +32,11 @@ export const setAxiosInterceptors = () => {
     updateHeaders(request)
     addSignal(request)
 
-    console.log({ request })
-
     return request
   }
 
   axios.interceptors.request.use((request: InternalAxiosRequestConfig) => {
     if (request.url == null || request.url.includes('static-file paths')) return request
-    console.log('holaaaaaaaaa')
 
     const newRequest = updateRequest(request) as InternalAxiosRequestConfig
 

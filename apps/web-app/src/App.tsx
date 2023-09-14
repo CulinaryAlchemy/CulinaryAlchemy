@@ -26,7 +26,6 @@ function App () {
             theme='light'
             visibleToasts={3}
           />
-          <div id='portalElement' />
           <TestServerStatus />
         </SWRConfig>
       </AuthContextProvider>

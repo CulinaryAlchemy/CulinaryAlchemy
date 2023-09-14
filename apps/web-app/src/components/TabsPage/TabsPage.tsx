@@ -4,7 +4,7 @@ import Box from '@mui/joy/Box'
 import { tabClasses } from '@mui/joy/Tab'
 import TabList from '@mui/joy/TabList'
 import Tabs from '@mui/joy/Tabs'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 interface IStyles {
   background: 'transparent' | 'theme'
