@@ -1,15 +1,16 @@
 import { Options } from 'sequelize';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let sslConfig: any = { require: true };
-if (process.env.ENVIRONMENT === 'development') {
-	sslConfig = { require: true, rejectUnauthorized: false };
-}
+// let sslConfig: any = { require: true, rejectUnauthorized: true };
+// if (process.env.ENVIRONMENT === 'development') {
+// 	sslConfig = { require: false, rejectUnauthorized: false };
+// }
 
 const dbConfig: Options = {
 	dialect: 'postgres',
+	ssl: false,
 	dialectOptions: {
-		ssl: { ...sslConfig },
+		// ssl: { ...sslConfig },
 		define: {
 			timestamps: false,
 			charset: 'utf8',
