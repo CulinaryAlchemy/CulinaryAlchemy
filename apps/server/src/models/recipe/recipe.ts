@@ -1,12 +1,14 @@
 import { Model, DataTypes } from 'sequelize';
 
-import { RecipeInterface } from 'interfaces/recipe/recipe.interface';
-import { sequelize } from 'database/database.connection';
+import { RecipeInterface } from '../../interfaces/recipe/recipe.interface';
+import { sequelize } from '../../database/database.connection';
 
 class Recipe extends Model<RecipeInterface> implements RecipeInterface {
 	id!: number;
+	user_id!: number;
 	title!: string;
 	description!: string;
+	steps!: string;
 	authors_notes!: string | null;
 	cooking_time!: number;
 	servings!: number;
@@ -22,32 +24,63 @@ Recipe.init(
 			primaryKey: true,
 			autoIncrement: true,
 		},
+		user_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
 		title: {
 			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				len: [3, 70],
+			},
 		},
 		description: {
 			type: DataTypes.STRING,
+			allowNull: true,
 		},
 		authors_notes: {
 			type: DataTypes.STRING,
+			allowNull: true,
 		},
 		ingredients: {
 			type: DataTypes.STRING,
+			allowNull: false,
 		},
 		spices: {
 			type: DataTypes.STRING,
+			allowNull: true,
 		},
 		cooking_time: {
-			type: DataTypes.INTEGER,
-		},
-		servings: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
+			allowNull: true,
+			validate: {
+				isInt: true,
+				min: 0,
+			},
 		},
 		equipment_needed: {
 			type: DataTypes.STRING,
+			allowNull: true,
+		},
+		servings: {
+			type: DataTypes.INTEGER,
+			allowNull: true,
+			validate: {
+				min: 0,
+				isInt: true,
+			},
+		},
+		steps: {
+			type: DataTypes.STRING,
+			allowNull: false,
 		},
 		youtube_link: {
 			type: DataTypes.STRING,
+			allowNull: true,
+			validate: {
+				isUrl: true,
+			},
 		},
 	},
 	{
