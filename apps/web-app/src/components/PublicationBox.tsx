@@ -29,7 +29,9 @@ export const PublicationBox: React.FC<IProps> = ({ schema, inputsData, onSubmit 
     >
       <Box sx={{
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        overflow: 'hidden',
+        borderRadius: '100%'
       }}>
         <Image
           src={user?.avatar as string}
