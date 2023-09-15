@@ -10,9 +10,10 @@ interface IProps {
   height?: string
   width?: string
   style?: CSSProperties
+  imageId?: string
 }
 
-export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, src, style, ...props }) => {
+export const Image: React.FC<IProps> = ({ imageId, srcBlurPlaceholder, src, style, ...props }) => {
   const [showPlaceholder, setShowPlaceholder] = useState(true)
 
   useEffect(() => {
@@ -34,7 +35,9 @@ export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, src, style, ...pro
         width: '100%',
         height: '100%',
         position: 'relative',
-        transition: 'opacity ease'
+        transition: 'opacity ease',
+        flexShrink: style?.flexShrink,
+        flexBasis: style?.flexBasis
       }}
     >
       <Box
@@ -55,6 +58,7 @@ export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, src, style, ...pro
         />
       </Box>
       <img
+        id={imageId}
         onLoadStart={handleOnLoadStart}
         onLoad={handleOnLoad}
         {...{ props, src }}

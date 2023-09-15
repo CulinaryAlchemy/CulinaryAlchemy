@@ -1,25 +1,58 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
+import { carouselRoutes } from '../routing'
 
 interface IParams {
   imageSources: string[]
+  carouselId: string
 }
-export const useCarousel = ({ imageSources }: IParams) => {
-  const imageIndex = useRef(0)
-  const [actualImageSource, setActualImage] = useState<string>(imageSources[imageIndex.current])
+export const useCarousel = ({ imageSources, carouselId }: IParams) => {
+  const [imageIndex, setImageIndex] = useState(0)
 
   const nextImage = () => {
-    const isTheLastImage = imageIndex.current === imageSources.length - 1
+    const isTheLastImage = imageIndex === imageSources.length - 1
     if (isTheLastImage) return
-    imageIndex.current += 1
-    setActualImage(imageSources[imageIndex.current])
+    setImageIndex((lastImageIndex) => {
+      const newImageIndex = lastImageIndex + 1
+
+      const element = document.getElementById(carouselRoutes.dynamic.getImageRoute(carouselId, String(newImageIndex)))
+
+      goToElement(element as HTMLElement)
+
+      return newImageIndex
+    })
   }
 
   const previousImage = () => {
-    const isTheFirstImage = imageIndex.current === 0
+    const isTheFirstImage = imageIndex === 0
     if (isTheFirstImage) return
-    imageIndex.current -= 1
-    setActualImage(imageSources[imageIndex.current])
+    setImageIndex((lastImageIndex) => {
+      const newImageIndex = lastImageIndex - 1
+
+      const element = document.getElementById(carouselRoutes.dynamic.getImageRoute(carouselId, String(newImageIndex)))
+      goToElement(element as HTMLElement)
+
+      return newImageIndex
+    })
   }
 
-  return { actualImageSource, nextImage, previousImage, imageIndex: imageIndex.current }
+  const goToElement = (element: HTMLElement) => {
+    // @ts-expect-error firefox does not support this :(
+    if (element?.scrollIntoViewIfNeeded != null) {
+      // @ts-expect-error firefox does not support this :( - Firefox
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      element?.scrollIntoViewIfNeeded({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+    } else {
+      element?.scrollIntoView({
+        // @ts-expect-error firefox suckssssssss
+        top: element?.offsetParent?.offsetTop as HTMLElement,
+        // @ts-expect-error firefox suckssssssss
+        bottom: element?.offsetParent?.offsetTop as HTMLElement,
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start'
+      })
+    }
+  }
+
+  return { nextImage, previousImage, imageIndex }
 }

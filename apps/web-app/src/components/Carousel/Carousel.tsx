@@ -3,7 +3,9 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft'
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight'
 import Box from '@mui/joy/Box'
 
+import { useId } from 'react'
 import { useCarousel } from './hooks'
+import { carouselRoutes } from './routing'
 
 interface IStyles {
   borderRadius?: string
@@ -16,7 +18,10 @@ interface IProps {
   styles: IStyles
 }
 export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
-  const { actualImageSource, nextImage, previousImage, imageIndex } = useCarousel({ imageSources })
+  const carouselId = useId()
+  console.log(carouselId)
+
+  const { nextImage, previousImage, imageIndex } = useCarousel({ imageSources, carouselId })
 
   const handleOnClickRight = () => {
     nextImage()
@@ -54,16 +59,17 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
       >
         {
           imageIndex !== 0 &&
-            <IconButton
-              onClick={handleOnClickLeft}
-            >
-              <ArrowCircleLeftIcon
-                sx={{
-                  height: '100%',
-                  fontSize: '1.8em'
-                }}
-              />
-            </IconButton>
+          <IconButton
+            onClick={handleOnClickLeft}
+          >
+            <ArrowCircleLeftIcon
+              sx={{
+                height: '100%',
+                color: 'rgb(216, 216, 223)',
+                fontSize: '1.8em'
+              }}
+            />
+          </IconButton>
         }
         {
           imageIndex !== imageSources.length - 1 &&
@@ -72,21 +78,40 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
           >
             <ArrowCircleRightIcon
               sx={{
+                color: 'rgb(216, 216, 223)',
                 fontSize: '1.8em'
               }}
             />
           </IconButton>
         }
       </Box>
-      <Image
-        src={actualImageSource}
-        alt='previous image'
-        style={{
-          height: '100%',
-          width: '100%',
-          objectFit: 'cover'
+      <Box
+        sx={{
+          display: 'flex',
+          flexGrow: 0,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          scrollBehavior: 'smooth'
         }}
-      />
+      >
+        {
+          imageSources.map((imageSource, index) => (
+            <Image
+              key={index}
+              imageId={carouselRoutes.dynamic.getImageRoute(carouselId, String(index))}
+              src={imageSource}
+              alt='previous image'
+              style={{
+                height: '100%',
+                width: '100%',
+                objectFit: 'cover',
+                flexShrink: 0,
+                flexBasis: '100%'
+              }}
+            />
+          ))
+        }
+      </Box>
     </Box>
   )
 }
