@@ -1,3 +1,5 @@
+import { getAuthSession } from '@/utils'
+
 export const globalConfig = {
   baseURL: {
     frontend: 'http://localhost:5173',
@@ -9,7 +11,8 @@ export const globalConfig = {
       refreshToken: 'shouldn\'t be here'
     },
     user: 'user-data',
-    language: 'language'
+    language: 'language',
+    isThereUser: !Object.values(getAuthSession('accesss23', 'user-data')).some((value) => value == null)
   },
   image: {
     maxSizeBytes: 200000
