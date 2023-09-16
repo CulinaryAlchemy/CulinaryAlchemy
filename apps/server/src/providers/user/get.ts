@@ -1,4 +1,4 @@
-import { User, UserDietary } from '../../models/';
+import { Recipe, User, UserDietary } from '../../models/';
 
 export const getUser = {
 	ById: async (id: number, isForInternalServerUse: boolean = false) => {
@@ -59,7 +59,8 @@ export const getUser = {
 	},
 	byUsername: async (
 		username: string,
-		isForInternalServerUse: boolean = false
+		includeProfile: boolean = false,
+		isForInternalServerUse: boolean = false,
 	) => {
 		let excludedPropety: string[] = [];
 		if (!isForInternalServerUse) {
@@ -72,6 +73,13 @@ export const getUser = {
 				'userDietary',
 			];
 		}
+
+		// eslint-disable-next-line prefer-const
+		let includeOptions = [];
+		if (includeProfile) {
+			includeOptions.push({ model: Recipe, as: 'recipes' });
+		}
+
 		try {
 			const user = await User.findOne({
 				attributes: { exclude: [...excludedPropety] },
@@ -79,6 +87,7 @@ export const getUser = {
 					username: username,
 					deletedAt: null,
 				},
+				include: includeOptions,
 			});
 			return Promise.resolve(user);
 		} catch (error) {

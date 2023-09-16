@@ -57,6 +57,7 @@ Recipe.init(
 			validate: {
 				isInt: true,
 				min: 0,
+				max: 180,
 			},
 		},
 		equipment_needed: {
@@ -68,6 +69,7 @@ Recipe.init(
 			allowNull: true,
 			validate: {
 				min: 0,
+				max: 100,
 				isInt: true,
 			},
 		},

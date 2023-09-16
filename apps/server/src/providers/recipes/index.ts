@@ -8,7 +8,7 @@ import { MealTypeXRecipe, RecipeXDietary } from '../../models/shared';
 // };
 const post = async (
 	recipe: RecipeInterface,
-	imagesUrls: ImageInterface[],
+	imagesUrls?: ImageInterface[],
 	mealTypeIds?: number[],
 	dietaryIds?: number[]
 ) => {
@@ -16,7 +16,6 @@ const post = async (
 		cooking_time,
 		description,
 		equipment_needed,
-		id,
 		ingredients,
 		servings,
 		steps,
@@ -32,7 +31,6 @@ const post = async (
 	try {
 		// create recipe
 		const newRecipe = Recipe.build({
-			id,
 			user_id,
 			title,
 			description,
@@ -49,15 +47,17 @@ const post = async (
 		await newRecipe.save({ transaction: t });
 
 		// create an image register (the database model) and set owner id to recipe id
-		for (const image of imagesUrls) {
-			await Image.create(
-				{
-					default_url: image.default_url,
-					blur_url: image.blur_url,
-					owner_id: newRecipe.id,
-				},
-				{ transaction: t }
-			);
+		if (imagesUrls) {
+			for (const image of imagesUrls) {
+				await Image.create(
+					{
+						default_url: image.default_url,
+						blur_url: image.blur_url,
+						owner_id: newRecipe.id,
+					},
+					{ transaction: t }
+				);
+			}
 		}
 
 		// associate it with a meal type
@@ -98,7 +98,7 @@ const post = async (
 		}
 
 		await t.commit();
-		
+
 		return Promise.resolve(newRecipe);
 	} catch (error) {
 		await t.rollback();

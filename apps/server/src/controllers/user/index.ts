@@ -1,11 +1,7 @@
 import { Request, Response } from 'express';
 
 import { UserProvider } from '../../providers/user';
-import {
-	ApiResponse,
-	HttpStatusCodes,
-	MessageCodes,
-} from '../../utils/index';
+import { ApiResponse, HttpStatusCodes, MessageCodes } from '../../utils/index';
 import { cleanObjectNullKeys, getObjectLength } from '../../utils/object.utils';
 import { cloudinaryService } from '../../services';
 
@@ -121,7 +117,7 @@ const User = {
 		byUsername: async (req: Request, res: Response) => {
 			const { username } = req.params;
 			try {
-				const user = await UserProvider.getUser.byUsername(username);
+				const user = await UserProvider.getUser.byUsername(username, true);
 				if (!user) {
 					return ApiResponse.error(
 						res,
@@ -137,6 +133,7 @@ const User = {
 					MessageCodes.USER_FOUND
 				);
 			} catch (error) {
+				console.log(error);
 				ApiResponse.error(
 					res,
 					HttpStatusCodes.NOT_FOUND,
