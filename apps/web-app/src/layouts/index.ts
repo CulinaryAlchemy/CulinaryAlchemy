@@ -1,3 +1,4 @@
+export * from './AuthLayout/AuthLayout'
 export * from './ContentLayout'
 export * from './DefaultLayout'
 export * from './GlobalLayout'

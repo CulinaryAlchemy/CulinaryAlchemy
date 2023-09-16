@@ -68,111 +68,120 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
   }
 
   return (
-    <Sheet variant='outlined'
+    <Box
       sx={{
         width: '100%',
         maxWidth: styles.width,
-        mx: 'auto',
-        my: styles.marginY ?? 4,
-        py: styles.paddingY ?? 3,
-        px: styles.paddingX ?? 2,
-        borderRadius: 'sm',
-        boxShadow: styles.border ?? 'md',
-        border: styles.border
+        mx: 'auto'
       }}
     >
-      <form onSubmit={defaultHandleSubmit(onSubmit)} noValidate>
-        <Sheet sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2
-        }}>
-          {Header}
-          <main>
-            <Suspense>
-              <Box sx={
-                [
-                  {
-                    display: styles.display,
-                    width: '100%',
-                    flexWrap: styles.flexWrap,
-                    justifyContent: styles.justifyContent
-                  },
-                  styles.gridColumns === 1 && gridFormStyles1,
-                  styles.gridColumns === 2 && gridFormStyles2
-                ]
-              }
-              >
-                {inputsData.map((inputData, index) => (
-                  <DeterminateInput
-                    key={index}
-                    data={inputData}
-                    register={register(inputData.name,
-                      {
-                        setValueAs: (value) => {
-                          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                          return value !== '' ? value : undefined
-                        },
-                        onChange: (event: SyntheticEvent) => {
-                          const value = (event.target as HTMLInputElement).value
-
-                          return value !== '' ? value : undefined
-                        }
-                      }
-                    )}
-                    {...{
-                      watch,
-                      setError,
-                      clearErrors
-                    }}
-                    isDirty={dirtyFields[inputData.name] as boolean}
-                    error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
-                  />
-                ))}
-              </Box>
-            </Suspense>
-            <Stack
-              direction='row'
-              spacing={1}
-              marginTop={1}
-              justifyContent={buttonSubmitSide}
-            >
-              <Button
-                type='submit'
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: '1em',
-                  flexGrow: buttonSubmitSide === 'default' ? 1 : 0
-                }}
-                disabled={Object.values(errors).length > 0 || !isDirty}
-              >
-                {isSubmitting
-                  ? <CircularProgress variant="plain" />
-                  : buttonSubmitName
+      <Sheet
+        variant='outlined'
+        sx={{
+          width: '100%',
+          maxWidth: styles.width,
+          my: styles.marginY ?? 4,
+          py: styles.paddingY ?? 3,
+          px: styles.paddingX ?? 2,
+          borderRadius: 'sm',
+          boxShadow: styles.border ?? 'md',
+          border: styles.border,
+          zIndex: 100
+        }}
+      >
+        <form onSubmit={defaultHandleSubmit(onSubmit)} noValidate>
+          <Sheet sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2
+          }}>
+            {Header}
+            <main>
+              <Suspense>
+                <Box sx={
+                  [
+                    {
+                      display: styles.display,
+                      width: '100%',
+                      flexWrap: styles.flexWrap,
+                      justifyContent: styles.justifyContent
+                    },
+                    styles.gridColumns === 1 && gridFormStyles1,
+                    styles.gridColumns === 2 && gridFormStyles2
+                  ]
                 }
-              </Button>
-              {showResetButton &&
+                >
+                  {inputsData.map((inputData, index) => (
+                    <DeterminateInput
+                      key={index}
+                      data={inputData}
+                      register={register(inputData.name,
+                        {
+                          setValueAs: (value) => {
+                            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                            return value !== '' ? value : undefined
+                          },
+                          onChange: (event: SyntheticEvent) => {
+                            const value = (event.target as HTMLInputElement).value
+
+                            return value !== '' ? value : undefined
+                          }
+                        }
+                      )}
+                      {...{
+                        watch,
+                        setError,
+                        clearErrors
+                      }}
+                      isDirty={dirtyFields[inputData.name] as boolean}
+                      error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
+                    />
+                  ))}
+                </Box>
+              </Suspense>
+              <Stack
+                direction='row'
+                spacing={1}
+                marginTop={1}
+                justifyContent={buttonSubmitSide}
+              >
                 <Button
+                  type='submit'
                   sx={{
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    marginTop: '1em'
+                    marginTop: '1em',
+                    flexGrow: buttonSubmitSide === 'default' ? 1 : 0
                   }}
-                  size='sm'
-                  variant='outlined'
-                  onClick={handleOnClickForReset}
+                  disabled={Object.values(errors).length > 0 || !isDirty}
                 >
-                  Reset
+                  {isSubmitting
+                    ? <CircularProgress variant="plain" />
+                    : buttonSubmitName
+                  }
                 </Button>
-              }
-            </Stack>
-          </main>
-          {Footer}
-        </Sheet>
-      </form >
-    </Sheet >
+                {showResetButton &&
+                  <Button
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginTop: '1em'
+                    }}
+                    size='sm'
+                    variant='outlined'
+                    onClick={handleOnClickForReset}
+                  >
+                    Reset
+                  </Button>
+                }
+              </Stack>
+            </main>
+            {Footer}
+          </Sheet>
+        </form >
+      </Sheet >
+    </Box>
   )
 }
