@@ -8,22 +8,22 @@ import { useEffect, useState } from 'react'
 export const useLocalAuth = () => {
   const [user, setUser] = useState<IUser>()
   const [isAuth, setIsAuth] = useState(false)
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(globalConfig.localStorage.isThereUser)
 
   useEffect(() => {
     const asyncExecContext = async () => {
+      const { accessToken, userData } = getAuthSession(globalConfig.localStorage.auth.accessToken, globalConfig.localStorage.user)
+
+      if (accessToken == null || userData == null) {
+        setLoading(false)
+        return
+      }
+
       const isValidSession = await checkSession()
 
       if (!isValidSession) {
         setLoading(false)
         signOut()
-        return
-      }
-
-      const { accessToken, userData } = getAuthSession(globalConfig.localStorage.auth.accessToken, globalConfig.localStorage.user)
-
-      if (accessToken == null || userData == null) {
-        setLoading(false)
         return
       }
 

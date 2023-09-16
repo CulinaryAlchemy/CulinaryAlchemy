@@ -1,12 +1,12 @@
 import Popper from '@mui/base/Popper'
-import Avatar from '@mui/joy/Avatar'
 import Box from '@mui/joy/Box'
-import IconButton from '@mui/joy/IconButton'
-
-import { DropDownListOfItems } from '@/components/DropDownMenu/components'
-import { useGlobalAuth } from '@/hooks'
+import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
+
+import { Image } from '@/components'
+import { DropDownListOfItems } from '@/components/DropDownMenu/components'
+import { useGlobalAuth } from '@/hooks'
 import { useState } from 'react'
 
 const DropDownMenu = () => {
@@ -31,26 +31,34 @@ const DropDownMenu = () => {
             @{user?.username}
           </Typography>
         </Stack>
-        <IconButton
+        <Sheet
           color="neutral"
           variant="outlined"
-          sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
+          sx={{
+            width: '2.5em',
+            height: '2.5em',
+            borderRadius: '100%',
+            cursor: 'pointer',
+            overflow: 'hidden'
+          }}
           aria-haspopup
           aria-expanded={open ? 'true' : 'false'}
           role="menuitem"
           onFocus={(event) => {
-            setAnchorEl(event.currentTarget)
+            if (event == null) return
+            setAnchorEl(event.currentTarget as unknown as HTMLAnchorElement)
           }}
           onMouseEnter={(event) => {
-            setAnchorEl(event.currentTarget)
+            setAnchorEl(event.currentTarget as unknown as HTMLAnchorElement)
           }}
         >
-          <Avatar
-            sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
-            alt="user logo"
+          <Image
             src={user?.avatar as string}
+            srcBlurPlaceholder={user?.avatarBlur as string}
+            style={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
+            alt="user logo"
           />
-        </IconButton>
+        </Sheet>
       </Stack>
       <Box
         sx={{
