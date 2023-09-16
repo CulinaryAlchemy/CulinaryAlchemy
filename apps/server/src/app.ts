@@ -23,3 +23,4 @@ if (process.env.ENVIRONMENT === 'development') {
 app.use('/', appRouter);
 
 export { app };
+

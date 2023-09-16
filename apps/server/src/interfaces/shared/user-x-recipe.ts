@@ -1,5 +1,5 @@
 export interface UserXRecipeInterface {
-	id: number;
+	id?: number;
 	user_id: number;
 	recipe_id: number;
 }

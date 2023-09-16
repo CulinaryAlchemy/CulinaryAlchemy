@@ -6,26 +6,23 @@ const corsConfig: CorsOptions = {
 			return next(new Error('Rejected by cors, internal server error'));
 		}
 
-		const environment = process.env.ENVIRONMENT;
+		const whiteList = process.env.ALLOWED_ORIGIN_LIST;
 
-		if (environment === 'development') {
-			if (!origin.startsWith('http://localhost')) {
-				next(new Error('Not allowed by CORS'));
-			}
-			return next(null, true);
+		if (!whiteList) {
+			return next(
+				new Error(
+					'No whiteList found in server variables. Check the corsConfig to detect the error'
+				)
+			);
 		}
 
-		if (environment === 'production') {
-			if (!origin.startsWith('https://culinary-alchemy-web-app.vercel.app')) {
-				next(new Error('Not allowed by CORS'));
+		for (const allowedOrigin of whiteList.split(' ')) {
+			if (origin.startsWith(allowedOrigin)) {
+				return next(null, true);
 			}
-			return next(null, true);
 		}
 
-		// if the environment is not production or development, we reject the request
-		return next(
-			new Error('Internal Environment is invalid, rejected by cors.')
-		);
+		return next(new Error('Rejected by cors, origin: ' + origin));
 	},
 };
 export { corsConfig };
