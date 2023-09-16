@@ -1,21 +1,22 @@
 import { Form } from '@/components'
-import { GlobalLayout } from '@/layouts'
-import { LoginFooter, LoginHeader } from './components'
-
 import { useGlobalAuth, useTranslation } from '@/hooks'
+import { AuthLayout } from '@/layouts'
 import { type IUserSignIn } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
+import { LoginFooter, LoginHeader } from './components'
 import { metadata } from './config'
 import { inputsArray, loginInputsSchema } from './models'
 
 const Login = () => {
   const { t } = useTranslation()
   const { signInByApi } = useGlobalAuth()
+
   const handleOnSumbit: SubmitHandler<FieldValues> = (data) => {
     void signInByApi(data as IUserSignIn)
   }
+
   return (
-    <GlobalLayout newTitle={metadata.title}>
+    <AuthLayout title={metadata.title} showBackground>
       <Form
         schema={loginInputsSchema}
         inputsData={inputsArray}
@@ -30,7 +31,7 @@ const Login = () => {
           width: '300px'
         }}
       />
-    </GlobalLayout>
+    </AuthLayout>
   )
 }
 

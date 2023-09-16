@@ -37,7 +37,16 @@ export const Header = () => {
           {
             isAuth
               ? <DropDownMenu />
-              : <AppLink to={CFrontRoutes.Static.auth.register}>{t('sign up')}</AppLink>
+              : (
+                <AppLink
+                  to={CFrontRoutes.Static.auth.register}
+                  sx={{
+                    zIndex: 100
+                  }}
+                >
+                  {t('sign up')}
+                </AppLink>
+                )
 
           }
         </Box>
