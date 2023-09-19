@@ -1,7 +1,7 @@
 import { Form } from '@/components'
 import { GlobalLayout } from '@/layouts'
 
-import { useGlobalAuth, useTranslation } from '@/hooks'
+import { useGlobalAuth, useGlobalLoading, useTranslation } from '@/hooks'
 import { type IUserRegister } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { RegisterFooter, RegisterHeader } from './components/'
@@ -11,9 +11,14 @@ import { inputsArray, registerInputsSchema } from './models'
 const Register = () => {
   const { t } = useTranslation()
   const { signUp } = useGlobalAuth()
+  const { toggleLoadingVisibility } = useGlobalLoading()
 
-  const handleOnSumbit: SubmitHandler<FieldValues> = (data) => {
-    signUp(data as IUserRegister)
+  const handleOnSumbit: SubmitHandler<FieldValues> = async (data) => {
+    toggleLoadingVisibility()
+    await signUp(data as IUserRegister)
+      .finally(() => {
+        toggleLoadingVisibility()
+      })
   }
 
   return (

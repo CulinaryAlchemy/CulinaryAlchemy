@@ -1,5 +1,5 @@
 import { DropZone, Form, Image, TabPanel } from '@/components'
-import { useGlobalAuth, useTranslation, useUserMethods } from '@/hooks'
+import { useGlobalAuth, useGlobalLoading, useTranslation, useUserMethods } from '@/hooks'
 import { type IUser, type IUserUpdate } from '@/models/LOGIC'
 import { CTabsDataAccountTabPanel, accountInformationInputsAccountTabSchema, accountInformationSelectedInputsArray } from '@/pages/Settings/models/UI'
 import { toastUtils } from '@/utils'
@@ -15,8 +15,9 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
   const { t } = useTranslation()
   const { updateUser } = useUserMethods()
   const { user } = useGlobalAuth()
+  const { toggleLoadingVisibility } = useGlobalLoading()
 
-  const handleOnSubmit: SubmitHandler<IUserUpdate> = (data) => {
+  const handleOnSubmit: SubmitHandler<IUserUpdate> = async (data) => {
     const areValuesNull = Object.values(data).every((actualData) => {
       if (actualData instanceof FileList) {
         data.avatar = actualData[0]
@@ -29,7 +30,11 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
     if (areValuesNull) {
       toastUtils.error('All fields are empty')
     } else {
-      void updateUser((user as IUser).id, data)
+      toggleLoadingVisibility()
+      await updateUser((user as IUser).id, data)
+        .finally(() => {
+          toggleLoadingVisibility()
+        })
     }
   }
 

@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react'
 interface IContext {
   user: IUser | undefined
   signInByApi: (userData: IUserSignIn) => Promise<void>
-  signUp: (userData: IUserRegister) => void
+  signUp: (userData: IUserRegister) => Promise<void>
   updateSessionData: (userData: IUser) => void
   signOut: () => void
   isAuth: boolean
