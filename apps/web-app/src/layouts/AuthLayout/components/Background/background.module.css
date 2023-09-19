@@ -18,7 +18,8 @@
 
 .background__icon-container {
     display: flex;
-    animation: 200s linear infinite;
+    animation: var(--animation-time) linear infinite;
+    animation-delay: var(--animation-delay);
 }
 
 .background__icon-container--left {

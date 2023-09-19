@@ -33,10 +33,18 @@ const Background = () => {
 
               const animationDirection = 'background__icon-container--' + (shouldUseLeftAnimation ? 'left' : 'right')
 
+              const animationTime = String(Math.floor(Math.random() * (401 - 250) + 250)) + 's'
+
+              const animationDelay = '-' + String(Math.floor(Math.random() * (500 - 1) + 1)) + 's'
               return (
                     <div
                         key={index}
                         className={styles['background__icon-container-container']}
+                        style={{
+                          // @ts-expect-error compiler shows an error
+                          '--animation-time': animationTime,
+                          '--animation-delay': animationDelay
+                        }}
                     >
                         <div
                             className={[

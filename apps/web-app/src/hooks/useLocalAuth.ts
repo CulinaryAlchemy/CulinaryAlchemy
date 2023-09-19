@@ -54,8 +54,8 @@ export const useLocalAuth = () => {
     defaultSignIn(responseSignIn)
   }
 
-  const signUp = (userData: IUserRegister) => {
-    void registerUser(userData)
+  const signUp = async (userData: IUserRegister) => {
+    await registerUser(userData)
       .then((res) => {
         if (res.status !== 201) return
         defaultSignIn(res)
