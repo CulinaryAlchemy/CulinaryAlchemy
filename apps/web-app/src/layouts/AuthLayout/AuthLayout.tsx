@@ -1,19 +1,19 @@
-import { GlobalLayout } from '@/layouts'
 import { lazy } from 'react'
+import { Outlet } from 'react-router-dom'
 
 interface IProps {
-  title: string
   showBackground: boolean
-  children: React.ReactNode
 }
 
 const Background = lazy(() => import('./components/Background/Background'))
 
-export const AuthLayout: React.FC<IProps> = ({ title, children, showBackground }) => {
+const AuthLayout: React.FC<IProps> = ({ showBackground }) => {
   return (
-        <GlobalLayout newTitle={title}>
+        <>
           {showBackground && <Background />}
-          {children}
-        </GlobalLayout>
+          <Outlet />
+        </>
   )
 }
+
+export default AuthLayout

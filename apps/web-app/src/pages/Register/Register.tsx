@@ -1,5 +1,5 @@
 import { Form } from '@/components'
-import { AuthLayout } from '@/layouts'
+import { GlobalLayout } from '@/layouts'
 
 import { useGlobalAuth, useTranslation } from '@/hooks'
 import { type IUserRegister } from '@/models/LOGIC'
@@ -17,7 +17,7 @@ const Register = () => {
   }
 
   return (
-    <AuthLayout title={metadata.title} showBackground>
+    <GlobalLayout newTitle={metadata.title}>
       <Form
         inputsData={inputsArray}
         schema={registerInputsSchema}
@@ -32,7 +32,7 @@ const Register = () => {
           width: '300px'
         }}
       />
-    </AuthLayout>
+    </GlobalLayout>
   )
 }
 
