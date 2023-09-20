@@ -40,7 +40,7 @@ export const useCarousel = ({ imageSources, carouselId }: IParams) => {
     if (element?.scrollIntoViewIfNeeded != null) {
       // @ts-expect-error firefox does not support this :( - Firefox
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      element?.scrollIntoViewIfNeeded({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+      element?.scrollIntoViewIfNeeded({ behavior: 'smooth' })
     } else {
       element?.scrollIntoView({
         // @ts-expect-error firefox suckssssssss
