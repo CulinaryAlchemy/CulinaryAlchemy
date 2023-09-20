@@ -17,9 +17,9 @@ interface IProps {
   imageSources: string[]
   styles: IStyles
 }
+
 export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
   const carouselId = useId()
-  console.log(carouselId)
 
   const { nextImage, previousImage, imageIndex } = useCarousel({ imageSources, carouselId })
 
@@ -33,13 +33,11 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
   return (
     <Box
       sx={{
+        ...styles,
         position: 'relative',
         display: 'flex',
         justifyContent: 'center',
-        width: styles.width,
-        height: styles.height,
-        overflow: 'hidden',
-        borderRadius: styles.borderRadius
+        overflow: 'hidden'
       }}
     >
       <Box
@@ -87,6 +85,8 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
       </Box>
       <Box
         sx={{
+          height: '100%',
+          width: '100%',
           display: 'flex',
           flexGrow: 0,
           whiteSpace: 'nowrap',
@@ -96,19 +96,19 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
       >
         {
           imageSources.map((imageSource, index) => (
-            <Image
-              key={index}
-              imageId={carouselRoutes.dynamic.getImageRoute(carouselId, String(index))}
-              src={imageSource}
-              alt='previous image'
-              style={{
-                height: '100%',
-                width: '100%',
-                objectFit: 'cover',
-                flexShrink: 0,
-                flexBasis: '100%'
-              }}
-            />
+              <Image
+                key={index}
+                imageId={carouselRoutes.dynamic.getImageRoute(carouselId, String(index))}
+                src={imageSource}
+                alt='previous image'
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  objectFit: 'cover',
+                  flexShrink: 0,
+                  flexBasis: '100%'
+                }}
+              />
           ))
         }
       </Box>

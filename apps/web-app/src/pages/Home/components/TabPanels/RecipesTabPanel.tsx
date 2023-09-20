@@ -1,15 +1,10 @@
-import { PublicationBox, Recipe, TabPanel } from '@/components'
-import { CHomeTabPanelNames, homeInputsArray, homeInputsSchema } from '@/pages/Home/models'
+import { PublicationBox, Recipe } from '@/components'
+import { homeInputsArray, homeInputsSchema } from '@/pages/Home/models'
 import Sheet from '@mui/joy/Sheet'
 
 const RecipesTabPanel = () => {
   return (
-        <TabPanel
-            showHeader={CHomeTabPanelNames.userFeed.showTabHeader}
-            routingBy="defaultUISystem"
-            value={CHomeTabPanelNames.userFeed.name}
-            loading={false}
-        >
+        <>
             <PublicationBox
                 onSubmit={() => { }}
                 inputsData={homeInputsArray}
@@ -38,7 +33,7 @@ const RecipesTabPanel = () => {
                     ))
                 }
             </Sheet>
-        </TabPanel>
+        </>
   )
 }
 

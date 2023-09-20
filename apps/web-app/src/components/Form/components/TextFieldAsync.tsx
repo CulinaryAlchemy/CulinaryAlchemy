@@ -37,6 +37,7 @@ const TextFieldAsync: React.FC<IProps> = ({ data, error, register, watch, setErr
           minWidth: '1px',
           '--Input-minWidth': '1px'
         }}
+        autoComplete='off'
         defaultValue={data.defaultValue as string}
         type={data.type}
         placeholder={data.placeholder}

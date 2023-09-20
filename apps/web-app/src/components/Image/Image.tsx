@@ -31,6 +31,7 @@ export const Image: React.FC<IProps> = ({ imageId, srcBlurPlaceholder, src, styl
   return (
     <Box
       component='div'
+      id={imageId}
       sx={{
         width: '100%',
         height: '100%',
@@ -58,7 +59,6 @@ export const Image: React.FC<IProps> = ({ imageId, srcBlurPlaceholder, src, styl
         />
       </Box>
       <img
-        id={imageId}
         onLoadStart={handleOnLoadStart}
         onLoad={handleOnLoad}
         {...{ props, src }}

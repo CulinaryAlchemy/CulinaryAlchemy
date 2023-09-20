@@ -44,7 +44,10 @@ export const ContentLayout: React.FC<IProps> = ({ information, styles, id }) => 
         flexBasis: '100%',
         whiteSpace: 'normal',
         justifyContent: styles.justifyContent,
-        alignItems: styles.alignItems,
+        alignItems: {
+          md: styles.alignItems,
+          sx: 'start'
+        },
         paddingBottom: {
           md: styles.paddingBottom
         }
@@ -65,6 +68,7 @@ export const ContentLayout: React.FC<IProps> = ({ information, styles, id }) => 
           sx={{
             height: '25em',
             width: '100%',
+            minHeight: '20em',
             maxWidth: {
               md: styles.carrousel.maxWidth,
               sx: '100%'
@@ -83,6 +87,8 @@ export const ContentLayout: React.FC<IProps> = ({ information, styles, id }) => 
         <Box
           component='main'
           sx={{
+            width: '100%',
+            maxWidth: '100%',
             alignSelf: styles.informationSection.alignSelf
           }}
         >
