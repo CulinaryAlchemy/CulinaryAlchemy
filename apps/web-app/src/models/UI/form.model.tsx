@@ -2,6 +2,16 @@ import { type TFormInputRecordObject } from '@/components/Form/models'
 import { Trans } from 'react-i18next'
 import { z as zValidator } from 'zod'
 
+export interface IInputStyles {
+  border?: string
+  fontWeight?: string
+  fontSize?: string
+  paddingInline?: string
+  label?: {
+    display?: 'none'
+  }
+}
+
 export const CInputUser: TFormInputRecordObject = {
   username: {
     name: 'username',

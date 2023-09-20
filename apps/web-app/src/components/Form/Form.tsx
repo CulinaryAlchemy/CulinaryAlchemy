@@ -6,12 +6,19 @@ import { Suspense, type SyntheticEvent } from 'react'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
 
+import { type IInputStyles } from '@/models/UI'
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button/'
 import CircularProgress from '@mui/joy/CircularProgress'
 import Sheet from '@mui/joy/Sheet/'
 import Stack from '@mui/joy/Stack'
 import { adaptDefaultValues } from './adapters'
+
+interface IInputsStyles {
+  textArea?: IInputStyles
+  textField?: IInputStyles
+}
+
 
 interface IStyles {
   gridColumns?: 1 | 2
@@ -34,15 +41,16 @@ interface IForm {
   Footer?: React.ReactNode
   defaultValues?: object
   buttonSubmitName: string
-  buttonSubmitSide: 'default' | 'start' | 'end'
+  buttonSubmitSide?: 'default' | 'start' | 'end'
   styles: IStyles
+  inputStyles?: IInputsStyles
   showResetButton?: boolean
 }
 
 const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1em' }
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
-export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, showResetButton = true, buttonSubmitSide }) => {
+export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide }) => {
   const {
     register,
     handleSubmit: defaultHandleSubmit,
@@ -131,7 +139,8 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
                       {...{
                         watch,
                         setError,
-                        clearErrors
+                        clearErrors,
+                        inputStyles
                       }}
                       isDirty={dirtyFields[inputData.name] as boolean}
                       error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
@@ -185,3 +194,5 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
     </Box>
   )
 }
+
+export default Form
