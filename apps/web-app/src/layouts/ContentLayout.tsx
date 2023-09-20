@@ -88,10 +88,7 @@ export const ContentLayout: React.FC<IProps> = ({ information, styles, id }) => 
           component='main'
           sx={{
             width: '100%',
-            maxWidth: {
-              md: '27em',
-              sx: '100%'
-            },
+            maxWidth: '100%',
             alignSelf: styles.informationSection.alignSelf
           }}
         >

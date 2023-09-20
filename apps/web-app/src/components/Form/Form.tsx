@@ -9,7 +9,6 @@ import { type ZodObject, type ZodRawShape } from 'zod'
 import { type IInputStyles } from '@/models/UI'
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button/'
-import CircularProgress from '@mui/joy/CircularProgress'
 import Sheet from '@mui/joy/Sheet/'
 import Stack from '@mui/joy/Stack'
 import { adaptDefaultValues } from './adapters'
@@ -60,7 +59,6 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
     reset,
     formState: {
       errors,
-      isSubmitting,
       dirtyFields,
       isDirty
     }
@@ -165,10 +163,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
                   }}
                   disabled={Object.values(errors).length > 0 || !isDirty}
                 >
-                  {isSubmitting
-                    ? <CircularProgress variant="plain" />
-                    : buttonSubmitName
-                  }
+                    {buttonSubmitName}
                 </Button>
                 {showResetButton &&
                   <Button

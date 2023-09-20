@@ -39,6 +39,7 @@ export const Image: React.FC<IProps> = ({ imageId, srcBlurPlaceholder, src, styl
         flexShrink: style?.flexShrink,
         flexBasis: style?.flexBasis
       }}
+      id={imageId}
     >
       <Box
         component='div'
@@ -58,7 +59,6 @@ export const Image: React.FC<IProps> = ({ imageId, srcBlurPlaceholder, src, styl
         />
       </Box>
       <img
-        id={imageId}
         onLoadStart={handleOnLoadStart}
         onLoad={handleOnLoad}
         {...{ props, src }}
