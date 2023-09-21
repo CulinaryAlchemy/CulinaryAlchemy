@@ -7,6 +7,8 @@ import {
 } from '../../middlewares/validators';
 import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
 import { authMiddleware } from '../../middlewares';
+import { upload } from '../../config';
+import { recipeImage } from '../../middlewares/image/recipe';
 
 const recipeRouter = express.Router();
 recipeRouter.post(
@@ -14,6 +16,8 @@ recipeRouter.post(
 	idValidator,
 	passportMiddleware,
 	authMiddleware,
+	upload.fields([{ name: 'recipe-image', maxCount: 3 }]),
+	recipeImage,
 	body('title').notEmpty().isString().isLength({ min: 3, max: 70 }),
 	body('description').optional().isString().isLength({ max: 255 }),
 	body('cooking_time').optional().notEmpty().isInt({ min: 0, max: 180 }),
