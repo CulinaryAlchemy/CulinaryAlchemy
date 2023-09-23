@@ -204,37 +204,37 @@ const User = {
 					// avatar
 					if ('avatar' in req.files) {
 						const avatarFile = req.files['avatar'][0] as Express.Multer.File;
-						const avatarUrl = await cloudinaryService.uploadImage(
+						const avatar = await cloudinaryService.uploadImage(
 							avatarFile as unknown as Express.Multer.File
 						);
-						params.avatar = avatarUrl;
+						params.avatar = avatar.secure_url;
 					}
 					if ('avatarBlur' in req.files) {
 						const avatarBlurFile = req.files[
 							'avatarBlur'
 						][0] as Express.Multer.File;
-						const avatarBlurUrl = await cloudinaryService.uploadImage(
+						const avatarBlur = await cloudinaryService.uploadImage(
 							avatarBlurFile as unknown as Express.Multer.File
 						);
-						params.avatarBlur = avatarBlurUrl;
+						params.avatarBlur = avatarBlur.secure_url;
 					}
 
 					// header
 					if ('header' in req.files) {
 						const headerFile = req.files['header'][0] as Express.Multer.File;
-						const headerUrl = await cloudinaryService.uploadImage(
+						const header = await cloudinaryService.uploadImage(
 							headerFile as unknown as Express.Multer.File
 						);
-						params.header = headerUrl;
+						params.header = header.secure_url;
 					}
 					if ('headerBlur' in req.files) {
 						const headerBlurFile = req.files[
 							'headerBlur'
 						][0] as Express.Multer.File;
-						const headerBlurUrl = await cloudinaryService.uploadImage(
+						const headerBlur = await cloudinaryService.uploadImage(
 							headerBlurFile as unknown as Express.Multer.File
 						);
-						params.headerBlur = headerBlurUrl;
+						params.headerBlur = headerBlur.secure_url;
 					}
 				} catch (error) {
 					return ApiResponse.error(

@@ -5,8 +5,8 @@ import {
 	idValidator,
 	validateValidationChainResult,
 } from '../../middlewares/validators';
-import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
-import { authMiddleware } from '../../middlewares';
+// import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
+// import { authMiddleware } from '../../middlewares';
 import { upload } from '../../config';
 import { recipeImage } from '../../middlewares/image/recipe';
 
@@ -14,9 +14,16 @@ const recipeRouter = express.Router();
 recipeRouter.post(
 	'/:id', // the user id
 	idValidator,
-	passportMiddleware,
-	authMiddleware,
-	upload.fields([{ name: 'recipe-image', maxCount: 3 }]),
+	// passportMiddleware,
+	// authMiddleware,
+	upload.fields([
+		{ name: 'image_1', maxCount: 1 },
+		{ name: 'image_1_blur', maxCount: 1 },
+		{ name: 'image_2', maxCount: 1 },
+		{ name: 'image_2_blur', maxCount: 1 },
+		{ name: 'image_3', maxCount: 1 },
+		{ name: 'image_3_blur', maxCount: 1 },
+	]),
 	recipeImage,
 	body('title').notEmpty().isString().isLength({ min: 3, max: 70 }),
 	body('description').optional().isString().isLength({ max: 255 }),

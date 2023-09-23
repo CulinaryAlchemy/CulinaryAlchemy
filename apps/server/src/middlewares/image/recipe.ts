@@ -6,31 +6,40 @@ const recipeImage = (req: Request, _res: Response, next: NextFunction) => {
 		return next(new Error('No images provided'));
 	}
 
-	const imagesArray: any = (req as any).files[
-		'images'
-	] as Express.Multer.File[];
+	const keysinRequestFiles = Object.keys(req.files);
 
-	if (imagesArray.length === 0)
-		return next(new Error('No images received on the server side'));
+	for (const key of keysinRequestFiles) {
+		if (key in req.files) {
+			const image = (req as any).files[key][0] as Express.Multer.File;
+			
+			// check image weight
+			let maxWeightInBytes: number;
+			if (image.fieldname.endsWith('blur')) {
+				maxWeightInBytes = 1000 * 20;
+			} else {
+				maxWeightInBytes = 1000 * 200;
+			}
+			const weightIsOkay = isImageWeightValid(image.size, maxWeightInBytes);
+			if (!weightIsOkay) {
+				return next(
+					new Error(
+						`Image size is too large. max image size: ${maxWeightInBytes} bytes. size of image received: ${image.size}`
+					)
+				);
+			}
 
-	for (const image of imagesArray) {
-		// check image size
-		const maxSizeInBytes = 1000 * 200;
-		const sizeIsOkay = isImageWeightValid(image.size, maxSizeInBytes);
-		if (!sizeIsOkay) {
-			return next(
-				new Error(
-					`Image size is too large. max image size: ${maxSizeInBytes} bytes. size of image received: ${image.size}`
-				)
-			);
-		}
+			let isImageSizeOkay: boolean = false;
 
-		const imagePath = image.path;
-		const isImageSizeOkay = isImageSizeValid(imagePath, 129, 129);
-		if (!isImageSizeOkay) {
-			return next(
-				new Error('Image size is too large, max image size: 129px x 129px')
-			);
+			if (image.fieldname.endsWith('blur')) {
+				isImageSizeOkay = isImageSizeValid(image.path, 20, 20);
+			} else {
+				isImageSizeOkay = isImageSizeValid(image.path, 129, 129);
+			}
+			if (!isImageSizeOkay) {
+				return next(
+					new Error('Image size is too large, max image size: 129px x 129px')
+				);
+			}
 		}
 	}
 	next();

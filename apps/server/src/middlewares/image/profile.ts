@@ -5,9 +5,9 @@ const profileImage = (req: Request, _res: Response, next: NextFunction) => {
 	if (req.files && 'avatar' in req.files) {
 		// check image size
 		const avatar = req.files['avatar'][0] as Express.Multer.File;
-		const maxSizeInBytes = 1000 * 200;
-		const sizeIsOkay = isImageWeightValid(avatar.size, maxSizeInBytes);
-		if (!sizeIsOkay) {
+		const maxWeighInBytes = 1000 * 200;
+		const weighIsOkay = isImageWeightValid(avatar.size, maxWeighInBytes);
+		if (!weighIsOkay) {
 			return next(new Error('Image size is too large'));
 		}
 
