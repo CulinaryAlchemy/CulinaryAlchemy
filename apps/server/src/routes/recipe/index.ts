@@ -1,21 +1,35 @@
 import { Controllers } from '../../controllers';
 import express from 'express';
-import { body } from 'express-validator';
+import { body, query } from 'express-validator';
 import {
 	idValidator,
 	validateValidationChainResult,
 } from '../../middlewares/validators';
-// import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
-// import { authMiddleware } from '../../middlewares';
+import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
+import { authMiddleware } from '../../middlewares';
 import { upload } from '../../config';
 import { recipeImage } from '../../middlewares/image/recipe';
 
 const recipeRouter = express.Router();
+recipeRouter.get(
+	'/all',
+	query('limit').optional().isInt({ min: 1, max: 10 }),
+	query('offset').optional().isInt({ min: 1, max: 10 }),
+	validateValidationChainResult,
+	Controllers.recipeController.get.all
+);
+recipeRouter.get(
+	'/:id',
+	idValidator,
+	validateValidationChainResult,
+	Controllers.recipeController.get.byId
+);
+
 recipeRouter.post(
 	'/:id', // the user id
 	idValidator,
-	// passportMiddleware,
-	// authMiddleware,
+	passportMiddleware,
+	authMiddleware,
 	upload.fields([
 		{ name: 'image_1', maxCount: 1 },
 		{ name: 'image_1_blur', maxCount: 1 },
@@ -42,4 +56,10 @@ recipeRouter.post(
 	Controllers.recipeController.post
 );
 
+recipeRouter.delete(
+	'/:id',
+	idValidator,
+	validateValidationChainResult,
+	Controllers.recipeController.remove
+);
 export { recipeRouter };

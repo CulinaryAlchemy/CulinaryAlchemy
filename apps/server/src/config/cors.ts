@@ -1,33 +1,35 @@
 import { CorsOptions } from 'cors';
 
 const corsConfig: CorsOptions = {
-	origin: (origin, next) => {
-		if (!origin) {
-			return next(
-				new Error(
-					'Rejected by cors, the is been an error on the cors configuration. origin value: ' +
-						origin
-				)
-			);
-		}
+	origin: (_origin, next) => {
+		return next(null, true);
 
-		const whiteList = process.env.ALLOWED_ORIGIN_LIST;
+		// if (!origin) {
+		// 	return next(
+		// 		new Error(
+		// 			'Rejected by cors, the is been an error on the cors configuration. origin value: ' +
+		// 				origin
+		// 		)
+		// 	);
+		// }
 
-		if (!whiteList) {
-			return next(
-				new Error(
-					'No whiteList found in server variables. Check the corsConfig to detect the error'
-				)
-			);
-		}
+		// const whiteList = process.env.ALLOWED_ORIGIN_LIST;
 
-		for (const allowedOrigin of whiteList.split(' ')) {
-			if (origin.startsWith(allowedOrigin)) {
-				return next(null, true);
-			}
-		}
+		// if (!whiteList) {
+		// 	return next(
+		// 		new Error(
+		// 			'No whiteList found in server variables. Check the corsConfig to detect the error'
+		// 		)
+		// 	);
+		// }
 
-		return next(new Error('Rejected by cors, origin: ' + origin));
+		// for (const allowedOrigin of whiteList.split(' ')) {
+		// 	if (origin?.startsWith(allowedOrigin)) {
+		// 		return next(null, true);
+		// 	}
+		// }
+
+		// return next(new Error('Rejected by cors, origin: ' + origin));
 	},
 };
 export { corsConfig };

@@ -4,6 +4,44 @@ import { ApiResponse, HttpStatusCodes } from '../../utils';
 import { Image, User } from '../../models';
 import { cloudinaryService } from '../../services';
 
+const get = {
+	byId: async (req: Request, res: Response) => {
+		const { id } = req.params;
+
+		try {
+			const recipe = await recipesProvider.get.byId(parseInt(id));
+			if (!recipe) {
+				return ApiResponse.error(res, HttpStatusCodes.NOT_FOUND, 'NOT_FOUND');
+			}
+			return ApiResponse.success(
+				res,
+				HttpStatusCodes.SUCCESS,
+				recipe,
+				'RECIPE_FOUND'
+			);
+		} catch (error) {
+			return ApiResponse.error(res, HttpStatusCodes.NOT_FOUND, 'NOT_FOUND');
+		}
+	},
+	all: async (req: Request, res: Response) => {
+		const { limit, offset } = req.query;
+
+		const parsedLimit = limit ? parseInt(limit as string) : 10;
+		const parsedOffset = offset ? parseInt(offset as string) : 0;
+
+		try {
+			const recipes = await recipesProvider.get.all(parsedLimit, parsedOffset);
+			return ApiResponse.success(
+				res,
+				HttpStatusCodes.SUCCESS,
+				recipes,
+				'RECIPES_FOUND'
+			);
+		} catch (error) {
+			return ApiResponse.error(res, HttpStatusCodes.NOT_FOUND, 'NOT_FOUND');
+		}
+	},
+};
 const post = async (req: Request, res: Response) => {
 	const {
 		title,
@@ -30,6 +68,7 @@ const post = async (req: Request, res: Response) => {
 
 	const keysInRequestFileObj = Object.keys(reqFiles);
 	let defaultImage: string = '';
+	//
 
 	for (const key of keysInRequestFileObj) {
 		const imageFile = reqFiles[key][0] as Express.Multer.File;
@@ -77,6 +116,29 @@ const post = async (req: Request, res: Response) => {
 		return;
 	}
 };
+// const put = async (req: Request, res: Response) => {};
+
+const remove = async (req: Request, res: Response) => {
+	const { id } = req.params;
+
+	try {
+		await recipesProvider.remove(parseInt(id));
+		return ApiResponse.success(
+			res,
+			HttpStatusCodes.SUCCESS,
+			null,
+			'RECIPES_FOUND'
+		);
+	} catch (error) {
+		return ApiResponse.error(
+			res,
+			HttpStatusCodes.INTERNAL_SERVER_ERROR,
+			'INTERNAL_SERVER_ERROR'
+		);
+	}
+};
 export const recipeController = {
 	post,
+	get,
+	remove,
 };

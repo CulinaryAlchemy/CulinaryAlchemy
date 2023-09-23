@@ -11,4 +11,5 @@ export interface RecipeInterface {
 	youtube_link: string | null;
 	ingredients: string; // an array in json stringified
 	spices: string | null; // an array in json stringified
+	end_date?: Date | null;
 }

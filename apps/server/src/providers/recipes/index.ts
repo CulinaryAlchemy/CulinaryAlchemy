@@ -1,11 +1,41 @@
 import { sequelize } from '../../database/database.connection';
 import { RecipeInterface, ImageInterface } from '../../interfaces';
-import { MealType, Recipe, Image } from '../../models';
+import { MealType, Recipe, Image, Dietary } from '../../models';
 import { MealTypeXRecipe, RecipeXDietary } from '../../models/shared';
 
-// const get = {
-// 	//
-// };
+const get = {
+	byId: async (id: number) => {
+		try {
+			const recipe = await Recipe.findByPk(id, {
+				include: [
+					{ model: Image, as: 'images' },
+					{ model: Dietary },
+					{ model: MealType },
+				],
+			});
+			return Promise.resolve(recipe);
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	},
+	all: async (limit: number = 10, offset: number = 0) => {
+		try {
+			const recipes = await Recipe.findAll({
+				where: { end_date: null },
+				limit: limit,
+				offset: offset,
+				include: [
+					{ model: Image, as: 'images' },
+					{ model: Dietary },
+					{ model: MealType },
+				],
+			});
+			return Promise.resolve(recipes);
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	},
+};
 const post = async (
 	recipe: RecipeInterface,
 	imagesUrls?: ImageInterface[],
@@ -111,9 +141,33 @@ const post = async (
 		);
 	}
 };
-// const put = () => {};
-// const remove = () => {};
+// const put = () => {
+// 	// check the recipe exist
+
+// 	// check is not deleted
+
+// 	// if the user want to update a image
+// 	if(imageId){
+
+// 	}
+// };
+const remove = async (recipeId: number) => {
+	try {
+		const recipe = await Recipe.findByPk(recipeId);
+		if (!recipe || recipe.end_date !== null) {
+			return Promise.reject(new Error('Recipe not found, or already deleted'));
+		}
+
+		recipe.end_date = new Date();
+		await recipe.save();
+		return Promise.resolve();
+	} catch (error) {
+		return Promise.reject(error);
+	}
+};
 
 export const recipesProvider = {
 	post,
+	get,
+	remove,
 };
