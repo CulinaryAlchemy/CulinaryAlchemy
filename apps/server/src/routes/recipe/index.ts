@@ -1,6 +1,6 @@
 import { Controllers } from '../../controllers';
 import express from 'express';
-import { body, query } from 'express-validator';
+import { body, param, query } from 'express-validator';
 import {
 	idValidator,
 	validateValidationChainResult,
@@ -57,8 +57,11 @@ recipeRouter.post(
 );
 
 recipeRouter.delete(
-	'/:id',
+	'/:id/:recipeId',
+	passportMiddleware,
+	authMiddleware,
 	idValidator,
+	param('recipeId').notEmpty().isInt(),
 	validateValidationChainResult,
 	Controllers.recipeController.remove
 );

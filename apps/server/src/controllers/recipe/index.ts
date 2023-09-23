@@ -135,10 +135,10 @@ const post = async (req: Request, res: Response) => {
 // const put = async (req: Request, res: Response) => {};
 
 const remove = async (req: Request, res: Response) => {
-	const { id } = req.params;
+	const { recipeId } = req.params;
 
 	try {
-		await recipesProvider.remove(parseInt(id));
+		await recipesProvider.remove(parseInt(recipeId));
 		return ApiResponse.success(
 			res,
 			HttpStatusCodes.SUCCESS,
