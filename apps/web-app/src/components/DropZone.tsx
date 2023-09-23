@@ -92,7 +92,8 @@ export const DropZone: React.FC<IProps> = ({ fileType, styles, onSuccess, width,
                 sx={{
                   cursor: 'pointer',
                   fontSize: '2.5em',
-                  opacity: '60%'
+                  opacity: '60%',
+                  color: 'rgb(216, 216, 223)'
                 }}
               />
             </label>

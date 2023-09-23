@@ -26,6 +26,7 @@ export const PostLayout: React.FC<IProps> = ({ children, styles }) => {
 
   return (
     <Sheet
+      component='article'
       variant='outlined'
       sx={{
         display: 'flex',
