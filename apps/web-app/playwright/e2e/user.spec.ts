@@ -9,7 +9,7 @@ test.describe('User page', () => {
         await page.getByText('My profile').click()
     })
 
-    test.only('should render the user recipes', async ({ page }) => {
+    test('should render the user recipes', async ({ page }) => {
         await expect(page.getByRole('article')).toHaveCount(5)
     })
 })

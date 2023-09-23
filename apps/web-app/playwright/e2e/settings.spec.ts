@@ -22,7 +22,7 @@ const navOptions = {
 
 const homeMessage = 'Welcome to the settings page!'
 
-test.describe.only('settings page', () => {
+test.describe('settings page', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/settings')
     })
