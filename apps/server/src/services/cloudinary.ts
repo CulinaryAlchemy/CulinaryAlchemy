@@ -9,7 +9,7 @@ export const cloudinaryService = {
 		height?: number,
 		center?: boolean,
 		optimize?: boolean
-	) => {
+	): Promise<cloudinary.UploadApiResponse> => {
 		cloudinary.v2.config({
 			cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 			api_key: process.env.CLOUDINARY_API_KEY,
@@ -38,14 +38,13 @@ export const cloudinaryService = {
 			};
 		}
 		try {
-			const result = await cloudinary.v2.uploader.upload(file.path);
+			const imageInfo = await cloudinary.v2.uploader.upload(file.path);
 
-			if (!result) {
-				return Promise.reject(result);
+			if (!imageInfo) {
+				return Promise.reject(imageInfo);
 			}
 
-			const imageUrl = result.secure_url;
-			return Promise.resolve(imageUrl);
+			return Promise.resolve(imageInfo);
 		} catch (error) {
 			console.log(error);
 			return Promise.reject(error);

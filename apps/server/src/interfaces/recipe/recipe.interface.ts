@@ -1,5 +1,5 @@
 export interface RecipeInterface {
-	id: number;
+	id?: number;
 	user_id: number;
 	title: string;
 	description: string;
@@ -11,4 +11,5 @@ export interface RecipeInterface {
 	youtube_link: string | null;
 	ingredients: string; // an array in json stringified
 	spices: string | null; // an array in json stringified
+	end_date?: Date | null;
 }

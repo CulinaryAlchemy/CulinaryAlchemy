@@ -36,4 +36,13 @@ Recipe.belongsToMany(Dietary, {
 // users x recipes
 User.hasMany(Recipe, { foreignKey: 'user_id', as: 'recipes' });
 
-export { User, Role, Recipe, MealType, Dietary, UserDietary };
+export {
+	User,
+	Role,
+	Recipe,
+	Image,
+	MealType,
+	Dietary,
+	UserDietary,
+	RecipeXDietary,
+};

@@ -16,6 +16,7 @@ class Recipe extends Model<RecipeInterface> implements RecipeInterface {
 	ingredients!: string;
 	spices!: string | null;
 	youtube_link!: string | null;
+	end_date!: Date | null;
 }
 Recipe.init(
 	{
@@ -57,6 +58,7 @@ Recipe.init(
 			validate: {
 				isInt: true,
 				min: 0,
+				max: 180,
 			},
 		},
 		equipment_needed: {
@@ -68,6 +70,7 @@ Recipe.init(
 			allowNull: true,
 			validate: {
 				min: 0,
+				max: 100,
 				isInt: true,
 			},
 		},
@@ -81,6 +84,10 @@ Recipe.init(
 			validate: {
 				isUrl: true,
 			},
+		},
+		end_date: {
+			type: DataTypes.DATE,
+			allowNull: true,
 		},
 	},
 	{
