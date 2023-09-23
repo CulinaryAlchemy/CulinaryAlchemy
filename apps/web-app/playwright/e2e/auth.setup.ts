@@ -1,5 +1,7 @@
 import { test as setup } from '@playwright/test'
 
+setup.use({ actionTimeout: 60000 })
+
 const formName = {
     email: 'Email',
     password: 'Password',
