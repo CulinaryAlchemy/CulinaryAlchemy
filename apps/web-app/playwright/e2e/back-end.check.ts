@@ -1,11 +1,14 @@
-import { expect, test as setup } from '@playwright/test'
+import { test as check, expect } from '@playwright/test'
 
 const status = {
     serverOnline: 'Server is online',
     tryOutTheApp: 'Try out the app :)'
 }
 
-setup('check back-end server status', async ({ page }) => {
+check('check back-end server status', async ({ page }) => {
+
+    check.setTimeout(300000)
+
     await page.goto('/')
 
     await page.waitForURL('/login')
