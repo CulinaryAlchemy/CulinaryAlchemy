@@ -3,6 +3,7 @@ import { recipesProvider } from '../../providers/recipes';
 import { ApiResponse, HttpStatusCodes } from '../../utils';
 import { Image, User } from '../../models';
 import { cloudinaryService } from '../../services';
+import { sequelize } from '../../database/database.connection';
 
 const get = {
 	byId: async (req: Request, res: Response) => {
@@ -58,6 +59,8 @@ const post = async (req: Request, res: Response) => {
 
 	const user_id = parseInt(req.params.id);
 
+	const t = await sequelize.transaction();
+
 	// we check the user exist
 	const doesUserExist = await User.findByPk(user_id);
 	if (!doesUserExist || doesUserExist.deletedAt !== null) {
@@ -67,8 +70,16 @@ const post = async (req: Request, res: Response) => {
 	const reqFiles = (req as any).files;
 
 	const keysInRequestFileObj = Object.keys(reqFiles);
+	// we verify we have couples of images
+	if (keysInRequestFileObj.length % 2 !== 0) {
+		return ApiResponse.error(
+			res,
+			HttpStatusCodes.BAD_REQUEST,
+			'every iamge must have a blur image'
+		);
+	}
+
 	let defaultImage: string = '';
-	//
 
 	for (const key of keysInRequestFileObj) {
 		const imageFile = reqFiles[key][0] as Express.Multer.File;
@@ -83,11 +94,14 @@ const post = async (req: Request, res: Response) => {
 			if (!defaultImage) {
 				throw new Error('internal server error');
 			}
-			await Image.create({
-				owner_id: user_id,
-				blur_url: imageUrl,
-				default_url: defaultImage,
-			});
+			await Image.create(
+				{
+					owner_id: user_id,
+					blur_url: imageUrl,
+					default_url: defaultImage,
+				},
+				{ transaction: t }
+			);
 		}
 	}
 
@@ -105,9 +119,11 @@ const post = async (req: Request, res: Response) => {
 			spices: JSON.stringify(spices),
 			youtube_link,
 		});
+		await t.commit();
 		ApiResponse.success(res, HttpStatusCodes.CREATED, newRecipe, '');
 		return;
 	} catch (error) {
+		await t.rollback();
 		ApiResponse.error(
 			res,
 			HttpStatusCodes.INTERNAL_SERVER_ERROR,
