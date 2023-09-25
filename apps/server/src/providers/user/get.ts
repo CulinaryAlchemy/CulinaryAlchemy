@@ -1,4 +1,4 @@
-import { Recipe, User, UserDietary } from '../../models/';
+import { Recipe, Role, User, UserDietary } from '../../models/';
 
 export const getUser = {
 	ById: async (id: number, isForInternalServerUse: boolean = false) => {
@@ -25,6 +25,7 @@ export const getUser = {
 						as: 'userDietary',
 						attributes: ['dietaryId'],
 					},
+					{ model: Role, as: 'role' },
 				],
 			});
 			return Promise.resolve(user);
@@ -51,6 +52,7 @@ export const getUser = {
 					...whereCondition,
 				},
 				attributes: { exclude: [...excludedPropety] },
+				include: [{ model: Role, as: 'role' }],
 			});
 			return Promise.resolve(user);
 		} catch (error) {
@@ -60,7 +62,7 @@ export const getUser = {
 	byUsername: async (
 		username: string,
 		includeProfile: boolean = false,
-		isForInternalServerUse: boolean = false,
+		isForInternalServerUse: boolean = false
 	) => {
 		let excludedPropety: string[] = [];
 		if (!isForInternalServerUse) {
@@ -77,7 +79,10 @@ export const getUser = {
 		// eslint-disable-next-line prefer-const
 		let includeOptions = [];
 		if (includeProfile) {
-			includeOptions.push({ model: Recipe, as: 'recipes' });
+			includeOptions.push(
+				{ model: Recipe, as: 'recipes' },
+				{ model: Role, as: 'role' }
+			);
 		}
 
 		try {
