@@ -115,7 +115,7 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
         <Form
           buttonSubmitName={t('save')}
           onSubmit={handleOnSubmit}
-          inputsData={accountInformationSelectedInputsArray}
+          inputsDataMain={accountInformationSelectedInputsArray}
           schema={accountInformationInputsAccountTabSchema}
           defaultValues={user}
           buttonSubmitSide='default'

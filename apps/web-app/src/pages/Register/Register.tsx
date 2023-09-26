@@ -24,7 +24,7 @@ const Register = () => {
   return (
     <GlobalLayout newTitle={metadata.title}>
       <Form
-        inputsData={inputsArray}
+        inputsDataMain={inputsArray}
         schema={registerInputsSchema}
         buttonSubmitName={t('sign up')}
         onSubmit={handleOnSumbit}

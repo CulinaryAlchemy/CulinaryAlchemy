@@ -24,7 +24,7 @@ const Login = () => {
     <GlobalLayout newTitle={metadata.title}>
       <Form
         schema={loginInputsSchema}
-        inputsData={inputsArray}
+        inputsDataMain={inputsArray}
         onSubmit={handleOnSumbit}
         buttonSubmitName={t('login2')}
         Header={<LoginHeader />}
