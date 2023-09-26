@@ -36,7 +36,7 @@ export const DeterminateInput: React.FC<IProps> = ({ data, register, error, watc
     return <TextArea {...{ data, register, error, styles: inputStyles?.textArea }}/>
   }
   if (data.formInputType === 'dropZone') {
-    return <DropZone {...{ data, register, error }}/>
+    return <DropZone {...{ data, register, error, watch }}/>
   }
   if (data.formInputType === 'checkbox') {
     return <CheckBox {...{ data, register, watch }}/>

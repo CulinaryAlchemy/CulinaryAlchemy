@@ -23,7 +23,7 @@ const DietaryPreferencesPanel = () => {
           <Form
             buttonSubmitName={t('save')}
             onSubmit={handleOnSubmit}
-            inputsData={dietaryPreferencesSelectedInputsArray}
+            inputsDataMain={dietaryPreferencesSelectedInputsArray}
             schema={dietaryPreferencesInputsSchema}
             buttonSubmitSide='default'
             styles={{

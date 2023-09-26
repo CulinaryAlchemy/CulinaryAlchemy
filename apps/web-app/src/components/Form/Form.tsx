@@ -34,7 +34,8 @@ interface IStyles {
 
 interface IForm {
   schema: ZodObject<ZodRawShape>
-  inputsData: TFormInputArray
+  inputsDataMain: TFormInputArray
+  inputsDataFooter?: TFormInputArray
   onSubmit: SubmitHandler<FieldValues>
   Header?: React.ReactNode
   Footer?: React.ReactNode
@@ -49,7 +50,7 @@ interface IForm {
 const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1em' }
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
-export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide }) => {
+export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide, inputsDataFooter }) => {
   const {
     register,
     handleSubmit: defaultHandleSubmit,
@@ -96,11 +97,12 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
         }}
       >
         <form onSubmit={defaultHandleSubmit(onSubmit)} noValidate>
-          <Sheet sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2
-          }}>
+          <Sheet
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2
+            }}>
             {Header}
             <main>
               <Suspense>
@@ -117,7 +119,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
                   ]
                 }
                 >
-                  {inputsData.map((inputData, index) => (
+                  {inputsDataMain.map((inputData, index) => (
                     <DeterminateInput
                       key={index}
                       data={inputData}
@@ -145,42 +147,70 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsData, onSub
                     />
                   ))}
                 </Box>
-              </Suspense>
-              <Stack
-                direction='row'
-                spacing={1}
-                marginTop={1}
-                justifyContent={buttonSubmitSide}
-              >
-                <Button
-                  type='submit'
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: '1em',
-                    flexGrow: buttonSubmitSide === 'default' ? 1 : 0
-                  }}
-                  disabled={Object.values(errors).length > 0 || !isDirty}
+                <Stack
+                  direction='row'
+                  spacing={1}
+                  marginTop={1}
+                  justifyContent={buttonSubmitSide}
                 >
-                    {buttonSubmitName}
-                </Button>
-                {showResetButton &&
+                  {inputsDataFooter?.[0] != null &&
+                    inputsDataFooter.map((inputData, index) => (
+                      <DeterminateInput
+                        key={index}
+                        data={inputData}
+                        register={register(inputData.name,
+                          {
+                            setValueAs: (value) => {
+                              // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                              return value !== '' ? value : undefined
+                            },
+                            onChange: (event: SyntheticEvent) => {
+                              const value = (event.target as HTMLInputElement).value
+
+                              return value !== '' ? value : undefined
+                            }
+                          }
+                        )}
+                        {...{
+                          watch,
+                          setError,
+                          clearErrors,
+                          inputStyles
+                        }}
+                        isDirty={dirtyFields[inputData.name] as boolean}
+                        error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
+                      />
+                    ))}
                   <Button
+                    type='submit'
                     sx={{
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginTop: '1em'
+                      marginTop: '1em',
+                      flexGrow: buttonSubmitSide === 'default' ? 1 : 0
                     }}
-                    size='sm'
-                    variant='outlined'
-                    onClick={handleOnClickForReset}
+                    disabled={Object.values(errors).length > 0 || !isDirty}
                   >
-                    Reset
+                    {buttonSubmitName}
                   </Button>
-                }
-              </Stack>
+                  {showResetButton &&
+                    <Button
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: '1em'
+                      }}
+                      size='sm'
+                      variant='outlined'
+                      onClick={handleOnClickForReset}
+                    >
+                      Reset
+                    </Button>
+                  }
+                </Stack>
+              </Suspense>
             </main>
             {Footer}
           </Sheet>

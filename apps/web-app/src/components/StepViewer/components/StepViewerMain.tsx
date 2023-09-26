@@ -64,7 +64,7 @@ export const StepViewerMain = () => {
                   isEditModeEnable
                     ? <Form
                       buttonSubmitName='Save'
-                      inputsData={stepViewerInputsArray}
+                      inputsDataMain={stepViewerInputsArray}
                       schema={stepViewerInputsSchema}
                       onSubmit={() => { handleOnClick() }}
                       buttonSubmitSide='default'

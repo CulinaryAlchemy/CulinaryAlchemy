@@ -1,13 +1,15 @@
 import { PublicationBox, Recipe } from '@/components'
-import { homeInputsArray, homeInputsSchema } from '@/pages/Home/models'
+import { homeInputsArrayFooter, homeInputsArrayMain, homeInputsSchema } from '@/pages/Home/models'
+import { loggerInstance } from '@/services'
 import Sheet from '@mui/joy/Sheet'
 
 const RecipesTabPanel = () => {
   return (
         <>
             <PublicationBox
-                onSubmit={() => { }}
-                inputsData={homeInputsArray}
+                onSubmit={(data) => { loggerInstance.log('RecipesTabPanel.tsx', data) }}
+                inputsDataMain={homeInputsArrayMain}
+                inputsDataFooter={homeInputsArrayFooter}
                 schema={homeInputsSchema}
             />
             <Sheet sx={{ maxWidth: '37.5em', margin: 'auto' }}>
