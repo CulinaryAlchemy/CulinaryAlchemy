@@ -8,6 +8,7 @@ import Tooltip from '@mui/joy/Tooltip'
 import Typography from '@mui/joy/Typography'
 import { useEffect, useState } from 'react'
 import { type FieldValues, type UseFormRegisterReturn, type UseFormWatch } from 'react-hook-form'
+import styles from './droZone.module.css'
 
 interface IProps {
   data: TDropZoneForm
@@ -26,7 +27,7 @@ const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
 
     const timeout = setTimeout(() => {
       setIsThereError(false)
-    }, 5000)
+    }, 15000)
 
     return () => {
       clearTimeout(timeout)
@@ -47,8 +48,14 @@ const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
           {files.length} / 4
         </Typography>
       }
-      <Tooltip title={error} open={isThereError}>
-        <FormControl>
+      <Tooltip
+        color={error ? 'danger' : 'neutral'}
+        title={error}
+        open={isThereError}
+      >
+        <FormControl
+          className={error && styles['shake-horizontal']}
+        >
           <FormLabel
             sx={{
               display: 'flex',
@@ -72,8 +79,8 @@ const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
               sx={{
                 cursor: 'pointer',
                 fontSize: '1.7em',
-                opacity: '60%',
-                color: error && '#ff6666',
+                opacity: error ? '100%' : '60%',
+                color: error ? '#ff9d9d' : 'initial',
                 margin: 0
               }}
             />

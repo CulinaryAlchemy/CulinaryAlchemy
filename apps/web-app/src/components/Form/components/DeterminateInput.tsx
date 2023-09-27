@@ -3,7 +3,7 @@ import { type IInputStyles } from '@/models/UI'
 import { lazy } from 'react'
 import { type FieldValues, type UseFormClearErrors, type UseFormRegisterReturn, type UseFormSetError, type UseFormWatch } from 'react-hook-form'
 
-const DropZone = lazy(() => import('@/components/Form/components/DropZone'))
+const DropZone = lazy(() => import('@/components/Form/components/DropZone/DropZone'))
 const TextArea = lazy(() => import('@/components/Form/components/TextArea'))
 const TextField = lazy(() => import('@/components/Form/components/TextField'))
 const TextFieldAsync = lazy(() => import('@/components/Form/components/TextFieldAsync'))
