@@ -11,6 +11,7 @@ import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button/'
 import Sheet from '@mui/joy/Sheet/'
 import Stack from '@mui/joy/Stack'
+import { toast } from 'sonner'
 import { adaptDefaultValues } from './adapters'
 
 interface IInputsStyles {
@@ -30,6 +31,7 @@ interface IStyles {
   marginY?: string
   justifyContent?: 'center' | 'start'
   gap?: number
+  backgroundColor?: string
 }
 
 interface IForm {
@@ -74,52 +76,93 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
     reset()
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleOnSubmit = defaultHandleSubmit((data: FieldValues, event: React.BaseSyntheticEvent<object, any, any> | undefined) => {
+    if (!isDirty) {
+      toast('The form is not dirty')
+      return
+    }
+
+    console.log('returning')
+    onSubmit(data, event)
+  })
+
   return (
-    <Box
+    <Sheet
+      variant='outlined'
       sx={{
         width: '100%',
         maxWidth: styles.width,
-        mx: 'auto'
+        my: styles.marginY ?? 4,
+        py: styles.paddingY ?? 3,
+        px: styles.paddingX ?? 2,
+        borderRadius: 'sm',
+        boxShadow: styles.border ?? 'md',
+        border: styles.border,
+        mx: 'auto',
+        backgroundColor: styles.backgroundColor
       }}
     >
-      <Sheet
-        variant='outlined'
-        sx={{
-          width: '100%',
-          maxWidth: styles.width,
-          my: styles.marginY ?? 4,
-          py: styles.paddingY ?? 3,
-          px: styles.paddingX ?? 2,
-          borderRadius: 'sm',
-          boxShadow: styles.border ?? 'md',
-          border: styles.border,
-          zIndex: 100
-        }}
-      >
-        <form onSubmit={defaultHandleSubmit(onSubmit)} noValidate>
-          <Sheet
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2
-            }}>
-            {Header}
-            <main>
-              <Suspense>
-                <Box sx={
-                  [
-                    {
-                      display: styles.display,
-                      width: '100%',
-                      flexWrap: styles.flexWrap,
-                      justifyContent: styles.justifyContent
-                    },
-                    styles.gridColumns === 1 && gridFormStyles1,
-                    styles.gridColumns === 2 && gridFormStyles2
-                  ]
-                }
-                >
-                  {inputsDataMain.map((inputData, index) => (
+      <form onSubmit={handleOnSubmit} noValidate>
+        <Sheet
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            backgroundColor: styles.backgroundColor
+          }}>
+          {Header}
+          <main>
+            <Suspense>
+              <Box sx={
+                [
+                  {
+                    display: styles.display,
+                    width: '100%',
+                    flexWrap: styles.flexWrap,
+                    justifyContent: styles.justifyContent
+                  },
+                  styles.gridColumns === 1 && gridFormStyles1,
+                  styles.gridColumns === 2 && gridFormStyles2
+                ]
+              }
+              >
+                {inputsDataMain.map((inputData, index) => (
+                  <DeterminateInput
+                    key={index}
+                    data={inputData}
+                    register={register(inputData.name,
+                      {
+                        setValueAs: (value) => {
+                          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                          return value !== '' ? value : undefined
+                        },
+                        onChange: (event: SyntheticEvent) => {
+                          const value = (event.target as HTMLInputElement).value
+
+                          return value !== '' ? value : undefined
+                        }
+                      }
+                    )}
+                    {...{
+                      watch,
+                      setError,
+                      clearErrors,
+                      inputStyles
+                    }}
+                    isDirty={dirtyFields[inputData.name] as boolean}
+                    error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
+                  />
+                ))}
+              </Box>
+              <Stack
+                direction='row'
+                spacing={1}
+                marginTop={1}
+                justifyContent={buttonSubmitSide}
+              >
+                {inputsDataFooter?.[0] != null &&
+                  inputsDataFooter.map((inputData, index) => (
                     <DeterminateInput
                       key={index}
                       data={inputData}
@@ -146,77 +189,43 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                       error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
                     />
                   ))}
-                </Box>
-                <Stack
-                  direction='row'
-                  spacing={1}
-                  marginTop={1}
-                  justifyContent={buttonSubmitSide}
+                <Button
+                  type='submit'
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '1em',
+                    minHeight: '2.6em',
+                    borderRadius: '0.4em',
+                    flexGrow: buttonSubmitSide === 'default' ? 1 : 0
+                  }}
+                  disabled={Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0) }
                 >
-                  {inputsDataFooter?.[0] != null &&
-                    inputsDataFooter.map((inputData, index) => (
-                      <DeterminateInput
-                        key={index}
-                        data={inputData}
-                        register={register(inputData.name,
-                          {
-                            setValueAs: (value) => {
-                              // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                              return value !== '' ? value : undefined
-                            },
-                            onChange: (event: SyntheticEvent) => {
-                              const value = (event.target as HTMLInputElement).value
-
-                              return value !== '' ? value : undefined
-                            }
-                          }
-                        )}
-                        {...{
-                          watch,
-                          setError,
-                          clearErrors,
-                          inputStyles
-                        }}
-                        isDirty={dirtyFields[inputData.name] as boolean}
-                        error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
-                      />
-                    ))}
+                  {buttonSubmitName}
+                </Button>
+                {showResetButton &&
                   <Button
-                    type='submit'
                     sx={{
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginTop: '1em',
-                      flexGrow: buttonSubmitSide === 'default' ? 1 : 0
+                      marginTop: '1em'
                     }}
-                    disabled={Object.values(errors).length > 0 || !isDirty}
+                    size='sm'
+                    variant='outlined'
+                    onClick={handleOnClickForReset}
                   >
-                    {buttonSubmitName}
+                    Reset
                   </Button>
-                  {showResetButton &&
-                    <Button
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginTop: '1em'
-                      }}
-                      size='sm'
-                      variant='outlined'
-                      onClick={handleOnClickForReset}
-                    >
-                      Reset
-                    </Button>
-                  }
-                </Stack>
-              </Suspense>
-            </main>
-            {Footer}
-          </Sheet>
-        </form >
-      </Sheet >
-    </Box>
+                }
+              </Stack>
+            </Suspense>
+          </main>
+          {Footer}
+        </Sheet>
+      </form >
+    </Sheet >
   )
 }
 

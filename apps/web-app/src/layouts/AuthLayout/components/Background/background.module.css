@@ -1,12 +1,9 @@
+.background__container {
+    overflow: hidden;
+    background-color: #00000030;
+}
 .background {
-    position: fixed;
     font-size: 4em;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    width: 100dvw;
-    height: 100vh;
-    height: 100dvh;
     z-index: 10;
     rotate: -10deg;
     transform: translateY(-20%);
@@ -46,6 +43,32 @@
     filter: drop-shadow(1px 1px 30px var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D)));
 }
 
+
+@media (width < 900px) {
+    .background__container {
+        position: absolute;
+        filter: blur(9px);
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -10;
+        top: -10px;
+    }
+
+    .background {
+        z-index: -10;
+    }
+}
+
+@keyframes background__container-animation {
+    0% {
+        background: black
+    }
+    100% {
+        
+    }
+}
 @keyframes scrollAnimationLeft {
     0% {
         transform: translateX(0)

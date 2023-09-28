@@ -1,8 +1,9 @@
-import { Header } from '@/components'
+
 import { AuthGuard, CFrontRoutes, SuspenseRouter } from '@/routing'
 import { Suspense, lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
+const AppLayout = lazy(() => import('@/layouts/AppLayout/AppLayout'))
 const HomePage = lazy(() => import('@/pages/Home/Home'))
 const NotFoundPage = lazy(() => import('@/pages/NotFound/NotFound'))
 const LoginPage = lazy(() => import('@/pages/Login/Login'))
@@ -16,7 +17,6 @@ const AuthLayout = lazy(() => import('@/layouts/AuthLayout/AuthLayout'))
 export const Routing = () => {
   return (
     <SuspenseRouter window={window}>
-      <Header />
       <Suspense>
         <Routes>
           <Route element={<AuthGuard />}>
@@ -24,14 +24,16 @@ export const Routing = () => {
               <Route path={CFrontRoutes.Static.auth.register} element={<RegisterPage />} />
               <Route path={CFrontRoutes.Static.auth.login} element={<LoginPage />} />
             </Route>
-            <Route path={CFrontRoutes.Static.base} element={<Navigate to={CFrontRoutes.Static.home} />} />
-            <Route path={CFrontRoutes.Static.home} element={<HomePage />} />
-            <Route path={CFrontRoutes.Static.settings.home.absolute + '/*'} element={<SettingsPage />} />
-            <Route path={CFrontRoutes.Static.recipe} element={<RecipePage />} />
-            <Route path={CFrontRoutes.Static.cooking} element={<CookingPage />} />
+            <Route element={<AppLayout />}>
+              <Route path={CFrontRoutes.Static.base} element={<Navigate to={CFrontRoutes.Static.home} />} />
+              <Route path={CFrontRoutes.Static.home} element={<HomePage />} />
+              <Route path={CFrontRoutes.Static.settings.home.absolute + '/*'} element={<SettingsPage />} />
+              <Route path={CFrontRoutes.Static.recipe} element={<RecipePage />} />
+              <Route path={CFrontRoutes.Static.cooking} element={<CookingPage />} />
+              <Route path={CFrontRoutes.Static.user} element={<UserPage />} />
+              <Route path={CFrontRoutes.Static.notFound} element={<NotFoundPage />} />
+            </Route>
           </Route>
-          <Route path={CFrontRoutes.Static.user} element={<UserPage />} />
-          <Route path={CFrontRoutes.Static.notFound} element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </SuspenseRouter>
