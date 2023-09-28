@@ -30,10 +30,13 @@ const Login = () => {
         Header={<LoginHeader />}
         Footer={<LoginFooter />}
         buttonSubmitSide='default'
+        showResetButton={false}
         styles={{
           display: 'grid',
           gridColumns: 1,
-          width: '300px'
+          width: '400px',
+          border: 'none',
+          backgroundColor: 'transparent'
         }}
       />
     </GlobalLayout>

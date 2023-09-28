@@ -40,9 +40,6 @@ export const Header = () => {
               : (
                 <AppLink
                   to={CFrontRoutes.Static.auth.register}
-                  sx={{
-                    zIndex: 100
-                  }}
                 >
                   {t('sign up')}
                 </AppLink>
