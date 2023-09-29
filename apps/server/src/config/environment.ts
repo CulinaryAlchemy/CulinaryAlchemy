@@ -1,6 +1,6 @@
 import { UserProvider } from '../providers/user';
 
-const checkEnvironmentEnv = async () => {
+const checkEnvironmentEnv = () => {
 	const environmentVars = [
 		'JWT_SECRET',
 		'PORT',
