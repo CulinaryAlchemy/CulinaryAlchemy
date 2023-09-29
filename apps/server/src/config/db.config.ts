@@ -1,16 +1,20 @@
 import { Options } from 'sequelize';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// let sslConfig: any = { require: true, rejectUnauthorized: true };
-// if (process.env.ENVIRONMENT === 'development') {
-// 	sslConfig = { require: false, rejectUnauthorized: false };
-// }
+function getSslConfig() {
+	if (process.env.ENVIRONMENT === 'development') {
+		return;
+	}
+
+	return { ssl: { require: true, rejectUnauthorized: true } };
+}
+
+const logging: boolean = JSON.parse(process.env.ALLOW_DB_LOGGIN as string);
 
 const dbConfig: Options = {
 	dialect: 'postgres',
-	ssl: false,
+	logging,
 	dialectOptions: {
-		// ssl: { ...sslConfig },
+		...getSslConfig(),
 		define: {
 			timestamps: false,
 			charset: 'utf8',
