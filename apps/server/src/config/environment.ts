@@ -12,6 +12,7 @@ const checkEnvironmentEnv = async () => {
 		'CLOUDINARY_API_SECRET',
 		'CLOUDINARY_CLOUD_NAME',
 		'ALLOWED_ORIGIN_LIST',
+		'ALLOW_DB_LOGGIN'
 	];
 
 	// we check all environments variables are setted
