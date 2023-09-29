@@ -1,5 +1,6 @@
 import { Options } from 'sequelize';
-
+import { checkEnvironmentEnv } from './index';
+checkEnvironmentEnv()
 function getSslConfig() {
 	if (process.env.ENVIRONMENT === 'development') {
 		return;
