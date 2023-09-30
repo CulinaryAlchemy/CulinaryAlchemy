@@ -7,7 +7,7 @@ export const homeInputsArrayMain: TFormInputArray = [
   {
     formInputType: 'textArea',
     label: 'What have u prepared today?',
-    name: 'post-area',
+    name: 'title',
     placeholder: 'I\'ve prepare a ...',
     validation: zValidator.string().min(10).max(50)
   }

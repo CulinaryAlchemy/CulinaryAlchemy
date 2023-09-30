@@ -83,7 +83,6 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
       return
     }
 
-    console.log('returning')
     onSubmit(data, event)
   })
 

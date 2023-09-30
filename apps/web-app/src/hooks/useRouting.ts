@@ -7,9 +7,9 @@ export const useRouting = () => {
     navigate(-1)
   }
 
-  const to = (route: string) => {
+  const goto = (route: string) => {
     navigate(route)
   }
 
-  return { backToLastPage, to }
+  return { backToLastPage, goto }
 }
