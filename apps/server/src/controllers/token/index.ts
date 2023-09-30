@@ -16,7 +16,7 @@ export const Token = {
 		}
 		try {
 			// get secret
-			const SECRET = process.env.SECRET;
+			const SECRET = process.env.JWT_SECRET;
 
 			// check secret
 			const tokenDecoded: any = verify(token, SECRET as Secret);
