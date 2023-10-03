@@ -32,6 +32,7 @@ interface IStyles {
   justifyContent?: 'center' | 'start'
   gap?: number
   backgroundColor?: string
+  gridTemplateAreas?: string
 }
 
 interface IForm {
@@ -118,6 +119,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                   {
                     display: styles.display,
                     width: '100%',
+                    gridTemplateAreas: styles.gridTemplateAreas,
                     flexWrap: styles.flexWrap,
                     justifyContent: styles.justifyContent
                   },

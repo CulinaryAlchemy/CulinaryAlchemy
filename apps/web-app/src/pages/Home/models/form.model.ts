@@ -5,11 +5,83 @@ import { z as zValidator } from 'zod'
 
 export const homeInputsArrayMain: TFormInputArray = [
   {
-    formInputType: 'textArea',
-    label: 'What have u prepared today?',
+    formInputType: 'textField',
+    label: 'Recipe title',
     name: 'title',
-    placeholder: 'I\'ve prepare a ...',
+    placeholder: 'La mue cream',
+    async: false,
+    type: 'text',
     validation: zValidator.string().min(10).max(50)
+  },
+  {
+    formInputType: 'textArea',
+    label: 'Recipe description',
+    name: 'description',
+    placeholder: 'I\'ve prepare a ...',
+    validation: zValidator.string().min(10).max(150)
+  },
+  {
+    formInputType: 'textField',
+    label: 'Author notes',
+    name: 'authors_notes',
+    placeholder: 'Don\'t use lemon',
+    async: false,
+    type: 'text',
+    validation: zValidator.string().min(10).max(50).optional()
+  },
+  {
+    formInputType: 'textField',
+    label: 'Cooking time',
+    name: 'cooking_time',
+    placeholder: '7',
+    async: false,
+    type: 'text',
+    validation: zValidator.string().min(1).max(7)
+  },
+  {
+    formInputType: 'textField',
+    label: 'Servings',
+    name: 'servings',
+    placeholder: 'servings',
+    async: false,
+    type: 'text',
+    validation: zValidator.string().min(5).max(70)
+  },
+  {
+    formInputType: 'textField',
+    label: 'Equipment needed',
+    name: 'equipment_needed',
+    placeholder: 'knife, meal, etc...',
+    async: false,
+    type: 'text',
+    validation: zValidator.string().min(5).max(70)
+  },
+  {
+    formInputType: 'textField',
+    label: 'Ingredients',
+    name: 'ingredients',
+    placeholder: 'lemon, meal, salt, etc...',
+    async: false,
+    type: 'text',
+    validation: zValidator.string().min(5).max(70)
+  },
+  {
+    formInputType: 'textField',
+    label: 'Spices',
+    name: 'spices',
+    placeholder: 'lemon, meal, salt, etc...',
+    async: false,
+    type: 'text',
+    validation: zValidator.string().min(5).max(70).optional()
+  },
+  {
+    formInputType: 'textField',
+    label: 'Youtube link',
+    name: 'youtube_link',
+    placeholder: 'lemon, meal, salt, etc...',
+    async: false,
+    type: 'text',
+    validation: zValidator.string().min(5).max(70).refine((value) => value.trim().includes('www.youtube.com'), { message: 'Invalid url' }).optional()
   }
 ]
 
