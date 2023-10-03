@@ -36,7 +36,8 @@ const Login = () => {
           gridColumns: 1,
           width: '400px',
           border: 'none',
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
+          gridTemplateAreas: '"email" "password"'
         }}
       />
     </GlobalLayout>

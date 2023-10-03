@@ -38,7 +38,8 @@ const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
     <Stack
       sx={{
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        gridArea: register.name
       }}
     >
       {files?.[0] != null &&

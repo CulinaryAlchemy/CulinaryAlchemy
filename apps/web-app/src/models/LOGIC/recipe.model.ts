@@ -1,9 +1,9 @@
 export interface IRecipe {
-  id: number
-  user_id: number
+  id?: number
+  user_id?: number
   title: string
   description: string
-  steps: string
+  steps?: string
   authors_notes: string | null
   cooking_time: number
   servings: number
@@ -12,6 +12,12 @@ export interface IRecipe {
   spices: string | null
   youtube_link: string | null
   end_date: Date | null
+  image_1?: string
+  image_1_blur?: string
+  image_2?: string
+  image_2_blur?: string
+  image_3?: string
+  image_3_blur?: string
 }
 
 export type TRecipeIds = number[]

@@ -13,18 +13,12 @@ export const HomeHeader = () => {
   const handleOnSubmit = async (data: unknown) => {
     let newUserData = data as IRecipe
 
-    newUserData.description = 'teeest'
-    newUserData.steps = 'hola como vamos'
-    newUserData.cooking_time = 20
-
     // @ts-expect-error testing
-    const image = await convertToBase64(data?.['images-dropzone'][0])
+    const image = await convertToBase64(data?.['images-dropzone'][0]) as string
 
     newUserData = {
+      ...newUserData,
       user_id: 1,
-      title: 'Recipe title',
-      description: 'A description for the recipe.',
-      // @ts-expect-error testing
       image_1: image,
       image_1_blur: image,
       image_2: image,

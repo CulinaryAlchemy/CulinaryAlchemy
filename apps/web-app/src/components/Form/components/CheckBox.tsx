@@ -21,7 +21,8 @@ const CheckBox: React.FC<IProps> = ({ data, register, watch }) => {
         isChecked && <CheckIcon sx={{ zIndex: 1, pointerEvents: 'none' }} />
       }
       sx={{
-        margin: '0.3em'
+        margin: '0.3em',
+        gridArea: register.name
       }}
     >
       <Checkbox

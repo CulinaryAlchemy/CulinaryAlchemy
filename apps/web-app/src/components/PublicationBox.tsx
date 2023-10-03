@@ -53,12 +53,13 @@ export const PublicationBox: React.FC<IProps> = ({ schema, inputsDataMain, input
           buttonSubmitName={t('post')}
           buttonSubmitSide='end'
           styles={{
-            display: 'flex',
+            display: 'grid',
             width: '100%',
             border: 'none',
             paddingY: '0px',
             marginY: '0px',
-            paddingX: '0px'
+            paddingX: '0px',
+            gridTemplateAreas: '"title title title" "description description description" "authors_notes authors_notes cooking_time" "servings equipment_needed equipment_needed" "ingredients ingredients spices" "youtube_link youtube_link youtube_link"'
           }}
           {...{ schema, inputsDataMain, inputsDataFooter, onSubmit }}
         />
