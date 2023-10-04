@@ -12,7 +12,7 @@ const checkEnvironmentEnv = () => {
 		'CLOUDINARY_API_SECRET',
 		'CLOUDINARY_CLOUD_NAME',
 		'ALLOWED_ORIGIN_LIST',
-		'ALLOW_DB_LOGGIN'
+		'ALLOW_DB_LOGGIN',
 	];
 
 	// we check all environments variables are setted
@@ -31,11 +31,16 @@ async function showEnvironmet() {
 	if (process.env.ENVIRONMENT === 'development') {
 		const testUser = await UserProvider.getUser.byUsername('test123');
 		console.log(
-			`the test user is: username: ${testUser?.username} password: ${process.env.TEST_PASSWORD}`
+			`the test user user username is: ${testUser?.username}, and the password is: ${process.env.TEST_PASSWORD}`
 		);
 		const adminUser = await UserProvider.getUser.byUsername('culinaryalchemy');
 		console.log(
-			`the admin user is: username: ${adminUser?.username} password: ${process.env.ADMIN_PASSWORD}`
+			`the admin user username is: ${adminUser?.username}, and the password is: ${process.env.ADMIN_PASSWORD}`
+		);
+		console.log(`your db uri is: ${process.env.POSTGRESQL_DB_URI}`);
+
+		console.log(
+			'the logs listed above are outputed because you are running th server in developmnet mode, this doesnt shows on production'
 		);
 	}
 }
