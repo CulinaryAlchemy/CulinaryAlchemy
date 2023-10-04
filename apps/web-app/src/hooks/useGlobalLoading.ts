@@ -1,3 +1,3 @@
-import { useLoadingContext } from '@/context'
+import { useLocalLoading } from '@/hooks'
 
-export const useGlobalLoading = () => useLoadingContext()
+export const useGlobalLoading = () => useLocalLoading()

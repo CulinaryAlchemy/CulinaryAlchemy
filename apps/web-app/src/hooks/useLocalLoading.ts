@@ -1,11 +1,9 @@
-import { useState } from 'react'
+import { globalLoadingInstance } from '@/components/GlobalLoading/services'
 
 export const useLocalLoading = () => {
-  const [isVisibleLoading, setIsVisibleLoader] = useState(false)
-
   const toggleLoadingVisibility = () => {
-    setIsVisibleLoader((loadingValue) => !loadingValue)
+    globalLoadingInstance.sendMessage()
   }
 
-  return { isVisibleLoading, toggleLoadingVisibility }
+  return { toggleLoadingVisibility }
 }
