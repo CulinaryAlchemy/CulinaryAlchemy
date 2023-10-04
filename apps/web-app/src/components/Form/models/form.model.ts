@@ -29,6 +29,7 @@ interface IDropZoneForm {
   formInputType: 'dropZone'
   accept: string
   type: 'file'
+  maxFiles: number
 }
 
 interface ICheckBoxForm {
