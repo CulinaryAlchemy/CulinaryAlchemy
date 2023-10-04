@@ -18,5 +18,9 @@ export const useCarousel = ({ imageSources }: IParams) => {
     setImageIndex((lastImageIndex) => lastImageIndex - 1)
   }
 
-  return { nextImage, previousImage, imageIndex }
+  const setNewImageIndex = (index: number) => {
+    setImageIndex(index)
+  }
+
+  return { nextImage, previousImage, imageIndex, setNewImageIndex }
 }
