@@ -21,19 +21,21 @@ const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
   const [isThereError, setIsThereError] = useState(false)
   const files = watch(data.name) as FileList
 
+  console.log()
   useEffect(() => {
     if (error == null) return
     setIsThereError(true)
 
     const timeout = setTimeout(() => {
       setIsThereError(false)
-    }, 15000)
+    }, 3000)
 
     return () => {
       clearTimeout(timeout)
     }
   }, [error])
 
+  console.log(error)
   return (
     <Stack
       sx={{
@@ -46,7 +48,7 @@ const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
         <Typography
           level='body3'
         >
-          {files.length} / 4
+          {files.length} / {data.maxFiles}
         </Typography>
       }
       <Tooltip
@@ -94,6 +96,11 @@ const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
               display: 'none',
               'input[type="file"]': {
                 width: '100%'
+              }
+            }}
+            slotProps={{
+              input: {
+                multiple: true
               }
             }}
           />

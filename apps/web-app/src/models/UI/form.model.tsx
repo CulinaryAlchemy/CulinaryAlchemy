@@ -91,6 +91,7 @@ export const CInputUser: TFormInputRecordObject = {
       ).optional(),
     formInputType: 'dropZone',
     accept: 'image/jpeg, image/jpg, image/png, image/webp',
-    defaultValue: undefined
+    defaultValue: undefined,
+    maxFiles: 1
   }
 }
