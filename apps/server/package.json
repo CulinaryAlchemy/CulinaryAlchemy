@@ -8,7 +8,7 @@
     "start": "tsc && node ./dist/bin/www.js",
     "build": "eslint . && tsc",
     "lint": "eslint .",
-    "dev": "eslint . && concurrently \"nodemon -q src/bin/www.ts\""
+    "dev": "concurrently \"nodemon -q src/bin/www.ts\""
   },
   "repository": {
     "type": "git",

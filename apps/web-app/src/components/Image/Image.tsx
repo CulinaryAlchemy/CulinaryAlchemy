@@ -10,10 +10,9 @@ interface IProps {
   height?: string
   width?: string
   style?: CSSProperties
-  imageId?: string
 }
 
-export const Image: React.FC<IProps> = ({ imageId, srcBlurPlaceholder, src, style, ...props }) => {
+export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, src, style, ...props }) => {
   const [showPlaceholder, setShowPlaceholder] = useState(true)
 
   useEffect(() => {
@@ -31,7 +30,6 @@ export const Image: React.FC<IProps> = ({ imageId, srcBlurPlaceholder, src, styl
   return (
     <Box
       component='div'
-      id={imageId}
       sx={{
         width: '100%',
         height: '100%',

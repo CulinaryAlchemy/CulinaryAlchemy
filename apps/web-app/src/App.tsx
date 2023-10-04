@@ -1,5 +1,5 @@
 import { CSWRConfig, setDefaultAxiosConfig } from '@/config'
-import { AuthContextProvider, LoaderProvider } from '@/context'
+import { AuthContextProvider } from '@/context'
 import { Routing } from '@/routing'
 
 import { GlobalComponents } from '@/components'
@@ -19,10 +19,8 @@ function App () {
       <CssBaseline />
       <AuthContextProvider>
         <SWRConfig value={CSWRConfig}>
-          <LoaderProvider>
-            <Routing />
-            <GlobalComponents />
-          </LoaderProvider>
+          <Routing />
+          <GlobalComponents />
         </SWRConfig>
       </AuthContextProvider>
     </CssVarsProvider>

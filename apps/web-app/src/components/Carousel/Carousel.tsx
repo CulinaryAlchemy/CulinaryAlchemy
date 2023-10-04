@@ -3,9 +3,7 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft'
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight'
 import Box from '@mui/joy/Box'
 
-import { useId } from 'react'
 import { useCarousel } from './hooks'
-import { carouselRoutes } from './routing'
 
 interface IStyles {
   borderRadius?: string
@@ -19,9 +17,7 @@ interface IProps {
 }
 
 export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
-  const carouselId = useId()
-
-  const { nextImage, previousImage, imageIndex } = useCarousel({ imageSources, carouselId })
+  const { nextImage, previousImage, imageIndex } = useCarousel({ imageSources })
 
   const handleOnClickRight = () => {
     nextImage()
@@ -98,7 +94,6 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
           imageSources.map((imageSource, index) => (
               <Image
                 key={index}
-                imageId={carouselRoutes.dynamic.getImageRoute(carouselId, String(index))}
                 src={imageSource}
                 alt='previous image'
                 style={{
@@ -106,7 +101,10 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
                   width: '100%',
                   objectFit: 'cover',
                   flexShrink: 0,
-                  flexBasis: '100%'
+                  flexGrow: 0,
+                  flexBasis: '100%',
+                  translate: `${-100 * imageIndex}%`,
+                  transition: 'translate 0.5s ease'
                 }}
               />
           ))
