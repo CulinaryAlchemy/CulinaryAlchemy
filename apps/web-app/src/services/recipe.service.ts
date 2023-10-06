@@ -7,7 +7,7 @@ export const getRecipeById = async (recipeId: string) => {
 }
 
 export const createRecipe = async (userId: string, recipeData: IRecipe) => {
-  return await axios.post<IApiResponse<unknown>>(CBackRoutes.Dynamic.recipe.create(userId), recipeData, { signal: AbortSignal.timeout(30000) })
+  return await axios.post<IApiResponse<unknown>>(CBackRoutes.Dynamic.recipe.create(userId), recipeData, { headers: { 'Content-Type': 'multipart/form-data' }, signal: AbortSignal.timeout(30000) })
 }
 
 export const deleteRecipe = async (userId: string, recipeId: string) => {
