@@ -126,7 +126,7 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
             border: 'none',
             marginY: '1em',
             paddingY: '0px',
-            gridTemplateAreas: '"username username" "name name" "email email" "description description" "location location"'
+            gridTemplateAreasMain: '"username" "name" "email" "description" "location"'
           }}
         />
       </Box>

@@ -74,7 +74,8 @@ export const StepViewerMain = () => {
                         marginY: '0px',
                         paddingX: '0px',
                         paddingY: '0px',
-                        border: 'none'
+                        border: 'none',
+                        gridTemplateAreasMain: '"stepName" "stepDescription"'
                       }}
                       inputStyles={{
                         textArea: {

@@ -4,7 +4,7 @@
 import { PublicationBox } from '@/components'
 import { useRecipeMethods } from '@/hooks'
 import { type IRecipe } from '@/models/LOGIC'
-import { homeInputsArrayFooter, homeInputsArrayMain, homeInputsSchema } from '@/pages/Home/models'
+import { homeInputsArrayFooter, homeInputsArrayMain, homeInputsArrayOptionals, homeInputsSchema } from '@/pages/Home/models'
 import { loggerInstance } from '@/services'
 
 export const HomeHeader = () => {
@@ -57,6 +57,7 @@ export const HomeHeader = () => {
       <PublicationBox
         onSubmit={handleOnSubmit}
         inputsDataMain={homeInputsArrayMain}
+        inputsDataOptionals={homeInputsArrayOptionals}
         inputsDataFooter={homeInputsArrayFooter}
         schema={homeInputsSchema}
       />
