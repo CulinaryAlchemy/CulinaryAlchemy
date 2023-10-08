@@ -11,14 +11,14 @@ export const homeInputsArrayMain: TFormInputArray = [
     placeholder: 'La mue cream',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(10).max(50)
+    validation: zValidator.string().min(3).max(70)
   },
   {
     formInputType: 'textArea',
     label: 'Recipe description',
     name: 'description',
     placeholder: 'I\'ve prepare a ...',
-    validation: zValidator.string().min(10).max(150)
+    validation: zValidator.string().max(255).optional()
   },
   {
     formInputType: 'textField',
@@ -27,7 +27,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     placeholder: 'Don\'t use lemon',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(10).max(50).optional()
+    validation: zValidator.string().min(20).max(255).optional()
   },
   {
     formInputType: 'textField',
@@ -36,7 +36,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     placeholder: '7',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(1).max(7)
+    validation: zValidator.coerce.number().min(0).max(180).optional()
   },
   {
     formInputType: 'textField',
@@ -45,7 +45,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     placeholder: 'servings',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(5).max(70)
+    validation: zValidator.coerce.number().min(1).max(100).optional()
   },
   {
     formInputType: 'textField',
@@ -54,7 +54,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     placeholder: 'knife, meal, etc...',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(5).max(70)
+    validation: zValidator.string().min(1).max(12).optional()
   },
   {
     formInputType: 'textField',
@@ -63,7 +63,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     placeholder: 'lemon, meal, salt, etc...',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(5).max(70)
+    validation: zValidator.string().min(1).max(12)
   },
   {
     formInputType: 'textField',
@@ -72,7 +72,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     placeholder: 'lemon, meal, salt, etc...',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(5).max(70).optional()
+    validation: zValidator.string().min(1).max(10).optional()
   },
   {
     formInputType: 'textField',
@@ -81,7 +81,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     placeholder: 'lemon, meal, salt, etc...',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(5).max(70).refine((value) => value.trim().includes('www.youtube.com'), { message: 'Invalid url' }).optional()
+    validation: zValidator.string().min(5).max(70).refine((value) => value.trim().startsWith('https://www.youtube.com/watch?v='), { message: 'Invalid url' }).optional()
   }
 ]
 
@@ -90,12 +90,14 @@ export const homeInputsArrayFooter: TFormInputArray = [
     formInputType: 'dropZone',
     label: 'images',
     name: 'images-dropzone',
-    validation: zValidator.custom<File[]>()
+    validation: zValidator.instanceof(FileList)
+      .refine((files) => files[0] != null, { message: 'Upload your recipe images' })
+      .refine((files) => files.length <= 4, { message: 'Max 4 images per recipe' })
       .refine(
-        (files: Array<{ size: number, type: string }>) => files[0] != null ? ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(files[0]?.type) : true,
+        (files) => Array.from(files).every(file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)),
         'Only .jpg, .jpeg, .png and .webp formats are supported.'
       )
-      .refine((files: Array<{ size: number }>) => Array.from(files).every((file) => file?.size <= 50000), 'Max image size is 5MB.'),
+      .refine((files) => Array.from(files).every((file) => file?.size <= 50000), 'Max image size is 5MB.'),
     accept: 'image/jpeg, image/jpg, image/png, image/webp',
     type: 'file',
     maxFiles: 4
