@@ -37,7 +37,7 @@ const Login = () => {
           width: '400px',
           border: 'none',
           backgroundColor: 'transparent',
-          gridTemplateAreas: '"email" "password"'
+          gridTemplateAreasMain: '"email" "password"'
         }}
       />
     </GlobalLayout>

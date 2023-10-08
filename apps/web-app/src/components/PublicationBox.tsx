@@ -9,11 +9,12 @@ import { type ZodObject, type ZodRawShape } from 'zod'
 interface IProps {
   schema: ZodObject<ZodRawShape>
   inputsDataMain: TFormInputArray
+  inputsDataOptionals?: TFormInputArray
   inputsDataFooter: TFormInputArray
   onSubmit: SubmitHandler<FieldValues>
 }
 
-export const PublicationBox: React.FC<IProps> = ({ schema, inputsDataMain, inputsDataFooter, onSubmit }) => {
+export const PublicationBox: React.FC<IProps> = ({ schema, inputsDataMain, inputsDataOptionals, inputsDataFooter, onSubmit }) => {
   const { user } = useGlobalAuth()
   const { t } = useTranslation()
 
@@ -59,9 +60,11 @@ export const PublicationBox: React.FC<IProps> = ({ schema, inputsDataMain, input
             paddingY: '0px',
             marginY: '0px',
             paddingX: '0px',
-            gridTemplateAreas: '"title title title" "description description description" "authors_notes authors_notes cooking_time" "servings equipment_needed equipment_needed" "ingredients ingredients spices" "youtube_link youtube_link youtube_link"'
+            gridTemplateAreasMain: '"title" "description"',
+            inputsGap: '0.5em',
+            gridTemplateAreasOptionals: '"authors_notes authors_notes" "servings cooking_time" "spices equipment_needed" "ingredients ingredients" "youtube_link youtube_link"'
           }}
-          {...{ schema, inputsDataMain, inputsDataFooter, onSubmit }}
+          {...{ schema, inputsDataMain, inputsDataOptionals, inputsDataFooter, onSubmit }}
         />
       </Box>
     </Sheet>

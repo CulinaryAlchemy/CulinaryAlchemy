@@ -18,15 +18,16 @@ export const homeInputsArrayMain: TFormInputArray = [
     label: 'Recipe description',
     name: 'description',
     placeholder: 'I\'ve prepare a ...',
-    validation: zValidator.string().max(255).optional()
-  },
+    validation: zValidator.string().max(255)
+  }
+]
+
+export const homeInputsArrayOptionals: TFormInputArray = [
   {
-    formInputType: 'textField',
+    formInputType: 'textArea',
     label: 'Author notes',
     name: 'authors_notes',
     placeholder: 'Don\'t use lemon',
-    async: false,
-    type: 'text',
     validation: zValidator.string().min(20).max(255).optional()
   },
   {
@@ -63,7 +64,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     placeholder: 'lemon, meal, salt, etc...',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(1).max(12)
+    validation: zValidator.string().min(1).max(12).optional()
   },
   {
     formInputType: 'textField',
@@ -106,6 +107,7 @@ export const homeInputsArrayFooter: TFormInputArray = [
 
 const homeInputsArray: TFormInputArray = [
   ...homeInputsArrayMain,
+  ...homeInputsArrayOptionals,
   ...homeInputsArrayFooter
 ]
 
