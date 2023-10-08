@@ -28,7 +28,7 @@ const Background = () => {
   return (
     <div className={styles.background__container}>
       <div className={styles.background}>
-        {Array(15).fill(null).map((_, index) => {
+        {Array(25).fill(null).map((_, index) => {
           const animationDirectionCalc = index % 2
           const shouldUseLeftAnimation = animationDirectionCalc === 0
 

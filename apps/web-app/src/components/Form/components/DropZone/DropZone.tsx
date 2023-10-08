@@ -21,21 +21,11 @@ const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
   const [isThereError, setIsThereError] = useState(false)
   const files = watch(data.name) as FileList
 
-  console.log()
   useEffect(() => {
     if (error == null) return
     setIsThereError(true)
-
-    const timeout = setTimeout(() => {
-      setIsThereError(false)
-    }, 3000)
-
-    return () => {
-      clearTimeout(timeout)
-    }
   }, [error])
 
-  console.log(error)
   return (
     <Stack
       sx={{
