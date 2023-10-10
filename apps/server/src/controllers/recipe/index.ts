@@ -67,41 +67,52 @@ const post = async (req: Request, res: Response) => {
 		throw new Error('USER_DOES_NOT_EXIST, or its already deleted');
 	}
 
-	const reqFiles = (req as any).files;
+	if (req.files) {
+		const reqFiles = (req as any).files;
 
-	const keysInRequestFileObj = Object.keys(reqFiles);
-	// we verify we have couples of images
-	if (keysInRequestFileObj.length % 2 !== 0) {
-		return ApiResponse.error(
-			res,
-			HttpStatusCodes.BAD_REQUEST,
-			'every iamge must have a blur image'
+		const keysInRequestFileObj = Object.keys(reqFiles);
+
+		const normalImages = keysInRequestFileObj.filter(
+			(imageKey) => !imageKey.endsWith('blur')
 		);
-	}
 
-	let defaultImage: string = '';
+		const blurImages = keysInRequestFileObj.filter((iamgeKey) =>
+			iamgeKey.endsWith('blur')
+		);
 
-	for (const key of keysInRequestFileObj) {
-		const imageFile = reqFiles[key][0] as Express.Multer.File;
-		const imageUrl = (await cloudinaryService.uploadImage(imageFile))
-			.secure_url;
-
-		if (!imageFile.fieldname.endsWith('blur')) {
-			defaultImage = imageUrl;
-			return;
-		}
-		if (imageFile.fieldname.endsWith('blur')) {
-			if (!defaultImage) {
-				throw new Error('internal server error');
-			}
-			await Image.create(
-				{
-					owner_id: user_id,
-					blur_url: imageUrl,
-					default_url: defaultImage,
-				},
-				{ transaction: t }
+		// we verify we have couples of images
+		if (normalImages.length !== blurImages.length) {
+			return ApiResponse.error(
+				res,
+				HttpStatusCodes.BAD_REQUEST,
+				'every iamge must have a blur image'
 			);
+		}
+
+		let defaultImage: string = '';
+
+		for (const key of keysInRequestFileObj) {
+			const imageFile = reqFiles[key][0] as Express.Multer.File;
+			const imageUrl = (await cloudinaryService.uploadImage(imageFile))
+				.secure_url;
+
+			if (!imageFile.fieldname.endsWith('blur')) {
+				defaultImage = imageUrl;
+				return;
+			}
+			if (imageFile.fieldname.endsWith('blur')) {
+				if (!defaultImage) {
+					throw new Error('internal server error');
+				}
+				await Image.create(
+					{
+						owner_id: user_id,
+						blur_url: imageUrl,
+						default_url: defaultImage,
+					},
+					{ transaction: t }
+				);
+			}
 		}
 	}
 
@@ -111,25 +122,25 @@ const post = async (req: Request, res: Response) => {
 			title,
 			description,
 			cooking_time,
-			equipment_needed: JSON.stringify(equipment_needed),
-			ingredients: JSON.stringify(ingredients),
+			equipment_needed,
+			ingredients,
 			servings,
-			steps: JSON.stringify(steps),
+			steps,
 			authors_notes,
-			spices: JSON.stringify(spices),
+			spices,
 			youtube_link,
 		});
+
 		await t.commit();
-		ApiResponse.success(res, HttpStatusCodes.CREATED, newRecipe, '');
-		return;
+		return ApiResponse.success(res, HttpStatusCodes.CREATED, newRecipe, '');
 	} catch (error) {
 		await t.rollback();
-		ApiResponse.error(
+		console.log(error);
+		return ApiResponse.error(
 			res,
 			HttpStatusCodes.INTERNAL_SERVER_ERROR,
 			'ERROR_WHILE_POSTING_RECIPE'
 		);
-		return;
 	}
 };
 // const put = async (req: Request, res: Response) => {};

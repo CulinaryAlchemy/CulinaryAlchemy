@@ -8,12 +8,12 @@ class Recipe extends Model<RecipeInterface> implements RecipeInterface {
 	user_id!: number;
 	title!: string;
 	description!: string;
-	steps!: string;
+	steps!: string | null;
 	authors_notes!: string | null;
-	cooking_time!: number;
-	servings!: number;
-	equipment_needed!: string;
-	ingredients!: string;
+	cooking_time!: number | null;
+	servings!: number | null;
+	equipment_needed!: string | null;
+	ingredients!: string | null;
 	spices!: string | null;
 	youtube_link!: string | null;
 	end_date!: Date | null;
@@ -38,7 +38,7 @@ Recipe.init(
 		},
 		description: {
 			type: DataTypes.STRING,
-			allowNull: true,
+			allowNull: false,
 		},
 		authors_notes: {
 			type: DataTypes.STRING,
@@ -46,7 +46,7 @@ Recipe.init(
 		},
 		ingredients: {
 			type: DataTypes.STRING,
-			allowNull: false,
+			allowNull: true,
 		},
 		spices: {
 			type: DataTypes.STRING,
@@ -76,7 +76,7 @@ Recipe.init(
 		},
 		steps: {
 			type: DataTypes.STRING,
-			allowNull: false,
+			allowNull: true,
 		},
 		youtube_link: {
 			type: DataTypes.STRING,

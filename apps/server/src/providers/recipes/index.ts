@@ -68,7 +68,7 @@ const post = async (
 			equipment_needed,
 			ingredients,
 			servings,
-			steps,
+			steps: steps ? JSON.stringify(steps) : null,
 			authors_notes,
 			spices,
 			youtube_link,
@@ -133,7 +133,6 @@ const post = async (
 	} catch (error) {
 		await t.rollback();
 
-		console.log('inside provider post function');
 		return Promise.reject(
 			new Error(
 				`There is been an errow while creating the recipe. Error: ${error}`
