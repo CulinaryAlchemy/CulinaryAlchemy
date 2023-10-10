@@ -77,8 +77,6 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
     resolver: zodResolver(schema, { async: true }, { mode: 'async' })
   })
 
-  console.log(errors)
-
   const [showOptionalInputs, setShowOptionalInputs] = useState(false)
 
   const handleOnClickToggleOptionalInputsDisplay = () => {

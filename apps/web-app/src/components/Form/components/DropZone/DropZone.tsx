@@ -25,7 +25,6 @@ const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
 
   const files = watch(register.name) as FileList
 
-  console.log({ files })
   const toggleShowDropZoneArea = () => {
     setShowDropZoneArea((prevState) => !prevState)
   }
