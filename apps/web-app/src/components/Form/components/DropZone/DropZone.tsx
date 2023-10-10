@@ -1,14 +1,16 @@
 import { type TDropZoneForm } from '@/components/Form/models'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
-import FormControl from '@mui/joy/FormControl'
-import FormLabel from '@mui/joy/FormLabel'
-import Input from '@mui/joy/Input'
+import Box from '@mui/joy/Box'
+import IconButton from '@mui/joy/IconButton'
 import Stack from '@mui/joy/Stack'
 import Tooltip from '@mui/joy/Tooltip'
-import Typography from '@mui/joy/Typography'
-import { useEffect, useState } from 'react'
+
+import React, { Suspense, lazy, useRef, useState, type LegacyRef } from 'react'
 import { type FieldValues, type UseFormRegisterReturn, type UseFormWatch } from 'react-hook-form'
-import styles from './droZone.module.css'
+
+
+
+const PopperDropZone = lazy(() => import('./components/PopperDropZone/PopperDropZone'))
 
 interface IProps {
   data: TDropZoneForm
@@ -18,86 +20,72 @@ interface IProps {
 }
 
 const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
-  const [isThereError, setIsThereError] = useState(false)
-  const files = watch(data.name) as FileList
+  const [showDropZoneArea, setShowDropZoneArea] = useState(false)
+  const elementContainer = useRef<LegacyRef<HTMLDivElement>>(null)
 
-  useEffect(() => {
-    if (error == null) return
-    setIsThereError(true)
-  }, [error])
+  const files = watch(register.name) as FileList
+
+  console.log({ files })
+  const toggleShowDropZoneArea = () => {
+    setShowDropZoneArea((prevState) => !prevState)
+  }
 
   return (
-    <Stack
-      sx={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        gridArea: register.name
-      }}
+    <Tooltip
+      open={error != null && !showDropZoneArea}
+      title={error}
+      color='danger'
+      placement='bottom'
     >
-      {files?.[0] != null &&
-        <Typography
-          level='body3'
-        >
-          {files.length} / {data.maxFiles}
-        </Typography>
-      }
-      <Tooltip
-        color={error ? 'danger' : 'neutral'}
-        title={error}
-        open={isThereError}
+      <Box
+        ref={elementContainer}
+        sx={{
+          position: 'relative',
+          gridArea: register.name
+        }}
       >
-        <FormControl
-          className={error && styles['shake-horizontal']}
+        <Suspense>
+          <PopperDropZone
+            {...{ error, register, showDropZoneArea }}
+            imageFiles={files}
+            anchorEl={elementContainer.current as unknown as HTMLDivElement}
+            maxFiles={data.maxFiles}
+          />
+        </Suspense>
+
+        <Stack
+          component='div'
+          sx={{
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}
         >
-          <FormLabel
+          <IconButton
+            variant='plain'
+            color='neutral'
             sx={{
               display: 'flex',
               justifyContent: 'center',
-              alignItems: 'start',
-              height: '100%',
-              margin: 0,
-              borderRadius: 'var(--IconButton-radius, var(--joy-radius-sm))',
-              border: 'var(--variant-borderWidth) solid',
-              borderColor: 'var(--joy-palette-neutral-outlinedBorder, var(--joy-palette-neutral-200, #D8D8DF))',
-              cursor: 'pointer',
-              padding: '0.5em 0.6em',
-              '&:hover': {
-                color: 'var(--joy-palette-neutral-outlinedHoverColor, var(--joy-palette-neutral-900, #131318))',
-                backgroundColor: 'var(--joy-palette-neutral-outlinedHoverBg, var(--joy-palette-neutral-100, #EBEBEF))',
-                borderColor: 'var(--joy-palette-neutral-outlinedHoverBorder, var(--joy-palette-neutral-300, #B9B9C6)'
-              }
+              alignItems: 'center'
             }}
+            onClick={toggleShowDropZoneArea}
           >
             <AddPhotoAlternateIcon
               sx={{
                 cursor: 'pointer',
-                fontSize: '1.7em',
                 opacity: error ? '100%' : '60%',
                 color: error ? '#ff9d9d' : 'initial',
                 margin: 0
               }}
             />
-          </FormLabel>
-          <Input
-            type={data.type}
-            {...(error !== '' && { error: true })}
-            {...register}
-            sx={{
-              display: 'none',
-              'input[type="file"]': {
-                width: '100%'
-              }
-            }}
-            slotProps={{
-              input: {
-                multiple: true
-              }
-            }}
-          />
-        </FormControl >
-      </Tooltip>
-    </Stack>
+          </IconButton>
+        </Stack>
+      </Box>
+    </Tooltip>
   )
 }
 
 export default DropZone
+
+
+

@@ -98,7 +98,7 @@ export const homeInputsArrayFooter: TFormInputArray = [
         (files) => Array.from(files).every(file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)),
         'Only .jpg, .jpeg, .png and .webp formats are supported.'
       )
-      .refine((files) => Array.from(files).every((file) => file?.size <= 50000), 'Max image size is 5MB.'),
+      .refine((files) => Array.from(files).every((file) => file?.size <= 50000), 'The maximum image size for each image is 5MB.'),
     accept: 'image/jpeg, image/jpg, image/png, image/webp',
     type: 'file',
     maxFiles: 4

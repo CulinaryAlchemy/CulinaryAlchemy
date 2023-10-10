@@ -1,8 +1,8 @@
 import { type TFormInputArray } from '@/components/Form/models'
-import { DeterminateInput } from './components'
+import { InputsArray } from './components'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Suspense, useState, type SyntheticEvent } from 'react'
+import { Suspense, useState } from 'react'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
 
@@ -77,6 +77,8 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
     resolver: zodResolver(schema, { async: true }, { mode: 'async' })
   })
 
+  console.log(errors)
+
   const [showOptionalInputs, setShowOptionalInputs] = useState(false)
 
   const handleOnClickToggleOptionalInputsDisplay = () => {
@@ -140,33 +142,18 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                   ]
                 }
               >
-                {inputsDataMain.map((inputData, index) => (
-                  <DeterminateInput
-                    key={index}
-                    data={inputData}
-                    register={register(inputData.name,
-                      {
-                        setValueAs: (value) => {
-                          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                          return value !== '' ? value : undefined
-                        },
-                        onChange: (event: SyntheticEvent) => {
-                          const value = (event.target as HTMLInputElement).value
-
-                          return value !== '' ? value : undefined
-                        }
-                      }
-                    )}
-                    {...{
-                      watch,
-                      setError,
-                      clearErrors,
-                      inputStyles
-                    }}
-                    isDirty={dirtyFields[inputData.name] as boolean}
-                    error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
-                  />
-                ))}
+                <InputsArray
+                  {...{
+                    inputsData: inputsDataMain,
+                    clearErrors,
+                    dirtyFields,
+                    errors,
+                    register,
+                    setError,
+                    watch,
+                    inputStyles
+                  }}
+                />
               </Box>
               {
                 inputsDataOptionals?.[0] != null &&
@@ -205,35 +192,18 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                     ]
                   }
                 >
-                  {
-                    inputsDataOptionals.map((inputData, index) => (
-                      <DeterminateInput
-                        key={index}
-                        data={inputData}
-                        register={register(inputData.name,
-                          {
-                            setValueAs: (value) => {
-                              // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                              return value !== '' ? value : undefined
-                            },
-                            onChange: (event: SyntheticEvent) => {
-                              const value = (event.target as HTMLInputElement).value
-
-                              return value !== '' ? value : undefined
-                            }
-                          }
-                        )}
-                        {...{
-                          watch,
-                          setError,
-                          clearErrors,
-                          inputStyles
-                        }}
-                        isDirty={dirtyFields[inputData.name] as boolean}
-                        error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
-                      />
-                    ))
-                  }
+                  <InputsArray
+                    {...{
+                      inputsData: inputsDataOptionals,
+                      clearErrors,
+                      dirtyFields,
+                      errors,
+                      register,
+                      setError,
+                      watch,
+                      inputStyles
+                    }}
+                  />
                 </Box>
               }
               <Stack
@@ -242,34 +212,21 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                 marginTop={1}
                 justifyContent={buttonSubmitSide}
               >
-                {inputsDataFooter?.[0] != null &&
-                  inputsDataFooter.map((inputData, index) => (
-                    <DeterminateInput
-                      key={index}
-                      data={inputData}
-                      register={register(inputData.name,
-                        {
-                          setValueAs: (value) => {
-                            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                            return value !== '' ? value : undefined
-                          },
-                          onChange: (event: SyntheticEvent) => {
-                            const value = (event.target as HTMLInputElement).value
-
-                            return value !== '' ? value : undefined
-                          }
-                        }
-                      )}
-                      {...{
-                        watch,
-                        setError,
-                        clearErrors,
-                        inputStyles
-                      }}
-                      isDirty={dirtyFields[inputData.name] as boolean}
-                      error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
-                    />
-                  ))}
+                {
+                  inputsDataFooter?.[0] != null &&
+                  <InputsArray
+                    {...{
+                      inputsData: inputsDataFooter,
+                      clearErrors,
+                      dirtyFields,
+                      errors,
+                      register,
+                      setError,
+                      watch,
+                      inputStyles
+                    }}
+                  />
+                }
                 <Button
                   type='submit'
                   sx={{
