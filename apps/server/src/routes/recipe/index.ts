@@ -11,6 +11,7 @@ import { upload } from '../../config';
 import { recipeImage } from '../../middlewares/image/recipe';
 
 const recipeRouter = express.Router();
+
 recipeRouter.get(
 	'/all',
 	query('limit').optional().isInt({ min: 1, max: 10 }),
@@ -28,8 +29,8 @@ recipeRouter.get(
 recipeRouter.post(
 	'/:id', // the user id
 	idValidator,
-	passportMiddleware,
-	authMiddleware,
+	// passportMiddleware,
+	// authMiddleware,
 	upload.fields([
 		{ name: 'image_1', maxCount: 1 },
 		{ name: 'image_1_blur', maxCount: 1 },
@@ -40,14 +41,18 @@ recipeRouter.post(
 	]),
 	recipeImage,
 	body('title').notEmpty().isString().isLength({ min: 3, max: 70 }),
-	body('description').optional().isString().isLength({ max: 255 }),
-	body('cooking_time').optional().notEmpty().isInt({ min: 0, max: 180 }),
-	body('equipment_needed').optional().notEmpty().isArray({ min: 1, max: 12 }),
-	body('ingredients').notEmpty().isArray({ min: 1, max: 20 }),
+	body('description').isString().isLength({ max: 255 }),
+	body('cooking_time')
+		.optional()
+		.optional()
+		.notEmpty()
+		.isInt({ min: 0, max: 180 }),
+	body('equipment_needed').optional().notEmpty().isString(),
+	body('ingredients').optional().notEmpty().isString(),
 	body('servings').optional().notEmpty().isInt({ min: 1, max: 100 }),
-	body('steps').notEmpty().isArray({ min: 2, max: 30 }),
+	body('steps').optional().notEmpty().isArray({ min: 2, max: 30 }),
 	body('authors_notes').optional().isString().isLength({ min: 20, max: 255 }),
-	body('spices').optional().isArray({ min: 1, max: 10 }),
+	body('spices').optional().isString(),
 	body('youtube_link')
 		.optional()
 		.isString()
