@@ -71,6 +71,9 @@ const getBackendRoutes = () => {
         email: '/user/check-email'
       }
     },
+    recipe: {
+      all: '/recipe/all'
+    },
     health: '/health/live'
 
   }
@@ -90,6 +93,17 @@ const getBackendRoutes = () => {
     role: {
       get (roleId: number) {
         return `/role/${roleId}`
+      }
+    },
+    recipe: {
+      getById (recipeId: string) {
+        return `/recipe/${recipeId}`
+      },
+      create (userId: string) {
+        return `/recipe/${userId}`
+      },
+      deleteById (userId: string, recipeId: string) {
+        return `/recipe/${userId}/${recipeId}`
       }
     }
   } as const

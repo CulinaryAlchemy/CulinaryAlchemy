@@ -16,7 +16,8 @@ export const getValidationError = (code: string) => {
     ACCOUNT_DESACTIVATED: 'Account deactivated',
     SERVER_IS_ON: 'Server is online',
     SERVER_IS_OFF: 'Server is offline',
-    TOKEN_NOT_FOUND: 'TOKEN_NOT_FOUND'
+    TOKEN_NOT_FOUND: 'TOKEN NOT FOUND',
+    RECIPES_FOUND: 'RECIPES FOUND'
   }
 
   return CustomMessageCodes[code]

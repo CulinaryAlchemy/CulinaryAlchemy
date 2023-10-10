@@ -24,7 +24,10 @@ const TextFieldAsync: React.FC<IProps> = ({ data, error, register, watch, setErr
   const { loading } = useAsyncValidations({ inputName: data.name, watchValue: watchValue as string, setError, clearErrors, isDirty })
 
   return (
-    <FormControl sx={{ marginBottom: '0.5em' }}>
+    <FormControl sx={{
+      marginBottom: '0.5em',
+      gridArea: register.name
+    }}>
       <FormLabel>{data.label}</FormLabel>
       <Input
         endDecorator={

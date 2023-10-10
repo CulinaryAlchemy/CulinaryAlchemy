@@ -1,14 +1,15 @@
 import { type TFormInputArray } from '@/components/Form/models'
-import { DeterminateInput } from './components'
+import { InputsArray } from './components'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Suspense, type SyntheticEvent } from 'react'
+import { Suspense, useState } from 'react'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
 
 import { type IInputStyles } from '@/models/UI'
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button/'
+import Divider from '@mui/joy/Divider'
 import Sheet from '@mui/joy/Sheet/'
 import Stack from '@mui/joy/Stack'
 import { toast } from 'sonner'
@@ -31,12 +32,16 @@ interface IStyles {
   marginY?: string
   justifyContent?: 'center' | 'start'
   gap?: number
+  inputsGap?: string
   backgroundColor?: string
+  gridTemplateAreasMain?: string
+  gridTemplateAreasOptionals?: string
 }
 
 interface IForm {
   schema: ZodObject<ZodRawShape>
   inputsDataMain: TFormInputArray
+  inputsDataOptionals?: TFormInputArray
   inputsDataFooter?: TFormInputArray
   onSubmit: SubmitHandler<FieldValues>
   Header?: React.ReactNode
@@ -52,7 +57,7 @@ interface IForm {
 const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1em' }
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
-export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide, inputsDataFooter }) => {
+export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide, inputsDataFooter, inputsDataOptionals }) => {
   const {
     register,
     handleSubmit: defaultHandleSubmit,
@@ -72,6 +77,13 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
     resolver: zodResolver(schema, { async: true }, { mode: 'async' })
   })
 
+  console.log(errors)
+
+  const [showOptionalInputs, setShowOptionalInputs] = useState(false)
+
+  const handleOnClickToggleOptionalInputsDisplay = () => {
+    setShowOptionalInputs(prevState => !prevState)
+  }
   const handleOnClickForReset = () => {
     reset()
   }
@@ -113,81 +125,108 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
           {Header}
           <main>
             <Suspense>
-              <Box sx={
-                [
-                  {
-                    display: styles.display,
-                    width: '100%',
-                    flexWrap: styles.flexWrap,
-                    justifyContent: styles.justifyContent
-                  },
-                  styles.gridColumns === 1 && gridFormStyles1,
-                  styles.gridColumns === 2 && gridFormStyles2
-                ]
-              }
+              <Box
+                component='section'
+                sx={
+                  [
+                    {
+                      display: styles.display,
+                      width: '100%',
+                      gridTemplateAreas: styles.gridTemplateAreasMain,
+                      flexWrap: styles.flexWrap,
+                      justifyContent: styles.justifyContent,
+                      gap: styles.inputsGap
+                    },
+                    styles.gridColumns === 1 && gridFormStyles1,
+                    styles.gridColumns === 2 && gridFormStyles2
+                  ]
+                }
               >
-                {inputsDataMain.map((inputData, index) => (
-                  <DeterminateInput
-                    key={index}
-                    data={inputData}
-                    register={register(inputData.name,
-                      {
-                        setValueAs: (value) => {
-                          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                          return value !== '' ? value : undefined
-                        },
-                        onChange: (event: SyntheticEvent) => {
-                          const value = (event.target as HTMLInputElement).value
+                <InputsArray
+                  {...{
+                    inputsData: inputsDataMain,
+                    clearErrors,
+                    dirtyFields,
+                    errors,
+                    register,
+                    setError,
+                    watch,
+                    inputStyles
+                  }}
+                />
+              </Box>
+              {
+                inputsDataOptionals?.[0] != null &&
+                <Divider
+                  sx={{
+                    marginBlock: '0.5em'
+                  }}
+                >
+                  <Button
+                    variant='outlined'
+                    color='neutral'
+                    size='sm'
+                    onClick={handleOnClickToggleOptionalInputsDisplay}
+                  >
+                    {showOptionalInputs ? 'Hide' : 'Show'} optional fields
+                  </Button>
+                </Divider>
+              }
+              {
+                (showOptionalInputs && inputsDataOptionals?.[0] != null) &&
 
-                          return value !== '' ? value : undefined
-                        }
-                      }
-                    )}
+                <Box
+                  component='section'
+                  sx={
+                    [
+                      {
+                        display: styles.display,
+                        width: '100%',
+                        gridTemplateAreas: styles.gridTemplateAreasOptionals,
+                        flexWrap: styles.flexWrap,
+                        justifyContent: styles.justifyContent,
+                        gap: styles.inputsGap
+                      },
+                      styles.gridColumns === 1 && gridFormStyles1,
+                      styles.gridColumns === 2 && gridFormStyles2
+                    ]
+                  }
+                >
+                  <InputsArray
                     {...{
-                      watch,
-                      setError,
+                      inputsData: inputsDataOptionals,
                       clearErrors,
+                      dirtyFields,
+                      errors,
+                      register,
+                      setError,
+                      watch,
                       inputStyles
                     }}
-                    isDirty={dirtyFields[inputData.name] as boolean}
-                    error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
                   />
-                ))}
-              </Box>
+                </Box>
+              }
               <Stack
                 direction='row'
                 spacing={1}
                 marginTop={1}
                 justifyContent={buttonSubmitSide}
               >
-                {inputsDataFooter?.[0] != null &&
-                  inputsDataFooter.map((inputData, index) => (
-                    <DeterminateInput
-                      key={index}
-                      data={inputData}
-                      register={register(inputData.name,
-                        {
-                          setValueAs: (value) => {
-                            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                            return value !== '' ? value : undefined
-                          },
-                          onChange: (event: SyntheticEvent) => {
-                            const value = (event.target as HTMLInputElement).value
-
-                            return value !== '' ? value : undefined
-                          }
-                        }
-                      )}
-                      {...{
-                        watch,
-                        setError,
-                        clearErrors,
-                        inputStyles
-                      }}
-                      isDirty={dirtyFields[inputData.name] as boolean}
-                      error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
-                    />
-                  ))}
+                {
+                  inputsDataFooter?.[0] != null &&
+                  <InputsArray
+                    {...{
+                      inputsData: inputsDataFooter,
+                      clearErrors,
+                      dirtyFields,
+                      errors,
+                      register,
+                      setError,
+                      watch,
+                      inputStyles
+                    }}
+                  />
+                }
                 <Button
                   type='submit'
                   sx={{
@@ -199,7 +238,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                     borderRadius: '0.4em',
                     flexGrow: buttonSubmitSide === 'default' ? 1 : 0
                   }}
-                  disabled={Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0) }
+                  disabled={Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0)}
                 >
                   {buttonSubmitName}
                 </Button>

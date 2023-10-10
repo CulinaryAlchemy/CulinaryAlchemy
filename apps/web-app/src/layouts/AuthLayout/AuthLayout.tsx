@@ -19,14 +19,14 @@ const AuthLayout: React.FC<IProps> = ({ showBackground }) => {
             gridTemplateColumns: {
               md: '1.03fr 1fr',
               sx: '1fr'
-            }
+            },
+            height: '100vh'
           }}
         >
           <Box
             sx={{
               display: 'flex',
-              flexDirection: 'column',
-              height: '100vh'
+              flexDirection: 'column'
             }}
           >
             <Header />

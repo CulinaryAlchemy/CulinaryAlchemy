@@ -16,7 +16,10 @@ interface IProps {
 
 const TextField: React.FC<IProps> = ({ data, error, register, styles }) => {
   return (
-    <FormControl sx={{ marginBottom: '0.5em' }}>
+    <FormControl sx={{
+      marginBottom: '0.5em',
+      gridArea: register.name
+    }}>
       <FormLabel
         sx={{
           display: styles?.label?.display

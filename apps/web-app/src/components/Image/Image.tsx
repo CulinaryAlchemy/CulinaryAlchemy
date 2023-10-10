@@ -10,14 +10,18 @@ interface IProps {
   height?: string
   width?: string
   style?: CSSProperties
+  onUnmount?: () => void
 }
 
-export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, src, style, ...props }) => {
+export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, src, style, onUnmount, ...props }) => {
   const [showPlaceholder, setShowPlaceholder] = useState(true)
 
   useEffect(() => {
-
-  }, [])
+    return () => {
+      if (onUnmount == null) return
+      onUnmount()
+    }
+  }, [onUnmount])
 
   const handleOnLoadStart = () => {
     setShowPlaceholder(true)
@@ -64,6 +68,9 @@ export const Image: React.FC<IProps> = ({ srcBlurPlaceholder, src, style, ...pro
         style={
           {
             display: showPlaceholder ? 'none' : 'block',
+            height: '100%',
+            width: '100%',
+            objectFit: 'cover',
             ...style
           }
         }

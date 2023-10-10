@@ -36,7 +36,8 @@ const Register = () => {
           gridColumns: 1,
           width: '400px',
           border: 'none',
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
+          gridTemplateAreasMain: '"username" "email" "password"'
         }}
       />
     </GlobalLayout>

@@ -17,7 +17,8 @@ const TextArea: React.FC<IProps> = ({ data, error, register, styles }) => {
   return (
     <FormControl
       sx={{
-        width: '100%'
+        width: '100%',
+        gridArea: register.name
       }}
     >
       <FormLabel
