@@ -213,7 +213,7 @@ const PopperDropZone: React.FC<IPropsPopperDropZone> = ({ showDropZoneArea, regi
                             }}
                             color={error ? 'danger' : 'neutral'}
                         >
-                            {(error === '' && imageFiles?.length === 0) && 'Add images'}
+                            {(error === '' && (imageFiles?.length === 0 || imageFiles == null)) && 'Add images'}
                             {error}
                         </Typography>
                     </Box>
