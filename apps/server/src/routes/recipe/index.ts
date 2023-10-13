@@ -29,8 +29,8 @@ recipeRouter.get(
 recipeRouter.post(
 	'/:id', // the user id
 	idValidator,
-	// passportMiddleware,
-	// authMiddleware,
+	passportMiddleware,
+	authMiddleware,
 	upload.fields([
 		{ name: 'image_1', maxCount: 1 },
 		{ name: 'image_1_blur', maxCount: 1 },
@@ -64,6 +64,8 @@ recipeRouter.post(
 recipeRouter.put(
 	'/:id/:recipeId',
 	idValidator,
+	passportMiddleware,
+	authMiddleware,
 	body('title').optional().notEmpty().isString().isLength({ min: 3, max: 70 }),
 	body('description').optional().isString().isLength({ max: 255 }),
 	body('cooking_time')
