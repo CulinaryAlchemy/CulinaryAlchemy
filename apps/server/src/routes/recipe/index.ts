@@ -29,8 +29,8 @@ recipeRouter.get(
 recipeRouter.post(
 	'/:id', // the user id
 	idValidator,
-	// passportMiddleware,
-	// authMiddleware,
+	passportMiddleware,
+	authMiddleware,
 	upload.fields([
 		{ name: 'image_1', maxCount: 1 },
 		{ name: 'image_1_blur', maxCount: 1 },
@@ -59,6 +59,32 @@ recipeRouter.post(
 		.custom((value) => value.startsWith('https://www.youtube.com/watch?v=')),
 	validateValidationChainResult,
 	Controllers.recipeController.post
+);
+
+recipeRouter.put(
+	'/:id/:recipeId',
+	idValidator,
+	passportMiddleware,
+	authMiddleware,
+	body('title').optional().notEmpty().isString().isLength({ min: 3, max: 70 }),
+	body('description').optional().isString().isLength({ max: 255 }),
+	body('cooking_time')
+		.optional()
+		.optional()
+		.notEmpty()
+		.isInt({ min: 0, max: 180 }),
+	body('equipment_needed').optional().notEmpty().isString(),
+	body('ingredients').optional().notEmpty().isString(),
+	body('servings').optional().notEmpty().isInt({ min: 1, max: 100 }),
+	body('steps').optional().notEmpty().isArray({ min: 2, max: 30 }),
+	body('authors_notes').optional().isString().isLength({ min: 20, max: 255 }),
+	body('spices').optional().isString(),
+	body('youtube_link')
+		.optional()
+		.isString()
+		.custom((value) => value.startsWith('https://www.youtube.com/watch?v=')),
+	validateValidationChainResult,
+	Controllers.recipeController.put
 );
 
 recipeRouter.delete(

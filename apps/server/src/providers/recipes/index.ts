@@ -1,5 +1,5 @@
 import { sequelize } from '../../database/database.connection';
-import { RecipeInterface, ImageInterface } from '../../interfaces';
+import { type RecipeInterface, type ImageInterface } from '../../interfaces';
 import { MealType, Recipe, Image, Dietary } from '../../models';
 import { MealTypeXRecipe, RecipeXDietary } from '../../models/shared';
 
@@ -140,16 +140,25 @@ const post = async (
 		);
 	}
 };
-// const put = () => {
-// 	// check the recipe exist
 
-// 	// check is not deleted
+const updateRecipe = async (recipe: RecipeInterface) => {
+	if (typeof recipe.id === 'string') recipe.id = parseInt(recipe.id);
+	if (!recipe.id && recipe.id !== 0)
+		return Promise.reject(new Error('Recipe id is required'));
 
-// 	// if the user want to update a image
-// 	if(imageId){
+	try {
+		const recipeInDb = await Recipe.findByPk(recipe.id);
+		if (!recipeInDb) {
+			return Promise.reject(new Error('Recipe not found'));
+		}
+		await recipeInDb.update(recipe);
 
-// 	}
-// };
+		return Promise.resolve('');
+	} catch (e) {
+		return Promise.reject(e);
+	}
+};
+
 const remove = async (recipeId: number) => {
 	try {
 		const recipe = await Recipe.findByPk(recipeId);
@@ -168,5 +177,6 @@ const remove = async (recipeId: number) => {
 export const recipesProvider = {
 	post,
 	get,
+	updateRecipe,
 	remove,
 };

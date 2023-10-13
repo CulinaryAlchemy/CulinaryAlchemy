@@ -4,6 +4,8 @@ import { ApiResponse, HttpStatusCodes } from '../../utils';
 import { Image, User } from '../../models';
 import { cloudinaryService } from '../../services';
 import { sequelize } from '../../database/database.connection';
+import { type RecipeInterface } from '../../interfaces';
+import { cleanObjectNullKeys } from '../../utils/object.utils';
 
 const get = {
 	byId: async (req: Request, res: Response) => {
@@ -55,7 +57,7 @@ const post = async (req: Request, res: Response) => {
 		authors_notes,
 		spices,
 		youtube_link,
-	} = req.body;
+	}: RecipeInterface = req.body;
 
 	const user_id = parseInt(req.params.id);
 
@@ -143,7 +145,90 @@ const post = async (req: Request, res: Response) => {
 		);
 	}
 };
-// const put = async (req: Request, res: Response) => {};
+const put = async (req: Request, res: Response) => {
+	const { recipeId } = req.params;
+
+	const {
+		title,
+		description,
+		cooking_time,
+		equipment_needed,
+		ingredients,
+		servings,
+		authors_notes,
+		steps,
+		spices,
+		youtube_link,
+	}: RecipeInterface = req.body;
+	const recipe = {
+		id: recipeId,
+		title,
+		description,
+		cooking_time,
+		equipment_needed,
+		ingredients,
+		servings,
+		steps,
+		authors_notes,
+		spices,
+		youtube_link,
+	};
+
+	// we check if the steps are received, and if they're, we stringify them.
+	steps ? (recipe.steps = JSON.stringify(steps)) : (recipe.steps = null);
+
+	// validate recipe exist
+	try {
+		const doesRecipeExist = await recipesProvider.get.byId(parseInt(recipeId));
+		if (!doesRecipeExist) {
+			return ApiResponse.error(
+				res,
+				HttpStatusCodes.INTERNAL_SERVER_ERROR,
+				'INTERNAL_SERVER_ERROR',
+				'recipe doesnt exist'
+			);
+		}
+	} catch (error) {
+		return ApiResponse.error(
+			res,
+			HttpStatusCodes.INTERNAL_SERVER_ERROR,
+			'INTERNAL_SERVER_ERROR',
+			'recipe doesnt exist'
+		);
+	}
+
+	const cleanRecipeObj: RecipeInterface = cleanObjectNullKeys(
+		recipe
+	) as RecipeInterface;
+
+	if (Object.keys(cleanRecipeObj).length === 0) {
+		return ApiResponse.error(
+			res,
+			HttpStatusCodes.BAD_REQUEST,
+			'BAD_REQUEST',
+			'no params received in the server'
+		);
+	}
+
+	try {
+		await recipesProvider.updateRecipe(cleanRecipeObj);
+	} catch (error) {
+		console.log(error);
+		return ApiResponse.error(
+			res,
+			HttpStatusCodes.INTERNAL_SERVER_ERROR,
+			'INTERNAL_SERVER_ERROR',
+			'error while updating the recipe'
+		);
+	}
+
+	return ApiResponse.success(
+		res,
+		HttpStatusCodes.SUCCESS,
+		null,
+		'RECIPE_UPDATED'
+	);
+};
 
 const remove = async (req: Request, res: Response) => {
 	const { recipeId } = req.params;
@@ -167,5 +252,6 @@ const remove = async (req: Request, res: Response) => {
 export const recipeController = {
 	post,
 	get,
+	put,
 	remove,
 };
