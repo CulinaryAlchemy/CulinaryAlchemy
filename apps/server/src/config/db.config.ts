@@ -2,7 +2,7 @@ import { Options } from 'sequelize';
 import { checkEnvironmentEnv } from './index';
 
 function getSslConfig() {
-	if (process.env.ENVIRONMENT === 'development') {
+	if (!JSON.parse(process.env.SSL) {
 		return;
 	}
 

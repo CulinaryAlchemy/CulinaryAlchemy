@@ -13,6 +13,7 @@ const checkEnvironmentEnv = () => {
 		'CLOUDINARY_CLOUD_NAME',
 		'ALLOWED_ORIGIN_LIST',
 		'ALLOW_DB_LOGGIN',
+		'SSL',
 	];
 
 	// we check all environments variables are setted
