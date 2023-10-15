@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { PublicationBox } from '@/components'
 import { useRecipeMethods } from '@/hooks'
 import { type IRecipe } from '@/models/LOGIC'
+import { type TImageFileOptimizedArray } from '@/models/UI'
 import { homeInputsArrayFooter, homeInputsArrayMain, homeInputsArrayOptionals, homeInputsSchema } from '@/pages/Home/models'
 import { loggerInstance } from '@/services'
+import { optimizeImage } from '@/utils'
 
 export const HomeHeader = () => {
   const { createRecipe } = useRecipeMethods()
@@ -13,15 +14,14 @@ export const HomeHeader = () => {
   const handleOnSubmit = async (data: unknown) => {
     let newUserData = data as IRecipe
 
-    // @ts-expect-error testing
-    const image = await convertToBase64(data?.['images-dropzone'][0]) as string
-    // @ts-expect-error testing
-    const image2 = await convertToBase64(data?.['images-dropzone'][1]) as string
-    // @ts-expect-error testing
-    const image3 = await convertToBase64(data?.['images-dropzone'][2]) as string
-    // @ts-expect-error testing
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const image4 = await convertToBase64(data?.['images-dropzone'][3]) as string
+    const images: TImageFileOptimizedArray = []
+
+    Array.from(newUserData['images-dropzone']).forEach(async (image) => {
+      const data = await optimizeImage(image, 400, 598, () => { })
+      if (data == null) return
+
+      images.push({ src: data.imageProcessedFile, srcBlurPlaceholder: data.imageBlur })
+    })
 
     // @ts-expect-error testing
     delete newUserData['images-dropzone']
@@ -29,12 +29,12 @@ export const HomeHeader = () => {
     newUserData = {
       ...newUserData,
       user_id: 1,
-      image_1: image,
-      image_1_blur: image,
-      image_2: image2,
-      image_2_blur: image2,
-      image_3: image3,
-      image_3_blur: image3
+      image_1: await convertToBase64(images[0]?.src) as string,
+      image_1_blur: await convertToBase64(images[0]?.srcBlurPlaceholder) as string,
+      image_2: await convertToBase64(images[1]?.src) as string,
+      image_2_blur: await convertToBase64(images[1]?.srcBlurPlaceholder) as string,
+      image_3: await convertToBase64(images[2]?.src) as string,
+      image_3_blur: await convertToBase64(images[2]?.srcBlurPlaceholder) as string
     }
 
     loggerInstance.log('HomeHeader.tsx', { data, newUserData })

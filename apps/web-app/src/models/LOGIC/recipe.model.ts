@@ -19,8 +19,10 @@ export interface IRecipe {
   image_3?: string
   image_3_blur?: string
   images: string[]
+  'images-dropzone': FileList
 }
 
+export type TRecipeKey = keyof IRecipe
 
 export type TRecipeArray = IRecipe[]
 
