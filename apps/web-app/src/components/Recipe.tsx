@@ -36,6 +36,7 @@ export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingBut
   loggerInstance.log('Recipe.tsx', { data, recipeId })
   return (
     <PostLayout
+      type='recipe'
       {...{ isLoading }}
       styles={{
         border: styles.border,
