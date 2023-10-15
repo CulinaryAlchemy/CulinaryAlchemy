@@ -1,7 +1,7 @@
 import FormControl from '@mui/joy/FormControl'
 import FormLabel from '@mui/joy/FormLabel'
 import Input, { inputClasses } from '@mui/joy/Input'
-import { type FieldValues, type UseFormClearErrors, type UseFormRegisterReturn, type UseFormSetError, type UseFormWatch } from 'react-hook-form'
+import { useFormContext, type UseFormRegisterReturn } from 'react-hook-form'
 
 import { Error } from '@/components/Form/components/'
 import { useAsyncValidations } from '@/components/Form/hooks'
@@ -12,13 +12,13 @@ interface IProps {
   data: TTextFieldForm
   error: string
   register: UseFormRegisterReturn<string>
-  watch: UseFormWatch<FieldValues>
-  setError: UseFormSetError<FieldValues>
-  clearErrors: UseFormClearErrors<FieldValues>
-  isDirty: boolean
 }
 
-const TextFieldAsync: React.FC<IProps> = ({ data, error, register, watch, setError, clearErrors, isDirty }) => {
+const TextFieldAsync: React.FC<IProps> = ({ data, error, register }) => {
+  const { watch, setError, clearErrors, formState: { dirtyFields } } = useFormContext()
+
+  const isDirty = dirtyFields[data.name] as boolean
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const watchValue = error === '' ? watch(data.name) : null
   const { loading } = useAsyncValidations({ inputName: data.name, watchValue: watchValue as string, setError, clearErrors, isDirty })

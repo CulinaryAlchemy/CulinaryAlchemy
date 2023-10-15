@@ -1,7 +1,7 @@
 import { DeterminateInput } from '@/components/Form/components'
 import { type TFormInputArray } from '@/components/Form/models'
 import { type IInputStyles } from '@/models/UI'
-import { type FieldErrors, type FieldValues, type UseFormClearErrors, type UseFormRegister, type UseFormSetError, type UseFormWatch } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 
 interface IInputsStyles {
   textArea?: IInputStyles
@@ -10,16 +10,11 @@ interface IInputsStyles {
 
 interface IPropsInputsArray {
   inputsData: TFormInputArray
-  register: UseFormRegister<FieldValues>
-  errors: FieldErrors<FieldValues>
-  watch: UseFormWatch<FieldValues>
-  setError: UseFormSetError<FieldValues>
-  clearErrors: UseFormClearErrors<FieldValues>
-  dirtyFields: Partial<Readonly<Record<string, unknown>>>
   inputStyles?: IInputsStyles
 }
 
-export const InputsArray: React.FC<IPropsInputsArray> = ({ inputsData, register, watch, clearErrors, errors, dirtyFields, setError, inputStyles }) => {
+export const InputsArray: React.FC<IPropsInputsArray> = ({ inputsData, inputStyles }) => {
+  const { register, formState: { errors } } = useFormContext()
   return (
     inputsData.map((inputData, index) => (
           <DeterminateInput
@@ -39,12 +34,8 @@ export const InputsArray: React.FC<IPropsInputsArray> = ({ inputsData, register,
               }
             )}
             {...{
-              watch,
-              setError,
-              clearErrors,
               inputStyles
             }}
-            isDirty={dirtyFields[inputData.name] as boolean}
             error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}
           />
     ))

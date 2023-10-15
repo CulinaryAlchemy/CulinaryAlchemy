@@ -1,19 +1,19 @@
 import { type TFormInputArray } from '@/components/Form/models'
+import { type IInputStyles } from '@/models/UI'
+import { adaptDefaultValues } from './adapters'
 import { InputsArray } from './components'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Suspense, useState } from 'react'
-import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
+import { FormProvider, useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
 
-import { type IInputStyles } from '@/models/UI'
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button/'
 import Divider from '@mui/joy/Divider'
 import Sheet from '@mui/joy/Sheet/'
 import Stack from '@mui/joy/Stack'
 import { toast } from 'sonner'
-import { adaptDefaultValues } from './adapters'
 
 interface IInputsStyles {
   textArea?: IInputStyles
@@ -59,17 +59,14 @@ const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 
 
 export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide, inputsDataFooter, inputsDataOptionals }) => {
   const {
-    register,
     handleSubmit: defaultHandleSubmit,
-    watch,
-    setError,
-    clearErrors,
     reset,
     formState: {
+      isDirty,
       errors,
-      dirtyFields,
-      isDirty
-    }
+      ...restFormState
+    },
+    ...restFormMethods
   } = useForm<FieldValues>({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -97,82 +94,42 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
   })
 
   return (
-    <Sheet
-      variant='outlined'
-      sx={{
-        width: '100%',
-        maxWidth: styles.width,
-        my: styles.marginY ?? 4,
-        py: styles.paddingY ?? 3,
-        px: styles.paddingX ?? 2,
-        borderRadius: 'sm',
-        boxShadow: styles.border ?? 'md',
-        border: styles.border,
-        mx: 'auto',
-        backgroundColor: styles.backgroundColor
-      }}
+    <FormProvider
+      {
+        ... {
+          formState: { errors, isDirty, ...restFormState },
+          handleSubmit: defaultHandleSubmit,
+          reset,
+          ...restFormMethods
+        }
+      }
     >
-      <form onSubmit={handleOnSubmit} noValidate>
-        <Sheet
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-            backgroundColor: styles.backgroundColor
-          }}>
-          {Header}
-          <main>
-            <Suspense>
-              <Box
-                component='section'
-                sx={
-                  [
-                    {
-                      display: styles.display,
-                      width: '100%',
-                      gridTemplateAreas: styles.gridTemplateAreasMain,
-                      flexWrap: styles.flexWrap,
-                      justifyContent: styles.justifyContent,
-                      gap: styles.inputsGap
-                    },
-                    styles.gridColumns === 1 && gridFormStyles1,
-                    styles.gridColumns === 2 && gridFormStyles2
-                  ]
-                }
-              >
-                <InputsArray
-                  {...{
-                    inputsData: inputsDataMain,
-                    clearErrors,
-                    dirtyFields,
-                    errors,
-                    register,
-                    setError,
-                    watch,
-                    inputStyles
-                  }}
-                />
-              </Box>
-              {
-                inputsDataOptionals?.[0] != null &&
-                <Divider
-                  sx={{
-                    marginBlock: '0.5em'
-                  }}
-                >
-                  <Button
-                    variant='outlined'
-                    color='neutral'
-                    size='sm'
-                    onClick={handleOnClickToggleOptionalInputsDisplay}
-                  >
-                    {showOptionalInputs ? 'Hide' : 'Show'} optional fields
-                  </Button>
-                </Divider>
-              }
-              {
-                (showOptionalInputs && inputsDataOptionals?.[0] != null) &&
-
+      <Sheet
+        variant='outlined'
+        sx={{
+          width: '100%',
+          maxWidth: styles.width,
+          my: styles.marginY ?? 4,
+          py: styles.paddingY ?? 3,
+          px: styles.paddingX ?? 2,
+          borderRadius: 'sm',
+          boxShadow: styles.border ?? 'md',
+          border: styles.border,
+          mx: 'auto',
+          backgroundColor: styles.backgroundColor
+        }}
+      >
+        <form onSubmit={handleOnSubmit} noValidate>
+          <Sheet
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              backgroundColor: styles.backgroundColor
+            }}>
+            {Header}
+            <main>
+              <Suspense>
                 <Box
                   component='section'
                   sx={
@@ -180,7 +137,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                       {
                         display: styles.display,
                         width: '100%',
-                        gridTemplateAreas: styles.gridTemplateAreasOptionals,
+                        gridTemplateAreas: styles.gridTemplateAreasMain,
                         flexWrap: styles.flexWrap,
                         justifyContent: styles.justifyContent,
                         gap: styles.inputsGap
@@ -192,76 +149,109 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                 >
                   <InputsArray
                     {...{
-                      inputsData: inputsDataOptionals,
-                      clearErrors,
-                      dirtyFields,
-                      errors,
-                      register,
-                      setError,
-                      watch,
+                      inputsData: inputsDataMain,
                       inputStyles
                     }}
                   />
                 </Box>
-              }
-              <Stack
-                direction='row'
-                spacing={1}
-                marginTop={1}
-                justifyContent={buttonSubmitSide}
-              >
                 {
-                  inputsDataFooter?.[0] != null &&
-                  <InputsArray
-                    {...{
-                      inputsData: inputsDataFooter,
-                      clearErrors,
-                      dirtyFields,
-                      errors,
-                      register,
-                      setError,
-                      watch,
-                      inputStyles
+                  inputsDataOptionals?.[0] != null &&
+                  <Divider
+                    sx={{
+                      marginBlock: '0.5em'
                     }}
-                  />
+                  >
+                    <Button
+                      variant='outlined'
+                      color='neutral'
+                      size='sm'
+                      onClick={handleOnClickToggleOptionalInputsDisplay}
+                    >
+                      {showOptionalInputs ? 'Hide' : 'Show'} optional fields
+                    </Button>
+                  </Divider>
                 }
-                <Button
-                  type='submit'
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: '1em',
-                    minHeight: '2.6em',
-                    borderRadius: '0.4em',
-                    flexGrow: buttonSubmitSide === 'default' ? 1 : 0
-                  }}
-                  disabled={Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0)}
+                {
+                  (showOptionalInputs && inputsDataOptionals?.[0] != null) &&
+
+                  <Box
+                    component='section'
+                    sx={
+                      [
+                        {
+                          display: styles.display,
+                          width: '100%',
+                          gridTemplateAreas: styles.gridTemplateAreasOptionals,
+                          flexWrap: styles.flexWrap,
+                          justifyContent: styles.justifyContent,
+                          gap: styles.inputsGap
+                        },
+                        styles.gridColumns === 1 && gridFormStyles1,
+                        styles.gridColumns === 2 && gridFormStyles2
+                      ]
+                    }
+                  >
+                    <InputsArray
+                      {...{
+                        inputsData: inputsDataOptionals,
+                        inputStyles
+                      }}
+                    />
+                  </Box>
+                }
+                <Stack
+                  direction='row'
+                  spacing={1}
+                  marginTop={1}
+                  justifyContent={buttonSubmitSide}
                 >
-                  {buttonSubmitName}
-                </Button>
-                {showResetButton &&
+                  {
+                    inputsDataFooter?.[0] != null &&
+                    <InputsArray
+                      {...{
+                        inputsData: inputsDataFooter,
+                        inputStyles
+                      }}
+                    />
+                  }
                   <Button
+                    type='submit'
                     sx={{
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginTop: '1em'
+                      marginTop: '1em',
+                      minHeight: '2.6em',
+                      borderRadius: '0.4em',
+                      flexGrow: buttonSubmitSide === 'default' ? 1 : 0
                     }}
-                    size='sm'
-                    variant='outlined'
-                    onClick={handleOnClickForReset}
+                    disabled={Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0)}
                   >
-                    Reset
+                    {buttonSubmitName}
                   </Button>
-                }
-              </Stack>
-            </Suspense>
-          </main>
-          {Footer}
-        </Sheet>
-      </form >
-    </Sheet >
+                  {showResetButton &&
+                    <Button
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: '1em'
+                      }}
+                      size='sm'
+                      variant='outlined'
+                      onClick={handleOnClickForReset}
+                    >
+                      Reset
+                    </Button>
+                  }
+                </Stack>
+              </Suspense>
+            </main>
+            {Footer}
+          </Sheet>
+        </form >
+      </Sheet >
+    </FormProvider>
   )
 }
 

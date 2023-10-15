@@ -6,7 +6,7 @@ import Stack from '@mui/joy/Stack'
 import Tooltip from '@mui/joy/Tooltip'
 
 import React, { Suspense, lazy, useRef, useState, type LegacyRef } from 'react'
-import { type FieldValues, type UseFormRegisterReturn, type UseFormWatch } from 'react-hook-form'
+import { useFormContext, type UseFormRegisterReturn } from 'react-hook-form'
 
 
 
@@ -16,10 +16,11 @@ interface IProps {
   data: TDropZoneForm
   error: string
   register: UseFormRegisterReturn<string>
-  watch: UseFormWatch<FieldValues>
 }
 
-const DropZone: React.FC<IProps> = ({ data, error, register, watch }) => {
+const DropZone: React.FC<IProps> = ({ data, error, register }) => {
+  const { watch } = useFormContext()
+
   const [showDropZoneArea, setShowDropZoneArea] = useState(false)
   const elementContainer = useRef<LegacyRef<HTMLDivElement>>(null)
 
