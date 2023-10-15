@@ -56,6 +56,7 @@ export const ContentLayout: React.FC<IProps> = ({ information, styles, id, image
     >
       <Stack
         sx={{
+          width: '100%',
           flexDirection: {
             md: styles.flexDirection,
             sx: 'column'
