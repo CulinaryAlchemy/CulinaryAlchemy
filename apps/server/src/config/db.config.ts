@@ -2,6 +2,9 @@ import { Options } from 'sequelize';
 import { checkEnvironmentEnv } from './index';
 
 function getSslConfig() {
+	if(process.env.SSL === undefined){
+		throw new Error('missing SSL variable')
+	}
 	if (!JSON.parse(process.env.SSL) {
 		return;
 	}
