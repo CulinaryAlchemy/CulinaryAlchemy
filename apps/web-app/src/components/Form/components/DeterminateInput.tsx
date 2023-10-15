@@ -1,7 +1,7 @@
 import { type TInputForm } from '@/components/Form/models'
 import { type IInputStyles } from '@/models/UI'
 import { lazy } from 'react'
-import { type FieldValues, type UseFormClearErrors, type UseFormRegisterReturn, type UseFormSetError, type UseFormWatch } from 'react-hook-form'
+import { type UseFormRegisterReturn } from 'react-hook-form'
 
 const DropZone = lazy(() => import('@/components/Form/components/DropZone/DropZone'))
 const TextArea = lazy(() => import('@/components/Form/components/TextArea'))
@@ -18,16 +18,12 @@ interface IProps {
   data: TInputForm
   register: UseFormRegisterReturn<string>
   error: string
-  watch: UseFormWatch<FieldValues>
-  setError: UseFormSetError<FieldValues>
-  clearErrors: UseFormClearErrors<FieldValues>
-  isDirty: boolean
   inputStyles?: IInputsStyles
 }
 
-export const DeterminateInput: React.FC<IProps> = ({ data, register, error, watch, setError, clearErrors, isDirty, inputStyles }) => {
+export const DeterminateInput: React.FC<IProps> = ({ data, register, error, inputStyles }) => {
   if (data.formInputType === 'textField' && data.async) {
-    return <TextFieldAsync {...{ data, register, error, watch, setError, clearErrors, isDirty }} />
+    return <TextFieldAsync {...{ data, register, error }} />
   }
   if (data.formInputType === 'textField') {
     return <TextField {...{ data, register, error, styles: inputStyles?.textField }} />
@@ -36,11 +32,11 @@ export const DeterminateInput: React.FC<IProps> = ({ data, register, error, watc
     return <TextArea {...{ data, register, error, styles: inputStyles?.textArea }}/>
   }
   if (data.formInputType === 'dropZone') {
-    return <DropZone {...{ data, register, error, watch }}/>
+    return <DropZone {...{ data, register, error }}/>
   }
   if (data.formInputType === 'checkbox') {
-    return <CheckBox {...{ data, register, watch }}/>
+    return <CheckBox {...{ data, register }}/>
   }
 
-  return <h1>Invalid input type</h1>
+  return <h1>Form library: Invalid input type</h1>
 }
