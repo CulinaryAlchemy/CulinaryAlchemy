@@ -17,6 +17,7 @@ export const UserMain = () => {
               <TabPanel routingBy='defaultUISystem' key={tabName.name} value={tabName.name} loading={false} >
                 {Array(5).fill(null).map((_, index) => (
                   <Recipe
+                    recipeId={0}
                     key={String(index)}
                     showStartCookingButton={false}
                     styles={{

@@ -2,7 +2,7 @@ import { type IApiResponse, type IRecipe } from '@/models/LOGIC'
 import { CBackRoutes } from '@/routing'
 import axios from 'axios'
 
-export const getRecipeById = async (recipeId: string) => {
+export const getRecipeById = async (recipeId: number) => {
   return await axios.get<IApiResponse<IRecipe>>(CBackRoutes.Dynamic.recipe.getById(recipeId))
 }
 

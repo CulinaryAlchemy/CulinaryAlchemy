@@ -96,7 +96,7 @@ const getBackendRoutes = () => {
       }
     },
     recipe: {
-      getById (recipeId: string) {
+      getById (recipeId: number) {
         return `/recipe/${recipeId}`
       },
       create (userId: string) {

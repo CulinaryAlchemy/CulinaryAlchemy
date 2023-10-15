@@ -100,6 +100,7 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
             <Image
               key={index}
               src={imageSource}
+              srcBlurPlaceholder={imageSource}
               alt='previous image'
               style={{
                 height: '100%',

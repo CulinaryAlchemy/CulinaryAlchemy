@@ -1,6 +1,6 @@
 import { Loading, Recipe } from '@/components'
 import { MessageLayout } from '@/layouts'
-import { type IApiResponse, type TRecipeIds } from '@/models/LOGIC'
+import { type IApiResponse, type TRecipeArray } from '@/models/LOGIC'
 import { CBackRoutes } from '@/routing'
 import { Typography } from '@mui/joy'
 import Box from '@mui/joy/Box'
@@ -8,7 +8,7 @@ import Sheet from '@mui/joy/Sheet'
 import useSWR from 'swr'
 
 export const Recipes = () => {
-  const { data, isLoading } = useSWR<IApiResponse<TRecipeIds>>(CBackRoutes.Static.recipe.all)
+  const { data, isLoading } = useSWR<IApiResponse<TRecipeArray>>(CBackRoutes.Static.recipe.all)
 
   if (isLoading) {
     return (
@@ -34,20 +34,20 @@ export const Recipes = () => {
         }}
       >
         <MessageLayout>
-          <Typography>There are not any recipes yet, be the first :D</Typography>
+          <Typography>There are not any recipes yet. Be the first :D</Typography>
         </MessageLayout>
       </Box>
     )
   }
 
-
   return (
     <Box>
       <Sheet sx={{ maxWidth: '37.5em', margin: 'auto' }}>
         {
-          Array(5).fill(null).map((_, index) => (
+          data?.data?.map((recipeId) => (
             <Recipe
-              key={String(index)}
+              recipeId={recipeId.id ?? 0}
+              key={recipeId.id}
               showStartCookingButton={false}
               styles={{
                 cursor: 'pointer',

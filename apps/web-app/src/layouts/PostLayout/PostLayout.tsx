@@ -3,7 +3,6 @@ import IconButton from '@mui/joy/IconButton'
 import Sheet from '@mui/joy/Sheet'
 import Skeleton from '@mui/joy/Skeleton'
 import Stack from '@mui/joy/Stack'
-import { useState } from 'react'
 import { PostFooter, PostHeader } from './components'
 
 interface IStyles {
@@ -15,11 +14,10 @@ interface IStyles {
 interface IProps {
   children: React.ReactNode
   styles?: IStyles
+  isLoading: boolean
 }
 
-export const PostLayout: React.FC<IProps> = ({ children, styles }) => {
-  const [isLoading] = useState(false)
-
+export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading }) => {
   if (isLoading) {
     return <PostLayoutSkeleton />
   }
