@@ -24,6 +24,7 @@ interface IProps {
   styles: IStyles
   information?: React.ReactNode
   id?: string
+  images?: string[]
 }
 
 const testImages = [
@@ -33,7 +34,7 @@ const testImages = [
   'https://res.cloudinary.com/dmjqr9trc/image/upload/v1694168250/kno16gs0bjpfad6utdgh.jpg'
 ]
 
-export const ContentLayout: React.FC<IProps> = ({ information, styles, id }) => {
+export const ContentLayout: React.FC<IProps> = ({ information, styles, id, images }) => {
   return (
     <Box
       component='div'
@@ -76,7 +77,7 @@ export const ContentLayout: React.FC<IProps> = ({ information, styles, id }) => 
             overflow: 'hidden'
           }}>
           <Carousel
-            imageSources={testImages}
+            imageSources={images ?? testImages}
             styles={{
               height: '100%',
               width: '100%',

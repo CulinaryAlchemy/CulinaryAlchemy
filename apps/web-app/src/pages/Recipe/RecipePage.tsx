@@ -13,7 +13,7 @@ const RecipePage = () => {
         }}
       >
         <Recipe
-          recipeId={recipeId as string}
+          recipeId={Number(recipeId)}
           showStartCookingButton
           styles={{
             border: 'none',

@@ -18,6 +18,10 @@ export interface IRecipe {
   image_2_blur?: string
   image_3?: string
   image_3_blur?: string
+  images: string[]
 }
+
+
+export type TRecipeArray = IRecipe[]
 
 export type TRecipeIds = number[]

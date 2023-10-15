@@ -1,8 +1,11 @@
 import { AppLink } from '@/components'
 import { ContentLayout, PostLayout } from '@/layouts'
-import { CFrontRoutes } from '@/routing'
+import { type IApiResponse, type IRecipe } from '@/models/LOGIC'
+import { CBackRoutes, CFrontRoutes } from '@/routing'
+import { loggerInstance } from '@/services'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
+import useSWR from 'swr'
 
 interface IStyles {
   border?: 'none'
@@ -25,12 +28,15 @@ interface IStyles {
 interface IProps {
   styles: IStyles
   showStartCookingButton: boolean
-  recipeId?: string
+  recipeId: number
 }
 
 export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingButton }) => {
+  const { data, isLoading } = useSWR<IApiResponse<IRecipe>>(CBackRoutes.Dynamic.recipe.getById(recipeId))
+  loggerInstance.log('Recipe.tsx', { data, recipeId })
   return (
     <PostLayout
+      {...{ isLoading }}
       styles={{
         border: styles.border,
         gap: styles.gap,
@@ -39,6 +45,7 @@ export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingBut
     >
       <ContentLayout
         styles={styles.content}
+        images={data?.data?.images}
         information={
           <section>
             <Box
@@ -58,17 +65,15 @@ export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingBut
                   }}
                 >
                   <AppLink to={CFrontRoutes.Dynamic.recipe('holaaa')} sx={{ color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D)) !important' }} >
-                    La paste cream
+                    {data?.data?.title}
                   </AppLink>
                 </Typography>
               </header>
-              <main>
-                <Typography
-                  level='body2'
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia at neque voluptates eius enim, asperiores cumque incidunt perspiciatis consequatur voluptatum, assumenda fuga atque labore nesciunt facere. In quis qui quas!
-                </Typography>
-              </main>
+              <Typography
+                level='body2'
+              >
+                {data?.data?.description}
+              </Typography>
               <footer>
                 <Box
                   sx={{
@@ -78,7 +83,7 @@ export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingBut
                 >
                   {showStartCookingButton &&
                     <AppLink
-                      to={CFrontRoutes.Dynamic.cooking(recipeId as string)}
+                      to={CFrontRoutes.Dynamic.cooking(String(recipeId))}
                       color='warning'
                       variant='soft'
                       sx={{
