@@ -69,7 +69,8 @@ const post = async (req: Request, res: Response) => {
 		throw new Error('USER_DOES_NOT_EXIST, or its already deleted');
 	}
 
-	if (req.files) {
+	if (Object.keys((req as any)).lenght >= 2) {
+		console.log('images received)
 		const reqFiles = (req as any).files;
 
 		const keysInRequestFileObj = Object.keys(reqFiles);
@@ -116,6 +117,8 @@ const post = async (req: Request, res: Response) => {
 				);
 			}
 		}
+	} else{
+		console.log('no images received')
 	}
 
 	try {
