@@ -29,6 +29,7 @@ const get = {
 					{ model: Dietary },
 					{ model: MealType },
 				],
+				attributes: ['id'],
 			});
 			return Promise.resolve(recipes);
 		} catch (error) {
