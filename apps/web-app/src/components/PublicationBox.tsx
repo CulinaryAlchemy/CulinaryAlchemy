@@ -1,7 +1,6 @@
-import { Form, Image } from '@/components'
+import { Form } from '@/components'
 import { type TFormInputArray } from '@/components/Form/models'
-import { useGlobalAuth, useTranslation } from '@/hooks'
-import Box from '@mui/joy/Box'
+import { useTranslation } from '@/hooks'
 import Sheet from '@mui/joy/Sheet'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { type ZodObject, type ZodRawShape } from 'zod'
@@ -15,7 +14,6 @@ interface IProps {
 }
 
 export const PublicationBox: React.FC<IProps> = ({ schema, inputsDataMain, inputsDataOptionals, inputsDataFooter, onSubmit }) => {
-  const { user } = useGlobalAuth()
   const { t } = useTranslation()
 
   return (
@@ -23,32 +21,20 @@ export const PublicationBox: React.FC<IProps> = ({ schema, inputsDataMain, input
       sx={{
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'start',
-        padding: '1em',
-        gap: '1em',
-        borderBottom: '0.1em solid var(--joy-palette-neutral-outlinedBorder, var(--joy-palette-neutral-200, #D8D8DF))'
+        gap: '1em'
       }}
     >
-      <Box sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        borderRadius: '100%'
-      }}>
-        <Image
-          src={user?.avatar as string}
-          srcBlurPlaceholder={user?.avatarBlur as string}
-          alt='user image'
-          style={{
-            aspectRatio: '1 / 1',
-            width: '2.5em',
-            borderRadius: '100%'
-          }}
-        />
-      </Box>
-      <Box sx={{
-        flexGrow: 1
-      }}>
+      <Sheet
+        sx={{
+          maxWidth: {
+            sx: '100%',
+            md: '55em'
+          },
+          width: '100%'
+        }}
+      >
         <Form
           showResetButton={false}
           buttonSubmitName={t('post')}
@@ -66,7 +52,7 @@ export const PublicationBox: React.FC<IProps> = ({ schema, inputsDataMain, input
           }}
           {...{ schema, inputsDataMain, inputsDataOptionals, inputsDataFooter, onSubmit }}
         />
-      </Box>
+      </Sheet>
     </Sheet>
   )
 }

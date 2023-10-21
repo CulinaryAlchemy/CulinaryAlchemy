@@ -31,6 +31,7 @@ export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type
         border: styles?.border,
         borderRight: 'none',
         borderLeft: 'none',
+        borderTop: 'none',
         paddingBottom: '0.2em',
         cursor: styles?.cursor,
         width: '100%',

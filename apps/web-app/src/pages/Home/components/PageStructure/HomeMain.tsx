@@ -2,8 +2,8 @@ import { Recipes } from '@/pages/Home/components/'
 
 export const HomeMain = () => {
   return (
-        <main>
+        <div>
             <Recipes />
-        </main>
+        </div>
   )
 }

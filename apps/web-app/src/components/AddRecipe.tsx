@@ -7,8 +7,16 @@ import { type TImageFileOptimizedArray } from '@/models/UI'
 import { homeInputsArrayFooter, homeInputsArrayMain, homeInputsArrayOptionals, homeInputsSchema } from '@/pages/Home/models'
 import { loggerInstance } from '@/services'
 import { optimizeImage } from '@/utils'
+import AddIcon from '@mui/icons-material/Add'
+import Box from '@mui/joy/Box'
+import IconButton from '@mui/joy/IconButton'
+import { Suspense, lazy, useState } from 'react'
 
-export const HomeHeader = () => {
+const Modal = lazy(() => import('@/components/Modal/Modal'))
+
+export const AddRecipe = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
   const { createRecipe } = useRecipeMethods()
 
   const handleOnSubmit = async (data: unknown) => {
@@ -52,15 +60,46 @@ export const HomeHeader = () => {
     })
   }
 
+  const handleOnClickModal = () => {
+    setIsModalVisible((prevState) => !prevState)
+  }
+
   return (
     <header>
-      <PublicationBox
-        onSubmit={handleOnSubmit}
-        inputsDataMain={homeInputsArrayMain}
-        inputsDataOptionals={homeInputsArrayOptionals}
-        inputsDataFooter={homeInputsArrayFooter}
-        schema={homeInputsSchema}
-      />
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: '0.5em',
+          right: '0.5em',
+          zIndex: 1000
+        }}
+      >
+        <IconButton variant='soft' color='neutral' onClick={handleOnClickModal}>
+          <AddIcon />
+        </IconButton>
+      </Box>
+      <Suspense>
+        {
+          isModalVisible &&
+          <Modal
+            title='Publish a recipe'
+            open
+            handleOnClickModal={handleOnClickModal}
+            showDividers={false}
+            styles={{
+              layout: 'fullscreen'
+            }}
+          >
+            <PublicationBox
+              onSubmit={handleOnSubmit}
+              inputsDataMain={homeInputsArrayMain}
+              inputsDataOptionals={homeInputsArrayOptionals}
+              inputsDataFooter={homeInputsArrayFooter}
+              schema={homeInputsSchema}
+            />
+          </Modal>
+        }
+      </Suspense>
     </header>
   )
 }
