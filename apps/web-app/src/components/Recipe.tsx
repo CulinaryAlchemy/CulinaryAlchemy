@@ -65,7 +65,7 @@ export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingBut
                     textTransform: 'uppercase'
                   }}
                 >
-                  <AppLink to={CFrontRoutes.Dynamic.recipe('holaaa')} sx={{ color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D)) !important' }} >
+                  <AppLink to={CFrontRoutes.Dynamic.recipe(String(data?.data?.id))} sx={{ color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D)) !important' }} >
                     {data?.data?.title}
                   </AppLink>
                 </Typography>
