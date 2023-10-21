@@ -16,12 +16,12 @@ export const HomeHeader = () => {
 
     const images: TImageFileOptimizedArray = []
 
-    Array.from(newUserData['images-dropzone']).forEach(async (image) => {
+    for (const image of newUserData['images-dropzone']) {
       const data = await optimizeImage(image, 400, 598, () => { })
-      if (data == null) return
-
-      images.push({ src: data.imageProcessedFile, srcBlurPlaceholder: data.imageBlur })
-    })
+      if (data != null) {
+        images.push({ src: data.imageProcessedFile, srcBlurPlaceholder: data.imageBlur })
+      }
+    }
 
     // @ts-expect-error testing
     delete newUserData['images-dropzone']
