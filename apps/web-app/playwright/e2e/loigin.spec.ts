@@ -9,7 +9,7 @@ const formName = {
 }
 
 const auth = {
-    email: 'test@gmail.com',
+    email: 'test2@gmail.com',
     password: 'password123123'
 }
 
