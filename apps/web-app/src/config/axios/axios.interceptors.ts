@@ -48,7 +48,13 @@ export const setAxiosInterceptors = () => {
   axios.interceptors.response.use(
     (success: AxiosResponse<IApiResponse<unknown>>) => {
       loggerInstance.log('Axios.interceptors.ts - response', success)
-      toastUtils.success(getValidationError(success.data.message))
+
+      const successMessage = getValidationError(success.data.message)
+
+      if (successMessage != null) {
+        toastUtils.success(successMessage)
+      }
+
       return success
     },
     (error: AxiosError<IApiResponse<unknown>>) => {
@@ -56,8 +62,11 @@ export const setAxiosInterceptors = () => {
       if (error.code === 'ERR_NETWORK' || error.code === 'ERR_CANCELED') {
         checkServerStatus()
       } else {
-        const errorText = getValidationError(error.response?.data?.message as string) ?? 'Error code not registered'
-        toastUtils.error(errorText)
+        const errorMessage = getValidationError(error.response?.data?.message as string)
+
+        if (errorMessage != null) {
+          toastUtils.error(errorMessage)
+        }
       }
       return Promise.reject(error)
     }
