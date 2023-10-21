@@ -68,8 +68,7 @@ const Modal: React.FC<IProps> = ({ showDividers = true, title, text, styles, onA
                 top: -0,
                 zIndex: 400,
                 backgroundColor: 'inherit',
-                width: '100%',
-                height: '100%'
+                width: '100%'
               }}>
               <Stack
                 sx={{

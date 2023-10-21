@@ -25,6 +25,13 @@ const PopperDropZone: React.FC<IPropsPopperDropZone> = ({ showDropZoneArea, regi
                 open={showDropZoneArea}
                 anchorEl={anchorEl}
                 placement='bottom-end'
+                slotProps={{
+                  root: {
+                    style: {
+                      zIndex: 10000
+                    }
+                  }
+                }}
             >
                 <Sheet
                     variant='outlined'

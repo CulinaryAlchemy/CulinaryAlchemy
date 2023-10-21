@@ -36,12 +36,16 @@ const DropZone: React.FC<IProps> = ({ data, error, register }) => {
       title={error}
       color='danger'
       placement='bottom'
+      sx={{
+        zIndex: 10000
+      }}
     >
       <Box
         ref={elementContainer}
         sx={{
           position: 'relative',
-          gridArea: register.name
+          gridArea: register.name,
+          zIndex: 10000
         }}
       >
         <Suspense>
