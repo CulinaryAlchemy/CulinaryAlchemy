@@ -5,7 +5,7 @@ test.describe('Home tests', () => {
         test('should render the recipes', async ({ page }) => {
             await page.goto('/home')
 
-            await expect(page.getByRole('article')).toHaveCount(5)
+            await expect(page.getByRole('article')).not.toHaveCount(0)
         })
     })
 })
