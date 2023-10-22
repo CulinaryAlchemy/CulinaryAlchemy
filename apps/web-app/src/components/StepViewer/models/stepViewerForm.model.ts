@@ -2,7 +2,6 @@ import { type TFormInputArray } from '@/components/Form/models'
 import { getDynamicSchemas } from '@/utils'
 import { z as zValidator } from 'zod'
 
-
 export const stepViewerInputsArray: TFormInputArray = [
   {
     name: 'stepName',

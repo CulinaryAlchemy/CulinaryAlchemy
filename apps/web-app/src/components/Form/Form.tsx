@@ -1,5 +1,5 @@
 import { type TFormInputArray } from '@/components/Form/models'
-import { type IInputStyles } from '@/models/UI'
+import { type IButtonDesign, type IInputStyles } from '@/models/UI'
 import { adaptDefaultValues } from './adapters'
 import { InputsArray } from './components'
 
@@ -52,12 +52,14 @@ interface IForm {
   styles: IStyles
   inputStyles?: IInputsStyles
   showResetButton?: boolean
+  showMainButton?: boolean
+  buttonsDesign?: IButtonDesign
 }
 
 const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1em' }
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
-export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide, inputsDataFooter, inputsDataOptionals }) => {
+export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide, inputsDataFooter, inputsDataOptionals, showMainButton = true, buttonsDesign }) => {
   const {
     handleSubmit: defaultHandleSubmit,
     reset,
@@ -96,12 +98,12 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
   return (
     <FormProvider
       {
-        ... {
-          formState: { errors, isDirty, ...restFormState },
-          handleSubmit: defaultHandleSubmit,
-          reset,
-          ...restFormMethods
-        }
+      ... {
+        formState: { errors, isDirty, ...restFormState },
+        handleSubmit: defaultHandleSubmit,
+        reset,
+        ...restFormMethods
+      }
       }
     >
       <Sheet
@@ -214,21 +216,24 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                       }}
                     />
                   }
-                  <Button
-                    type='submit'
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginTop: '1em',
-                      minHeight: '2.6em',
-                      borderRadius: '0.4em',
-                      flexGrow: buttonSubmitSide === 'default' ? 1 : 0
-                    }}
-                    disabled={Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0)}
-                  >
-                    {buttonSubmitName}
-                  </Button>
+                  {showMainButton &&
+                    <Button
+                      type='submit'
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: '1em',
+                        minHeight: '2.6em',
+                        borderRadius: '0.4em',
+                        flexGrow: buttonSubmitSide === 'default' ? 1 : 0
+                      }}
+                      disabled={Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0)}
+                      {...buttonsDesign}
+                    >
+                      {buttonSubmitName}
+                    </Button>
+                  }
                   {showResetButton &&
                     <Button
                       sx={{
@@ -240,6 +245,7 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                       size='sm'
                       variant='outlined'
                       onClick={handleOnClickForReset}
+                      {...buttonsDesign}
                     >
                       Reset
                     </Button>
