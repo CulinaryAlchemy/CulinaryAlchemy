@@ -69,8 +69,8 @@ const post = async (req: Request, res: Response) => {
 		throw new Error('USER_DOES_NOT_EXIST, or its already deleted');
 	}
 
-	if (Object.keys((req as any)).lenght >= 2) {
-		console.log('images received)
+	if (Object.keys(req.files as object).length >= 2) {
+		console.log('images received');
 		const reqFiles = (req as any).files;
 
 		const keysInRequestFileObj = Object.keys(reqFiles);
@@ -88,16 +88,19 @@ const post = async (req: Request, res: Response) => {
 			return ApiResponse.error(
 				res,
 				HttpStatusCodes.BAD_REQUEST,
-				'every iamge must have a blur image'
+				'every image must have a blur image'
 			);
 		}
 
 		let defaultImage: string = '';
 
+		console.log(keysInRequestFileObj);
 		for (const key of keysInRequestFileObj) {
 			const imageFile = reqFiles[key][0] as Express.Multer.File;
+			
 			const imageUrl = (await cloudinaryService.uploadImage(imageFile))
 				.secure_url;
+				
 
 			if (!imageFile.fieldname.endsWith('blur')) {
 				defaultImage = imageUrl;
@@ -117,8 +120,8 @@ const post = async (req: Request, res: Response) => {
 				);
 			}
 		}
-	} else{
-		console.log('no images received')
+	} else {
+		console.log('no images received');
 	}
 
 	try {
