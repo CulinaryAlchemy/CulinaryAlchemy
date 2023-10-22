@@ -1,4 +1,3 @@
-import { getAuthSession } from '@/utils'
 
 export const globalConfig = {
   baseURL: {
@@ -8,11 +7,11 @@ export const globalConfig = {
   localStorage: {
     auth: {
       accessToken: 'accesss23', // should be in memory and reset it with the help of api /refresh end point
-      refreshToken: 'shouldn\'t be here'
+      refreshToken: 'shouldn\'t be here',
+      storageMethod: 'storageMethod'
     },
     user: 'user-data',
-    language: 'language',
-    isThereUser: !Object.values(getAuthSession('accesss23', 'user-data')).some((value) => value == null)
+    language: 'language'
   },
   image: {
     maxSizeBytes: 200000

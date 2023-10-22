@@ -4,7 +4,7 @@ import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 import { useId } from 'react'
 
-export const LoginFooter = () => {
+export const RegisterFooter = () => {
   const checkboxRememberMeId = useId()
   const { t } = useTranslation()
   const { setStorageMethod, storageMethod } = useGlobalAuth()
@@ -39,7 +39,6 @@ export const LoginFooter = () => {
           <Typography level='body3'>{t('remember me')}</Typography>
         </label>
       </Box>
-      <Typography level='body3'>{t('forgot your password?')}</Typography>
     </Box>
   )
 }

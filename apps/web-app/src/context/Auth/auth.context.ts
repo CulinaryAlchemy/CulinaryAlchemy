@@ -1,4 +1,4 @@
-import { type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
+import { type IUser, type IUserRegister, type IUserSignIn, type TStorage } from '@/models/LOGIC'
 import { createContext, useContext } from 'react'
 
 interface IContext {
@@ -9,6 +9,8 @@ interface IContext {
   signOut: () => void
   isAuth: boolean
   isLoading: boolean
+  setStorageMethod: (storage: TStorage) => void
+  storageMethod: TStorage
 }
 const defaultState: IContext = {
   user: undefined,
@@ -17,7 +19,9 @@ const defaultState: IContext = {
   signInByApi: async () => { },
   signUp: async () => { },
   signOut: () => {},
-  updateSessionData: () => {}
+  updateSessionData: () => {},
+  setStorageMethod: () => {},
+  storageMethod: 'localStorage'
 }
 
 const authContext = createContext<IContext>(defaultState)
