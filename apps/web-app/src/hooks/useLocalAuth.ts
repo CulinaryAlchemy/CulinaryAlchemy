@@ -1,19 +1,21 @@
 import { globalConfig } from '@/config'
-import { type IApiResponse, type IAuthApiResponse, type IUser, type IUserRegister, type IUserSignIn } from '@/models/LOGIC'
+import { type IApiResponse, type IAuthApiResponse, type IUser, type IUserRegister, type IUserSignIn, type TStorage } from '@/models/LOGIC'
 import { checkUserSession, loggerInstance, registerUser, signInUser } from '@/services'
-import { clearSession, getAuthSession, saveAuthSession, updateUserAuthSession } from '@/utils'
+import { clearSession, getAuthSession, getStorageMethodFromLocalStorage, saveAuthSession, setStorageMethodToLocalStorage, updateUserAuthSession } from '@/utils'
 import { type AxiosResponse } from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const useLocalAuth = () => {
   const [user, setUser] = useState<IUser>()
   const [isAuth, setIsAuth] = useState(false)
-  const [isLoading, setLoading] = useState(globalConfig.localStorage.isThereUser)
+  const storageMethod = useRef<TStorage>(getStorageMethodFromLocalStorage())
+  const [isLoading, setLoading] = useState(() => !Object.values(getAuthSession(globalConfig.localStorage.auth.accessToken, globalConfig.localStorage.user, storageMethod.current)).some((value) => value == null))
 
   useEffect(() => {
     const asyncExecContext = async () => {
-      const { accessToken, userData } = getAuthSession(globalConfig.localStorage.auth.accessToken, globalConfig.localStorage.user)
+      const { accessToken, userData } = getAuthSession(globalConfig.localStorage.auth.accessToken, globalConfig.localStorage.user, storageMethod.current)
 
+      loggerInstance.log('useLocalAuth.ts - 18', { storageMethod: storageMethod.current, userData, accessToken })
       if (accessToken == null || userData == null) {
         setLoading(false)
         return
@@ -45,7 +47,13 @@ export const useLocalAuth = () => {
     setIsAuth(true)
     setUser(user)
 
-    saveAuthSession(globalConfig.localStorage.auth.accessToken, globalConfig.localStorage.user, { accessToken: token, userData: user })
+    loggerInstance.log('useLocalAuth.ts - 50', { storageMethod, user, token })
+    saveAuthSession(
+      globalConfig.localStorage.auth.accessToken,
+      globalConfig.localStorage.user,
+      { accessToken: token, userData: user },
+      storageMethod.current
+    )
   }
 
   const signInByApi = async (userData: IUserSignIn) => {
@@ -72,7 +80,11 @@ export const useLocalAuth = () => {
 
   const updateSessionData = (userData: IUser) => {
     setUser(userData)
-    updateUserAuthSession(globalConfig.localStorage.user, userData)
+    updateUserAuthSession(
+      globalConfig.localStorage.user,
+      userData,
+      storageMethod.current
+    )
   }
 
   const checkSession = async () => {
@@ -84,5 +96,10 @@ export const useLocalAuth = () => {
     }
   }
 
-  return { user, signInByApi, signUp, signOut, isAuth, isLoading, updateSessionData }
+  const setStorageMethod = (storage: TStorage) => {
+    storageMethod.current = storage
+    setStorageMethodToLocalStorage(storage)
+  }
+
+  return { user, signInByApi, signUp, signOut, isAuth, isLoading, updateSessionData, setStorageMethod, storageMethod: storageMethod.current }
 }

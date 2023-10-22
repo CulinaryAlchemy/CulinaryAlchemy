@@ -4,7 +4,7 @@ import { GlobalLayout } from '@/layouts'
 import { useGlobalAuth, useGlobalLoading, useTranslation } from '@/hooks'
 import { type IUserRegister } from '@/models/LOGIC'
 import { type FieldValues, type SubmitHandler } from 'react-hook-form'
-import { RegisterHeader } from './components/'
+import { RegisterFooter, RegisterHeader } from './components/'
 import { metadata } from './config'
 import { inputsArray, registerInputsSchema } from './models'
 
@@ -29,6 +29,7 @@ const Register = () => {
         buttonSubmitName={t('sign up')}
         onSubmit={handleOnSumbit}
         Header= {<RegisterHeader />}
+        Footer={<RegisterFooter />}
         buttonSubmitSide='default'
         showResetButton={false}
         styles={{
