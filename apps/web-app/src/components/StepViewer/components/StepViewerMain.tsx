@@ -1,17 +1,21 @@
-import { useStepViewerMain } from '@/components/StepViewer/hooks/'
 import { stepViewerInputsArray, stepViewerInputsSchema } from '@/components/StepViewer/models'
 import { ContentLayout } from '@/layouts/ContentLayout'
+import { loggerInstance } from '@/services'
 import Box from '@mui/joy/Box'
-import Typography from '@mui/joy/Typography'
-import { lazy } from 'react'
+import { lazy, useState } from 'react'
 
 const Form = lazy(() => import('@/components/Form/Form'))
 
 export const StepViewerMain = () => {
-  const { isEditModeEnable, toggleEditMode } = useStepViewerMain()
+  const [isEditing, setIsEditing] = useState(false)
 
-  const handleOnClick = () => {
-    toggleEditMode()
+  const handleOnClickForEditing = () => {
+    setIsEditing(true)
+  }
+
+  const handleOnSubmit = (data: unknown) => {
+    loggerInstance.log('StepViewerMain.tsx - 17', data)
+    setIsEditing(false)
   }
 
   return (
@@ -53,6 +57,7 @@ export const StepViewerMain = () => {
 
             information={
               <Box
+                onClick={handleOnClickForEditing}
                 sx={{
                   maxWidth: {
                     md: '35em',
@@ -60,68 +65,47 @@ export const StepViewerMain = () => {
                   }
                 }}
               >
-                {
-                  isEditModeEnable
-                    ? <Form
-                      buttonSubmitName='Save'
-                      inputsDataMain={stepViewerInputsArray}
-                      schema={stepViewerInputsSchema}
-                      onSubmit={() => { handleOnClick() }}
-                      buttonSubmitSide='default'
-                      styles={{
-                        width: '100%',
-                        display: 'grid',
-                        marginY: '0px',
-                        paddingX: '0px',
-                        paddingY: '0px',
-                        border: 'none',
-                        gridTemplateAreasMain: '"stepName" "stepDescription"'
-                      }}
-                      inputStyles={{
-                        textArea: {
-                          border: 'none',
-                          fontSize: '0.875em',
-                          paddingInline: '0px',
-                          label: {
-                            display: 'none'
-                          }
-                        },
-                        textField: {
-                          border: 'none',
-                          fontSize: 'clamp(1em, 7vw ,2.25em)',
-                          fontWeight: '600',
-                          paddingInline: '0px',
-                          label: {
-                            display: 'none'
-                          }
-                        }
-                      }}
-                    />
-                    : <>
-                      <Typography
-                        onClick={handleOnClick}
-                        level='h2'
-                      >
-                        Sal
-                      </Typography>
-                      <Typography
-                        level='body2'
-                      >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam illo sint alias asperiores amet, vitae corporis, sunt velit vel ipsam porro. Facilis atque corporis quod vel ipsa expedita sed dolore?
-                      </Typography>
-                      <a
-                        href={`#${index - 1}`}
-                      >
-                        Previous
-                      </a>
-                      -
-                      <a
-                        href={`#${index + 1}`}
-                      >
-                        Next
-                      </a>
-                    </>
-                }
+                <Form
+                  buttonSubmitName='Save'
+                  showMainButton={isEditing}
+                  showResetButton={false}
+                  inputsDataMain={stepViewerInputsArray}
+                  schema={stepViewerInputsSchema}
+                  onSubmit={handleOnSubmit}
+                  buttonSubmitSide='default'
+                  styles={{
+                    width: '100%',
+                    display: 'grid',
+                    marginY: '0px',
+                    paddingX: '0px',
+                    paddingY: '0px',
+                    border: 'none',
+                    gridTemplateAreasMain: '"stepName" "stepDescription"'
+                  }}
+                  inputStyles={{
+                    textArea: {
+                      border: 'none',
+                      fontSize: '0.875em',
+                      paddingInline: '0px',
+                      label: {
+                        display: 'none'
+                      }
+                    },
+                    textField: {
+                      border: 'none',
+                      fontSize: 'clamp(1em, 7vw ,2.25em)',
+                      fontWeight: '600',
+                      paddingInline: '0px',
+                      label: {
+                        display: 'none'
+                      }
+                    }
+                  }}
+                  buttonsDesign={{
+                    color: 'neutral',
+                    variant: 'outlined'
+                  }}
+                />
               </Box>
             }
           />
