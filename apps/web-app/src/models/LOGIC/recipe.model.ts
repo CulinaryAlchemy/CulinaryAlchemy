@@ -12,14 +12,14 @@ export interface IRecipe {
   spices: string | null
   youtube_link: string | null
   end_date: Date | null
-  image_1?: string
-  image_1_blur?: string
-  image_2?: string
-  image_2_blur?: string
-  image_3?: string
-  image_3_blur?: string
+  image_1?: File
+  image_1_blur?: File
+  image_2?: File
+  image_2_blur?: File
+  image_3?: File
+  image_3_blur?: File
   images: string[]
-  'images-dropzone': FileList
+  'images-dropzone': FileList | null
 }
 
 export type TRecipeKey = keyof IRecipe
