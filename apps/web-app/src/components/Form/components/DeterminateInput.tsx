@@ -19,17 +19,18 @@ interface IProps {
   register: UseFormRegisterReturn<string>
   error: string
   inputStyles?: IInputsStyles
+  areInputsReadOnly?: boolean
 }
 
-export const DeterminateInput: React.FC<IProps> = ({ data, register, error, inputStyles }) => {
+export const DeterminateInput: React.FC<IProps> = ({ areInputsReadOnly = false, data, register, error, inputStyles }) => {
   if (data.formInputType === 'textField' && data.async) {
-    return <TextFieldAsync {...{ data, register, error }} />
+    return <TextFieldAsync {...{ data, register, error, isReadOnly: areInputsReadOnly }} />
   }
   if (data.formInputType === 'textField') {
-    return <TextField {...{ data, register, error, styles: inputStyles?.textField }} />
+    return <TextField {...{ data, register, error, styles: inputStyles?.textField, isReadOnly: areInputsReadOnly }} />
   }
   if (data.formInputType === 'textArea') {
-    return <TextArea {...{ data, register, error, styles: inputStyles?.textArea }}/>
+    return <TextArea {...{ data, register, error, styles: inputStyles?.textArea, isReadOnly: areInputsReadOnly }}/>
   }
   if (data.formInputType === 'dropZone') {
     return <DropZone {...{ data, register, error }}/>

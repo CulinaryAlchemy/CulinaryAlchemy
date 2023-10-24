@@ -3,7 +3,7 @@ export interface IRecipe {
   user_id?: number
   title: string
   description: string
-  steps?: string
+  steps?: TStepArray
   authors_notes: string | null
   cooking_time: number
   servings: number
@@ -21,6 +21,13 @@ export interface IRecipe {
   images: string[]
   'images-dropzone': FileList | null
 }
+
+export interface IStep {
+  stepName: string
+  stepDescription: string
+}
+
+export type TStepArray = IStep[]
 
 export type TRecipeKey = keyof IRecipe
 

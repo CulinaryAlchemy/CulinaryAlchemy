@@ -29,10 +29,10 @@ export const Routing = () => {
               <Route path={CFrontRoutes.Static.home} element={<HomePage />} />
               <Route path={CFrontRoutes.Static.settings.home.absolute + '/*'} element={<SettingsPage />} />
               <Route path={CFrontRoutes.Static.recipe} element={<RecipePage />} />
-              <Route path={CFrontRoutes.Static.cooking} element={<CookingPage />} />
               <Route path={CFrontRoutes.Static.user} element={<UserPage />} />
               <Route path={CFrontRoutes.Static.notFound} element={<NotFoundPage />} />
             </Route>
+            <Route path={CFrontRoutes.Static.cooking} element={<CookingPage />} />
           </Route>
         </Routes>
       </Suspense>

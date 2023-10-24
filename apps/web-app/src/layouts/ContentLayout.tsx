@@ -17,6 +17,8 @@ interface IStyles {
   informationSection: {
     paddingInline?: string
     alignSelf?: string
+    width?: string
+    maxWidth?: string
   }
 }
 
@@ -61,6 +63,7 @@ export const ContentLayout: React.FC<IProps> = ({ information, styles, id, image
             md: styles.flexDirection,
             sx: 'column'
           },
+          justifyContent: styles.justifyContent,
           gap: styles.gap,
           paddingInline: styles.paddingInline
         }}
@@ -89,8 +92,11 @@ export const ContentLayout: React.FC<IProps> = ({ information, styles, id, image
         <Box
           component='main'
           sx={{
-            width: '100%',
-            maxWidth: '100%',
+            width: styles.informationSection.width ?? '100%',
+            maxWidth: {
+              xs: '100%',
+              md: styles.informationSection.maxWidth ?? '100%'
+            },
             alignSelf: styles.informationSection.alignSelf
           }}
         >
