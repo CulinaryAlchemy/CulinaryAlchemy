@@ -42,6 +42,7 @@ interface IForm {
   schema: ZodObject<ZodRawShape>
   inputsDataMain: TFormInputArray
   inputsDataOptionals?: TFormInputArray
+  areInputsReadOnly?: boolean
   inputsDataFooter?: TFormInputArray
   onSubmit: SubmitHandler<FieldValues>
   Header?: React.ReactNode
@@ -59,7 +60,7 @@ interface IForm {
 const gridFormStyles1 = { display: 'grid', gridTemplateColumns: '1fr', gap: '0.1em' }
 const gridFormStyles2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em' }
 
-export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide, inputsDataFooter, inputsDataOptionals, showMainButton = true, buttonsDesign }) => {
+export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues, schema, inputsDataMain, onSubmit, Header, Footer, buttonSubmitName = 'submit', styles, inputStyles, showResetButton = true, buttonSubmitSide, inputsDataFooter, inputsDataOptionals, showMainButton = true, buttonsDesign }) => {
   const {
     handleSubmit: defaultHandleSubmit,
     reset,
@@ -152,7 +153,8 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                   <InputsArray
                     {...{
                       inputsData: inputsDataMain,
-                      inputStyles
+                      inputStyles,
+                      areInputsReadOnly
                     }}
                   />
                 </Box>
@@ -196,7 +198,8 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                     <InputsArray
                       {...{
                         inputsData: inputsDataOptionals,
-                        inputStyles
+                        inputStyles,
+                        areInputsReadOnly
                       }}
                     />
                   </Box>
@@ -212,7 +215,8 @@ export const Form: React.FC<IForm> = ({ defaultValues, schema, inputsDataMain, o
                     <InputsArray
                       {...{
                         inputsData: inputsDataFooter,
-                        inputStyles
+                        inputStyles,
+                        areInputsReadOnly
                       }}
                     />
                   }

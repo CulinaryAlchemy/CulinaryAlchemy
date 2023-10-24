@@ -83,6 +83,9 @@ const getBackendRoutes = () => {
       get (userName: string) {
         return `/user/profile/${userName}`
       },
+      getById (id: number) {
+        return `/user/${id}`
+      },
       update (userId: number) {
         return `/user/${userId}`
       },
@@ -103,6 +106,9 @@ const getBackendRoutes = () => {
         return `/recipe/${userId}`
       },
       deleteById (userId: string, recipeId: string) {
+        return `/recipe/${userId}/${recipeId}`
+      },
+      updateById (userId: string, recipeId: string) {
         return `/recipe/${userId}/${recipeId}`
       }
     }

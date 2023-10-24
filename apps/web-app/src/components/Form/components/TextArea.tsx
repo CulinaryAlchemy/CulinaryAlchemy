@@ -11,9 +11,10 @@ interface IProps {
   error: string
   register: UseFormRegisterReturn<string>
   styles?: IInputStyles
+  isReadOnly?: boolean
 }
 
-const TextArea: React.FC<IProps> = ({ data, error, register, styles }) => {
+const TextArea: React.FC<IProps> = ({ isReadOnly = false, data, error, register, styles }) => {
   return (
     <FormControl
       sx={{
@@ -48,6 +49,7 @@ const TextArea: React.FC<IProps> = ({ data, error, register, styles }) => {
         {...register}
         {...(error !== '' && { error: true })}
         placeholder={data.placeholder} minRows={4}
+        readOnly={isReadOnly}
       />
       <Error text={error} />
     </FormControl>

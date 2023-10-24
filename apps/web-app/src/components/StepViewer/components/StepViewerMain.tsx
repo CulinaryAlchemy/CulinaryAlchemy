@@ -1,116 +1,151 @@
-import { stepViewerInputsArray, stepViewerInputsSchema } from '@/components/StepViewer/models'
-import { ContentLayout } from '@/layouts/ContentLayout'
-import { loggerInstance } from '@/services'
+import { useStepViewerMain } from '@/components/StepViewer/hooks'
+import { MessageLayout } from '@/layouts'
+import { type IStep, type TStepArray } from '@/models/LOGIC'
+import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/joy/Box'
-import { lazy, useState } from 'react'
+import Button from '@mui/joy/Button'
+import IconButton from '@mui/joy/IconButton'
+import Typography from '@mui/joy/Typography'
+import React, { Suspense, lazy, startTransition } from 'react'
 
-const Form = lazy(() => import('@/components/Form/Form'))
+const Step = lazy(() => import('@/components/StepViewer/components/Step'))
 
-export const StepViewerMain = () => {
-  const [isEditing, setIsEditing] = useState(false)
+interface IProps {
+  isEditable: boolean
+  onSaveSteps: (newStep: unknown) => Promise<unknown>
+  defaultSteps: TStepArray | undefined
 
-  const handleOnClickForEditing = () => {
-    setIsEditing(true)
+}
+export const StepViewerMain: React.FC<IProps> = ({ isEditable, onSaveSteps, defaultSteps }) => {
+  const {
+    steps,
+    isTheFirstStepOptimistic,
+    toggleIsTheFirstStepOptimistic,
+    addNewStep,
+    updateStep,
+    resetStep
+  } = useStepViewerMain(
+    defaultSteps
+  )
+
+  const handleOnClickForRemoveMessage = () => {
+    startTransition(() => {
+      toggleIsTheFirstStepOptimistic()
+    })
   }
 
-  const handleOnSubmit = (data: unknown) => {
-    loggerInstance.log('StepViewerMain.tsx - 17', data)
-    setIsEditing(false)
+  const handleOnClickForAddAStep = () => {
+    addNewStep({ stepName: '', stepDescription: '' })
+
+    if (steps == null) return
+
+    setTimeout(() => {
+      if (steps.at(-1)?.stepName !== '') {
+        location.hash = `${steps?.length}`
+      } else {
+        location.hash = `${steps?.length - 1}`
+      }
+    }, 200)
+  }
+
+  const handleOnSaveStep = async (newStep: IStep) => {
+    if (steps == null) return
+    const newSteps = [...steps, newStep]
+    return await onSaveSteps(newSteps)
   }
 
   return (
-    <Box
-      component='main'
-      sx={{
-        display: 'flex',
-        width: '100%',
-        position: 'relative',
-        height: '100%',
-        whiteSpace: 'nowrap',
-        alignSelf: 'stretch',
-        flexGrow: 1,
-        scrollBehavior: 'smooth',
-        overflowX: 'hidden'
-      }}
-    >
-      {
-        Array(5).fill(null).map((_, index) => (
-          <ContentLayout
-            key={index}
-            id={String(index)}
-            styles={{
-              paddingInline: '1em',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingBottom: '3em',
-              gap: '1em',
-              carrousel: {
-                maxWidth: '25em',
-                borderRadius: '0.5em'
-              },
-              informationSection: {
-                paddingInline: '0',
-                alignSelf: 'start'
-              }
-            }}
-
-            information={
-              <Box
-                onClick={handleOnClickForEditing}
-                sx={{
-                  maxWidth: {
-                    md: '35em',
-                    xs: '100%'
+    <Suspense>
+      <Box
+        component='main'
+        sx={{
+          display: 'flex',
+          width: '100%',
+          position: 'relative',
+          height: '100%',
+          whiteSpace: 'nowrap',
+          alignSelf: 'stretch',
+          flexGrow: 1,
+          scrollBehavior: 'smooth',
+          overflowX: 'hidden'
+        }}
+      >
+        {
+          (isEditable) &&
+          (
+            <Box
+              sx={{
+                position: 'fixed',
+                bottom: '0.5em',
+                right: '0.5em',
+                zIndex: 1000
+              }}
+            >
+              <IconButton variant='soft' color='neutral' onClick={handleOnClickForAddAStep}>
+                <AddIcon />
+              </IconButton>
+            </Box>
+          )
+        }
+        {
+          steps?.[0] == null && isTheFirstStepOptimistic
+            ? (
+              <MessageLayout>
+                <Box
+                  sx={{
+                    mt: '5em',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <Typography level='display2'>NO STEPS FOUND</Typography>
+                  {
+                    (isEditable) &&
+                    (
+                      <Button
+                        color='neutral'
+                        variant='outlined'
+                        size='lg'
+                        onClick={handleOnClickForRemoveMessage}
+                      >
+                        Click to add one
+                      </Button>
+                    )
                   }
-                }}
-              >
-                <Form
-                  buttonSubmitName='Save'
-                  showMainButton={isEditing}
-                  showResetButton={false}
-                  inputsDataMain={stepViewerInputsArray}
-                  schema={stepViewerInputsSchema}
-                  onSubmit={handleOnSubmit}
-                  buttonSubmitSide='default'
-                  styles={{
-                    width: '100%',
-                    display: 'grid',
-                    marginY: '0px',
-                    paddingX: '0px',
-                    paddingY: '0px',
-                    border: 'none',
-                    gridTemplateAreasMain: '"stepName" "stepDescription"'
-                  }}
-                  inputStyles={{
-                    textArea: {
-                      border: 'none',
-                      fontSize: '0.875em',
-                      paddingInline: '0px',
-                      label: {
-                        display: 'none'
+                </Box>
+              </MessageLayout>
+              )
+            : (
+                steps?.map((step, index) => (
+                <Step
+                  id={String(index)}
+                  key={step.stepName}
+                  stepData={step}
+                  onSaveStep={handleOnSaveStep}
+                  {...{ resetStep, updateStep, isEditable }}
+                  navigationElement={
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      {
+                        index !== 0 && (<a href={`#${index - 1}`}>Previous</a>)
                       }
-                    },
-                    textField: {
-                      border: 'none',
-                      fontSize: 'clamp(1em, 7vw ,2.25em)',
-                      fontWeight: '600',
-                      paddingInline: '0px',
-                      label: {
-                        display: 'none'
+
+                      {
+                        index !== steps.length - 1 && (<a href={`#${index + 1}`}>Next</a>)
                       }
-                    }
-                  }}
-                  buttonsDesign={{
-                    color: 'neutral',
-                    variant: 'outlined'
-                  }}
+                    </Box>
+                  }
                 />
-              </Box>
-            }
-          />
-        ))
-      }
-    </Box>
+                ))
+              )
+        }
+      </Box>
+    </Suspense>
   )
 }

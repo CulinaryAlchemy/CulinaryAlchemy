@@ -9,11 +9,12 @@ interface IInputsStyles {
 }
 
 interface IPropsInputsArray {
+  areInputsReadOnly?: boolean
   inputsData: TFormInputArray
   inputStyles?: IInputsStyles
 }
 
-export const InputsArray: React.FC<IPropsInputsArray> = ({ inputsData, inputStyles }) => {
+export const InputsArray: React.FC<IPropsInputsArray> = ({ areInputsReadOnly = false, inputsData, inputStyles }) => {
   const { register, formState: { errors } } = useFormContext()
   return (
     inputsData.map((inputData, index) => (
@@ -34,6 +35,7 @@ export const InputsArray: React.FC<IPropsInputsArray> = ({ inputsData, inputStyl
               }
             )}
             {...{
+              areInputsReadOnly,
               inputStyles
             }}
             error={errors[inputData.name] != null ? errors[inputData.name]?.message as string : ''}

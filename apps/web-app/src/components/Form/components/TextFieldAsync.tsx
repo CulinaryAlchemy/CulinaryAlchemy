@@ -12,9 +12,10 @@ interface IProps {
   data: TTextFieldForm
   error: string
   register: UseFormRegisterReturn<string>
+  isReadOnly?: boolean
 }
 
-const TextFieldAsync: React.FC<IProps> = ({ data, error, register }) => {
+const TextFieldAsync: React.FC<IProps> = ({ isReadOnly = false, data, error, register }) => {
   const { watch, setError, clearErrors, formState: { dirtyFields } } = useFormContext()
 
   const isDirty = dirtyFields?.[data.name] as boolean
@@ -46,6 +47,7 @@ const TextFieldAsync: React.FC<IProps> = ({ data, error, register }) => {
         placeholder={data.placeholder}
         {...(error !== '' && { error: true })}
         {...register}
+        readOnly={isReadOnly}
       />
       <Error text={error} />
     </FormControl>

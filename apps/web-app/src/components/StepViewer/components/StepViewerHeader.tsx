@@ -1,23 +1,26 @@
 import { AppLink } from '@/components'
-import { useGlobalAuth } from '@/hooks'
-import { CFrontRoutes } from '@/routing'
+import { type IApiResponse, type IRecipe, type IUserApiResponse } from '@/models/LOGIC'
+import { CBackRoutes, CFrontRoutes } from '@/routing'
 import { ModalClose } from '@mui/joy'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 import { Link } from 'react-router-dom'
+import useSWR from 'swr'
 
 interface IProps {
-  recipeId: string
+  recipeData: IRecipe
+  userId: number
 }
 
-export const StepViewerHeader: React.FC<IProps> = ({ recipeId }) => {
-  const { user } = useGlobalAuth()
+export const StepViewerHeader: React.FC<IProps> = ({ recipeData, userId }) => {
+  const { data } = useSWR<IApiResponse<IUserApiResponse>>(userId != null && CBackRoutes.Dynamic.user.getById(userId))
 
   const handleOnCloseClick = () => {
     if (document.exitFullscreen) {
       void document.exitFullscreen()
     }
   }
+
   return (
     <Box
       component='header'
@@ -43,7 +46,7 @@ export const StepViewerHeader: React.FC<IProps> = ({ recipeId }) => {
               fontSize: 'clamp(1em, 5vw, 1.5em)'
             }}
           >
-            La paste cream
+            {recipeData.title}
           </Typography>
           <Typography
             level='body3'
@@ -56,9 +59,9 @@ export const StepViewerHeader: React.FC<IProps> = ({ recipeId }) => {
             <span>By </span>
             <AppLink
               onClick={handleOnCloseClick}
-              to={CFrontRoutes.Dynamic.user(user?.username as string)}
+              to={CFrontRoutes.Dynamic.user(data?.data?.username as string)}
             >
-              {user?.username}
+              {data?.data?.username as string}
             </AppLink>
           </Typography>
         </Box>
@@ -66,7 +69,7 @@ export const StepViewerHeader: React.FC<IProps> = ({ recipeId }) => {
       <ModalClose
         component={Link}
         onClick={handleOnCloseClick}
-        to={CFrontRoutes.Dynamic.recipe(recipeId)}
+        to={CFrontRoutes.Dynamic.recipe(String(recipeData.id))}
         sx={{
           position: 'relative',
           top: 0,
