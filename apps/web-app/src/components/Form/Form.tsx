@@ -68,6 +68,7 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
       isDirty,
       errors,
       isSubmitting,
+      dirtyFields,
       ...restFormState
     },
     ...restFormMethods
@@ -87,7 +88,6 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
     reset()
   }
 
-  console.log({ isSubmitting })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleOnSubmit = defaultHandleSubmit((data: FieldValues, event: React.BaseSyntheticEvent<object, any, any> | undefined) => {
     if (!isDirty) {
@@ -102,7 +102,7 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
     <FormProvider
       {
       ... {
-        formState: { errors, isDirty, isSubmitting, ...restFormState },
+        formState: { errors, isDirty, isSubmitting, dirtyFields, ...restFormState },
         handleSubmit: defaultHandleSubmit,
         reset,
         ...restFormMethods
