@@ -7,7 +7,7 @@ export const useRecipeMethods = () => {
 
   const createRecipe = (recipeData: IRecipe) => {
     recipeData.user_id = user?.id as number
-    void createRecipeService(String(user?.id), recipeData)
+    return createRecipeService(String(user?.id), recipeData)
   }
 
   const updateRecipe = (recipeId: string, recipeData: IRecipe) => {

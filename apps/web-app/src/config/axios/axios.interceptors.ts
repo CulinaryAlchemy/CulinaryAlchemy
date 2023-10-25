@@ -24,7 +24,7 @@ export const setAxiosInterceptors = () => {
   const addSignal = (request: AxiosRequestConfig) => {
     if (request.signal != null) return request
 
-    request.signal = AbortSignal.timeout(4000)
+    request.signal = AbortSignal.timeout(8000)
     return request
   }
 
@@ -62,7 +62,13 @@ export const setAxiosInterceptors = () => {
       if (error.code === 'ERR_NETWORK' || error.code === 'ERR_CANCELED') {
         checkServerStatus()
       } else {
-        const errorMessage = getValidationError(error.response?.data?.message as string)
+        let errorMessage = ''
+
+        if (error?.response?.status != null && error?.response?.status >= 500) {
+          errorMessage = 'Something went wrong'
+        } else {
+          errorMessage = getValidationError(error.response?.data?.message as string)
+        }
 
         if (errorMessage != null) {
           toastUtils.error(errorMessage)

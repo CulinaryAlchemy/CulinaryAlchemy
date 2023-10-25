@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/joy/Box'
 import IconButton from '@mui/joy/IconButton'
 import { Suspense, lazy, useState } from 'react'
+import { globalLoadingInstance } from './GlobalLoading/services'
 
 const Modal = lazy(() => import('@/components/Modal/Modal'))
 
@@ -40,7 +41,12 @@ export const AddRecipe = () => {
       'images-dropzone': null
     }
 
-    createRecipe(newUserData)
+    try {
+      globalLoadingInstance.sendMessage()
+      await createRecipe(newUserData)
+    } catch (e) {} finally {
+      globalLoadingInstance.sendMessage()
+    }
   }
 
   const handleOnClickModal = () => {
