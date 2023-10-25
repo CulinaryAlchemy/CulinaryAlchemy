@@ -1,14 +1,17 @@
 import { AppLink, Image } from '@/components'
-import { useGlobalAuth } from '@/hooks'
+import { CUserRoles, type IUser } from '@/models/LOGIC'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Box from '@mui/joy/Box'
+import Chip from '@mui/joy/Chip'
 import IconButton from '@mui/joy/IconButton'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 
-export const PostHeader = () => {
-  const { user } = useGlobalAuth()
+interface IProps {
+  userData: IUser
+}
 
+export const PostHeader: React.FC<IProps> = ({ userData }) => {
   return (
     <Box
       component='header'
@@ -24,8 +27,8 @@ export const PostHeader = () => {
     >
       <Sheet sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%', overflow: 'hidden' }}>
         <Image
-          src={user?.avatar as string}
-          srcBlurPlaceholder={user?.avatarBlur as string}
+          src={userData.avatar as string}
+          srcBlurPlaceholder={userData.avatarBlur as string}
           alt="user image"
           style={{
             width: '100%',
@@ -44,10 +47,21 @@ export const PostHeader = () => {
               fontWeight: 600
             }}
             color='neutral'
-            to={`/${user?.username as string}`}
+            to={`/${userData?.username}`}
           >
-            {user?.username}
+            {userData?.username}
           </AppLink>
+          {userData?.role?.name === CUserRoles.Admin && (
+            <Chip
+              size="sm"
+              variant="outlined"
+              sx={{
+                borderRadius: '0.7em'
+              }}
+            >
+              {userData.role?.name}
+            </Chip>
+          )}
         </Stack>
       </Stack>
       <IconButton

@@ -8,7 +8,7 @@ export interface IApiResponse<T> {
   message: string
 }
 
-interface IApiError {
+export interface IApiError {
   statusCode: number
   message: string
   invalidAreas?: null | string[]

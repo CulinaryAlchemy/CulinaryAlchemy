@@ -34,8 +34,10 @@ interface IProps {
 export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingButton }) => {
   const { data, isLoading } = useSWR<IApiResponse<IRecipe>>(CBackRoutes.Dynamic.recipe.getById(recipeId))
   loggerInstance.log('Recipe.tsx', { data, recipeId })
+
   return (
     <PostLayout
+      userId={data?.data?.user_id}
       type='recipe'
       {...{ isLoading }}
       styles={{
