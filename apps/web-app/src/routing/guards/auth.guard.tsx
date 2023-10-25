@@ -2,7 +2,6 @@ import { Loading } from '@/components'
 import { useGlobalAuth } from '@/hooks'
 import { MessageLayout } from '@/layouts'
 import { CFrontRoutes } from '@/routing'
-import { isValidUserRoute } from '@/utils'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 export const AuthGuard = () => {
@@ -23,9 +22,8 @@ export const AuthGuard = () => {
   }
 
   const isAAuthRote = Object.values({ ...CFrontRoutes.Static.auth }).includes(pathname)
-  const isAValidUserRoute = isValidUserRoute(pathname)
 
-  if (!isAuth && (isAAuthRote || isAValidUserRoute)) {
+  if (!isAuth && (isAAuthRote)) {
     return <Outlet />
   }
 

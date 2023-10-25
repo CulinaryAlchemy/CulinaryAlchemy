@@ -12,7 +12,7 @@ import { globalLoadingInstance } from './GlobalLoading/services'
 
 const Modal = lazy(() => import('@/components/Modal/Modal'))
 
-export const AddRecipe = () => {
+const AddRecipe = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const { createRecipe } = useRecipeMethods()
@@ -92,3 +92,5 @@ export const AddRecipe = () => {
     </header>
   )
 }
+
+export default AddRecipe
