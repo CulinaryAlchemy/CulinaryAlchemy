@@ -1,7 +1,7 @@
-import { sequelize } from '../../database/database.connection';
-import { type RecipeInterface, type ImageInterface } from '../../interfaces';
+import { type RecipeInterface } from '../../interfaces';
 import { MealType, Recipe, Image, Dietary } from '../../models';
 import { MealTypeXRecipe, RecipeXDietary } from '../../models/shared';
+import { Transaction } from 'sequelize';
 
 const get = {
 	byId: async (id: number) => {
@@ -32,12 +32,17 @@ const get = {
 		}
 	},
 };
-const post = async (
-	recipe: RecipeInterface,
-	imagesUrls?: ImageInterface[],
-	mealTypeIds?: number[],
-	dietaryIds?: number[]
-) => {
+const post = async ({
+	recipe,
+	dietaryIds,
+	mealTypeIds,
+	transaction: t,
+}: {
+	recipe: RecipeInterface;
+	mealTypeIds?: number[];
+	dietaryIds?: number[];
+	transaction?: Transaction;
+}) => {
 	const {
 		cooking_time,
 		description,
@@ -51,8 +56,6 @@ const post = async (
 		spices,
 		youtube_link,
 	} = recipe;
-
-	const t = await sequelize.transaction();
 
 	try {
 		// create recipe
@@ -70,21 +73,7 @@ const post = async (
 			youtube_link,
 		});
 
-		await newRecipe.save({ transaction: t });
-
-		// create an image register (the database model) and set owner id to recipe id
-		if (imagesUrls) {
-			for (const image of imagesUrls) {
-				await Image.create(
-					{
-						default_url: image.default_url,
-						blur_url: image.blur_url,
-						owner_id: newRecipe.id,
-					},
-					{ transaction: t }
-				);
-			}
-		}
+		await newRecipe.save({ transaction: t ?? null });
 
 		// associate it with a meal type
 		if (mealTypeIds) {
@@ -123,12 +112,8 @@ const post = async (
 			}
 		}
 
-		await t.commit();
-
 		return Promise.resolve(newRecipe);
 	} catch (error) {
-		await t.rollback();
-
 		return Promise.reject(
 			new Error(
 				`There is been an errow while creating the recipe. Error: ${error}`

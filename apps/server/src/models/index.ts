@@ -19,6 +19,7 @@ Dietary.belongsToMany(User, { through: UserDietary });
 
 // recipes x images
 Recipe.hasMany(Image, { foreignKey: 'owner_id', as: 'images' });
+Image.belongsTo(Recipe);
 
 // recipes x meal types
 Recipe.belongsToMany(MealType, {

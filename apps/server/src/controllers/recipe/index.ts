@@ -69,94 +69,96 @@ const post = async (req: Request, res: Response) => {
 		throw new Error('USER_DOES_NOT_EXIST, or its already deleted');
 	}
 
-	if (req.files && Object.keys(req.files as object).length >= 2) {
-		console.log('images received');
-		const reqFiles = (req as any).files;
+	try {
+		const newRecipe = await recipesProvider.post({
+			recipe: {
+				user_id,
+				title,
+				description,
+				cooking_time,
+				equipment_needed,
+				ingredients,
+				servings,
+				steps,
+				authors_notes,
+				spices,
+				youtube_link,
+			},
+			transaction: t,
+		});
 
-		const keysInRequestFileObj = Object.keys(reqFiles);
+		if (req.files && Object.keys(req.files as object).length >= 2) {
+			console.log('images received');
+			const reqFiles = (req as any).files;
 
-		const normalImages = keysInRequestFileObj.filter(
-			(imageKey) => !imageKey.endsWith('blur')
-		);
+			const keysInRequestFileObj = Object.keys(reqFiles);
 
-		const blurImages = keysInRequestFileObj.filter((iamgeKey) =>
-			iamgeKey.endsWith('blur')
-		);
-
-		// we verify we have couples of images
-		if (normalImages.length !== blurImages.length) {
-			return ApiResponse.error(
-				res,
-				HttpStatusCodes.BAD_REQUEST,
-				'every image must have a blur image'
+			const normalImages = keysInRequestFileObj.filter(
+				(imageKey) => !imageKey.endsWith('blur')
 			);
-		}
 
-		for (let i = 0; i < keysInRequestFileObj.length; i++) {
-			const imageFile = reqFiles[
-				`${keysInRequestFileObj[i]}`
-			][0] as Express.Multer.File;
+			const blurImages = keysInRequestFileObj.filter((iamgeKey) =>
+				iamgeKey.endsWith('blur')
+			);
 
-			// if the image ends with blur
-			if (imageFile.fieldname.endsWith('blur')) {
-				const blurImage = imageFile;
-				const defaultImage =
-					reqFiles[`${imageFile.fieldname.replace('_blur', '')}`][0];
+			// we verify we have couples of images
+			if (normalImages.length !== blurImages.length) {
+				return ApiResponse.error(
+					res,
+					HttpStatusCodes.BAD_REQUEST,
+					'every image must have a blur image'
+				);
+			}
 
-				if (!blurImage || !defaultImage) {
-					return ApiResponse.error(
-						res,
-						HttpStatusCodes.BAD_REQUEST,
-						'blur image and default image are required'
-					);
-				}
+			for (let i = 0; i < keysInRequestFileObj.length; i++) {
+				const imageFile = reqFiles[
+					`${keysInRequestFileObj[i]}`
+				][0] as Express.Multer.File;
 
-				try {
-					const defaultImageUrl = (
-						await cloudinaryService.uploadImage(defaultImage)
-					).secure_url;
-					const blurImageUrl = (await cloudinaryService.uploadImage(blurImage))
-						.secure_url;
+				// if the image ends with blur
+				if (imageFile.fieldname.endsWith('blur')) {
+					const blurImage = imageFile;
+					const defaultImage =
+						reqFiles[`${imageFile.fieldname.replace('_blur', '')}`][0];
 
-					console.log({ defaultImageUrl, blurImageUrl });
-					await Image.create(
-						{
-							owner_id: user_id,
-							blur_url: blurImageUrl,
-							default_url: defaultImageUrl,
-						},
-						{ transaction: t }
-					);
-				} catch (error) {
-					await t.rollback();
-					ApiResponse.error(
-						res,
-						HttpStatusCodes.INTERNAL_SERVER_ERROR,
-						'Error while uploading images'
-					);
-					console.log(error);
-					throw new Error('Error while uploading images');
+					if (!blurImage || !defaultImage) {
+						return ApiResponse.error(
+							res,
+							HttpStatusCodes.BAD_REQUEST,
+							'blur image and default image are required'
+						);
+					}
+
+					try {
+						const defaultImageUrl = (
+							await cloudinaryService.uploadImage(defaultImage)
+						).secure_url;
+						const blurImageUrl = (
+							await cloudinaryService.uploadImage(blurImage)
+						).secure_url;
+
+						console.log({ defaultImageUrl, blurImageUrl });
+						await Image.create(
+							{
+								owner_id: newRecipe.id,
+								blur_url: blurImageUrl,
+								default_url: defaultImageUrl,
+							},
+							{ transaction: t }
+						);
+					} catch (error) {
+						await t.rollback();
+						ApiResponse.error(
+							res,
+							HttpStatusCodes.INTERNAL_SERVER_ERROR,
+							'Error while uploading images'
+						);
+						console.log(error);
+						throw new Error('Error while uploading images');
+					}
 				}
 			}
 		}
-	} else {
-		console.log('no images received');
-	}
-
-	try {
-		const newRecipe = await recipesProvider.post({
-			user_id,
-			title,
-			description,
-			cooking_time,
-			equipment_needed,
-			ingredients,
-			servings,
-			steps,
-			authors_notes,
-			spices,
-			youtube_link,
-		});
 
 		await t.commit();
 		return ApiResponse.success(res, HttpStatusCodes.CREATED, newRecipe, '');
