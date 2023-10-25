@@ -1,5 +1,10 @@
+import { MessageLayout } from '@/layouts'
+import { type IApiResponse, type IUser, type IUserApiResponse } from '@/models/LOGIC'
+import { CBackRoutes } from '@/routing'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
+import Typography from '@mui/joy/Typography'
+import useSWR from 'swr'
 import { PostFooter, PostHeader, PostLayoutSkeleton } from './components'
 
 interface IStyles {
@@ -13,12 +18,17 @@ interface IProps {
   styles?: IStyles
   isLoading: boolean
   type: 'default' | 'recipe'
+  userId: number | undefined
 }
 
-export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type }) => {
-  if (isLoading) {
+export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type, userId }) => {
+  const { data, isLoading: isLoadingUser } = useSWR<IApiResponse<IUserApiResponse>>(userId != null && CBackRoutes.Dynamic.user.getById(userId))
+
+  if (isLoading || isLoadingUser) {
     return <PostLayoutSkeleton {...{ type, styles }} />
   }
+
+  const isThereAError = data?.error ?? userId
 
   return (
     <Sheet
@@ -38,15 +48,31 @@ export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type
         paddingBlock: '1em'
       }}
     >
-      <PostHeader />
-      <Stack
-        sx={{
-          width: '100%'
-        }}
-      >
-        {children}
-      </Stack>
-      <PostFooter />
+      {
+        isThereAError == null
+          ? (
+            <MessageLayout
+              styles={{
+                position: 'relative'
+              }}
+            >
+              <Typography level='h4'>Something went wrong</Typography>
+            </MessageLayout>
+            )
+          : (
+            <>
+              <PostHeader userData={data?.data as IUser} />
+              <Stack
+                sx={{
+                  width: '100%'
+                }}
+              >
+                {children}
+              </Stack>
+              <PostFooter />
+            </>
+            )
+      }
     </Sheet>
   )
 }
