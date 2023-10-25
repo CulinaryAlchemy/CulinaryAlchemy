@@ -13,7 +13,10 @@ const getFrontendRoutes = () => {
       login: '/login',
       register: '/register'
     },
-    user: BaseRoutes.user + ':userName',
+    user: {
+      base: BaseRoutes.user,
+      router: BaseRoutes.user + ':userName'
+    },
     recipe: BaseRoutes.recipe + ':recipeId',
     cooking: BaseRoutes.cooking + ':recipeId',
     notFound: '*',
