@@ -23,7 +23,7 @@ export const LinearLoading = () => {
               position: 'fixed',
               width: '100vw',
               top: 0,
-              zIndex: 1000
+              zIndex: 100000000
             }}
           >
             <LinearProgress

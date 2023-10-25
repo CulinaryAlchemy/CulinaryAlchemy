@@ -67,6 +67,7 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
     formState: {
       isDirty,
       errors,
+      isSubmitting,
       ...restFormState
     },
     ...restFormMethods
@@ -86,6 +87,7 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
     reset()
   }
 
+  console.log({ isSubmitting })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleOnSubmit = defaultHandleSubmit((data: FieldValues, event: React.BaseSyntheticEvent<object, any, any> | undefined) => {
     if (!isDirty) {
@@ -93,14 +95,14 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
       return
     }
 
-    onSubmit(data, event)
+    return onSubmit(data, event)
   })
 
   return (
     <FormProvider
       {
       ... {
-        formState: { errors, isDirty, ...restFormState },
+        formState: { errors, isDirty, isSubmitting, ...restFormState },
         handleSubmit: defaultHandleSubmit,
         reset,
         ...restFormMethods
@@ -232,7 +234,8 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
                         borderRadius: '0.4em',
                         flexGrow: buttonSubmitSide === 'default' ? 1 : 0
                       }}
-                      disabled={Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0)}
+                      loading={isSubmitting}
+                      disabled={isSubmitting || Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0)}
                       {...buttonsDesign}
                     >
                       {buttonSubmitName}
