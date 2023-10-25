@@ -18,7 +18,7 @@ interface IProps {
 const TextFieldAsync: React.FC<IProps> = ({ isReadOnly = false, data, error, register }) => {
   const { watch, setError, clearErrors, formState: { dirtyFields } } = useFormContext()
 
-  const isDirty = dirtyFields?.[data.name] as boolean
+  const isDirty = dirtyFields?.[register.name] as boolean
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const watchValue = error === '' ? watch(data.name) : null
