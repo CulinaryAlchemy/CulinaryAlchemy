@@ -16,13 +16,17 @@ export const cloudinaryService = {
 			api_secret: process.env.CLOUDINARY_API_SECRET,
 			secure: true,
 		});
+
 		const transformOptions: any = [];
+
 		if (width) {
 			transformOptions[0] = { ...transformOptions[0], width: width };
 		}
+
 		if (height) {
 			transformOptions[0] = { ...transformOptions[0], height: height };
 		}
+
 		if (center) {
 			transformOptions[0] = {
 				...transformOptions[0],
@@ -30,6 +34,7 @@ export const cloudinaryService = {
 				crop: 'fill',
 			};
 		}
+
 		if (optimize) {
 			transformOptions[1] = {
 				...transformOptions[1],
@@ -37,6 +42,7 @@ export const cloudinaryService = {
 				fetch_format: 'auto',
 			};
 		}
+
 		try {
 			const imageInfo = await cloudinary.v2.uploader.upload(file.path);
 
@@ -44,12 +50,12 @@ export const cloudinaryService = {
 				return Promise.reject(imageInfo);
 			}
 
+			await deleteFile(file.path);
+
 			return Promise.resolve(imageInfo);
 		} catch (error) {
 			console.log(error);
 			return Promise.reject(error);
-		} finally {
-			await deleteFile(file.path);
 		}
 	},
 	deleteImage: async (imageUrl: string) => {

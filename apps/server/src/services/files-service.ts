@@ -1,22 +1,15 @@
-import { existsSync, unlink } from 'node:fs';
+import fsPromises from 'node:fs/promises';
+import path from 'node:path';
 
 export async function deleteFile(filepath: string) {
-	const FileExist = existsSync(filepath);
-	if (FileExist) {
-		try {
-			await unlink(filepath, (err) => {
-				if (err) {
-					console.log(err);
-				}
-				return Promise.resolve();
-			});
-		} catch (error) {
-			return Promise.reject(error);
-		}
-	} else {
-		console.log('filepath doesnt exist: ', filepath);
-		return Promise.reject(
-			new Error('filepath doesnt exist in path: ' + filepath)
-		);
+	const absoluteFilepAth = path.resolve(filepath);
+	try {
+		await fsPromises.unlink(absoluteFilepAth);
+		console.log('File deleted');
+		console.log(absoluteFilepAth);
+		return Promise.resolve('');
+	} catch (error) {
+		console.log(error);
+		return Promise.reject(error);
 	}
 }

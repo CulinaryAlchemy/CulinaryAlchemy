@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { isImageSizeValid, isImageWeightValid } from '../../utils';
 
 const recipeImage = (req: Request, _res: Response, next: NextFunction) => {
-	if (req.files) {
+	if (req.files && Object.keys(req.files).length > 0) {
 		const keysinRequestFiles = Object.keys(req.files);
 
 		for (const key of keysinRequestFiles) {
@@ -31,7 +31,7 @@ const recipeImage = (req: Request, _res: Response, next: NextFunction) => {
 				if (image.fieldname.endsWith('blur')) {
 					isImageSizeOkay = isImageSizeValid(image.path, 20, 20);
 				} else {
-					isImageSizeOkay = isImageSizeValid(image.path, 129, 129);
+					isImageSizeOkay = isImageSizeValid(image.path, 400, 598);
 				}
 
 				if (!isImageSizeOkay) {

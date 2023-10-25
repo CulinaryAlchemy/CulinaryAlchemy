@@ -60,8 +60,8 @@ userRouter.get(
 
 userRouter.put(
 	'/:id',
-	// passportMiddleware,
-	// authMiddleware,
+	passportMiddleware,
+	authMiddleware,
 	idValidator,
 	upload.fields([
 		{ name: 'avatar', maxCount: 1 },

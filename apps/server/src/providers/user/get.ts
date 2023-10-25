@@ -80,7 +80,11 @@ export const getUser = {
 		let includeOptions = [];
 		if (includeProfile) {
 			includeOptions.push(
-				{ model: Recipe, as: 'recipes' },
+				{
+					model: Recipe,
+					as: 'recipes',
+					attributes: ['id'],
+				},
 				{ model: Role, as: 'role' }
 			);
 		}

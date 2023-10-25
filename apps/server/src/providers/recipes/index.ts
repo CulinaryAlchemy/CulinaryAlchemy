@@ -24,11 +24,6 @@ const get = {
 				where: { end_date: null },
 				limit: limit,
 				offset: offset,
-				include: [
-					{ model: Image, as: 'images' },
-					{ model: Dietary },
-					{ model: MealType },
-				],
 				attributes: ['id'],
 			});
 			return Promise.resolve(recipes);
