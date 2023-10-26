@@ -29,8 +29,8 @@ recipeRouter.get(
 recipeRouter.post(
 	'/:id', // the user id
 	idValidator,
-	passportMiddleware,
-	authMiddleware,
+	// passportMiddleware,
+	// authMiddleware,
 	upload.fields([
 		{ name: 'image_1', maxCount: 1 },
 		{ name: 'image_1_blur', maxCount: 1 },
@@ -50,7 +50,14 @@ recipeRouter.post(
 	body('equipment_needed').optional().notEmpty().isString(),
 	body('ingredients').optional().notEmpty().isString(),
 	body('servings').optional().notEmpty().isInt({ min: 1, max: 100 }),
-	body('steps').optional().notEmpty().isArray({ min: 2, max: 30 }),
+	body('steps')
+		.optional()
+		.notEmpty()
+		.isArray({ min: 1, max: 30 })
+		.custom((value) => {
+			console.log(value);
+			return true;
+		}),
 	body('authors_notes').optional().isString().isLength({ min: 20, max: 255 }),
 	body('spices').optional().isString(),
 	body('youtube_link')

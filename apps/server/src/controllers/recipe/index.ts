@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { recipesProvider } from '../../providers/recipes';
 import { ApiResponse, HttpStatusCodes } from '../../utils';
-import { Image, User } from '../../models';
+import { User, Image } from '../../models';
 import { cloudinaryService } from '../../services';
 import { sequelize } from '../../database/database.connection';
 import { type RecipeInterface } from '../../interfaces';
@@ -69,75 +69,96 @@ const post = async (req: Request, res: Response) => {
 		throw new Error('USER_DOES_NOT_EXIST, or its already deleted');
 	}
 
-	if (Object.keys(req.files as object).length >= 2) {
-		console.log('images received');
-		const reqFiles = (req as any).files;
-
-		const keysInRequestFileObj = Object.keys(reqFiles);
-
-		const normalImages = keysInRequestFileObj.filter(
-			(imageKey) => !imageKey.endsWith('blur')
-		);
-
-		const blurImages = keysInRequestFileObj.filter((iamgeKey) =>
-			iamgeKey.endsWith('blur')
-		);
-
-		// we verify we have couples of images
-		if (normalImages.length !== blurImages.length) {
-			return ApiResponse.error(
-				res,
-				HttpStatusCodes.BAD_REQUEST,
-				'every image must have a blur image'
-			);
-		}
-
-		let defaultImage: string = '';
-
-		console.log(keysInRequestFileObj);
-		for (const key of keysInRequestFileObj) {
-			const imageFile = reqFiles[key][0] as Express.Multer.File;
-			
-			const imageUrl = (await cloudinaryService.uploadImage(imageFile))
-				.secure_url;
-				
-
-			if (!imageFile.fieldname.endsWith('blur')) {
-				defaultImage = imageUrl;
-				return;
-			}
-			if (imageFile.fieldname.endsWith('blur')) {
-				if (!defaultImage) {
-					throw new Error('internal server error');
-				}
-				await Image.create(
-					{
-						owner_id: user_id,
-						blur_url: imageUrl,
-						default_url: defaultImage,
-					},
-					{ transaction: t }
-				);
-			}
-		}
-	} else {
-		console.log('no images received');
-	}
-
 	try {
 		const newRecipe = await recipesProvider.post({
-			user_id,
-			title,
-			description,
-			cooking_time,
-			equipment_needed,
-			ingredients,
-			servings,
-			steps,
-			authors_notes,
-			spices,
-			youtube_link,
+			recipe: {
+				user_id,
+				title,
+				description,
+				cooking_time,
+				equipment_needed,
+				ingredients,
+				servings,
+				steps,
+				authors_notes,
+				spices,
+				youtube_link,
+			},
+			transaction: t,
 		});
+
+		if (req.files && Object.keys(req.files as object).length >= 2) {
+			console.log('images received');
+			const reqFiles = (req as any).files;
+
+			const keysInRequestFileObj = Object.keys(reqFiles);
+
+			const normalImages = keysInRequestFileObj.filter(
+				(imageKey) => !imageKey.endsWith('blur')
+			);
+
+			const blurImages = keysInRequestFileObj.filter((iamgeKey) =>
+				iamgeKey.endsWith('blur')
+			);
+
+			// we verify we have couples of images
+			if (normalImages.length !== blurImages.length) {
+				return ApiResponse.error(
+					res,
+					HttpStatusCodes.BAD_REQUEST,
+					'every image must have a blur image'
+				);
+			}
+
+			for (let i = 0; i < keysInRequestFileObj.length; i++) {
+				const imageFile = reqFiles[
+					`${keysInRequestFileObj[i]}`
+				][0] as Express.Multer.File;
+
+				// if the image ends with blur
+				if (imageFile.fieldname.endsWith('blur')) {
+					const blurImage = imageFile;
+					const defaultImage =
+						reqFiles[`${imageFile.fieldname.replace('_blur', '')}`][0];
+
+					if (!blurImage || !defaultImage) {
+						return ApiResponse.error(
+							res,
+							HttpStatusCodes.BAD_REQUEST,
+							'blur image and default image are required'
+						);
+					}
+
+					try {
+						const defaultImageUrl = (
+							await cloudinaryService.uploadImage(defaultImage)
+						).secure_url;
+						const blurImageUrl = (
+							await cloudinaryService.uploadImage(blurImage)
+						).secure_url;
+
+						console.log({ defaultImageUrl, blurImageUrl });
+						await Image.create(
+							{
+								owner_id: newRecipe.id,
+								blur_url: blurImageUrl,
+								default_url: defaultImageUrl,
+							},
+							{ transaction: t }
+						);
+					} catch (error) {
+						await t.rollback();
+						ApiResponse.error(
+							res,
+							HttpStatusCodes.INTERNAL_SERVER_ERROR,
+							'Error while uploading images'
+						);
+						console.log(error);
+						throw new Error('Error while uploading images');
+					}
+				}
+			}
+		}
 
 		await t.commit();
 		return ApiResponse.success(res, HttpStatusCodes.CREATED, newRecipe, '');
