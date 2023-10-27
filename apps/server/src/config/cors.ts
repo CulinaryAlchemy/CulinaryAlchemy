@@ -3,8 +3,7 @@ import { CorsOptions } from 'cors';
 const corsConfig: CorsOptions = {
 	origin: (origin, next) => {
 		if (!origin) {
-			return next(null, true);
-			// new Error('Rejected by cors. No origin detected')
+			new Error('Rejected by cors. No origin detected');
 		}
 
 		const whiteList = process.env.ALLOWED_ORIGIN_LIST;
