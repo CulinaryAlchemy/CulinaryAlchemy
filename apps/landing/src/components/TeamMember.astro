@@ -1,0 +1,20 @@
+---
+import { type TeamMember } from '@/models'
+
+interface Props {
+    data: TeamMember
+}
+const { data: { name, url, roles } } = Astro.props
+---
+<a
+    href={url}
+    class="flex-grow flex flex-col justify-center items-center border border-r-0 border-border bg-card bg-image-primary pt-1"
+    target="_blank"
+>
+    <span class="text-sm leading-[1em] font-bold">{name}</span>
+    <span class="text-[0.6em] text-text-secondary">
+        {
+            new Intl.ListFormat('en').format(roles)
+        }
+    </span>
+</a>

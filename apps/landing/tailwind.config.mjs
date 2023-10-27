@@ -7,8 +7,8 @@ export default {
 			inter: 'Inter'
 		},
 		colors: {
+			'card': '#131318',
 			'back-primary': '#131318',
-			'card': '#09090d',
 			'border': '#25252d',
 			'text-primary': '#ebebef',
 			'text-secondary': '#d8d8df',
