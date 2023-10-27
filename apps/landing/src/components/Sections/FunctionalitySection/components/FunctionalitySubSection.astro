@@ -1,16 +1,18 @@
 ---
-import Post from '../components/Post.astro'
-import { type FunctionalitySubSection } from '../models'
+import Post from "../components/Post.astro"
+import StepViewer from "../components/StepViewer.astro"
+import User from "../components/User.astro"
+import { type FunctionalitySubSection } from "../models"
 
 interface Styles {
-    section: string,
-    dataContainer: string,
-    elementsContainer: string
+    section: string;
+    dataContainer: string;
+    elementsContainer: string;
 }
 
 interface Props {
-    styles: Styles
-    sectionData: FunctionalitySubSection
+    styles: Styles;
+    sectionData: FunctionalitySubSection;
 }
 
 const { sectionData, styles } = Astro.props;
@@ -24,9 +26,9 @@ const { sectionData, styles } = Astro.props;
             <h2 class="text-text-primary text-6xl font-bold drop-shadow-title">
                 {sectionData.title}
             </h2>
-            <span class="text-text-tertiary text-2xl">
+            <p class="text-text-tertiary text-2xl [text-wrap:balance]">
                 {sectionData.description}
-            </span>
+            </p>
         </header>
     </div>
     <div>
@@ -36,7 +38,9 @@ const { sectionData, styles } = Astro.props;
                     .fill(null)
                     .map(() => (
                         <div class="shrink-0 h-[18rem]">
-                            <Post />
+                            {sectionData.components === "post" && <Post />}
+                            {sectionData.components === "user" && <User />}
+                            {sectionData.components === "step-viewer" && <StepViewer />}
                         </div>
                     ))
             }

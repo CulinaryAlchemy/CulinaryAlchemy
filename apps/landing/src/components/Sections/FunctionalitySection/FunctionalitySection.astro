@@ -46,7 +46,11 @@ import { functionalitySubSections } from './models'
         animation-range: 10vh 100%;
     }
 
+    .section-posts__data-container {
+        
+    }
     .section-posts__data-container--left {
+        width: 50%;
         background: linear-gradient(
             90deg,
             rgba(19, 19, 24, 1) 0%,
@@ -55,6 +59,9 @@ import { functionalitySubSections } from './models'
     }
 
     .section-posts__data-container--right {
+        display: flex;
+        align-items: flex-end;
+        width: 60%;
         background: linear-gradient(
             90deg,
             rgba(19, 19, 24, 0) 0%,
@@ -63,11 +70,11 @@ import { functionalitySubSections } from './models'
     }
 
     .posts__container--left {
-        --translate-value: -50%;
+        --translate-value: -12%;
     }
 
     .posts__container--right {
-        --translate-value: 50%;
+        --translate-value: 12%;
     }
 
     @keyframes scroll-x {

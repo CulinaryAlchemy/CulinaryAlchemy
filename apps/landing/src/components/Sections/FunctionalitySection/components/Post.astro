@@ -1,7 +1,11 @@
-<article
-    class="h-[18rem] w-[15em] flex flex-col border border-border rounded-sm bg-card overflow-hidden"
->
-    <header class="font-bold border-b border-b-border p-1 flex justify-between items-center">
+---
+import ComponentLayout from "../layouts/ComponentLayout.astro"
+---
+
+<ComponentLayout styles="h-[18rem] w-[15rem]">
+    <header
+        class="font-bold border-b border-b-border p-1 flex justify-between items-center"
+    >
         <h3 class="capitalize">La cream</h3>
         <span class="flex gap-[0.1rem]">
             <span class="text-xs font-normal">by</span>
@@ -11,4 +15,4 @@
     <div class="flex-grow pt-3">
         <img class="blur-xl" src="pizza.jpg" />
     </div>
-</article>
+</ComponentLayout>
