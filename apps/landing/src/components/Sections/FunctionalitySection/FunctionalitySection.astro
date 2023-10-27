@@ -1,0 +1,78 @@
+---
+import FunctionalitySubSection from "./components/FunctionalitySubSection.astro"
+import { functionalitySubSections } from './models'
+---
+
+<section class="posts relative mt-1 mb-0 flex flex-col gap-1 overflow-hidden">
+    {
+        functionalitySubSections.map((contentData, index) => {
+            let section = "";
+            let dataContainer = "";
+            let elementsContainer = "";
+
+            if (index % 2 === 0) {
+                dataContainer = "left-0 section-posts__data-container--left";
+                elementsContainer = "posts__container--left";
+                section = "sub-section--left";
+            } else {
+                dataContainer = "right-0 section-posts__data-container--right";
+                elementsContainer = "posts__container--right";
+                section = "sub-section--right";
+            }
+
+            return (
+                <FunctionalitySubSection
+                    sectionData={contentData}
+                    styles={{ dataContainer, elementsContainer, section }}
+                />
+            );
+        })
+    }
+</section>
+
+<style is:global>
+    .sub-section--left {
+        justify-content: start;
+    }
+
+    .sub-section--right {
+        justify-content: end;
+    }
+
+    .posts__container {
+        animation: scroll-x linear forwards;
+        animation-duration: auto;
+        animation-timeline: scroll(root block);
+        animation-range: 10vh 100%;
+    }
+
+    .section-posts__data-container--left {
+        background: linear-gradient(
+            90deg,
+            rgba(19, 19, 24, 1) 0%,
+            rgba(19, 19, 24, 0) 100%
+        );
+    }
+
+    .section-posts__data-container--right {
+        background: linear-gradient(
+            90deg,
+            rgba(19, 19, 24, 0) 0%,
+            rgba(19, 19, 24, 1) 100%
+        );
+    }
+
+    .posts__container--left {
+        --translate-value: -50%;
+    }
+
+    .posts__container--right {
+        --translate-value: 50%;
+    }
+
+    @keyframes scroll-x {
+        to {
+            transform: translateX(var(--translate-value));
+        }
+    }
+</style>
