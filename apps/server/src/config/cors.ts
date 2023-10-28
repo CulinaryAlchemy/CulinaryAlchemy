@@ -17,7 +17,7 @@ const corsConfig: CorsOptions = {
 		}
 
 		for (const allowedOrigin of whiteList.split(' ')) {
-			if (origin?.startsWith(allowedOrigin)) {
+			if (origin?.startsWith(allowedOrigin) ) {
 				return next(null, true);
 			}
 		}

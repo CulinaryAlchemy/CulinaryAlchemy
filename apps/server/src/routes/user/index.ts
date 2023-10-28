@@ -99,7 +99,8 @@ userRouter.put(
 		.optional()
 		.isEmail()
 		.notEmpty()
-		.custom(validateEmail).withMessage('invalid email format')
+		.custom(validateEmail)
+		.withMessage('invalid email format')
 		.isLength({ min: 4, max: 320 }),
 	validateValidationChainResult,
 	Controllers.User.put.byId
@@ -132,4 +133,12 @@ userRouter.delete(
 	param('dietaryId').notEmpty().isInt({ min: 1 }),
 	validateValidationChainResult,
 	Controllers.User.manageDietary.remove
+);
+
+// user recipes
+userRouter.get(
+	'/recipes/:id',
+	idValidator,
+	validateValidationChainResult,
+	Controllers.recipeController.get.byUserId
 );
