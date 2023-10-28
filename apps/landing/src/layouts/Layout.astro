@@ -22,3 +22,9 @@ const { title } = Astro.props;
 		<slot />
 	</body>
 </html>
+
+<style is:global>
+	html {
+		timeline-scope:--global-scroll;
+	}
+</style>

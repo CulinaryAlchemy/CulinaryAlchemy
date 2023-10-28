@@ -7,15 +7,12 @@ import { functionalitySubSections } from "./models"
     {
         functionalitySubSections.map((contentData, index) => {
             let section = "";
-            let dataContainer = "";
             let elementsContainer = "";
 
             if (index % 2 === 0) {
-                dataContainer = "left-0 section-posts__data-container--left";
                 elementsContainer = "posts__container--left";
                 section = "sub-section--left";
             } else {
-                dataContainer = "right-0 section-posts__data-container--right";
                 elementsContainer = "posts__container--right";
                 section = "sub-section--right";
             }
@@ -23,7 +20,7 @@ import { functionalitySubSections } from "./models"
             return (
                 <FunctionalitySubSection
                     sectionData={contentData}
-                    styles={{ dataContainer, elementsContainer, section }}
+                    styles={{ elementsContainer, section }}
                 />
             );
         })
@@ -44,30 +41,6 @@ import { functionalitySubSections } from "./models"
         animation-duration: auto;
         animation-timeline: scroll(root block);
         animation-range: 10vh 100%;
-    }
-
-    .section-posts__data-container {
-    }
-    .section-posts__data-container--left {
-        width: 50%;
-        background: linear-gradient(
-            90deg,
-            rgba(19, 19, 24, 1) 0%,
-            rgba(19, 19, 24, 0.8) 50%,
-            rgba(19, 19, 24, 0) 100%
-        );
-    }
-
-    .section-posts__data-container--right {
-        display: flex;
-        align-items: flex-end;
-        width: 60%;
-        background: linear-gradient(
-            90deg,
-            rgba(19, 19, 24, 0) 0%,
-            rgba(19, 19, 24, 0.8) 50%,
-            rgba(19, 19, 24, 1) 100%
-        );
     }
 
     .posts__container--left {
