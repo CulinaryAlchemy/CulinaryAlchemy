@@ -6,7 +6,6 @@ import { type FunctionalitySubSection } from "../models"
 
 interface Styles {
     section: string;
-    dataContainer: string;
     elementsContainer: string;
 }
 
@@ -18,19 +17,7 @@ interface Props {
 const { sectionData, styles } = Astro.props;
 ---
 
-<section class={`relative flex overflow-hidden ${styles.section}`}>
-    <div
-        class={`absolute flex flex-col justify-center top-0 h-full bg-card z-20 p-5 ${styles.dataContainer}`}
-    >
-        <header>
-            <h2 class="text-text-primary text-6xl font-bold drop-shadow-title">
-                {sectionData.title}
-            </h2>
-            <p class="text-text-tertiary text-2xl [text-wrap:balance]">
-                {sectionData.description}
-            </p>
-        </header>
-    </div>
+<section class={`postsse relative flex overflow-hidden ${styles.section}`}>
     <div>
         <div class={`posts__container flex gap-1 ${styles.elementsContainer}`}>
             {
@@ -40,14 +27,12 @@ const { sectionData, styles } = Astro.props;
                         <div class="shrink-0 h-[18rem]">
                             {sectionData.components === "post" && <Post />}
                             {sectionData.components === "user" && <User />}
-                            {sectionData.components === "step-viewer" && <StepViewer />}
+                            {sectionData.components === "step-viewer" && (
+                                <StepViewer />
+                            )}
                         </div>
                     ))
             }
         </div>
     </div>
 </section>
-
-<style>
-    
-</style>
