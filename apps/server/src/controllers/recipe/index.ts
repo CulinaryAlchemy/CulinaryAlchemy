@@ -44,6 +44,19 @@ const get = {
 			return ApiResponse.error(res, HttpStatusCodes.NOT_FOUND, 'NOT_FOUND');
 		}
 	},
+	byUserId: async (req: Request, res: Response) => {
+		const userId = req.params.id;
+
+		const userRecipes = await recipesProvider.get.byUserId(userId).catch(() => {
+			return ApiResponse.error(
+				res,
+				HttpStatusCodes.INTERNAL_SERVER_ERROR,
+				'INTERNAL_SERVER_ERROR'
+			);
+		});
+
+		return ApiResponse.success(res, HttpStatusCodes.SUCCESS, userRecipes, '');
+	},
 };
 const post = async (req: Request, res: Response) => {
 	const {

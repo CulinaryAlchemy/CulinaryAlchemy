@@ -31,6 +31,19 @@ const get = {
 			return Promise.reject(error);
 		}
 	},
+	byUserId: async (userId: string) => {
+		try {
+			const recipes = await Recipe.findAll({
+				where: {
+					user_id: userId,
+				},
+				attributes: ['id'],
+			});
+			return Promise.resolve(recipes);
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	},
 };
 const post = async ({
 	recipe,
