@@ -1,6 +1,6 @@
 ---
 import FunctionalitySubSection from "./components/FunctionalitySubSection.astro"
-import { functionalitySubSections } from './models'
+import { functionalitySubSections } from "./models"
 ---
 
 <section class="posts relative mt-1 mb-0 flex flex-col gap-1 overflow-hidden">
@@ -47,13 +47,13 @@ import { functionalitySubSections } from './models'
     }
 
     .section-posts__data-container {
-        
     }
     .section-posts__data-container--left {
         width: 50%;
         background: linear-gradient(
             90deg,
             rgba(19, 19, 24, 1) 0%,
+            rgba(19, 19, 24, 0.8) 50%,
             rgba(19, 19, 24, 0) 100%
         );
     }
@@ -65,6 +65,7 @@ import { functionalitySubSections } from './models'
         background: linear-gradient(
             90deg,
             rgba(19, 19, 24, 0) 0%,
+            rgba(19, 19, 24, 0.8) 50%,
             rgba(19, 19, 24, 1) 100%
         );
     }
