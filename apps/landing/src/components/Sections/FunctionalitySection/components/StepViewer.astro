@@ -13,37 +13,22 @@ import ComponentLayout from "../layouts/ComponentLayout.astro"
         </span>
     </header>
     <ol
-        class="marker:text-[1em] marker:font-bold flex flex-col justify-start items-center h-full z-10 py-5 px-10 gap-3 list-decimal"
+        class="marker:text-[1em] marker:font-bold flex flex-col justify-start items-center h-full z-10 p-5 gap-3 list-decimal"
     >
-        <li class="w-full">
-            <span class="font-bold text-base">Add salad</span>
-            <p
-                class="text-sm text-ellipsis overflow-hidden whitespace-nowrap leading-[1] text-text-secondary"
-            >
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Corporis, maiores! Laboriosam, cum ipsam dolorum corporis ullam
-                inventore placeat.
-            </p>
-        </li>
-        <li class="w-full">
-            <span class="font-bold text-base">Add salad</span>
-            <p
-                class="text-sm text-ellipsis overflow-hidden whitespace-nowrap leading-[1] text-text-secondary"
-            >
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Corporis, maiores! Laboriosam, cum ipsam dolorum corporis ullam
-                inventore placeat.
-            </p>
-        </li>
-        <li class="w-full">
-            <span class="font-bold text-base">Add salad</span>
-            <p
-                class="text-sm text-ellipsis overflow-hidden whitespace-nowrap leading-[1] text-text-secondary"
-            >
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Corporis, maiores! Laboriosam, cum ipsam dolorum corporis ullam
-                inventore placeat.
-            </p>
+        <li class="self-stretch flex items-start gap-1">
+            <div>
+                <span class="text-text-primary font-bold leading-[2.8rem] text-[2.6em]">1</span>
+            </div>
+            <div class="flex flex-col justify-start flex-grow max-w-[80%]">
+                <span class="font-bold text-base">Add salad</span>
+                <p
+                    class="text-xs w-full text-ellipsis overflow-hidden whitespace-nowrap leading-[1] text-text-secondary"
+                >
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Corporis, maiores! Laboriosam, cum ipsam dolorum corporis ullam
+                    inventore placeat.
+                </p>
+            </div>
         </li>
     </ol>
 
