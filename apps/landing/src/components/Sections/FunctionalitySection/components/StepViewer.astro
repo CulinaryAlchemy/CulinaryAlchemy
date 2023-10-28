@@ -2,14 +2,52 @@
 import ComponentLayout from "../layouts/ComponentLayout.astro"
 ---
 
-<ComponentLayout styles="h-[18rem] w-[15rem]">
-    <header>
-        <div class="h-5 w-5">
-            <img
-                class="object-cover h-full w-full"
-                src="https://avatars.githubusercontent.com/u/120581623?v=4"
-                alt="jes015 image"
-            />
-        </div>
+<ComponentLayout styles="relative h-[18rem] w-[15rem] flex flex-col">
+    <header
+        class="font-bold border-b border-b-border p-1 flex justify-between items-center"
+    >
+        <h3 class="capitalize">La cream</h3>
+        <span class="flex gap-[0.1rem]">
+            <span class="text-xs font-normal">by</span>
+            <a class="text-xs underline">Jes015</a>
+        </span>
     </header>
+    <ol
+        class="marker:text-[1em] marker:font-bold flex flex-col justify-start items-center h-full z-10 py-5 px-10 gap-3 list-decimal"
+    >
+        <li class="w-full">
+            <span class="font-bold text-base">Add salad</span>
+            <p
+                class="text-sm text-ellipsis overflow-hidden whitespace-nowrap leading-[1] text-text-secondary"
+            >
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Corporis, maiores! Laboriosam, cum ipsam dolorum corporis ullam
+                inventore placeat.
+            </p>
+        </li>
+        <li class="w-full">
+            <span class="font-bold text-base">Add salad</span>
+            <p
+                class="text-sm text-ellipsis overflow-hidden whitespace-nowrap leading-[1] text-text-secondary"
+            >
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Corporis, maiores! Laboriosam, cum ipsam dolorum corporis ullam
+                inventore placeat.
+            </p>
+        </li>
+        <li class="w-full">
+            <span class="font-bold text-base">Add salad</span>
+            <p
+                class="text-sm text-ellipsis overflow-hidden whitespace-nowrap leading-[1] text-text-secondary"
+            >
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Corporis, maiores! Laboriosam, cum ipsam dolorum corporis ullam
+                inventore placeat.
+            </p>
+        </li>
+    </ol>
+
+    <div class="flex-grow mt-10 absolute">
+        <img class="blur-xl" src="pizza.jpg" />
+    </div>
 </ComponentLayout>
