@@ -2,27 +2,28 @@ import { CorsOptions } from 'cors';
 
 const corsConfig: CorsOptions = {
 	origin: (origin, next) => {
-		if (!origin) {
-			new Error('Rejected by cors. No origin detected');
-		}
+		return next(null, origin);
+		// if (!origin) {
+		// 	new Error('Rejected by cors. No origin detected');
+		// }
 
-		const whiteList = process.env.ALLOWED_ORIGIN_LIST;
+		// const whiteList = process.env.ALLOWED_ORIGIN_LIST;
 
-		if (!whiteList) {
-			return next(
-				new Error(
-					'No whiteList found in server variables. Check the .env and corsConfig to detect the error'
-				)
-			);
-		}
+		// if (!whiteList) {
+		// 	return next(
+		// 		new Error(
+		// 			'No whiteList found in server variables. Check the .env and corsConfig to detect the error'
+		// 		)
+		// 	);
+		// }
 
-		for (const allowedOrigin of whiteList.split(' ')) {
-			if (origin?.startsWith(allowedOrigin) ) {
-				return next(null, true);
-			}
-		}
+		// for (const allowedOrigin of whiteList.split(' ')) {
+		// 	if (origin?.startsWith(allowedOrigin) ) {
+		// 		return next(null, origin);
+		// 	}
+		// }
 
-		return next(new Error('Rejected by cors'));
+		// return next(new Error('Rejected by cors'));
 	},
 };
 export { corsConfig };
