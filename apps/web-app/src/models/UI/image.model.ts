@@ -3,5 +3,11 @@ export interface IImageFileOptimized {
   srcBlurPlaceholder: File
 }
 
+export interface IImageFileOptimizedFromBack {
+  default_url: string
+  blur_url: string
+}
+
 export type TImageFileOptimizedArray = IImageFileOptimized[]
+export type IImageFileOptimizedFromBackArray = IImageFileOptimizedFromBack[]
 

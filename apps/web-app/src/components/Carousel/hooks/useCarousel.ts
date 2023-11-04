@@ -1,13 +1,14 @@
 import { useState } from 'react'
 
 interface IParams {
-  imageSources: string[]
+  imageSourcesLength: number
 }
-export const useCarousel = ({ imageSources }: IParams) => {
+
+export const useCarousel = ({ imageSourcesLength }: IParams) => {
   const [imageIndex, setImageIndex] = useState(0)
 
   const nextImage = () => {
-    const isTheLastImage = imageIndex === imageSources.length - 1
+    const isTheLastImage = imageIndex === imageSourcesLength - 1
     if (isTheLastImage) return
     setImageIndex((lastImageIndex) => lastImageIndex + 1)
   }

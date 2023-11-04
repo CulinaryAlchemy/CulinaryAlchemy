@@ -3,6 +3,7 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft'
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight'
 import Box from '@mui/joy/Box'
 
+import { type IImageFileOptimizedFromBackArray } from '@/models/UI'
 import { lazy } from 'react'
 import { useCarousel } from './hooks'
 
@@ -15,12 +16,12 @@ interface IStyles {
 }
 
 interface IProps {
-  imageSources: string[]
+  imageSources: IImageFileOptimizedFromBackArray
   styles: IStyles
 }
 
 export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
-  const { nextImage, previousImage, imageIndex, setNewImageIndex } = useCarousel({ imageSources })
+  const { nextImage, previousImage, imageIndex, setNewImageIndex } = useCarousel({ imageSourcesLength: imageSources.length })
 
   const handleOnClickRight = () => {
     nextImage()
@@ -99,8 +100,8 @@ export const Carousel: React.FC<IProps> = ({ imageSources, styles }) => {
           imageSources.map((imageSource, index) => (
             <Image
               key={index}
-              src={imageSource}
-              srcBlurPlaceholder={imageSource}
+              src={imageSource.default_url}
+              srcBlurPlaceholder={imageSource.blur_url}
               alt='previous image'
               style={{
                 height: '100%',
