@@ -1,7 +1,7 @@
 import { Loading } from '@/components'
 import { useTranslation } from '@/hooks'
 import { DefaultLayout, GlobalLayout, MessageLayout } from '@/layouts'
-import { type IUser } from '@/models/LOGIC'
+import { type IUser, type IUserApiResponse } from '@/models/LOGIC'
 import { Suspense, lazy } from 'react'
 import { UserHeader, UserMain } from './components'
 import { useUser } from './hooks/'
@@ -28,7 +28,7 @@ const User = () => {
     <GlobalLayout newTitle={userName as string}>
       <DefaultLayout>
         <UserHeader data={userData?.data as IUser} isOwner={isUserProfileOwner} />
-        <UserMain />
+        <UserMain recipesIds={(userData?.data as IUserApiResponse)?.recipes} />
       </DefaultLayout>
     </GlobalLayout>
   )

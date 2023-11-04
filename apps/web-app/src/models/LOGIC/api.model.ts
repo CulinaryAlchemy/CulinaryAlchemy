@@ -19,6 +19,6 @@ export interface IAuthApiResponse {
   user: IUser
 }
 
-export type IUserApiResponse = IUser
+export type IUserApiResponse = IUser & { recipes: Array<{ id: number }> }
 
 export type IRoleApiResponse = IRole

@@ -94,6 +94,9 @@ const getBackendRoutes = () => {
       },
       delete (userId: number) {
         return `/user/${userId}`
+      },
+      getRecipes (userId: number) {
+        return `/user/recipes/${userId}`
       }
     },
     role: {
