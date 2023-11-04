@@ -19,9 +19,10 @@ interface IProps {
   isLoading: boolean
   type: 'default' | 'recipe'
   userId: number | undefined
+  recipeId: string
 }
 
-export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type, userId }) => {
+export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type, userId, recipeId }) => {
   const { data, isLoading: isLoadingUser } = useSWR<IApiResponse<IUserApiResponse>>(userId != null && CBackRoutes.Dynamic.user.getById(userId))
 
   if (isLoading || isLoadingUser) {
@@ -61,7 +62,7 @@ export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type
             )
           : (
             <>
-              <PostHeader userData={data?.data as IUser} />
+              <PostHeader userData={data?.data as IUser} recipeId={recipeId} />
               <Stack
                 sx={{
                   width: '100%'

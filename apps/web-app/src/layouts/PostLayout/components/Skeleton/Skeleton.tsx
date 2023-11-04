@@ -48,10 +48,10 @@ export const PostLayoutSkeleton: React.FC<IPropsSkeleton> = ({ styles, type }) =
                 {
                     type === 'default' &&
                     <>
-                        <Skeleton variant='text' level='body3' />
-                        <Skeleton variant='text' level='body3' />
-                        <Skeleton variant='text' level='body3' />
-                        <Skeleton variant='text' level='body3' width='80%' />
+                        <Skeleton variant='text' />
+                        <Skeleton variant='text' />
+                        <Skeleton variant='text' />
+                        <Skeleton variant='text' width='80%' />
                     </>
                 }
             </PostLayoutSkeletonMain>

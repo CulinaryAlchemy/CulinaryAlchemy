@@ -100,7 +100,7 @@ export const StepViewerMain: React.FC<IProps> = ({ isEditable, onSaveSteps, defa
                     justifyContent: 'center'
                   }}
                 >
-                  <Typography level='display2'>NO STEPS FOUND</Typography>
+                  <Typography sx={{ fontSize: '1.5em' }}>NO STEPS FOUND</Typography>
                   {
                     (isEditable) &&
                     (

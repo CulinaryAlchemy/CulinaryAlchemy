@@ -12,42 +12,44 @@ const Background = lazy(() => import('./components/Background/Background'))
 
 const AuthLayout: React.FC<IProps> = ({ showBackground }) => {
   return (
+    <Box
+      sx={{
+        display: 'grid',
+        overflow: 'hidden',
+        gridTemplateColumns: {
+          md: '1.03fr 1fr',
+          sx: '1fr'
+        },
+        height: '100vh'
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <Header />
         <Box
           sx={{
-            display: 'grid',
-            overflow: 'hidden',
-            gridTemplateColumns: {
-              md: '1.03fr 1fr',
-              sx: '1fr'
-            },
-            height: '100vh'
+            flexGrow: 1
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            <Header />
-            <Box
-              sx={{
-                flexGrow: 1
-              }}
-            >
-              <Outlet />
-            </Box>
-            <Typography
-              level='body3'
-              sx={{
-                fontWeight: 600,
-                alignSelf: 'center',
-                marginBottom: '1em'
-              }}
-            >@ CulinaryAlchemy 2023</Typography>
-          </Box>
-          {showBackground && <Background />}
+          <Outlet />
         </Box>
+        <Typography
+          sx={{
+            color: 'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))',
+            lineHeight: 'var(--joy-lineHeight-md, 1.5)',
+            fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))',
+            fontWeight: 600,
+            alignSelf: 'center',
+            marginBottom: '1em'
+          }}
+        >@ CulinaryAlchemy 2023</Typography>
+      </Box>
+      {showBackground && <Background />}
+    </Box>
   )
 }
 
