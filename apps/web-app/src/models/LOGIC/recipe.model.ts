@@ -1,3 +1,5 @@
+import { type IImageFileOptimizedFromBackArray } from '@/models/UI'
+
 export interface IRecipe {
   id?: number
   user_id?: number
@@ -18,7 +20,7 @@ export interface IRecipe {
   image_2_blur?: File
   image_3?: File
   image_3_blur?: File
-  images: string[]
+  images: IImageFileOptimizedFromBackArray
   'images-dropzone': FileList | null
 }
 

@@ -1,4 +1,5 @@
 import { Carousel } from '@/components'
+import { type IImageFileOptimizedFromBackArray } from '@/models/UI'
 import Box from '@mui/joy/Box'
 import Stack from '@mui/joy/Stack'
 
@@ -26,15 +27,8 @@ interface IProps {
   styles: IStyles
   information?: React.ReactNode
   id?: string
-  images?: string[]
+  images?: IImageFileOptimizedFromBackArray
 }
-
-const testImages = [
-  'https://res.cloudinary.com/dy9gxuv2j/image/upload/v1692994795/default-header.jpg',
-  'https://res.cloudinary.com/dy9gxuv2j/image/upload/v1692989889/default-avatar.jpg',
-  'https://res.cloudinary.com/dmjqr9trc/image/upload/v1693965462/icrymhri5admsjxi6uoa.jpg',
-  'https://res.cloudinary.com/dmjqr9trc/image/upload/v1694168250/kno16gs0bjpfad6utdgh.jpg'
-]
 
 export const ContentLayout: React.FC<IProps> = ({ information, styles, id, images }) => {
   return (
@@ -81,7 +75,7 @@ export const ContentLayout: React.FC<IProps> = ({ information, styles, id, image
             overflow: 'hidden'
           }}>
           <Carousel
-            imageSources={images ?? testImages}
+            imageSources={images!}
             styles={{
               height: '100%',
               width: '100%',
