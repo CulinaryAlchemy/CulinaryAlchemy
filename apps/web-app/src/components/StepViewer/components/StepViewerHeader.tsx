@@ -49,8 +49,10 @@ export const StepViewerHeader: React.FC<IProps> = ({ recipeData, userId }) => {
             {recipeData.title}
           </Typography>
           <Typography
-            level='body3'
             sx={{
+              color: 'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))',
+              lineHeight: 'var(--joy-lineHeight-md, 1.5)',
+              fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))',
               alignSelf: 'end',
               paddingBottom: '0.3em',
               textTransform: 'capitalize'

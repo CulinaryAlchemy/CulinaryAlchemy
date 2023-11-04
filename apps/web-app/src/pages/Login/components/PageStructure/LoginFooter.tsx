@@ -36,10 +36,10 @@ export const LoginFooter = () => {
           defaultChecked={storageMethod === 'localStorage'}
         />
         <label htmlFor={checkboxRememberMeId}>
-          <Typography level='body3'>{t('remember me')}</Typography>
+          <Typography sx={{ color: 'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))', lineHeight: 'var(--joy-lineHeight-md, 1.5)', fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))' }}>{t('remember me')}</Typography>
         </label>
       </Box>
-      <Typography level='body3'>{t('forgot your password?')}</Typography>
+      <Typography sx={{ color: 'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))', lineHeight: 'var(--joy-lineHeight-md, 1.5)', fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))' }}>{t('forgot your password?')}</Typography>
     </Box>
   )
 }

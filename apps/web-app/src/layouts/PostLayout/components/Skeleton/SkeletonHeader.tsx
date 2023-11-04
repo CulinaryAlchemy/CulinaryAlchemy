@@ -28,7 +28,7 @@ export const PostLayoutSkeletonHeader = () => {
           <Sheet sx={{ flexShrink: 0, width: '2.5em', height: '2.5em', borderRadius: '100%', overflow: 'hidden' }}>
             <Skeleton variant='circular' sx={{ width: '100%', height: '100%' }} />
           </Sheet>
-          <Skeleton sx={{ flexShrink: 0, flexBasis: '100%' }} variant='text' level='body1' width='5em' />
+          <Skeleton sx={{ flexShrink: 0, flexBasis: '100%' }} variant='text' width='5em' />
         </Stack>
 
         <IconButton

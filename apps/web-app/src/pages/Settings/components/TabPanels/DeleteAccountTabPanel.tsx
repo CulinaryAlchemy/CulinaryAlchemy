@@ -42,9 +42,9 @@ const DeleteAccountTabPanel = () => {
                         <List
                             items={
                                 [
-                                    <Typography level='body3'>{t('deleAccount info 1 message')}</Typography>,
-                                    <Typography level='body3'>{t('deleAccount info 2 message')}</Typography>,
-                                    <Typography level='body3'>{t('deleAccount info 3 message')}</Typography>
+                                    <Typography sx={{ color: 'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))', lineHeight: 'var(--joy-lineHeight-md, 1.5)', fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))' }}>{t('deleAccount info 1 message')}</Typography>,
+                                    <Typography sx={{ color: 'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))', lineHeight: 'var(--joy-lineHeight-md, 1.5)', fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))' }}>{t('deleAccount info 2 message')}</Typography>,
+                                    <Typography sx={{ color: 'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))', lineHeight: 'var(--joy-lineHeight-md, 1.5)', fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))' }}>{t('deleAccount info 3 message')}</Typography>
                                 ]
                             }
                         />

@@ -17,5 +17,4 @@ export * from './Recipe'
 export * from './TabPanel/TabPanel'
 export * from './TabsPage/TabsPage'
 export * from './TestServerStatus'
-export * from './Tweet'
 

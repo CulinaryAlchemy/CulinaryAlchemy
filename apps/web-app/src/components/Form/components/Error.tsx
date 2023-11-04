@@ -7,9 +7,8 @@ interface IProps {
 export const Error: React.FC<IProps> = ({ text }) => {
   return (
         <Typography
-            level="body3"
             color='danger'
-            sx={{ alignSelf: 'flex-end', textTransform: 'capitalize' }}
+            sx={{ alignSelf: 'flex-end', textTransform: 'capitalize', fontSize: '0.8em' }}
         >
             {text !== '' && text}
         </Typography>

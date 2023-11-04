@@ -1,5 +1,5 @@
 import { type IRecipe } from '@/models/LOGIC'
-import { createRecipe as createRecipeService, updateRecipe as updateRecipeService } from '@/services'
+import { createRecipe as createRecipeService, deleteRecipe as deleteRecipeService, updateRecipe as updateRecipeService } from '@/services'
 import { useGlobalAuth } from '.'
 
 export const useRecipeMethods = () => {
@@ -15,5 +15,9 @@ export const useRecipeMethods = () => {
     return updateRecipeService(String(user?.id), recipeId, recipeData)
   }
 
-  return { createRecipe, updateRecipe }
+  const deleteRecipe = (recipeId: string) => {
+    return deleteRecipeService(String(user?.id), recipeId)
+  }
+
+  return { createRecipe, updateRecipe, deleteRecipe }
 }

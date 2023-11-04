@@ -13,8 +13,7 @@ export const RegisterHeader = () => {
       <Typography
         endDecorator={<AppLink to={CFrontRoutes.Static.auth.login}>{t('login')}</AppLink>}
         fontSize="sm"
-        sx={{ alignSelf: 'center' }}
-        level='body2'
+        sx={{ fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-sm, 0.875rem))', textWrap: 'balance', color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))', alignSelf: 'center' }}
       >
         {t('do you already have an account?')}
       </Typography>

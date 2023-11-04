@@ -15,5 +15,5 @@ export const updateRecipe = async (userId: string, recipeId: string, recipeData:
 }
 
 export const deleteRecipe = async (userId: string, recipeId: string) => {
-  return await axios.post<IApiResponse<unknown>>(CBackRoutes.Dynamic.recipe.deleteById(userId, recipeId))
+  return await axios.delete<IApiResponse<unknown>>(CBackRoutes.Dynamic.recipe.deleteById(userId, recipeId))
 }

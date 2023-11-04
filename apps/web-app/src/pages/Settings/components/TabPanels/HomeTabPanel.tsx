@@ -20,7 +20,14 @@ const HomeTabPanel = () => {
           </Typography>
         </header>
         <main>
-          <Typography level='body3' sx={{ textWrap: 'balance', textAlign: 'center' }}>
+          <Typography
+            sx={{
+              color: 'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))',
+              lineHeight: 'var(--joy-lineHeight-md, 1.5)',
+              fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))',
+              textWrap: 'balance',
+              textAlign: 'center'
+            }}>
             {t('settings default message')}
           </Typography>
         </main>

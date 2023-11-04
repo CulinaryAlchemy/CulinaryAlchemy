@@ -22,7 +22,7 @@ export const PostLayoutSkeletonFooter = () => {
                     <Button key={button.name} size='sm' variant='plain' color='neutral' startDecorator={
                         button.icon
                     }>
-                        <Skeleton level='body2'>3</Skeleton>
+                        <Skeleton sx={{ fontWeight: 700, fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-sm, 0.875rem))', textWrap: 'balance', color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))' }}>3</Skeleton>
                     </Button>
                 ))
             }
