@@ -46,7 +46,8 @@ export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type
         paddingBottom: '0.2em',
         cursor: styles?.cursor,
         width: '100%',
-        paddingBlock: '0.6em'
+        paddingBlock: '0.6em',
+        minHeight: '606.78px'
       }}
     >
       {

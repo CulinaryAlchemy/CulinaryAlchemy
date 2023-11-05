@@ -74,7 +74,7 @@ export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingBut
                 </Typography>
               </header>
               <Typography
-                sx={{ fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-sm, 0.875rem))', textWrap: 'balance', color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))' }}
+                sx={{ display: '-webkit-box', '-webkit-line-clamp': '1', '-webkit-box-orient': 'vertical', overflow: 'hidden', wordWrap: 'break-word', fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-sm, 0.875rem))', textWrap: 'balance', color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))' }}
               >
                 {data?.data?.description}
               </Typography>

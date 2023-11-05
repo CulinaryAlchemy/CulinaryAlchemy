@@ -23,13 +23,15 @@ export const PostLayoutSkeleton: React.FC<IPropsSkeleton> = ({ styles, type }) =
               flexDirection: 'column',
               gap: styles?.gap ?? '0.5em',
               border: styles?.border,
+              borderTop: 'none',
               borderRight: 'none',
               borderLeft: 'none',
               paddingBottom: '0.2em',
               cursor: styles?.cursor,
               width: '100%',
               paddingBlock: '1em',
-              alignItems: 'center'
+              alignItems: 'center',
+              minHeight: '606.78px'
             }}
         >
             <PostLayoutSkeletonHeader />
