@@ -17,12 +17,12 @@ export const UserMain: React.FC<IProps> = ({ recipesIds }) => {
       }}
     >
       {
-        recipesIds[0] != null
+        recipesIds[0]?.id != null
           ? (
               recipesIds?.map((recipeId) => (
               <Recipe
-                recipeId={recipeId.id ?? 0}
-                key={recipeId.id}
+                recipeId={recipeId?.id ?? 0}
+                key={recipeId?.id}
                 showStartCookingButton={false}
                 styles={{
                   cursor: 'pointer',
