@@ -1,4 +1,4 @@
-import { type IRecipe } from '@/models/LOGIC'
+import { type IRecipe, type IRecipePartial } from '@/models/LOGIC'
 import { createRecipe as createRecipeService, deleteRecipe as deleteRecipeService, updateRecipe as updateRecipeService } from '@/services'
 import { useGlobalAuth } from '.'
 
@@ -10,7 +10,7 @@ export const useRecipeMethods = () => {
     return createRecipeService(String(user?.id), recipeData)
   }
 
-  const updateRecipe = (recipeId: string, recipeData: IRecipe) => {
+  const updateRecipe = (recipeId: string, recipeData: IRecipePartial) => {
     recipeData.user_id = user?.id as number
     return updateRecipeService(String(user?.id), recipeId, recipeData)
   }

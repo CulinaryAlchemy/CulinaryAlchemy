@@ -97,7 +97,7 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
     }
 
     setIsNewSubmitting(true)
-    return (onSubmit(data, event) as Promise<unknown>).finally(() => { setIsNewSubmitting(false) })
+    return (onSubmit(data, event) as Promise<unknown>)?.finally(() => { setIsNewSubmitting(false) })
   })
 
   return (

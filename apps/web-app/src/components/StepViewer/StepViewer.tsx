@@ -66,6 +66,7 @@ const StepViewer: React.FC<IProps> = () => {
                   userId={data?.data?.user_id as number}
                 />
                 <StepViewerMain
+                  recipeId={recipeId}
                   defaultSteps={data?.data?.steps}
                   onSaveSteps={handleOnSaveSteps}
                   isEditable={user?.id === data?.data?.user_id}

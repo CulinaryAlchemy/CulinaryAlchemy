@@ -1,9 +1,13 @@
 import { type IStep, type TStepArray } from '@/models/LOGIC'
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 export const useStepViewerMain = (defaultSteps: TStepArray | undefined) => {
   const [steps, setSteps] = useState(defaultSteps)
   const [isTheFirstStepOptimistic, setIsTheFirstStepOptimistic] = useState(true)
+
+  useEffect(() => {
+
+  }, [steps])
 
   const addNewStep = (newStep: IStep) => {
     const isNotUnique = steps?.find(step => step.stepName.toLocaleLowerCase() === newStep.stepName.toLocaleLowerCase())
