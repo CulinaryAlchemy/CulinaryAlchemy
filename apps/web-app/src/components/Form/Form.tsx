@@ -80,6 +80,7 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
   })
 
   const [showOptionalInputs, setShowOptionalInputs] = useState(false)
+  const [isNewSubmitting, setIsNewSubmitting] = useState(false)
 
   const handleOnClickToggleOptionalInputsDisplay = () => {
     setShowOptionalInputs(prevState => !prevState)
@@ -95,7 +96,8 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
       return
     }
 
-    return onSubmit(data, event)
+    setIsNewSubmitting(true)
+    return (onSubmit(data, event) as Promise<unknown>).finally(() => { setIsNewSubmitting(false) })
   })
 
   return (
@@ -234,8 +236,8 @@ export const Form: React.FC<IForm> = ({ areInputsReadOnly = false, defaultValues
                         borderRadius: '0.4em',
                         flexGrow: buttonSubmitSide === 'default' ? 1 : 0
                       }}
-                      loading={isSubmitting}
-                      disabled={isSubmitting || Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0)}
+                      loading={isNewSubmitting}
+                      disabled={isNewSubmitting || Object.values(errors).length > 0 || (!isDirty && Object.values(errors).length > 0)}
                       {...buttonsDesign}
                     >
                       {buttonSubmitName}
