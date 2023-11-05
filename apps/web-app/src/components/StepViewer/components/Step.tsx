@@ -16,6 +16,8 @@ interface IProps {
   navigationElement: React.ReactNode
 }
 
+const defaultCarouselImages = [{ blur_url: 'https://portfolio-three-chi-27.vercel.app/song-dragon-peak-1-resized.webp', default_url: 'https://portfolio-three-chi-27.vercel.app/song-dragon-peak-1.webp' }, { blur_url: 'https://portfolio-three-chi-27.vercel.app/song-ocean-1-resized.webp', default_url: 'https://portfolio-three-chi-27.vercel.app/song-ocean-1.webp' }]
+
 const Step: React.FC<IProps> = ({ isEditable, id, stepData, updateStep, resetStep, onSaveStep, navigationElement }) => {
   const { isEditing, toggleIsEditing } = useStep(stepData.stepName === '')
 
@@ -61,7 +63,7 @@ const Step: React.FC<IProps> = ({ isEditable, id, stepData, updateStep, resetSte
           width: '100%'
         }
       }}
-
+      images={defaultCarouselImages}
       information={
         <Box
           sx={{
