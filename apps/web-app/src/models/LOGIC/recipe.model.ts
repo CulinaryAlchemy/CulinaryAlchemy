@@ -24,6 +24,8 @@ export interface IRecipe {
   'images-dropzone': FileList | null
 }
 
+export type IRecipePartial = Partial<IRecipe>
+
 export interface IStep {
   stepName: string
   stepDescription: string

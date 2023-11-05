@@ -1,4 +1,4 @@
-import { useStepViewerMain } from '@/components/StepViewer/hooks'
+import { useStepViewerMain, useSyncStepsWithBackend } from '@/components/StepViewer/hooks'
 import { MessageLayout } from '@/layouts'
 import { type IStep, type TStepArray } from '@/models/LOGIC'
 import AddIcon from '@mui/icons-material/Add'
@@ -11,12 +11,13 @@ import React, { Suspense, lazy, startTransition } from 'react'
 const Step = lazy(() => import('@/components/StepViewer/components/Step'))
 
 interface IProps {
+  recipeId: string | undefined
   isEditable: boolean
   onSaveSteps: (newStep: unknown) => Promise<unknown>
   defaultSteps: TStepArray | undefined
 
 }
-export const StepViewerMain: React.FC<IProps> = ({ isEditable, onSaveSteps, defaultSteps }) => {
+export const StepViewerMain: React.FC<IProps> = ({ recipeId, isEditable, onSaveSteps, defaultSteps }) => {
   const {
     steps,
     isTheFirstStepOptimistic,
@@ -27,6 +28,7 @@ export const StepViewerMain: React.FC<IProps> = ({ isEditable, onSaveSteps, defa
   } = useStepViewerMain(
     defaultSteps
   )
+  useSyncStepsWithBackend(recipeId, steps)
 
   const handleOnClickForRemoveMessage = () => {
     startTransition(() => {
@@ -45,7 +47,7 @@ export const StepViewerMain: React.FC<IProps> = ({ isEditable, onSaveSteps, defa
       } else {
         location.hash = `${steps?.length - 1}`
       }
-    }, 200)
+    }, 300)
   }
 
   const handleOnSaveStep = async (newStep: IStep) => {
@@ -100,7 +102,7 @@ export const StepViewerMain: React.FC<IProps> = ({ isEditable, onSaveSteps, defa
                     justifyContent: 'center'
                   }}
                 >
-                  <Typography sx={{ fontSize: '1.5em' }}>NO STEPS FOUND</Typography>
+                  <Typography sx={{ fontSize: '3.3em', fontWeight: 'bold' }}>NO STEPS FOUND</Typography>
                   {
                     (isEditable) &&
                     (
