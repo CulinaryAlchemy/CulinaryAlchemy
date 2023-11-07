@@ -29,8 +29,8 @@ recipeRouter.get(
 recipeRouter.post(
 	'/:id', // the user id
 	idValidator,
-	// passportMiddleware,
-	// authMiddleware,
+	passportMiddleware,
+	authMiddleware,
 	upload.fields([
 		{ name: 'image_1', maxCount: 1 },
 		{ name: 'image_1_blur', maxCount: 1 },

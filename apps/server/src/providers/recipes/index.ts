@@ -36,6 +36,7 @@ const get = {
 			const recipes = await Recipe.findAll({
 				where: {
 					user_id: userId,
+					end_date: null,
 				},
 				attributes: ['id'],
 			});
