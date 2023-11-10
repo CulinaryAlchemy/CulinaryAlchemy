@@ -84,7 +84,7 @@ recipeRouter.put(
 	body('steps')
 		.optional()
 		.notEmpty()
-		.isArray({ min: 2, max: 30 })
+		.isArray({ min: 0, max: 30 })
 		.custom(stepValidator),
 	body('authors_notes').optional().isString().isLength({ min: 20, max: 255 }),
 	body('spices').optional().isString(),
