@@ -3,6 +3,7 @@ import express from 'express';
 import { body, param, query } from 'express-validator';
 import {
 	idValidator,
+	stepValidator,
 	validateValidationChainResult,
 } from '../../middlewares/validators';
 import { passportMiddleware } from '../../middlewares/auth/passport-jwt-strategy';
@@ -54,10 +55,7 @@ recipeRouter.post(
 		.optional()
 		.notEmpty()
 		.isArray({ min: 1, max: 30 })
-		.custom((value) => {
-			console.log(value);
-			return true;
-		}),
+		.custom(stepValidator),
 	body('authors_notes').optional().isString().isLength({ min: 20, max: 255 }),
 	body('spices').optional().isString(),
 	body('youtube_link')
@@ -83,7 +81,11 @@ recipeRouter.put(
 	body('equipment_needed').optional().notEmpty().isString(),
 	body('ingredients').optional().notEmpty().isString(),
 	body('servings').optional().notEmpty().isInt({ min: 1, max: 100 }),
-	body('steps').optional().notEmpty().isArray({ min: 2, max: 30 }),
+	body('steps')
+		.optional()
+		.notEmpty()
+		.isArray({ min: 0, max: 30 })
+		.custom(stepValidator),
 	body('authors_notes').optional().isString().isLength({ min: 20, max: 255 }),
 	body('spices').optional().isString(),
 	body('youtube_link')
