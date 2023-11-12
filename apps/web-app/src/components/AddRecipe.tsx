@@ -3,7 +3,7 @@ import { useRecipeMethods } from '@/hooks'
 import { type IRecipe } from '@/models/LOGIC'
 import { type TImageFileOptimizedArray } from '@/models/UI'
 import { homeInputsArrayFooter, homeInputsArrayMain, homeInputsArrayOptionals, homeInputsSchema } from '@/pages/Home/models'
-import { optimizeImage } from '@/utils'
+import { optimizeImage, toastUtils } from '@/utils'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/joy/Box'
 import IconButton from '@mui/joy/IconButton'
@@ -44,7 +44,10 @@ const AddRecipe = () => {
     try {
       globalLoadingInstance.sendMessage()
       await createRecipe(newUserData)
-    } catch (e) {} finally {
+      toastUtils.success('Recipe added')
+    } catch (e) {
+      toastUtils.error('Something went wrong')
+    } finally {
       globalLoadingInstance.sendMessage()
     }
   }
