@@ -8,6 +8,6 @@ export const useSyncStepsWithBackend = (recipeId: string | undefined, steps: TSt
   useEffect(() => {
     if (steps == null || !recipeId) return
 
-    void updateRecipe(recipeId, { steps })
+    void updateRecipe(recipeId, { steps }, false)
   }, [recipeId, steps, updateRecipe])
 }

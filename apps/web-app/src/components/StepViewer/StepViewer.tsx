@@ -1,5 +1,5 @@
 import { Loading } from '@/components'
-import { useGlobalAuth, useRecipeMethods } from '@/hooks'
+import { useGlobalAuth } from '@/hooks'
 import { GlobalLayout, MessageLayout } from '@/layouts'
 import { type IApiResponse, type IRecipe, type TStepArray } from '@/models/LOGIC'
 import { CBackRoutes } from '@/routing'
@@ -17,7 +17,6 @@ interface IProps {
 const StepViewer: React.FC<IProps> = () => {
   const { recipeId } = useParams()
   const { data, isLoading } = useSWR<IApiResponse<IRecipe>>(CBackRoutes.Dynamic.recipe.getById(Number(recipeId)))
-  const { updateRecipe } = useRecipeMethods()
   const { user } = useGlobalAuth()
 
   useEffect(() => {
@@ -28,14 +27,8 @@ const StepViewer: React.FC<IProps> = () => {
     }
   }, [])
 
-  const handleOnSaveSteps = async (stepsData: unknown) => {
-    if (data?.data == null) return
-
-    const newSteps: IRecipe = { ...data.data, steps: stepsData as TStepArray }
-    return await updateRecipe(String(recipeId), newSteps)
-  }
-
-
+  // @ts-expect-error the back-end is sending the steps in json
+  const stepsParsed = data?.data?.steps != null ? JSON.parse(data?.data?.steps as string) as TStepArray : []
 
   return (
     <GlobalLayout newTitle={recipeId as string}>
@@ -67,8 +60,7 @@ const StepViewer: React.FC<IProps> = () => {
                 />
                 <StepViewerMain
                   recipeId={recipeId}
-                  defaultSteps={data?.data?.steps}
-                  onSaveSteps={handleOnSaveSteps}
+                  defaultSteps={stepsParsed}
                   isEditable={user?.id === data?.data?.user_id}
                 />
               </>
