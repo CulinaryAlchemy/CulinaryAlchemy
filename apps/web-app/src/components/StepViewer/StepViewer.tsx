@@ -1,13 +1,18 @@
-import { Loading } from '@/components'
+import { AppLink, Loading } from '@/components'
 import { useGlobalAuth } from '@/hooks'
 import { GlobalLayout, MessageLayout } from '@/layouts'
 import { type IApiResponse, type IRecipe, type TStepArray } from '@/models/LOGIC'
-import { CBackRoutes } from '@/routing'
-import { Box } from '@mui/joy'
-import { useEffect } from 'react'
+import { CBackRoutes, CFrontRoutes } from '@/routing'
+import Box from '@mui/joy/Box'
+import Typography from '@mui/joy/Typography'
+import { type AxiosError } from 'axios'
+import { Suspense, lazy, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import useSWR from 'swr'
-import { StepViewerHeader, StepViewerMain } from './components'
+
+const StepViewerHeader = lazy(() => import('./components/StepViewerHeader'))
+const StepViewerMain = lazy(() => import('./components/StepViewerMain'))
+
 
 interface IProps {
   handleOnClose: () => void
@@ -16,7 +21,7 @@ interface IProps {
 
 const StepViewer: React.FC<IProps> = () => {
   const { recipeId } = useParams()
-  const { data, isLoading } = useSWR<IApiResponse<IRecipe>>(CBackRoutes.Dynamic.recipe.getById(Number(recipeId)))
+  const { data, isLoading, error } = useSWR<IApiResponse<IRecipe>, AxiosError<IApiResponse<IRecipe>>>(CBackRoutes.Dynamic.recipe.getById(Number(recipeId)))
   const { user } = useGlobalAuth()
 
   useEffect(() => {
@@ -46,25 +51,56 @@ const StepViewer: React.FC<IProps> = () => {
         }}
       >
         {
-          isLoading
-            ? (
-              <MessageLayout>
-                <Loading size='lg' />
-              </MessageLayout>
-              )
-            : (
-              <>
-                <StepViewerHeader
-                  recipeData={data?.data as IRecipe}
-                  userId={data?.data?.user_id as number}
-                />
-                <StepViewerMain
-                  recipeId={recipeId}
-                  defaultSteps={stepsParsed}
-                  isEditable={user?.id === data?.data?.user_id}
-                />
-              </>
-              )
+          (!isLoading && (error != null || data == null)) &&
+          (
+            <MessageLayout>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.2em',
+                  alignItems: 'center'
+                }}
+              >
+                <Typography level='h2'>
+                  {
+                    (error?.response?.status != null && error.response.status === 404)
+                      ? 'Recipe not found'
+                      : 'Something went wrong'
+                    }
+                </Typography>
+                <AppLink
+                  sx={{ fontSize: '1.2em', fontWeight: '600', textDecoration: 'underline' }}
+                  to={CFrontRoutes.Static.home}
+                >
+                  Go to home
+                </AppLink>
+              </Box>
+            </MessageLayout>
+          )
+        }
+        {
+          isLoading &&
+          (
+            <MessageLayout>
+              <Loading size='lg' />
+            </MessageLayout>
+          )
+        }
+        {
+          (!isLoading && (data?.data != null && error == null)) && (
+            <Suspense>
+              <StepViewerHeader
+                recipeData={data.data}
+                userId={data?.data?.user_id as number}
+              />
+              <StepViewerMain
+                recipeId={recipeId}
+                defaultSteps={stepsParsed}
+                isEditable={user?.id === data?.data?.user_id}
+              />
+            </Suspense>
+          )
         }
 
       </Box>

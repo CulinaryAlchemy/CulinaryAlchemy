@@ -16,7 +16,7 @@ interface IProps {
   defaultSteps: TStepArray | undefined
 
 }
-export const StepViewerMain: React.FC<IProps> = ({ recipeId, isEditable, defaultSteps }) => {
+const StepViewerMain: React.FC<IProps> = ({ recipeId, isEditable, defaultSteps }) => {
   const {
     steps,
     isTheFirstStepOptimistic,
@@ -143,3 +143,5 @@ export const StepViewerMain: React.FC<IProps> = ({ recipeId, isEditable, default
     </Suspense>
   )
 }
+
+export default StepViewerMain
