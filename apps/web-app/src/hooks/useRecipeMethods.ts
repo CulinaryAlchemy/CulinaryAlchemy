@@ -10,9 +10,9 @@ export const useRecipeMethods = () => {
     return createRecipeService(String(user?.id), recipeData)
   }
 
-  const updateRecipe = (recipeId: string, recipeData: IRecipePartial) => {
+  const updateRecipe = (recipeId: string, recipeData: IRecipePartial, sendHeadersForFile = true) => {
     recipeData.user_id = user?.id as number
-    return updateRecipeService(String(user?.id), recipeId, recipeData)
+    return updateRecipeService(String(user?.id), recipeId, recipeData, sendHeadersForFile)
   }
 
   const deleteRecipe = (recipeId: string) => {

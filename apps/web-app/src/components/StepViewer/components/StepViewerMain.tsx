@@ -1,6 +1,6 @@
 import { useStepViewerMain, useSyncStepsWithBackend } from '@/components/StepViewer/hooks'
 import { MessageLayout } from '@/layouts'
-import { type IStep, type TStepArray } from '@/models/LOGIC'
+import { type TStepArray } from '@/models/LOGIC'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button'
@@ -13,11 +13,10 @@ const Step = lazy(() => import('@/components/StepViewer/components/Step'))
 interface IProps {
   recipeId: string | undefined
   isEditable: boolean
-  onSaveSteps: (newStep: unknown) => Promise<unknown>
   defaultSteps: TStepArray | undefined
 
 }
-export const StepViewerMain: React.FC<IProps> = ({ recipeId, isEditable, onSaveSteps, defaultSteps }) => {
+export const StepViewerMain: React.FC<IProps> = ({ recipeId, isEditable, defaultSteps }) => {
   const {
     steps,
     isTheFirstStepOptimistic,
@@ -48,12 +47,6 @@ export const StepViewerMain: React.FC<IProps> = ({ recipeId, isEditable, onSaveS
         location.hash = `${steps?.length - 1}`
       }
     }, 300)
-  }
-
-  const handleOnSaveStep = async (newStep: IStep) => {
-    if (steps == null) return
-    const newSteps = [...steps, newStep]
-    return await onSaveSteps(newSteps)
   }
 
   return (
@@ -125,7 +118,6 @@ export const StepViewerMain: React.FC<IProps> = ({ recipeId, isEditable, onSaveS
                   id={String(index)}
                   key={step.stepName}
                   stepData={step}
-                  onSaveStep={handleOnSaveStep}
                   {...{ resetStep, updateStep, isEditable }}
                   navigationElement={
                     <Box

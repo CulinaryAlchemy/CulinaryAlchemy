@@ -2,7 +2,6 @@ import { Form } from '@/components'
 import { stepViewerInputsArray, stepViewerInputsSchema } from '@/components/StepViewer/models'
 import { ContentLayout } from '@/layouts'
 import { type IStep } from '@/models/LOGIC'
-import { toastUtils } from '@/utils'
 import Box from '@mui/joy/Box'
 import { useStep } from '../hooks/useStep'
 
@@ -12,13 +11,12 @@ interface IProps {
   stepData: IStep
   updateStep: (oldStepName: string, updatedStep: IStep) => void
   resetStep: (stepTitle: string, oldStepValues: IStep) => void
-  onSaveStep: (data: IStep) => Promise<unknown>
   navigationElement: React.ReactNode
 }
 
 const defaultCarouselImages = [{ blur_url: 'https://portfolio-three-chi-27.vercel.app/song-dragon-peak-1-resized.webp', default_url: 'https://portfolio-three-chi-27.vercel.app/song-dragon-peak-1.webp' }, { blur_url: 'https://portfolio-three-chi-27.vercel.app/song-ocean-1-resized.webp', default_url: 'https://portfolio-three-chi-27.vercel.app/song-ocean-1.webp' }]
 
-const Step: React.FC<IProps> = ({ isEditable, id, stepData, updateStep, resetStep, onSaveStep, navigationElement }) => {
+const Step: React.FC<IProps> = ({ isEditable, id, stepData, updateStep, navigationElement }) => {
   const { isEditing, toggleIsEditing } = useStep(stepData.stepName === '')
 
   const handleOnClickForEditing = () => {
@@ -31,13 +29,6 @@ const Step: React.FC<IProps> = ({ isEditable, id, stepData, updateStep, resetSte
     if (isEditing && isEditable) {
       updateStep(stepData.stepName, data as IStep)
     }
-
-    const step = data as IStep
-    onSaveStep(step)
-      .catch(() => {
-        resetStep(step.stepName, stepData)
-        toastUtils.error('The step was not added/modified. Something went wrong.')
-      })
     toggleIsEditing(false)
   }
 
