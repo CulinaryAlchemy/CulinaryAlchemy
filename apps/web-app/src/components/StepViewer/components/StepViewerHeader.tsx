@@ -12,7 +12,7 @@ interface IProps {
   userId: number
 }
 
-export const StepViewerHeader: React.FC<IProps> = ({ recipeData, userId }) => {
+const StepViewerHeader: React.FC<IProps> = ({ recipeData, userId }) => {
   const { data } = useSWR<IApiResponse<IUserApiResponse>>(userId != null && CBackRoutes.Dynamic.user.getById(userId))
 
   const handleOnCloseClick = () => {
@@ -81,3 +81,5 @@ export const StepViewerHeader: React.FC<IProps> = ({ recipeData, userId }) => {
     </Box>
   )
 }
+
+export default StepViewerHeader

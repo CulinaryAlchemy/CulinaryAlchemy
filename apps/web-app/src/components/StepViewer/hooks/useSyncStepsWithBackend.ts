@@ -6,7 +6,8 @@ export const useSyncStepsWithBackend = (recipeId: string | undefined, steps: TSt
   const { updateRecipe } = useRecipeMethods()
 
   useEffect(() => {
-    if (steps == null || !recipeId) return
+    const lastStep = steps?.at(-1)
+    if (steps == null || !recipeId || lastStep?.stepName === '' || lastStep?.stepDescription === '') return
 
     void updateRecipe(recipeId, { steps }, false)
   }, [recipeId, steps, updateRecipe])
