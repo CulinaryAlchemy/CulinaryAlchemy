@@ -1,14 +1,9 @@
-import { AppLink, Image } from '@/components'
+import { AppLink, DropdownMenuBase, Image } from '@/components'
 import { useGlobalAuth, useRecipeMethods } from '@/hooks'
 import { CUserRoles, type IUser } from '@/models/LOGIC'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Box from '@mui/joy/Box'
 import Chip from '@mui/joy/Chip'
-import Dropdown from '@mui/joy/Dropdown'
-import IconButton from '@mui/joy/IconButton'
-import Menu from '@mui/joy/Menu'
-import MenuButton from '@mui/joy/MenuButton'
-import MenuItem from '@mui/joy/MenuItem'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
@@ -80,25 +75,32 @@ export const PostHeader: React.FC<IProps> = ({ userData, recipeId }) => {
           )}
         </Stack>
       </Stack>
-      <Dropdown>
-        <MenuButton
-          slots={{ root: IconButton }}
-          slotProps={{ root: { variant: 'plain', color: 'neutral', size: 'sm' } }}
-        >
+      <DropdownMenuBase
+        triggerIcon={
           <MoreVertIcon />
-        </MenuButton>
-        <Menu placement='bottom-end'>
-          {
-            canDelete && <MenuItem onClick={handleOnClickDeleteRecipe} sx={{ fontSize: '0.93em' }} color='danger'>Delete</MenuItem>
-          }
-          {
-            canReport && <MenuItem sx={{ fontSize: '0.93em' }} color='warning'>Report</MenuItem>
-          }
-          {
-            user == null && <Typography sx={{ fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-sm, 0.875rem))', textWrap: 'balance', color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))', padding: '0.7em' }}>You need to sign up to check this out</Typography>
-          }
-        </Menu>
-      </Dropdown>
+        }
+      >
+
+        {
+          canDelete &&
+          <DropdownMenuBase.Item onClick={handleOnClickDeleteRecipe}>
+            <Typography color='danger' level='body2'>
+              Delete
+            </Typography>
+          </DropdownMenuBase.Item>
+        }
+        {
+          canReport &&
+          <DropdownMenuBase.Item>
+            <Typography color='warning' level='body2'>
+              Report
+            </Typography>
+          </DropdownMenuBase.Item>
+        }
+        {
+          user == null && <Typography sx={{ fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-sm, 0.875rem))', textWrap: 'balance', color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))', padding: '0.7em' }}>You need to sign up to check this out</Typography>
+        }
+      </DropdownMenuBase>
     </Box>
   )
 }
