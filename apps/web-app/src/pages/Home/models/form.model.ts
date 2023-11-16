@@ -55,7 +55,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     placeholder: 'Knife, pot, cutting board...',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(1).max(12).optional()
+    validation: zValidator.string().min(1).max(100).optional()
   },
   {
     formInputType: 'textField',
@@ -64,7 +64,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     placeholder: 'Pasta, eggs, bacon, Parmesan cheese...',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(1).max(12).optional()
+    validation: zValidator.string().min(1).max(200).optional()
   },
   {
     formInputType: 'textField',
@@ -73,7 +73,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     placeholder: 'Salt, pepper, garlic powder...',
     async: false,
     type: 'text',
-    validation: zValidator.string().min(1).max(10).optional()
+    validation: zValidator.string().min(1).max(100).optional()
   },
   {
     formInputType: 'textField',
