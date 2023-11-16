@@ -37,7 +37,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     placeholder: '30',
     async: false,
     type: 'text',
-    validation: zValidator.coerce.number().min(0).max(180).optional()
+    validation: zValidator.coerce.number({ invalid_type_error: 'Only numbers are allowed' }).min(0).max(180).optional()
   },
   {
     formInputType: 'textField',
@@ -46,7 +46,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     placeholder: '4',
     async: false,
     type: 'text',
-    validation: zValidator.coerce.number().min(1).max(100).optional()
+    validation: zValidator.coerce.number({ invalid_type_error: 'Only numbers are allowed' }).min(1).max(100).optional()
   },
   {
     formInputType: 'textField',
