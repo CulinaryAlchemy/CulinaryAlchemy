@@ -39,14 +39,18 @@ const AuthLayout: React.FC<IProps> = ({ showBackground }) => {
         </Box>
         <Typography
           sx={{
-            color: 'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))',
+            color:
+              'var(--joy-palette-text-tertiary, var(--joy-palette-neutral-500, #73738C))',
             lineHeight: 'var(--joy-lineHeight-md, 1.5)',
-            fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))',
+            fontSize:
+              'var(--Typography-fontSize, var(--joy-fontSize-xs, 0.75rem))',
             fontWeight: 600,
             alignSelf: 'center',
             marginBottom: '1em'
           }}
-        >@ CulinaryAlchemy 2023</Typography>
+        >
+          @ CulinaryAlchemy 2023
+        </Typography>
       </Box>
       {showBackground && <Background />}
     </Box>
