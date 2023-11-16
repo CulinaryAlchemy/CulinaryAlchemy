@@ -8,7 +8,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     formInputType: 'textField',
     label: 'Recipe title',
     name: 'title',
-    placeholder: 'La mue cream',
+    placeholder: 'Delicious Pasta Barbonara',
     async: false,
     type: 'text',
     validation: zValidator.string().min(3).max(70)
@@ -17,7 +17,7 @@ export const homeInputsArrayMain: TFormInputArray = [
     formInputType: 'textArea',
     label: 'Recipe description',
     name: 'description',
-    placeholder: 'I\'ve prepare a ...',
+    placeholder: 'A classic Italian dish with creamy sauce...',
     validation: zValidator.string().max(255)
   }
 ]
@@ -27,14 +27,14 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     formInputType: 'textArea',
     label: 'Author notes',
     name: 'authors_notes',
-    placeholder: 'Don\'t use lemon',
+    placeholder: 'Don\'t use lemon, Tip for extra flavor ...',
     validation: zValidator.string().min(20).max(255).optional()
   },
   {
     formInputType: 'textField',
     label: 'Cooking time',
     name: 'cooking_time',
-    placeholder: '7',
+    placeholder: '30',
     async: false,
     type: 'text',
     validation: zValidator.coerce.number().min(0).max(180).optional()
@@ -43,7 +43,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     formInputType: 'textField',
     label: 'Servings',
     name: 'servings',
-    placeholder: 'servings',
+    placeholder: '4',
     async: false,
     type: 'text',
     validation: zValidator.coerce.number().min(1).max(100).optional()
@@ -52,7 +52,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     formInputType: 'textField',
     label: 'Equipment needed',
     name: 'equipment_needed',
-    placeholder: 'knife, meal, etc...',
+    placeholder: 'Knife, pot, cutting board...',
     async: false,
     type: 'text',
     validation: zValidator.string().min(1).max(12).optional()
@@ -61,7 +61,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     formInputType: 'textField',
     label: 'Ingredients',
     name: 'ingredients',
-    placeholder: 'lemon, meal, salt, etc...',
+    placeholder: 'Pasta, eggs, bacon, Parmesan cheese...',
     async: false,
     type: 'text',
     validation: zValidator.string().min(1).max(12).optional()
@@ -70,7 +70,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     formInputType: 'textField',
     label: 'Spices',
     name: 'spices',
-    placeholder: 'lemon, meal, salt, etc...',
+    placeholder: 'Salt, pepper, garlic powder...',
     async: false,
     type: 'text',
     validation: zValidator.string().min(1).max(10).optional()
@@ -79,7 +79,7 @@ export const homeInputsArrayOptionals: TFormInputArray = [
     formInputType: 'textField',
     label: 'Youtube link',
     name: 'youtube_link',
-    placeholder: 'lemon, meal, salt, etc...',
+    placeholder: 'https://www.youtube.com/watch?v=_GuOjXYl5ew',
     async: false,
     type: 'text',
     validation: zValidator.string().min(5).max(70).refine((value) => value.trim().startsWith('https://www.youtube.com/watch?v='), { message: 'Invalid url' }).optional()
