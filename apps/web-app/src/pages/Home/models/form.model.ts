@@ -93,7 +93,7 @@ export const homeInputsArrayFooter: TFormInputArray = [
     name: 'images-dropzone',
     validation: zValidator.instanceof(File, { message: 'Upload your recipe images' }).array()
       .refine((files) => files[0] != null, { message: 'Upload your recipe images' })
-      .refine((files) => files.length <= 4, { message: 'Max 4 images per recipe' })
+      .refine((files) => files.length <= 3, { message: 'Max 3 images per recipe' })
       .refine(
         (files) => Array.from(files).every(file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)),
         'Only .jpg, .jpeg, .png and .webp formats are supported.'
@@ -101,7 +101,7 @@ export const homeInputsArrayFooter: TFormInputArray = [
       .refine((files) => Array.from(files).every((file) => file?.size <= 5000000), 'The maximum image size for each image is 5MB.'),
     accept: 'image/jpeg, image/jpg, image/png, image/webp',
     type: 'file',
-    maxFiles: 4
+    maxFiles: 3
   }
 ]
 

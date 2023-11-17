@@ -4,9 +4,10 @@ import { isAlreadyFileNameInArray } from '../util'
 
 interface Params {
   inputName: string
+  maxFiles: number
 }
 
-export const usePopperDropZone = ({ inputName }: Params) => {
+export const usePopperDropZone = ({ inputName, maxFiles }: Params) => {
   const [warning, setWarning] = useState<string | null>(null)
   const { watch, setValue } = useFormContext()
   const imageFiles = watch(inputName) as FileList
@@ -15,7 +16,7 @@ export const usePopperDropZone = ({ inputName }: Params) => {
   useEffect(() => {
     setValue(inputName, [])
     return () => {
-      if (imageFiles != null && (imageFiles.length > 0) && (imageFiles.length <= 4)) {
+      if (imageFiles != null && (imageFiles.length > 0) && (imageFiles.length <= maxFiles)) {
         setWarning(null)
         clearTimeout(timeoutForError.current)
       }
@@ -26,9 +27,9 @@ export const usePopperDropZone = ({ inputName }: Params) => {
   const addImages = (newImages: File[]) => {
     const totalImageCount = newImages.length + (imageFiles != null ? imageFiles.length : 0)
 
-    if (totalImageCount > 4) {
-      setWarning('Max 4 images per recipe')
-      if ((imageFiles.length > 0) && (imageFiles.length <= 4)) {
+    if (totalImageCount > maxFiles) {
+      setWarning(`You can only upload ${maxFiles} files`)
+      if ((imageFiles.length > 0) && (imageFiles.length <= maxFiles)) {
         timeoutForError.current = setTimeout(() => {
           setWarning(null)
           clearTimeout(timeoutForError.current)
