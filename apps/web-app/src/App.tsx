@@ -13,9 +13,7 @@ setDefaultAxiosConfig()
 
 function App () {
   return (
-    <CssVarsProvider
-      defaultMode="system"
-    >
+    <CssVarsProvider defaultMode="system">
       <CssBaseline />
       <AuthContextProvider>
         <SWRConfig value={CSWRConfig}>
