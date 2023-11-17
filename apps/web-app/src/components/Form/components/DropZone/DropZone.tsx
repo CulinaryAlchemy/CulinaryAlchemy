@@ -6,7 +6,7 @@ import Stack from '@mui/joy/Stack'
 import Tooltip from '@mui/joy/Tooltip'
 
 import React, { Suspense, lazy, useRef, useState, type LegacyRef } from 'react'
-import { useFormContext, type UseFormRegisterReturn } from 'react-hook-form'
+import { type UseFormRegisterReturn } from 'react-hook-form'
 
 
 
@@ -19,12 +19,8 @@ interface IProps {
 }
 
 const DropZone: React.FC<IProps> = ({ data, error, register }) => {
-  const { watch } = useFormContext()
-
   const [showDropZoneArea, setShowDropZoneArea] = useState(false)
   const elementContainer = useRef<LegacyRef<HTMLDivElement>>(null)
-
-  const files = watch(register.name) as FileList
 
   const toggleShowDropZoneArea = () => {
     setShowDropZoneArea((prevState) => !prevState)
@@ -51,7 +47,6 @@ const DropZone: React.FC<IProps> = ({ data, error, register }) => {
         <Suspense>
           <PopperDropZone
             {...{ error, register, showDropZoneArea }}
-            imageFiles={files}
             anchorEl={elementContainer.current as unknown as HTMLDivElement}
             maxFiles={data.maxFiles}
           />

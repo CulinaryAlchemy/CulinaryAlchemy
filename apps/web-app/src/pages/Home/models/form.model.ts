@@ -91,7 +91,7 @@ export const homeInputsArrayFooter: TFormInputArray = [
     formInputType: 'dropZone',
     label: 'images',
     name: 'images-dropzone',
-    validation: zValidator.instanceof(FileList, { message: 'Upload your recipe images' })
+    validation: zValidator.instanceof(File, { message: 'Upload your recipe images' }).array()
       .refine((files) => files[0] != null, { message: 'Upload your recipe images' })
       .refine((files) => files.length <= 4, { message: 'Max 4 images per recipe' })
       .refine(
