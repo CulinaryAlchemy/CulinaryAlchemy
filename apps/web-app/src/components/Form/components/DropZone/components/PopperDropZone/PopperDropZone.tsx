@@ -20,7 +20,7 @@ interface IPropsPopperDropZone {
 }
 
 const PopperDropZone: React.FC<IPropsPopperDropZone> = ({ showDropZoneArea, register: { onChange, ...register }, anchorEl, maxFiles, error }) => {
-  const { addImages, imageFiles, removeImage, warning } = usePopperDropZone({ inputName: register.name })
+  const { addImages, imageFiles, removeImage, warning } = usePopperDropZone({ inputName: register.name, maxFiles })
 
   const handleOnClickForRemoveImage = (fileIndex: number) => () => {
     removeImage(fileIndex)
