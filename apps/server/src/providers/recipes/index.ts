@@ -6,7 +6,8 @@ import { Transaction } from 'sequelize';
 const get = {
 	byId: async (id: number) => {
 		try {
-			const recipe = await Recipe.findByPk(id, {
+			const recipe = await Recipe.findOne({
+				where: { id: id, end_date: null },
 				include: [
 					{ model: Image, as: 'images' },
 					{ model: Dietary },
@@ -97,13 +98,13 @@ const post = async ({
 				if (!doesMealtypeExist) {
 					throw new Error(
 						'One of the mealTypeIds doesnt exist. mealType id not existing: ' +
-							id
+							id,
 					);
 				}
 
 				await MealTypeXRecipe.create(
 					{ meal_type_id: id, recipe_id: newRecipe.id },
-					{ transaction: t }
+					{ transaction: t },
 				);
 			}
 		}
@@ -115,13 +116,13 @@ const post = async ({
 				if (!doesDietaryIds) {
 					throw new Error(
 						'One of the dietariesIds doesnt exist. Dietary id not existing: ' +
-							id
+							id,
 					);
 				}
 
 				await RecipeXDietary.create(
 					{ dietary_id: id, recipe_id: newRecipe.id },
-					{ transaction: t }
+					{ transaction: t },
 				);
 			}
 		}
@@ -130,8 +131,8 @@ const post = async ({
 	} catch (error) {
 		return Promise.reject(
 			new Error(
-				`There is been an errow while creating the recipe. Error: ${error}`
-			)
+				`There is been an errow while creating the recipe. Error: ${error}`,
+			),
 		);
 	}
 };
