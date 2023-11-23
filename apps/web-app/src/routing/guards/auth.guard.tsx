@@ -10,7 +10,11 @@ export const AuthGuard = () => {
   const { isAuth, isLoading } = useGlobalAuth()
 
   if (isLoading) {
-    return <MessageLayout><Loading size='lg' /></MessageLayout>
+    return (
+      <MessageLayout>
+        <Loading size="lg" />
+      </MessageLayout>
+    )
   }
 
   if (isAuth && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {
@@ -21,12 +25,13 @@ export const AuthGuard = () => {
     return <Outlet />
   }
 
-  const isAAuthRote = Object.values({ ...CFrontRoutes.Static.auth }).includes(pathname)
+  const isAAuthRote = Object.values({ ...CFrontRoutes.Static.auth }).includes(
+    pathname
+  )
 
-  if (!isAuth && (isAAuthRote)) {
+  if (!isAuth && isAAuthRote) {
     return <Outlet />
   }
-
 
   return <Navigate to={CFrontRoutes.Static.auth.login} />
 }

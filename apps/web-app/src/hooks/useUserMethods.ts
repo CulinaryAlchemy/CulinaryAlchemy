@@ -10,10 +10,15 @@ export const useUserMethods = () => {
   const updateUser = (id: number, newUserDate: IUserUpdate) => {
     return updateApiUser(id, newUserDate)
       .then((response) => {
-        if (!location.pathname.includes(CFrontRoutes.Static.settings.home.absolute)) {
-          goto(CFrontRoutes.Dynamic.user(response.data.data?.username as string))
+        if (
+          !location.pathname.includes(
+            CFrontRoutes.Static.settings.home.absolute
+          )
+        ) {
+          goto(
+            CFrontRoutes.Dynamic.user(response.data.data?.username as string)
+          )
         }
-
         updateSessionData(response.data.data as IUser)
       })
       .catch(() => {})

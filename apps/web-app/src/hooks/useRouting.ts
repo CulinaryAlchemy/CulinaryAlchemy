@@ -1,7 +1,8 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 export const useRouting = () => {
   const navigate = useNavigate()
+  const path = useLocation().pathname
 
   const backToLastPage = () => {
     navigate(-1)
@@ -11,5 +12,13 @@ export const useRouting = () => {
     navigate(route)
   }
 
-  return { backToLastPage, goto }
+  const refresh = () => {
+    location.reload()
+  }
+
+  const getActualPath = () => {
+    return path
+  }
+
+  return { backToLastPage, goto, refresh, getActualPath }
 }

@@ -17,7 +17,7 @@ export const PostHeader: React.FC<IProps> = ({ userData, recipeId }) => {
   const { user } = useGlobalAuth()
   const { deleteRecipe } = useRecipeMethods()
 
-  const canDelete = user?.id === userData.id
+  const canDelete = user?.id === userData?.id
   const canReport = user != null
 
   const handleOnClickDeleteRecipe = () => {
@@ -26,7 +26,7 @@ export const PostHeader: React.FC<IProps> = ({ userData, recipeId }) => {
 
   return (
     <Box
-      component='header'
+      component="header"
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -37,7 +37,14 @@ export const PostHeader: React.FC<IProps> = ({ userData, recipeId }) => {
         width: '100%'
       }}
     >
-      <Sheet sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%', overflow: 'hidden' }}>
+      <Sheet
+        sx={{
+          width: '2.5em',
+          height: '2.5em',
+          borderRadius: '100%',
+          overflow: 'hidden'
+        }}
+      >
         <Image
           src={userData.avatar as string}
           srcBlurPlaceholder={userData.avatarBlur as string}
@@ -49,15 +56,16 @@ export const PostHeader: React.FC<IProps> = ({ userData, recipeId }) => {
           }}
         />
       </Sheet>
-      <Stack flexGrow={1} direction='row' alignItems='center'>
-        <Stack flexGrow={1} alignItems='start'>
+      <Stack flexGrow={1} direction="row" alignItems="center">
+        <Stack flexGrow={1} alignItems="start">
           <AppLink
             sx={{
-              color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))',
+              color:
+                'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))',
               textDecorationColor: 'inherit',
               fontWeight: 600
             }}
-            color='neutral'
+            color="neutral"
             to={`/${userData?.username}`}
           >
             {userData?.username}
@@ -75,31 +83,35 @@ export const PostHeader: React.FC<IProps> = ({ userData, recipeId }) => {
           )}
         </Stack>
       </Stack>
-      <DropdownMenuBase
-        triggerIcon={
-          <MoreVertIcon />
-        }
-      >
-
-        {
-          canDelete &&
+      <DropdownMenuBase triggerIcon={<MoreVertIcon />}>
+        {canDelete && (
           <DropdownMenuBase.Item onClick={handleOnClickDeleteRecipe}>
-            <Typography color='danger' level='body2'>
+            <Typography color="danger" level="body2">
               Delete
             </Typography>
           </DropdownMenuBase.Item>
-        }
-        {
-          canReport &&
+        )}
+        {canReport && (
           <DropdownMenuBase.Item>
-            <Typography color='warning' level='body2'>
+            <Typography color="warning" level="body2">
               Report
             </Typography>
           </DropdownMenuBase.Item>
-        }
-        {
-          user == null && <Typography sx={{ fontSize: 'var(--Typography-fontSize, var(--joy-fontSize-sm, 0.875rem))', textWrap: 'balance', color: 'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))', padding: '0.7em' }}>You need to sign up to check this out</Typography>
-        }
+        )}
+        {user == null && (
+          <Typography
+            sx={{
+              fontSize:
+                'var(--Typography-fontSize, var(--joy-fontSize-sm, 0.875rem))',
+              textWrap: 'balance',
+              color:
+                'var(--joy-palette-text-primary, var(--joy-palette-neutral-800, #25252D))',
+              padding: '0.7em'
+            }}
+          >
+            You need to sign up to check this out
+          </Typography>
+        )}
       </DropdownMenuBase>
     </Box>
   )
