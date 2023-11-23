@@ -13,21 +13,36 @@ const User = () => {
   const { userName, userData, isLoading, error, isUserProfileOwner } = useUser()
 
   if (isLoading) {
-    return <MessageLayout><Loading size='lg' /></MessageLayout>
+    return (
+      <MessageLayout>
+        <Loading size="lg" />
+      </MessageLayout>
+    )
   }
 
   if (error != null && error.response == null) {
-    return <MessageLayout><h1>{t('something went wrong')}</h1></MessageLayout>
+    return (
+      <MessageLayout>
+        <h1>{t('something went wrong')}</h1>
+      </MessageLayout>
+    )
   }
 
   if (userData.data == null) {
-    return <Suspense><NotFoundPage /></Suspense>
+    return (
+      <Suspense>
+        <NotFoundPage />
+      </Suspense>
+    )
   }
 
   return (
     <GlobalLayout newTitle={userName as string}>
       <DefaultLayout>
-        <UserHeader data={userData?.data as IUser} isOwner={isUserProfileOwner} />
+        <UserHeader
+          data={userData?.data as IUser}
+          isOwner={isUserProfileOwner}
+        />
         <UserMain recipesIds={(userData?.data as IUserApiResponse)?.recipes} />
       </DefaultLayout>
     </GlobalLayout>

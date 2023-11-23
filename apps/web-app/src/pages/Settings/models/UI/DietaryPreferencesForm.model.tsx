@@ -21,16 +21,19 @@ const checkBoxTranslations = checkBoxNames.map((checkBoxName) => (
   <Trans>dietaryPreferencesValues.{checkBoxName}</Trans>
 ))
 
-export const dietaryPreferencesSelectedInputsArray: TFormInputArray = checkBoxTranslations.map((checkBoxTranslation, index) => (
-  {
+export const dietaryPreferencesSelectedInputsArray: TFormInputArray =
+  checkBoxTranslations.map((checkBoxTranslation, index) => ({
     formInputType: 'checkbox',
     name: checkBoxNames[index],
     label: checkBoxTranslation,
     validation: ZValidator.boolean().optional(),
     defaultValue: false
-  }
-))
+  }))
 
-const dietaryPreferencesDynamicInputsSchemas = getDynamicSchemas(dietaryPreferencesSelectedInputsArray)
+const dietaryPreferencesDynamicInputsSchemas = getDynamicSchemas(
+  dietaryPreferencesSelectedInputsArray
+)
 
-export const dietaryPreferencesInputsSchema = ZValidator.object(dietaryPreferencesDynamicInputsSchemas).deepPartial()
+export const dietaryPreferencesInputsSchema = ZValidator.object(
+  dietaryPreferencesDynamicInputsSchemas
+).deepPartial()

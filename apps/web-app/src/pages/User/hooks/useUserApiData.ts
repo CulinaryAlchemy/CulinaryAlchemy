@@ -1,4 +1,10 @@
-import { type IApiResponse, type IRole, type IRoleApiResponse, type IUser, type IUserApiResponse } from '@/models/LOGIC'
+import {
+  type IApiResponse,
+  type IRole,
+  type IRoleApiResponse,
+  type IUser,
+  type IUserApiResponse
+} from '@/models/LOGIC'
 import { CBackRoutes } from '@/routing'
 import { type AxiosError } from 'axios'
 import useSWR from 'swr'
@@ -8,8 +14,25 @@ export const useUserApiData = (
   isUserProfileOwner: boolean,
   defaultUser?: IUser
 ) => {
-  const { isLoading: isLoadingUser, data: userData, error } = useSWR<IApiResponse<IUserApiResponse>, AxiosError<IApiResponse<IUserApiResponse>>>(CBackRoutes.Dynamic.user.get(userName as string))
-  const { data: dataRole, isLoading: isLoadingRole } = useSWR<IApiResponse<IRoleApiResponse>, AxiosError<IApiResponse<IRoleApiResponse>>>(userData ? CBackRoutes.Dynamic.role.get(userData?.data?.roleId as number) : null)
+  const {
+    isLoading: isLoadingUser,
+    data: userData,
+    error
+  } = useSWR<
+    IApiResponse<IUserApiResponse>,
+    AxiosError<IApiResponse<IUserApiResponse>>
+  >(CBackRoutes.Dynamic.user.get(userName as string), {
+    revalidateOnMount: true
+  })
+  const { data: dataRole, isLoading: isLoadingRole } = useSWR<
+    IApiResponse<IRoleApiResponse>,
+    AxiosError<IApiResponse<IRoleApiResponse>>
+  >(
+    userData
+      ? CBackRoutes.Dynamic.role.get(userData?.data?.roleId as number)
+      : null
+  )
+
   const defaultUserData: { data: unknown } = { data: null }
 
   if (userData?.data != null) {
@@ -22,5 +45,11 @@ export const useUserApiData = (
 
   const isAllLoading = isLoadingUser || isLoadingRole
 
-  return { userName, isLoading: isAllLoading, userData: userData ?? defaultUserData, error, userRole: dataRole?.data?.name }
+  return {
+    userName,
+    isLoading: isAllLoading,
+    userData: userData ?? defaultUserData,
+    error,
+    userRole: dataRole?.data?.name
+  }
 }

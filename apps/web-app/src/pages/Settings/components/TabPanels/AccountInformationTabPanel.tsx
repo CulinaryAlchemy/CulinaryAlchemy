@@ -1,7 +1,18 @@
+/* eslint-disable @typescript-eslint/indent */
 import { DropZone, Form, Image, TabPanel } from '@/components'
-import { useGlobalAuth, useGlobalLoading, useTranslation, useUserMethods } from '@/hooks'
+import {
+  useGlobalAuth,
+  useGlobalLoading,
+  useTranslation,
+  useUserMethods,
+  useRouting
+} from '@/hooks'
 import { type IUser, type IUserUpdate } from '@/models/LOGIC'
-import { CTabsDataAccountTabPanel, accountInformationInputsAccountTabSchema, accountInformationSelectedInputsArray } from '@/pages/Settings/models/UI'
+import {
+  CTabsDataAccountTabPanel,
+  accountInformationInputsAccountTabSchema,
+  accountInformationSelectedInputsArray
+} from '@/pages/Settings/models/UI'
 import { toastUtils } from '@/utils'
 import Box from '@mui/joy/Box'
 import { type SubmitHandler } from 'react-hook-form'
@@ -11,12 +22,16 @@ interface IProps {
   showHeaders?: boolean
 }
 
-const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, showHeaders }) => {
+const AccountInformationTabPanel: React.FC<IProps> = ({
+  showBackNavigation,
+  showHeaders
+}) => {
   const { t } = useTranslation()
   const { updateUser } = useUserMethods()
   const { user } = useGlobalAuth()
   const { toggleLoadingVisibility } = useGlobalLoading()
 
+  const router = useRouting()
   const handleOnSubmit: SubmitHandler<IUserUpdate> = async (data) => {
     const areValuesNull = Object.values(data).every((actualData) => {
       if (actualData instanceof FileList) {
@@ -31,16 +46,21 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
       toastUtils.error('All fields are empty')
     } else {
       toggleLoadingVisibility()
-      await updateUser((user as IUser).id, data)
-        .finally(() => {
-          toggleLoadingVisibility()
-        })
+      await updateUser((user as IUser).id, data).finally(() => {
+        toggleLoadingVisibility()
+      })
+      router.refresh()
     }
   }
 
-  const handleOnImageSuccess = (userKey: 'avatar' | 'header') => (imageFile: File, imageBlurFile: File) => {
-    return updateUser(user?.id as number, { [userKey]: imageFile, [userKey + 'Blur']: imageBlurFile })
-  }
+  const handleOnImageSuccess =
+    (userKey: 'avatar' | 'header') =>
+    (imageFile: File, imageBlurFile: File) => {
+      return updateUser(user?.id as number, {
+        [userKey]: imageFile,
+        [userKey + 'Blur']: imageBlurFile
+      })
+    }
 
   return (
     <TabPanel
@@ -49,23 +69,25 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
       description={CTabsDataAccountTabPanel.information.description}
       showBackNavigation={showBackNavigation ?? true}
       showHeader={showHeaders ?? true}
-      routingBy='routingSystem'
+      routingBy="routingSystem"
       loading={false}
     >
       <Box
         sx={{
           overflow: 'hidden'
-        }}>
+        }}
+      >
         <Box
           sx={{
             height: '10em',
             backgroundColor: 'var(--joy-palette-neutral-outlinedBorder)',
             overflow: 'hidden',
             position: 'relative'
-          }}>
+          }}
+        >
           <DropZone
             onSuccess={handleOnImageSuccess('header')}
-            fileType='image/jpeg, image/jpg, image/png, image/webp'
+            fileType="image/jpeg, image/jpg, image/png, image/webp"
             styles={{
               width: '100%',
               height: '100%',
@@ -93,10 +115,11 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
             marginTop: '-3.5em !important',
             overflow: 'hidden',
             zIndex: '100'
-          }}>
+          }}
+        >
           <DropZone
             onSuccess={handleOnImageSuccess('avatar')}
-            fileType='image/jpeg, image/jpg, image/png, image/webp'
+            fileType="image/jpeg, image/jpg, image/png, image/webp"
             styles={{
               width: '100%',
               height: '100%',
@@ -118,7 +141,7 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
           inputsDataMain={accountInformationSelectedInputsArray}
           schema={accountInformationInputsAccountTabSchema}
           defaultValues={user}
-          buttonSubmitSide='default'
+          buttonSubmitSide="default"
           styles={{
             gridColumns: 1,
             width: '100%',
@@ -126,7 +149,8 @@ const AccountInformationTabPanel: React.FC<IProps> = ({ showBackNavigation, show
             border: 'none',
             marginY: '1em',
             paddingY: '0px',
-            gridTemplateAreasMain: '"username" "name" "email" "description" "location"'
+            gridTemplateAreasMain:
+              '"username" "name" "email" "description" "location"'
           }}
         />
       </Box>
