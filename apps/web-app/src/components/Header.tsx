@@ -21,7 +21,6 @@ export const Header = () => {
   const frontendRoutes = CFrontRoutes
   const registerRoute = frontendRoutes.Static.auth.register
 
-  console.log(registerRoute)
   return (
     <header>
       <Stack
@@ -36,26 +35,30 @@ export const Header = () => {
           padding: '1em'
         }}
       >
-        {isAuth ? (
+        {isAuth
+          ? (
           <AppLink to={CFrontRoutes.Static.home} style={{ color: 'inherit' }}>
             <RestaurantRounded sx={{ fontSize: '2.7em' }} />
           </AppLink>
-        ) : (
+            )
+          : (
           <RestaurantRounded sx={{ fontSize: '2.7em' }} />
-        )}
+            )}
 
         <Box sx={{ position: 'absolute', top: 0, right: 0, padding: '1em' }}>
           {isAuth && <DropDownMenu />}
           {!isAuth &&
-            (actualPath !== registerRoute ? (
+            (actualPath !== registerRoute
+              ? (
               <AppLink to={CFrontRoutes.Static.auth.register}>
                 {t('sign up')}
               </AppLink>
-            ) : (
+                )
+              : (
               <AppLink to={CFrontRoutes.Static.auth.login}>
-                {t('log in')}
+                {t('sign in')}
               </AppLink>
-            ))}
+                ))}
         </Box>
       </Stack>
     </header>

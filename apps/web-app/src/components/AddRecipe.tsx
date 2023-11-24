@@ -1,5 +1,5 @@
 import { PublicationBox } from '@/components'
-import { useRecipeMethods } from '@/hooks'
+import { useRecipeMethods, useRouting } from '@/hooks'
 import { type IRecipe } from '@/models/LOGIC'
 import { type TImageFileOptimizedArray } from '@/models/UI'
 import { homeInputsArrayFooter, homeInputsArrayMain, homeInputsArrayOptionals, homeInputsSchema } from '@/pages/Home/models'
@@ -14,7 +14,7 @@ const Modal = lazy(() => import('@/components/Modal/Modal'))
 
 const AddRecipe = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-
+  const { refresh } = useRouting()
   const { createRecipe } = useRecipeMethods()
 
   const handleOnSubmit = async (data: unknown) => {
@@ -45,6 +45,7 @@ const AddRecipe = () => {
       globalLoadingInstance.sendMessage()
       await createRecipe(newUserData)
       toastUtils.success('Recipe added')
+      refresh()
     } catch (e) {
       toastUtils.error('Something went wrong')
     } finally {
