@@ -16,8 +16,9 @@ export const UserMain: React.FC<IProps> = ({ recipesIds }) => {
           '0.1em solid var(--joy-palette-neutral-outlinedBorder, var(--joy-palette-neutral-200, #D8D8DF));'
       }}
     >
-      {recipesIds[0]?.id != null ? (
-        recipesIds?.map((recipeId) => (
+      {recipesIds[0]?.id != null
+        ? (
+            recipesIds?.map((recipeId) => (
           <Recipe
             recipeId={recipeId?.id ?? 0}
             key={recipeId?.id}
@@ -36,14 +37,15 @@ export const UserMain: React.FC<IProps> = ({ recipesIds }) => {
               }
             }}
           />
-        ))
-      ) : (
+            ))
+          )
+        : (
         <MessageLayout
           styles={{ position: 'relative', padding: '25% 0 25% 0' }}
         >
           <Typography level="h3">No recipes found</Typography>
         </MessageLayout>
-      )}
+          )}
     </Box>
   )
 }
