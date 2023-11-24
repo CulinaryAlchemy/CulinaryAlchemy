@@ -19,14 +19,14 @@ export const useUserApiData = (
     data: userData,
     error
   } = useSWR<
-    IApiResponse<IUserApiResponse>,
-    AxiosError<IApiResponse<IUserApiResponse>>
+  IApiResponse<IUserApiResponse>,
+  AxiosError<IApiResponse<IUserApiResponse>>
   >(CBackRoutes.Dynamic.user.get(userName as string), {
     revalidateOnMount: true
   })
   const { data: dataRole, isLoading: isLoadingRole } = useSWR<
-    IApiResponse<IRoleApiResponse>,
-    AxiosError<IApiResponse<IRoleApiResponse>>
+  IApiResponse<IRoleApiResponse>,
+  AxiosError<IApiResponse<IRoleApiResponse>>
   >(
     userData
       ? CBackRoutes.Dynamic.role.get(userData?.data?.roleId as number)

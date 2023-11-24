@@ -37,16 +37,16 @@ const getFrontendRoutes = () => {
         relative: 'deactivate'
       }
     }
-  }
+  } as const
 
   const Dynamic = {
-    user(userId: string) {
+    user (userId: string) {
       return `${BaseRoutes.user}${userId}`
     },
-    recipe(recipeId: string) {
+    recipe (recipeId: string) {
       return `${BaseRoutes.recipe}${recipeId}`
     },
-    cooking(recipeId: string) {
+    cooking (recipeId: string) {
       return `${BaseRoutes.cooking}${recipeId}`
     }
   } as const
@@ -77,53 +77,53 @@ const getBackendRoutes = () => {
     dietary: {
       getAll: '/dietary/all'
     }
-  }
+  } as const
 
   const Dynamic = {
     user: {
-      get(userName: string) {
+      get (userName: string) {
         return `/user/profile/${userName}`
       },
-      getById(id: number) {
+      getById (id: number) {
         return `/user/${id}`
       },
-      update(userId: number) {
+      update (userId: number) {
         return `/user/${userId}`
       },
-      delete(userId: number) {
+      delete (userId: number) {
         return `/user/${userId}`
       },
-      getRecipes(userId: number) {
+      getRecipes (userId: number) {
         return `/user/recipes/${userId}`
       },
-      addDietary(userId: number, dietaryId: number) {
+      addDietary (userId: number, dietaryId: number) {
         return `/user/${userId}/dietary/${dietaryId}`
       },
-      removeDietary(userId: number, dietaryId: number) {
+      removeDietary (userId: number, dietaryId: number) {
         return `/user/${userId}/dietary/${dietaryId}`
       }
     },
     role: {
-      get(roleId: number) {
+      get (roleId: number) {
         return `/role/${roleId}`
       }
     },
     recipe: {
-      getById(recipeId: number) {
+      getById (recipeId: number) {
         return `/recipe/${recipeId}`
       },
-      create(userId: string) {
+      create (userId: string) {
         return `/recipe/${userId}`
       },
-      deleteById(userId: string, recipeId: string) {
+      deleteById (userId: string, recipeId: string) {
         return `/recipe/${userId}/${recipeId}`
       },
-      updateById(userId: string, recipeId: string) {
+      updateById (userId: string, recipeId: string) {
         return `/recipe/${userId}/${recipeId}`
       }
     },
     dietary: {
-      getById(dietaryId: number) {
+      getById (dietaryId: number) {
         return `/dietary/${dietaryId}`
       }
     }

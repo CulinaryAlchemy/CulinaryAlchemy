@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 export const useUser = () => {
   const { userName } = useParams()
-  const { user } = useGlobalAuth() // esta variable se actualiza bien
+  const { user } = useGlobalAuth()
 
   const isUserProfileOwner = userName === user?.username
 

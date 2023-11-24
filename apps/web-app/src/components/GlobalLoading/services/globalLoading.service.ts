@@ -1,3 +1,3 @@
-import { CustomMessageEventApp } from '@/components/GlobalLoading/utils'
+import { CustomMessageEventApp } from '@/utils'
 
 export const globalLoadingInstance = new CustomMessageEventApp('globalLoading')

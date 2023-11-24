@@ -17,7 +17,7 @@ export const AuthGuard = () => {
     )
   }
 
-  if (isAuth && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {
+  if (isAuth && (pathname === CFrontRoutes.Static.auth.login || pathname === CFrontRoutes.Static.auth.register) && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {
     return <Navigate to={CFrontRoutes.Static.home} />
   }
 
@@ -25,9 +25,7 @@ export const AuthGuard = () => {
     return <Outlet />
   }
 
-  const isAAuthRote = Object.values({ ...CFrontRoutes.Static.auth }).includes(
-    pathname
-  )
+  const isAAuthRote = (pathname === CFrontRoutes.Static.auth.login || pathname === CFrontRoutes.Static.auth.register) && Object.values({ ...CFrontRoutes.Static.auth }).includes(pathname)
 
   if (!isAuth && isAAuthRote) {
     return <Outlet />

@@ -3,9 +3,9 @@ import { DropZone, Form, Image, TabPanel } from '@/components'
 import {
   useGlobalAuth,
   useGlobalLoading,
+  useRouting,
   useTranslation,
-  useUserMethods,
-  useRouting
+  useUserMethods
 } from '@/hooks'
 import { type IUser, type IUserUpdate } from '@/models/LOGIC'
 import {
@@ -46,10 +46,11 @@ const AccountInformationTabPanel: React.FC<IProps> = ({
       toastUtils.error('All fields are empty')
     } else {
       toggleLoadingVisibility()
-      await updateUser((user as IUser).id, data).finally(() => {
+      await updateUser((user as IUser).id, data)
+      .finally(() => {
         toggleLoadingVisibility()
+        router.refresh()
       })
-      router.refresh()
     }
   }
 
