@@ -18,13 +18,13 @@ export const CTabsData: TTabDataRecord = {
     description: <Trans>accountTabPanel message</Trans>,
     traduction: <Trans>account</Trans>,
     to: CFrontRoutes.Static.settings.account.absolute
-  },
-  dietaryPreferences: {
-    name: 'dietaryPreferences',
-    description: <Trans>dietaryPreferencesTabPanel message</Trans>,
-    traduction: <Trans>dietaryPreferences</Trans>,
-    to: CFrontRoutes.Static.settings.dietaryPreferences.absolute
   }
+  // dietaryPreferences: {
+  // name: 'dietaryPreferences',
+  // description: <Trans>dietaryPreferencesTabPanel message</Trans>,
+  // traduction: <Trans>dietaryPreferences</Trans>,
+  // to: CFrontRoutes.Static.settings.dietaryPreferences.absolute
+  // }
 } as const
 
 export const CTabsDataAccountTabPanel: TTabDataRecord = {
@@ -45,4 +45,3 @@ export const CTabsDataAccountTabPanel: TTabDataRecord = {
     icon: <HeartBrokenIcon sx={{ fontSize: '1.4em' }} />
   }
 } as const
-

@@ -1,6 +1,5 @@
 import { Loading } from '@/components'
-import { globalConfig } from '@/config'
-import { ImageOptimizerManager, ImageValidator, toastUtils } from '@/utils'
+import { optimizeImage, toastUtils } from '@/utils'
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak'
 import Box from '@mui/joy/Box'
 import { useId, useState } from 'react'
@@ -31,36 +30,11 @@ export const DropZone: React.FC<IProps> = ({ fileType, styles, onSuccess, width,
     }
 
     setIsLoading(true)
-    const file: File = event?.target?.files[0]
+    const data = await optimizeImage(event?.target?.files[0], height, width, () => { setIsLoading(false) })
 
-    const imageValidatorInstance = new ImageValidator()
+    if (data == null) return
 
-    const isValidWidthAndHeight = await imageValidatorInstance.validateWidthAndHeight(
-      {
-        file,
-        minHeight: height,
-        minWidth: width
-      }
-    )
-
-    if (!isValidWidthAndHeight) {
-      toastUtils.error(`The image dimensions are too small. They should be at least ${width}px wide by ${height}px high.`)
-      setIsLoading(false)
-      return
-    }
-
-    const imageOptimizerInstance = new ImageOptimizerManager()
-    const imageProcessedFile = await imageOptimizerInstance.optimizeAndResize(file, width, height)
-
-    const isValidImageSize = imageValidatorInstance.validateSize(imageProcessedFile)
-
-    if (!isValidImageSize) {
-      toastUtils.error(`The image is too large. The maximum allowed image size is ${globalConfig.image.maxSizeBytes / 1024}KB.`)
-      setIsLoading(false)
-      return
-    }
-
-    const imageBlur = await imageOptimizerInstance.optimizeAndResize(imageProcessedFile, 20, 20)
+    const { imageBlur, imageProcessedFile } = data
 
     onSuccess(imageProcessedFile, imageBlur)
       .finally(() => {
@@ -87,25 +61,26 @@ export const DropZone: React.FC<IProps> = ({ fileType, styles, onSuccess, width,
       {isLoading
         ? <Loading size='md' />
         : <>
-            <label htmlFor={id}>
-              <CenterFocusWeakIcon
-                sx={{
-                  cursor: 'pointer',
-                  fontSize: '2.5em',
-                  opacity: '60%'
-                }}
-              />
-            </label>
-            <input
-              onChange={handleOnChange}
-              accept={fileType}
-              id={id}
-              type="file"
-              style={{
-                display: 'none'
+          <label htmlFor={id}>
+            <CenterFocusWeakIcon
+              sx={{
+                cursor: 'pointer',
+                fontSize: '2.5em',
+                opacity: '60%',
+                color: 'rgb(216, 216, 223)'
               }}
             />
-          </>
+          </label>
+          <input
+            onChange={handleOnChange}
+            accept={fileType}
+            id={id}
+            type="file"
+            style={{
+              display: 'none'
+            }}
+          />
+        </>
       }
     </Box>
   )

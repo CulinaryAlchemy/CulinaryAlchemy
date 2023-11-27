@@ -10,21 +10,26 @@ export const AuthGuard = () => {
   const { isAuth, isLoading } = useGlobalAuth()
 
   if (isLoading) {
-    return <MessageLayout><Loading size='lg' /></MessageLayout>
+    return (
+      <MessageLayout>
+        <Loading size="lg" />
+      </MessageLayout>
+    )
   }
 
-  if (isAuth && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {
-    return <Navigate to={CFrontRoutes.Static.index} />
+  if (isAuth && (pathname === CFrontRoutes.Static.auth.login || pathname === CFrontRoutes.Static.auth.register) && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {
+    return <Navigate to={CFrontRoutes.Static.home} />
   }
 
   if (isAuth) {
     return <Outlet />
   }
 
-  if (!isAuth && Object.values(CFrontRoutes.Static.auth).includes(pathname)) {
+  const isAAuthRote = (pathname === CFrontRoutes.Static.auth.login || pathname === CFrontRoutes.Static.auth.register) && Object.values({ ...CFrontRoutes.Static.auth }).includes(pathname)
+
+  if (!isAuth && isAAuthRote) {
     return <Outlet />
   }
-
 
   return <Navigate to={CFrontRoutes.Static.auth.login} />
 }

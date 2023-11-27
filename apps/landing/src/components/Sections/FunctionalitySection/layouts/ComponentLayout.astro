@@ -1,0 +1,11 @@
+---
+interface Props {
+    styles: string
+}
+
+const { styles } = Astro.props
+---
+
+<article class=`flex flex-col border border-border rounded-sm bg-card overflow-hidden ${styles}`>
+    <slot />
+</article>

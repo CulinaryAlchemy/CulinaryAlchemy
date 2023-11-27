@@ -56,8 +56,10 @@ const DatabaseService = {
 			await DatabaseService.sync();
 			console.log('Database has been synchronized successfully.');
 
-			await DatabaseService.seed.all();
-			console.log('Databse seeded successfully');
+			if (process.env.ENVIRONMENT === 'development') {
+				await DatabaseService.seed.all();
+				console.log('Databse seeded successfully');
+			}
 
 			return Promise.resolve();
 		} catch (error) {

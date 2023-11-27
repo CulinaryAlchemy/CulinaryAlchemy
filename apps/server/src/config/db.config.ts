@@ -1,24 +1,36 @@
 import { Options } from 'sequelize';
+import { checkEnvironmentEnv } from './index';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let sslConfig: any = { require: true };
-if (process.env.ENVIRONMENT === 'development') {
-	sslConfig = { require: true, rejectUnauthorized: false };
+function getSslConfig() {
+	if(process.env.SSL === undefined){
+		throw new Error('missing SSL variable');
+	}
+	if (!JSON.parse(process.env.SSL)) {
+		return;
+	}
+
+	return { ssl: { require: true, rejectUnauthorized: true } };
 }
 
-const dbConfig: Options = {
-	dialect: 'postgres',
-	dialectOptions: {
-		ssl: { ...sslConfig },
-		define: {
-			timestamps: false,
-			charset: 'utf8',
-			collate: 'utf8_general_ci',
-			foreignKeys: {
-				deferrable: true,
+function getDtabaseConfiguration() {
+	checkEnvironmentEnv();
+	const logging: boolean = JSON.parse(process.env.ALLOW_DB_LOGGIN as string);
+	const dbConfig: Options = {
+		dialect: 'postgres',
+		logging,
+		dialectOptions: {
+			...getSslConfig(),
+			define: {
+				timestamps: false,
+				charset: 'utf8',
+				collate: 'utf8_general_ci',
+				foreignKeys: {
+					deferrable: true,
+				},
 			},
 		},
-	},
-};
+	};
+	return dbConfig;
+}
 
-export { dbConfig };
+export { getDtabaseConfiguration };

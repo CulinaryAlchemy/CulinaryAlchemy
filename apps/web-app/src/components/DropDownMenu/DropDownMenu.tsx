@@ -1,15 +1,15 @@
 import Popper from '@mui/base/Popper'
-import Avatar from '@mui/joy/Avatar'
 import Box from '@mui/joy/Box'
-import IconButton from '@mui/joy/IconButton'
-
-import { DropDownListOfItems } from '@/components/DropDownMenu/components'
-import { useGlobalAuth } from '@/hooks'
+import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
+
+import { Image } from '@/components'
+import { DropDownListOfItems } from '@/components/DropDownMenu/components'
+import { useGlobalAuth } from '@/hooks'
 import { useState } from 'react'
 
-export const DropDownMenu = () => {
+const DropDownMenu = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
   const { user } = useGlobalAuth()
 
@@ -24,33 +24,41 @@ export const DropDownMenu = () => {
     >
       <Stack direction="row" alignItems="left" sx={{ gap: '0.4em' }}>
         <Stack sx={{ alignItems: 'end' }}>
-          <Typography level="body1" sx={{ fontWeight: '600' }}>
-            {user?.name}
+          <Typography sx={{ fontWeight: '600' }}>
+            {user?.name ?? user?.username}
           </Typography>
-          <Typography level="body2" sx={{ fontSize: '0.75em' }}>
+          <Typography sx={{ fontSize: '0.75em' }}>
             @{user?.username}
           </Typography>
         </Stack>
-        <IconButton
+        <Sheet
           color="neutral"
           variant="outlined"
-          sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
+          sx={{
+            width: '2.5em',
+            height: '2.5em',
+            borderRadius: '100%',
+            cursor: 'pointer',
+            overflow: 'hidden'
+          }}
           aria-haspopup
           aria-expanded={open ? 'true' : 'false'}
           role="menuitem"
           onFocus={(event) => {
-            setAnchorEl(event.currentTarget)
+            if (event == null) return
+            setAnchorEl(event.currentTarget as unknown as HTMLAnchorElement)
           }}
           onMouseEnter={(event) => {
-            setAnchorEl(event.currentTarget)
+            setAnchorEl(event.currentTarget as unknown as HTMLAnchorElement)
           }}
         >
-          <Avatar
-            sx={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
-            alt="user logo"
+          <Image
             src={user?.avatar as string}
+            srcBlurPlaceholder={user?.avatarBlur as string}
+            style={{ width: '2.5em', height: '2.5em', borderRadius: '100%' }}
+            alt="user logo"
           />
-        </IconButton>
+        </Sheet>
       </Stack>
       <Box
         sx={{
@@ -75,3 +83,5 @@ export const DropDownMenu = () => {
     </Box>
   )
 }
+
+export default DropDownMenu

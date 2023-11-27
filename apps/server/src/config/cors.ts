@@ -2,30 +2,28 @@ import { CorsOptions } from 'cors';
 
 const corsConfig: CorsOptions = {
 	origin: (origin, next) => {
-		if (!origin) {
-			return next(new Error('Rejected by cors, internal server error'));
-		}
+		return next(null, origin);
+		// if (!origin) {
+		// 	new Error('Rejected by cors. No origin detected');
+		// }
 
-		const environment = process.env.ENVIRONMENT;
+		// const whiteList = process.env.ALLOWED_ORIGIN_LIST;
 
-		if (environment === 'development') {
-			if (!origin.startsWith('http://localhost')) {
-				next(new Error('Not allowed by CORS'));
-			}
-			return next(null, true);
-		}
+		// if (!whiteList) {
+		// 	return next(
+		// 		new Error(
+		// 			'No whiteList found in server variables. Check the .env and corsConfig to detect the error'
+		// 		)
+		// 	);
+		// }
 
-		if (environment === 'production') {
-			if (!origin.startsWith('https://culinary-alchemy-web-app.vercel.app')) {
-				next(new Error('Not allowed by CORS'));
-			}
-			return next(null, true);
-		}
+		// for (const allowedOrigin of whiteList.split(' ')) {
+		// 	if (origin?.startsWith(allowedOrigin) ) {
+		// 		return next(null, origin);
+		// 	}
+		// }
 
-		// if the environment is not production or development, we reject the request
-		return next(
-			new Error('Internal Environment is invalid, rejected by cors.')
-		);
+		// return next(new Error('Rejected by cors'));
 	},
 };
 export { corsConfig };

@@ -1,0 +1,38 @@
+---
+import ComponentLayout from "../layouts/ComponentLayout.astro"
+---
+
+<ComponentLayout styles="relative h-[18rem] w-[15rem] flex flex-col">
+    <header
+        class="font-bold border-b border-b-border p-1 flex justify-between items-center"
+    >
+        <h3 class="capitalize">La cream</h3>
+        <span class="flex gap-[0.1rem]">
+            <span class="text-xs font-normal">by</span>
+            <a class="text-xs underline">Jes015</a>
+        </span>
+    </header>
+    <ol
+        class="marker:text-[1em] marker:font-bold flex flex-col justify-start items-center h-full z-10 p-5 gap-3 list-decimal"
+    >
+        <li class="self-stretch flex items-start gap-1">
+            <div>
+                <span class="text-text-primary font-bold leading-[2.8rem] text-[2.6em]">1</span>
+            </div>
+            <div class="flex flex-col justify-start flex-grow max-w-[80%]">
+                <span class="font-bold text-base">Add salad</span>
+                <p
+                    class="text-xs w-full text-ellipsis overflow-hidden whitespace-nowrap leading-[1] text-text-secondary"
+                >
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Corporis, maiores! Laboriosam, cum ipsam dolorum corporis ullam
+                    inventore placeat.
+                </p>
+            </div>
+        </li>
+    </ol>
+
+    <div class="flex-grow mt-10 absolute">
+        <img class="blur-xl" src="pizza.jpg" />
+    </div>
+</ComponentLayout>

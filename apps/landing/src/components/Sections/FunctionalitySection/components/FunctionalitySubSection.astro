@@ -1,0 +1,38 @@
+---
+import Post from "../components/Post.astro"
+import StepViewer from "../components/StepViewer.astro"
+import User from "../components/User.astro"
+import { type FunctionalitySubSection } from "../models"
+
+interface Styles {
+    section: string;
+    elementsContainer: string;
+}
+
+interface Props {
+    styles: Styles;
+    sectionData: FunctionalitySubSection;
+}
+
+const { sectionData, styles } = Astro.props;
+---
+
+<section class={`postsse relative flex overflow-hidden ${styles.section}`}>
+    <div>
+        <div class={`posts__container flex gap-1 ${styles.elementsContainer}`}>
+            {
+                Array(15)
+                    .fill(null)
+                    .map(() => (
+                        <div class="shrink-0 h-[18rem]">
+                            {sectionData.components === "post" && <Post />}
+                            {sectionData.components === "user" && <User />}
+                            {sectionData.components === "step-viewer" && (
+                                <StepViewer />
+                            )}
+                        </div>
+                    ))
+            }
+        </div>
+    </div>
+</section>

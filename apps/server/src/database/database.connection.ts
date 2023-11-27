@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize';
-import { dbConfig } from '../config';
+import { getDtabaseConfiguration } from '../config';
 
 const POSTGRESQL_DB_URI = process.env.POSTGRESQL_DB_URI;
 
-const sequelize = new Sequelize(POSTGRESQL_DB_URI!, dbConfig);
+const sequelize = new Sequelize(POSTGRESQL_DB_URI!, getDtabaseConfiguration());
 
 export { sequelize };

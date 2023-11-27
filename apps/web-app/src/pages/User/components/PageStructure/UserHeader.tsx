@@ -108,7 +108,6 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
             </Stack>
           </Stack>
           <Typography
-            level="body1"
             sx={{ maxHeight: '4.7em', overflow: 'hidden', fontSize: '0.938em' }}
           >
             {data?.description != null ? data.description : ''}
@@ -116,7 +115,7 @@ export const UserHeader: React.FC<IProps> = ({ data, isOwner }) => {
           {data?.location && (
             <Stack direction="row" spacing={1} justifyContent="left">
               <PlaceOutlinedIcon sx={{ color: '#b9b9c6' }} />
-              <Typography level="body2">{data?.location}</Typography>
+              <Typography sx={{ fontSize: '0.9em' }}>{data?.location}</Typography>
             </Stack>
           )}
         </Stack>

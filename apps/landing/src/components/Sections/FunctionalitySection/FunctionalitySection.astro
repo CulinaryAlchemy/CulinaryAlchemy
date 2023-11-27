@@ -1,0 +1,59 @@
+---
+import FunctionalitySubSection from "./components/FunctionalitySubSection.astro"
+import { functionalitySubSections } from "./models"
+---
+
+<section class="posts relative mt-1 mb-0 flex flex-col gap-1 overflow-hidden">
+    {
+        functionalitySubSections.map((contentData, index) => {
+            let section = "";
+            let elementsContainer = "";
+
+            if (index % 2 === 0) {
+                elementsContainer = "posts__container--left";
+                section = "sub-section--left";
+            } else {
+                elementsContainer = "posts__container--right";
+                section = "sub-section--right";
+            }
+
+            return (
+                <FunctionalitySubSection
+                    sectionData={contentData}
+                    styles={{ elementsContainer, section }}
+                />
+            );
+        })
+    }
+</section>
+
+<style is:global>
+    .sub-section--left {
+        justify-content: start;
+    }
+
+    .sub-section--right {
+        justify-content: end;
+    }
+
+    .posts__container {
+        animation: scroll-x linear forwards;
+        animation-duration: auto;
+        animation-timeline: scroll(root block);
+        animation-range: 20vh;
+    }
+
+    .posts__container--left {
+        --translate-value: -12%;
+    }
+
+    .posts__container--right {
+        --translate-value: 12%;
+    }
+
+    @keyframes scroll-x {
+        to {
+            transform: translateX(var(--translate-value));
+        }
+    }
+</style>

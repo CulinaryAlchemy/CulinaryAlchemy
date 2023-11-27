@@ -2,6 +2,20 @@ import { type TFormInputRecordObject } from '@/components/Form/models'
 import { Trans } from 'react-i18next'
 import { z as zValidator } from 'zod'
 
+export interface IButtonDesign {
+  variant: 'solid' | 'outlined'
+  color: 'neutral' | 'primary'
+}
+export interface IInputStyles {
+  border?: string
+  fontWeight?: string
+  fontSize?: string
+  paddingInline?: string
+  label?: {
+    display?: 'none'
+  }
+}
+
 export const CInputUser: TFormInputRecordObject = {
   username: {
     name: 'username',
@@ -81,6 +95,7 @@ export const CInputUser: TFormInputRecordObject = {
       ).optional(),
     formInputType: 'dropZone',
     accept: 'image/jpeg, image/jpg, image/png, image/webp',
-    defaultValue: undefined
+    defaultValue: undefined,
+    maxFiles: 1
   }
 }

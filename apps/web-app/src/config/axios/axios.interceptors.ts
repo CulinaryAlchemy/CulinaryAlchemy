@@ -1,12 +1,12 @@
 import { globalConfig } from '@/config'
 import { type IApiResponse } from '@/models/LOGIC'
 import { loggerInstance } from '@/services'
-import { checkServerStatus, getFromLocalStorage, getValidationError, toastUtils } from '@/utils'
+import { checkServerStatus, getFromStorage, getValidationError, toastUtils } from '@/utils'
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
 
 export const setAxiosInterceptors = () => {
   const getAccessToken = () => {
-    const accessToken = getFromLocalStorage(globalConfig.localStorage.auth.accessToken)
+    const accessToken = getFromStorage(globalConfig.localStorage.auth.accessToken, 'localStorage') ?? getFromStorage(globalConfig.localStorage.auth.accessToken, 'sessionStorage')
     return accessToken
   }
 
@@ -24,7 +24,7 @@ export const setAxiosInterceptors = () => {
   const addSignal = (request: AxiosRequestConfig) => {
     if (request.signal != null) return request
 
-    request.signal = AbortSignal.timeout(4000)
+    request.signal = AbortSignal.timeout(8000)
     return request
   }
 
@@ -36,7 +36,7 @@ export const setAxiosInterceptors = () => {
   }
 
   axios.interceptors.request.use((request: InternalAxiosRequestConfig) => {
-    if (getAccessToken() == null || request.url == null || request.url.includes('static-file paths')) return request
+    if (request.url == null || request.url.includes('static-file paths')) return request
 
     const newRequest = updateRequest(request) as InternalAxiosRequestConfig
 
@@ -48,7 +48,13 @@ export const setAxiosInterceptors = () => {
   axios.interceptors.response.use(
     (success: AxiosResponse<IApiResponse<unknown>>) => {
       loggerInstance.log('Axios.interceptors.ts - response', success)
-      toastUtils.success(getValidationError(success.data.message))
+
+      const successMessage = getValidationError(success.data.message)
+
+      if (successMessage != null) {
+        toastUtils.success(successMessage)
+      }
+
       return success
     },
     (error: AxiosError<IApiResponse<unknown>>) => {
@@ -56,8 +62,17 @@ export const setAxiosInterceptors = () => {
       if (error.code === 'ERR_NETWORK' || error.code === 'ERR_CANCELED') {
         checkServerStatus()
       } else {
-        const errorText = getValidationError(error.response?.data?.message as string) ?? 'Error code not registered'
-        toastUtils.error(errorText)
+        let errorMessage = ''
+
+        if (error?.response?.status != null && error?.response?.status >= 500) {
+          errorMessage = 'Something went wrong'
+        } else {
+          errorMessage = getValidationError(error.response?.data?.message as string)
+        }
+
+        if (errorMessage != null) {
+          toastUtils.error(errorMessage)
+        }
       }
       return Promise.reject(error)
     }
