@@ -62,7 +62,7 @@ export const getUser = {
 	byUsername: async (
 		username: string,
 		includeProfile: boolean = false,
-		isForInternalServerUse: boolean = false
+		isForInternalServerUse: boolean = false,
 	) => {
 		let excludedPropety: string[] = [];
 		if (!isForInternalServerUse) {
@@ -84,11 +84,11 @@ export const getUser = {
 					model: Recipe,
 					as: 'recipes',
 					attributes: ['id'],
+					//	where: { end_date: null },
 				},
-				{ model: Role, as: 'role' }
+				{ model: Role, as: 'role' },
 			);
 		}
-
 		try {
 			const user = await User.findOne({
 				attributes: { exclude: [...excludedPropety] },
@@ -96,7 +96,15 @@ export const getUser = {
 					username: username,
 					deletedAt: null,
 				},
-				include: includeOptions,
+				include: [
+					{
+						model: Recipe,
+						as: 'recipes',
+						attributes: ['id'],
+						where: { end_date: null },
+						required: false,
+					},
+				],
 			});
 			return Promise.resolve(user);
 		} catch (error) {

@@ -16,13 +16,13 @@ const User = {
 					res,
 					HttpStatusCodes.SUCCESS,
 					null,
-					MessageCodes.ACCOUNT_DESACTIVATED
+					MessageCodes.ACCOUNT_DESACTIVATED,
 				);
 			} catch (error) {
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.NOT_FOUND,
-					MessageCodes.USER_NOT_FOUND
+					MessageCodes.USER_NOT_FOUND,
 				);
 			}
 		},
@@ -44,7 +44,7 @@ const User = {
 					return ApiResponse.error(
 						res,
 						HttpStatusCodes.NOT_FOUND,
-						MessageCodes.USERS_NOT_FOUND
+						MessageCodes.USERS_NOT_FOUND,
 					);
 				}
 
@@ -52,13 +52,13 @@ const User = {
 					res,
 					HttpStatusCodes.SUCCESS,
 					users,
-					MessageCodes.USER_FOUND
+					MessageCodes.USER_FOUND,
 				);
 			} catch (error) {
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.INTERNAL_SERVER_ERROR,
-					MessageCodes.INTERNAL_SERVER_ERROR
+					MessageCodes.INTERNAL_SERVER_ERROR,
 				);
 			}
 		},
@@ -70,7 +70,7 @@ const User = {
 					return ApiResponse.error(
 						res,
 						HttpStatusCodes.NOT_FOUND,
-						MessageCodes.USER_NOT_FOUND
+						MessageCodes.USER_NOT_FOUND,
 					);
 				}
 
@@ -78,13 +78,13 @@ const User = {
 					res,
 					HttpStatusCodes.SUCCESS,
 					user,
-					MessageCodes.USER_FOUND
+					MessageCodes.USER_FOUND,
 				);
 			} catch (error) {
 				ApiResponse.error(
 					res,
 					HttpStatusCodes.NOT_FOUND,
-					MessageCodes.INTERNAL_SERVER_ERROR
+					MessageCodes.INTERNAL_SERVER_ERROR,
 				);
 			}
 		},
@@ -96,7 +96,7 @@ const User = {
 					return ApiResponse.error(
 						res,
 						HttpStatusCodes.NOT_FOUND,
-						MessageCodes.USER_NOT_FOUND
+						MessageCodes.USER_NOT_FOUND,
 					);
 				}
 
@@ -104,13 +104,13 @@ const User = {
 					res,
 					HttpStatusCodes.SUCCESS,
 					user,
-					MessageCodes.USER_FOUND
+					MessageCodes.USER_FOUND,
 				);
 			} catch (error) {
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.NOT_FOUND,
-					MessageCodes.INTERNAL_SERVER_ERROR
+					MessageCodes.INTERNAL_SERVER_ERROR,
 				);
 			}
 		},
@@ -118,11 +118,13 @@ const User = {
 			const { username } = req.params;
 			try {
 				const user = await UserProvider.getUser.byUsername(username, true);
+				console.log('here !');
+				console.log(user);
 				if (!user) {
 					return ApiResponse.error(
 						res,
 						HttpStatusCodes.NOT_FOUND,
-						MessageCodes.USER_NOT_FOUND
+						MessageCodes.USER_NOT_FOUND,
 					);
 				}
 
@@ -130,14 +132,14 @@ const User = {
 					res,
 					HttpStatusCodes.SUCCESS,
 					user,
-					MessageCodes.USER_FOUND
+					MessageCodes.USER_FOUND,
 				);
 			} catch (error) {
 				console.log(error);
 				ApiResponse.error(
 					res,
 					HttpStatusCodes.NOT_FOUND,
-					MessageCodes.INTERNAL_SERVER_ERROR
+					MessageCodes.INTERNAL_SERVER_ERROR,
 				);
 			}
 		},
@@ -145,9 +147,8 @@ const User = {
 	checkIfAvailable: {
 		username: async (req: Request, res: Response) => {
 			const { username } = req.body;
-			const isUsernameavailable = await UserProvider.checkAvaiability.username(
-				username
-			);
+			const isUsernameavailable =
+				await UserProvider.checkAvaiability.username(username);
 
 			if (isUsernameavailable) {
 				return ApiResponse.success(res, HttpStatusCodes.SUCCESS, null, '');
@@ -155,7 +156,7 @@ const User = {
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.CONFLICT,
-					'Username already in use'
+					'Username already in use',
 				);
 			}
 		},
@@ -169,7 +170,7 @@ const User = {
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.CONFLICT,
-					'Email already in use'
+					'Email already in use',
 				);
 			}
 		},
@@ -205,7 +206,7 @@ const User = {
 					if ('avatar' in req.files) {
 						const avatarFile = req.files['avatar'][0] as Express.Multer.File;
 						const avatar = await cloudinaryService.uploadImage(
-							avatarFile as unknown as Express.Multer.File
+							avatarFile as unknown as Express.Multer.File,
 						);
 						params.avatar = avatar.secure_url;
 					}
@@ -214,7 +215,7 @@ const User = {
 							'avatarBlur'
 						][0] as Express.Multer.File;
 						const avatarBlur = await cloudinaryService.uploadImage(
-							avatarBlurFile as unknown as Express.Multer.File
+							avatarBlurFile as unknown as Express.Multer.File,
 						);
 						params.avatarBlur = avatarBlur.secure_url;
 					}
@@ -223,7 +224,7 @@ const User = {
 					if ('header' in req.files) {
 						const headerFile = req.files['header'][0] as Express.Multer.File;
 						const header = await cloudinaryService.uploadImage(
-							headerFile as unknown as Express.Multer.File
+							headerFile as unknown as Express.Multer.File,
 						);
 						params.header = header.secure_url;
 					}
@@ -232,7 +233,7 @@ const User = {
 							'headerBlur'
 						][0] as Express.Multer.File;
 						const headerBlur = await cloudinaryService.uploadImage(
-							headerBlurFile as unknown as Express.Multer.File
+							headerBlurFile as unknown as Express.Multer.File,
 						);
 						params.headerBlur = headerBlur.secure_url;
 					}
@@ -240,7 +241,7 @@ const User = {
 					return ApiResponse.error(
 						res,
 						HttpStatusCodes.INTERNAL_SERVER_ERROR,
-						''
+						'',
 					);
 				}
 			}
@@ -251,27 +252,27 @@ const User = {
 					res,
 					HttpStatusCodes.BAD_REQUEST,
 					'No params provided',
-					null
+					null,
 				);
 			}
 			try {
 				const finalParams: any = cleanObjectNullKeys(params);
 				await UserProvider.updateUser(id, { ...finalParams });
 				const userWithUpdatedValues = await UserProvider.getUser.ById(
-					parseInt(id)
+					parseInt(id),
 				);
 				return ApiResponse.success(
 					res,
 					HttpStatusCodes.CREATED,
 					userWithUpdatedValues,
-					MessageCodes.DATA_UPDATED
+					MessageCodes.DATA_UPDATED,
 				);
 			} catch (error) {
 				console.log(error);
 				return ApiResponse.error(
 					res,
 					HttpStatusCodes.INTERNAL_SERVER_ERROR,
-					MessageCodes.INTERNAL_SERVER_ERROR
+					MessageCodes.INTERNAL_SERVER_ERROR,
 				);
 			}
 		},
@@ -284,20 +285,20 @@ const User = {
 			try {
 				await UserProvider.AssociateWith.dietary.add(
 					parseInt(dietaryId, 10),
-					parseInt(userId)
+					parseInt(userId),
 				);
 				ApiResponse.success(
 					res,
 					HttpStatusCodes.CREATED,
 					null,
-					MessageCodes.DATA_UPDATED
+					MessageCodes.DATA_UPDATED,
 				);
 			} catch (error) {
 				console.log(error);
 				ApiResponse.error(
 					res,
 					HttpStatusCodes.INTERNAL_SERVER_ERROR,
-					MessageCodes.INTERNAL_SERVER_ERROR
+					MessageCodes.INTERNAL_SERVER_ERROR,
 				);
 			}
 		},
@@ -308,20 +309,20 @@ const User = {
 			try {
 				await UserProvider.AssociateWith.dietary.remove(
 					parseInt(dietaryId, 10),
-					parseInt(userId)
+					parseInt(userId),
 				);
 				ApiResponse.success(
 					res,
 					HttpStatusCodes.CREATED,
 					null,
-					MessageCodes.DATA_UPDATED
+					MessageCodes.DATA_UPDATED,
 				);
 			} catch (error) {
 				console.log(error);
 				ApiResponse.error(
 					res,
 					HttpStatusCodes.INTERNAL_SERVER_ERROR,
-					MessageCodes.INTERNAL_SERVER_ERROR
+					MessageCodes.INTERNAL_SERVER_ERROR,
 				);
 			}
 		},
