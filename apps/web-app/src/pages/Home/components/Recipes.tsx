@@ -49,7 +49,6 @@ export const Recipes = () => {
               recipeId={recipeId.id ?? 0}
               key={recipeId.id}
               styles={{
-                cursor: 'pointer',
                 content: {
                   flexDirection: 'column',
                   gap: '1em',
