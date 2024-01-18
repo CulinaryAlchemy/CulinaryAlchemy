@@ -1,5 +1,5 @@
 import { MessageLayout } from '@/layouts'
-import { type IApiResponse, type IUser, type IUserApiResponse } from '@/models/LOGIC'
+import { type IApiResponse, type IRecipe, type IUser, type IUserApiResponse } from '@/models/LOGIC'
 import { CBackRoutes } from '@/routing'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
@@ -19,10 +19,10 @@ interface IProps {
   isLoading: boolean
   type: 'default' | 'recipe'
   userId: number | undefined
-  recipeId: string
+  recipeData: IRecipe | null | undefined
 }
 
-export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type, userId, recipeId }) => {
+export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type, userId, recipeData }) => {
   const { data, isLoading: isLoadingUser } = useSWR<IApiResponse<IUserApiResponse>>(userId != null && CBackRoutes.Dynamic.user.getById(userId))
 
   if (isLoading || isLoadingUser) {
@@ -63,7 +63,7 @@ export const PostLayout: React.FC<IProps> = ({ children, styles, isLoading, type
             )
           : (
             <>
-              <PostHeader userData={data?.data as IUser} recipeId={recipeId} />
+              <PostHeader userData={data?.data as IUser} recipeData={recipeData} />
               <Stack
                 sx={{
                   width: '100%'
