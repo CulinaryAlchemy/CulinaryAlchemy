@@ -2,7 +2,6 @@ import { AppLink } from '@/components'
 import { ContentLayout, PostLayout } from '@/layouts'
 import { type IApiResponse, type IRecipe } from '@/models/LOGIC'
 import { CBackRoutes, CFrontRoutes } from '@/routing'
-import { loggerInstance } from '@/services'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 import useSWR from 'swr'
@@ -27,17 +26,15 @@ interface IStyles {
 
 interface IProps {
   styles: IStyles
-  showStartCookingButton: boolean
   recipeId: number
 }
 
-export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingButton }) => {
+export const Recipe: React.FC<IProps> = ({ recipeId, styles }) => {
   const { data, isLoading } = useSWR<IApiResponse<IRecipe>>(CBackRoutes.Dynamic.recipe.getById(recipeId))
-  loggerInstance.log('Recipe.tsx', { data, recipeId })
 
   return (
     <PostLayout
-      recipeId={String(data?.data?.id)}
+      recipeData={data?.data}
       userId={data?.data?.user_id}
       type='recipe'
       {...{ isLoading }}
@@ -85,18 +82,16 @@ export const Recipe: React.FC<IProps> = ({ recipeId, styles, showStartCookingBut
                     justifyContent: 'end'
                   }}
                 >
-                  {showStartCookingButton &&
-                    <AppLink
-                      to={CFrontRoutes.Dynamic.cooking(String(recipeId))}
-                      color='warning'
-                      variant='soft'
-                      sx={{
-                        padding: '0.5em'
-                      }}
-                    >
-                      Start cooking
-                    </AppLink>
-                  }
+                  <AppLink
+                    to={CFrontRoutes.Dynamic.cooking(String(recipeId))}
+                    color='warning'
+                    variant='soft'
+                    sx={{
+                      padding: '0.5em'
+                    }}
+                  >
+                    Start cooking
+                  </AppLink>
                 </Box>
               </footer>
             </Box>

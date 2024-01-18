@@ -48,9 +48,7 @@ export const Recipes = () => {
             <Recipe
               recipeId={recipeId.id ?? 0}
               key={recipeId.id}
-              showStartCookingButton={false}
               styles={{
-                cursor: 'pointer',
                 content: {
                   flexDirection: 'column',
                   gap: '1em',
