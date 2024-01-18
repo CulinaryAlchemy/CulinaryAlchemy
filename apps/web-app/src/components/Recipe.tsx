@@ -34,7 +34,7 @@ export const Recipe: React.FC<IProps> = ({ recipeId, styles }) => {
 
   return (
     <PostLayout
-      recipeId={String(data?.data?.id)}
+      recipeData={data?.data}
       userId={data?.data?.user_id}
       type='recipe'
       {...{ isLoading }}

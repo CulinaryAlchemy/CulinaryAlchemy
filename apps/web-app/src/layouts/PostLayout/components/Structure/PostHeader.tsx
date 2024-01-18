@@ -1,28 +1,45 @@
 import { AppLink, DropdownMenuBase, Image } from '@/components'
 import { useGlobalAuth, useRecipeMethods } from '@/hooks'
-import { CUserRoles, type IUser } from '@/models/LOGIC'
+import { CUserRoles, type IRecipe, type IUser } from '@/models/LOGIC'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import Twitter from '@mui/icons-material/Twitter'
 import Box from '@mui/joy/Box'
+import Button from '@mui/joy/Button'
 import Chip from '@mui/joy/Chip'
+import Input from '@mui/joy/Input'
 import Sheet from '@mui/joy/Sheet'
 import Stack from '@mui/joy/Stack'
 import Typography from '@mui/joy/Typography'
+import { Suspense, lazy, useState } from 'react'
+
+const Modal = lazy(() => import('@/components/Modal/Modal'))
 
 interface IProps {
   userData: IUser
-  recipeId: string
+  recipeData: IRecipe | null | undefined
 }
 
-export const PostHeader: React.FC<IProps> = ({ userData, recipeId }) => {
+export const PostHeader: React.FC<IProps> = ({ userData, recipeData }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const { user } = useGlobalAuth()
   const { deleteRecipe } = useRecipeMethods()
 
   const canDelete = user?.id === userData?.id
-  const canReport = user != null
 
   const handleOnClickDeleteRecipe = () => {
-    void deleteRecipe(recipeId)
+    if (recipeData?.id == null) return
+    void deleteRecipe(String(recipeData.id))
   }
+
+  const handleOnClickModal = () => {
+    setIsModalVisible((prevState) => !prevState)
+  }
+
+  const handleOnClickToCopyLink = () => {
+    void navigator.clipboard.writeText(postURL)
+  }
+
+  const postURL = `https://culinary-alchemy-web-app.vercel.app/recipe/${recipeData?.id ?? ''}`
 
   return (
     <Box
@@ -84,17 +101,18 @@ export const PostHeader: React.FC<IProps> = ({ userData, recipeId }) => {
         </Stack>
       </Stack>
       <DropdownMenuBase triggerIcon={<MoreVertIcon />}>
+        <DropdownMenuBase.Item onClick={handleOnClickModal}>
+          <Typography
+            color="primary"
+            level="body2"
+          >
+            Share
+          </Typography>
+        </DropdownMenuBase.Item>
         {canDelete && (
           <DropdownMenuBase.Item onClick={handleOnClickDeleteRecipe}>
             <Typography color="danger" level="body2">
               Delete
-            </Typography>
-          </DropdownMenuBase.Item>
-        )}
-        {canReport && (
-          <DropdownMenuBase.Item>
-            <Typography color="warning" level="body2">
-              Report
             </Typography>
           </DropdownMenuBase.Item>
         )}
@@ -113,6 +131,62 @@ export const PostHeader: React.FC<IProps> = ({ userData, recipeId }) => {
           </Typography>
         )}
       </DropdownMenuBase>
+      <Suspense>
+        {
+          isModalVisible &&
+          <Modal
+            title='Share recipe'
+            open
+            handleOnClickModal={handleOnClickModal}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                gap: '0.4rem',
+                justifyContent: 'center',
+                padding: '1rem',
+                paddingBottom: '0.5rem'
+              }}
+            >
+              <a
+                href={`https://twitter.com/intent/tweet?text=Peek this recipe "${recipeData?.title ?? ''}", by ${userData.username ?? ''}&url=${postURL}`}
+                target='_blank'
+              >
+                <Twitter
+                  sx={{
+                    fontSize: '2rem'
+                  }}
+                />
+              </a>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 1,
+                maxWidth: '55em',
+                width: '100%'
+              }}
+            >
+              <Input
+                sx={{
+                  flexGrow: 1
+                }}
+                size='sm'
+                value={postURL}
+                readOnly
+              />
+              <Button
+                onClick={handleOnClickToCopyLink}
+                color='neutral'
+                variant='outlined'
+                size='sm'
+              >
+                Copy
+              </Button>
+            </Box>
+          </Modal>
+        }
+      </Suspense>
     </Box>
   )
 }
