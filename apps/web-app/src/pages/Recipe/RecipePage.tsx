@@ -14,7 +14,6 @@ const RecipePage = () => {
       >
         <Recipe
           recipeId={Number(recipeId)}
-          showStartCookingButton
           styles={{
             border: 'none',
             gap: '0.5em',
