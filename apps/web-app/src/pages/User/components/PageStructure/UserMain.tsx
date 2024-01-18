@@ -24,7 +24,6 @@ export const UserMain: React.FC<IProps> = ({ recipesIds }) => {
             key={recipeId?.id}
             showStartCookingButton={false}
             styles={{
-              cursor: 'pointer',
               content: {
                 flexDirection: 'column',
                 gap: '1em',

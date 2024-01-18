@@ -50,7 +50,6 @@ export const Recipes = () => {
               key={recipeId.id}
               showStartCookingButton={false}
               styles={{
-                cursor: 'pointer',
                 content: {
                   flexDirection: 'column',
                   gap: '1em',
