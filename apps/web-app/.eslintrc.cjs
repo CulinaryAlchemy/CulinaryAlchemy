@@ -2,26 +2,26 @@
 
 module.exports = {
   root: true,
-  env: { browser: true, es2023: true  },
+  env: { browser: true, es2023: true },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react-hooks/recommended',
-    'standard-with-typescript',
+    'standard-with-typescript'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: true,
-    tsconfigRootDir: __dirname,
+    tsconfigRootDir: __dirname
   },
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
-      { allowConstantExport: true },
+      { allowConstantExport: true }
     ],
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
@@ -31,11 +31,13 @@ module.exports = {
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/triple-slash-reference': 'off',
-    "no-restricted-imports": [
-      "error",
+    'no-restricted-imports': [
+      'error',
       {
-        "patterns": ["@mui/*/*/*"]
+        patterns: ['@mui/*/*/*']
       }
-    ]
+    ],
+    '@typescript-eslint/indent': 'off',
+    'eslint-multinine-ternary': 'off'
   }
 }
