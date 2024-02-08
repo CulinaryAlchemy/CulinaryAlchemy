@@ -2,7 +2,7 @@
 
 [![pipeline](https://github.com/CulinaryAlchemy/CulinaryAlchemy/actions/workflows/pipeline.yaml/badge.svg)](https://github.com/CulinaryAlchemy/CulinaryAlchemy/actions/workflows/pipeline.yaml)
 
-CulinaryAlchemy is an online platform that aims to revolutionize the way people discover, share, and explore recipes. It provides a vibrant and inclusive community for individuals with diverse dietary needs, home cooks, and food enthusiasts. Our mission is to inspire, connect, and empower users through the sharing and discovery of culinary creations, promoting creativity and healthy eating choices.
+Recipes social media
 
 ## Table of Contents
 
@@ -21,18 +21,6 @@ CulinaryAlchemy is an online platform that aims to revolutionize the way people 
 - **Recipes feed** Feed with recipes list with title, valoration, and recipe picture for each recipe. when a recipe is clicked, a "details" modal must be open showing the recipe ingredients, steps, cuisine type, and valoration.
 - **User profile** In a Twitter style, a profile layout of the User name, profile picture, banner, location, and external website link. While showing the user-posted recipes in a list.
 - **Favourite Recipes:** Save your favorite recipes for quick access in a list.
-
-### Extended version
-
-- **Diverse Dietary Support:** Tailor recipes to specific dietary needs and preferences such as vegetarian, vegan, gluten-free, and more. Our platform ensures inclusivity and caters to a wide range of dietary restrictions.
-- **Nutritional Information:** Access detailed nutritional information for each recipe, including calories, macronutrients, and allergen information. Make informed choices that align with your dietary goals.
-- **Ingredient Substitutions:** Adapt recipes to suit your dietary needs and allergies with our ingredient substitution feature. Swap out ingredients while maintaining the deliciousness of the dish.
-- **Weekly Highlighted Recipes:** Discover trending and seasonal dishes with our curated collection of weekly highlighted recipes. Get inspired and expand your culinary horizons.
-- **Interactive Cooking Guides:** Enhance your cooking skills with step-by-step tutorials for selected recipes. Visualize the process through images, videos, and animations to master new techniques.
-- **Engagement and Feedback:** Interact with the community through commenting, rating, and following features. Build connections, share tips, and receive valuable feedback on your culinary creations.
-- **Advanced Search and Filtering:** Find recipes that match your preferences with our powerful search and filtering options. Search by ingredients, dietary preferences, categories, and more.
-- **Personalized Feeds:** Enjoy a tailored recipe feed based on your profile's dietary preferences and interests. Discover recipes that cater to your unique tastes.
-- **Favourite Recipes:** Save your favorite recipes for quick access and create your personalized cookbook
 
 ## Technologies Used
 
